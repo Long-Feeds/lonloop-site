@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>lonX · AI Application & Backend Engineer</title>
+<meta name="description" content="lonX — AI 应用 / 后端研发工程师。专注 LLM Agent 与 Claude Code 生态。" />
+<meta name="color-scheme" content="dark" />
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#11141b; --card:#151924; --line:#222838;
+    --txt:#e7eaf0; --muted:#9aa3b2; --dim:#6b7384;
+    --accent:#7c9cff; --accent2:#5be0c8; --chip:#1b2130;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:radial-gradient(1200px 600px at 80% -10%, #1a2030 0%, var(--bg) 55%) no-repeat, var(--bg);
+    color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Helvetica Neue",Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:72px 24px 96px}
+  /* hero */
+  .eyebrow{color:var(--accent2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(40px,8vw,68px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 10px;font-weight:800}
+  h1 .dot{color:var(--accent)}
+  .tagline{font-size:clamp(18px,3.4vw,23px);color:var(--txt);font-weight:600}
+  .intro{color:var(--muted);font-size:17px;max-width:620px;margin-top:16px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .chip{background:var(--chip);border:1px solid var(--line);color:var(--muted);
+    font-size:13px;padding:6px 12px;border-radius:999px;font-weight:500}
+  .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15px;
+    padding:11px 18px;border-radius:12px;transition:transform .15s ease,border-color .15s ease,background .15s ease}
+  .btn-primary{background:var(--accent);color:#0a0c11}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--accent);transform:translateY(-2px)}
+  /* sections */
+  .section{margin-top:64px}
+  .section h2{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 18px;
+    display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
+  .card:hover{transform:translateY(-3px);border-color:#33405e}
+  .card .name{font-size:18px;font-weight:700;display:flex;align-items:center;gap:9px}
+  .badge{font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;
+    background:rgba(91,224,200,.12);color:var(--accent2);border:1px solid rgba(91,224,200,.25)}
+  .card .desc{color:var(--muted);font-size:14.5px;margin-top:10px;flex:1}
+  .card .tags{color:var(--dim);font-size:12.5px;margin-top:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .card .actions{display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  .card .actions a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
+  .card .actions a:hover{text-decoration:underline}
+  .card .actions a.muted{color:var(--dim)}
+  /* footer */
+  footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);color:var(--dim);font-size:14px;
+    display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">AI Application · Backend R&amp;D</div>
+      <h1>lonX<span class="dot">.</span></h1>
+      <div class="tagline">构建 LLM Agent 与 Claude Code 生态的工程师</div>
+      <p class="intro">
+        专注 AI Agent / LLM 应用与后端系统。喜欢把「能跑的 idea」做成真正可用、可维护、能上线的东西 —— 从自动构建的工具站，到深入 Claude Code 源码的研究。
+      </p>
+      <div class="chips">
+        <span class="chip">Go</span>
+        <span class="chip">TypeScript</span>
+        <span class="chip">Python</span>
+        <span class="chip">Bun</span>
+        <span class="chip">React</span>
+        <span class="chip">LLM Agents</span>
+        <span class="chip">Claude Code</span>
+      </div>
+      <div class="links">
+        <a class="btn btn-primary" href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn btn-ghost" href="mailto:lonx@lonloop.com">lonx@lonloop.com</a>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>Selected Projects</h2>
+      <div class="grid">
+
+        <article class="card">
+          <div class="name">Daily Tools <span class="badge">LIVE</span></div>
+          <p class="desc">每日工具集：每天自动构思并交付一个真正可用的小工具，每个都经真实浏览器集成测试后部署，沉淀成不断生长的工具站。</p>
+          <div class="tags">Claude Code · 自动化 · GitHub Pages</div>
+          <div class="actions">
+            <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener">在线访问 ↗</a>
+            <a class="muted" href="https://github.com/Long-Feeds/daily-tools" target="_blank" rel="noopener">代码</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="name">解密 Claude Code <span class="badge">LIVE</span></div>
+          <p class="desc">《解密 Claude Code：Anthropic CLI 源码深度解析》—— 基于源码逐层拆解 Claude Code 的 agent 实现与内部机制的技术书。</p>
+          <div class="tags">Agent 内核 · 源码分析 · 技术写作</div>
+          <div class="actions">
+            <a href="https://long-feeds.github.io/claude-code-book/" target="_blank" rel="noopener">在线阅读 ↗</a>
+            <a class="muted" href="https://github.com/Long-Feeds/claude-code-book" target="_blank" rel="noopener">代码</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="name">Feishu × Claude Code <span class="badge">LIVE</span></div>
+          <p class="desc">飞书 × Claude Code 的产品落地页：把通过飞书消息远程操控 Claude Code 会话的能力，做成清晰的展示页。</p>
+          <div class="tags">前端 · Landing · 产品展示</div>
+          <div class="actions">
+            <a href="https://long-feeds.github.io/feishu-claude-landing/" target="_blank" rel="noopener">在线访问 ↗</a>
+            <a class="muted" href="https://github.com/Long-Feeds/feishu-claude-landing" target="_blank" rel="noopener">代码</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <footer>
+      <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+      <span>
+        <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a> ·
+        <a href="mailto:lonx@lonloop.com">Email</a>
+      </span>
+    </footer>
+  </div>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

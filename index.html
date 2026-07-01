@@ -57,7 +57,15 @@
     line-height:1.65; -webkit-font-smoothing:antialiased;
     min-height:100vh;
   }
-  .wrap{max-width:880px;margin:0 auto;padding:72px 24px 96px}
+  /* top nav */
+  .topnav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .topnav .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--txt)}
+  .topnav .brand .dot{color:var(--accent)}
+  .topnav .tabs{display:flex;gap:6px}
+  .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;transition:color .15s ease,background .15s ease}
+  .topnav .tab:hover{color:var(--txt)}
+  .topnav .tab.active{color:var(--accent);background:var(--chip)}
+  .wrap{max-width:880px;margin:0 auto;padding:40px 24px 96px}
   /* hero */
   .eyebrow{color:var(--accent2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
   h1{font-size:clamp(40px,8vw,68px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 10px;font-weight:800}
@@ -99,6 +107,13 @@
 </style>
 </head>
 <body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab active">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+    </div>
+  </nav>
   <div class="wrap">
     <header>
       <div class="eyebrow">AI Application · Backend R&amp;D</div>

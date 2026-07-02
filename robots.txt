@@ -1,0 +1,6 @@
+# lonloop.com — lonX
+# Public portfolio. Crawlers welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://lonloop.com/sitemap.xml

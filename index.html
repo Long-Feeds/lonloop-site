@@ -99,6 +99,15 @@
   .card .actions a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
   .card .actions a:hover{text-decoration:underline}
   .card .actions a.muted{color:var(--dim)}
+  /* "more" call-to-action tile — fills the grid, funnels to GitHub */
+  .card-more{align-items:center;justify-content:center;text-align:center;gap:7px;
+    text-decoration:none;border-style:dashed;background:transparent;
+    transition:transform .15s ease,border-color .15s ease,background .15s ease}
+  .card-more:hover{transform:translateY(-3px);border-color:var(--accent);background:var(--card)}
+  .card-more .more-title{font-size:17px;font-weight:700;color:var(--txt)}
+  .card-more .more-arrow{color:var(--accent);display:inline-block;transition:transform .15s ease}
+  .card-more:hover .more-arrow{transform:translate(2px,-2px)}
+  .card-more .more-sub{color:var(--dim);font-size:13.5px}
   /* footer */
   footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);color:var(--dim);font-size:14px;
     display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
@@ -170,6 +179,11 @@
             <a class="muted" href="https://github.com/Long-Feeds/feishu-claude-landing" target="_blank" rel="noopener">代码</a>
           </div>
         </article>
+
+        <a class="card card-more" href="https://github.com/Long-Feeds" target="_blank" rel="noopener" aria-label="在 GitHub 上浏览全部开源项目">
+          <span class="more-title">更多项目 <span class="more-arrow" aria-hidden="true">↗</span></span>
+          <span class="more-sub">在 GitHub 上浏览全部开源工作</span>
+        </a>
 
       </div>
     </section>

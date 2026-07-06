@@ -57,6 +57,10 @@
     line-height:1.65; -webkit-font-smoothing:antialiased;
     min-height:100vh;
   }
+  /* keyboard focus — a consistent accent ring on every interactive element
+     (only on keyboard nav, never a mouse-click flash, via :focus-visible;
+     engines without :focus-visible keep the browser default) */
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   /* top nav */
   .topnav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .topnav .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--txt)}

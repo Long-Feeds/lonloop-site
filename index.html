@@ -61,6 +61,17 @@
      (only on keyboard nav, never a mouse-click flash, via :focus-visible;
      engines without :focus-visible keep the browser default) */
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  /* respect the OS "reduce motion" setting — neutralize hover lifts, transitions
+     and smooth scroll for users prone to motion sickness (WCAG 2.3.3).
+     Default experience is unchanged; only opted-in users are affected. */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
   /* top nav */
   .topnav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .topnav .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--txt)}

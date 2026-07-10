@@ -81,7 +81,7 @@
   .topnav .tabs{display:flex;gap:6px}
   .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;transition:color .15s ease,background .15s ease}
   .topnav .tab:hover{color:var(--txt)}
-  .topnav .tab.active{color:var(--accent);background:var(--chip)}
+  .topnav .tab[aria-current="page"]{color:var(--accent);background:var(--chip)}
   .wrap{max-width:880px;margin:0 auto;padding:40px 24px 96px}
   /* hero */
   .eyebrow{color:var(--accent2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
@@ -136,7 +136,7 @@
   <nav class="topnav">
     <a class="brand" href="/">lonX<span class="dot">.</span></a>
     <div class="tabs">
-      <a href="/" class="tab active">主页</a>
+      <a href="/" class="tab" aria-current="page">主页</a>
       <a href="/collection/" class="tab">收藏夹</a>
     </div>
   </nav>

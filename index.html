@@ -82,6 +82,13 @@
   .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;transition:color .15s ease,background .15s ease}
   .topnav .tab:hover{color:var(--txt)}
   .topnav .tab[aria-current="page"]{color:var(--accent);background:var(--chip)}
+  .nav-right{display:flex;align-items:center;gap:10px}
+  /* language toggle — offers the other language; choice persists in localStorage */
+  .lang-toggle{font:inherit;cursor:pointer;color:var(--muted);font-weight:700;font-size:13px;
+    letter-spacing:.02em;line-height:1;padding:8px 12px;border-radius:999px;
+    border:1px solid var(--line);background:var(--chip);
+    transition:color .15s ease,border-color .15s ease}
+  .lang-toggle:hover{color:var(--txt);border-color:var(--accent)}
   .wrap{max-width:880px;margin:0 auto;padding:40px 24px 96px}
   /* hero */
   .eyebrow{color:var(--accent2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
@@ -135,9 +142,12 @@
 <body>
   <nav class="topnav">
     <a class="brand" href="/">lonX<span class="dot">.</span></a>
-    <div class="tabs">
-      <a href="/" class="tab" aria-current="page">主页</a>
-      <a href="/collection/" class="tab">收藏夹</a>
+    <div class="nav-right">
+      <div class="tabs">
+        <a href="/" class="tab" aria-current="page" data-i18n="nav.home">主页</a>
+        <a href="/collection/" class="tab" data-i18n="nav.collection">收藏夹</a>
+      </div>
+      <button type="button" id="langToggle" class="lang-toggle" aria-label="Switch to English">EN</button>
     </div>
   </nav>
   <div class="wrap">
@@ -145,8 +155,8 @@
     <header>
       <div class="eyebrow">AI Application · Backend R&amp;D</div>
       <h1>lonX<span class="dot">.</span></h1>
-      <div class="tagline">构建 LLM Agent 与 Claude Code 生态的工程师</div>
-      <p class="intro">
+      <div class="tagline" data-i18n="hero.tagline">构建 LLM Agent 与 Claude Code 生态的工程师</div>
+      <p class="intro" data-i18n="hero.intro">
         专注 AI Agent / LLM 应用与后端系统。喜欢把「能跑的 idea」做成真正可用、可维护、能上线的东西 —— 从自动构建的工具站，到深入 Claude Code 源码的研究。
       </p>
       <div class="chips">
@@ -170,37 +180,37 @@
 
         <article class="card">
           <div class="name">Daily Tools <span class="badge">LIVE</span></div>
-          <p class="desc">每日工具集：每天自动构思并交付一个真正可用的小工具，每个都经真实浏览器集成测试后部署，沉淀成不断生长的工具站。</p>
-          <div class="tags">Claude Code · 自动化 · GitHub Pages</div>
+          <p class="desc" data-i18n="daily.desc">每日工具集：每天自动构思并交付一个真正可用的小工具，每个都经真实浏览器集成测试后部署，沉淀成不断生长的工具站。</p>
+          <div class="tags" data-i18n="daily.tags">Claude Code · 自动化 · GitHub Pages</div>
           <div class="actions">
-            <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener">在线访问 <span aria-hidden="true">↗</span></a>
-            <a class="muted" href="https://github.com/Long-Feeds/daily-tools" target="_blank" rel="noopener">代码</a>
+            <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener"><span data-i18n="proj.visit">在线访问</span> <span aria-hidden="true">↗</span></a>
+            <a class="muted" href="https://github.com/Long-Feeds/daily-tools" target="_blank" rel="noopener" data-i18n="proj.code">代码</a>
           </div>
         </article>
 
         <article class="card">
-          <div class="name">解密 Claude Code <span class="badge">LIVE</span></div>
-          <p class="desc">《解密 Claude Code：Anthropic CLI 源码深度解析》—— 基于源码逐层拆解 Claude Code 的 agent 实现与内部机制的技术书。</p>
-          <div class="tags">Agent 内核 · 源码分析 · 技术写作</div>
+          <div class="name"><span data-i18n="book.name">解密 Claude Code</span> <span class="badge">LIVE</span></div>
+          <p class="desc" data-i18n="book.desc">《解密 Claude Code：Anthropic CLI 源码深度解析》—— 基于源码逐层拆解 Claude Code 的 agent 实现与内部机制的技术书。</p>
+          <div class="tags" data-i18n="book.tags">Agent 内核 · 源码分析 · 技术写作</div>
           <div class="actions">
-            <a href="https://long-feeds.github.io/claude-code-book/" target="_blank" rel="noopener">在线阅读 <span aria-hidden="true">↗</span></a>
-            <a class="muted" href="https://github.com/Long-Feeds/claude-code-book" target="_blank" rel="noopener">代码</a>
+            <a href="https://long-feeds.github.io/claude-code-book/" target="_blank" rel="noopener"><span data-i18n="proj.read">在线阅读</span> <span aria-hidden="true">↗</span></a>
+            <a class="muted" href="https://github.com/Long-Feeds/claude-code-book" target="_blank" rel="noopener" data-i18n="proj.code">代码</a>
           </div>
         </article>
 
         <article class="card">
           <div class="name">Always-On Agent Kit <span class="badge">LIVE</span></div>
-          <p class="desc">让 Claude Code agent 跑数月而非数分钟：一套常驻 agent 的模板 + playbook，全部源自正在运行的真实 agent，即取即用。</p>
-          <div class="tags">Claude Code · 长时运行 Agent · Playbook</div>
+          <p class="desc" data-i18n="kit.desc">让 Claude Code agent 跑数月而非数分钟：一套常驻 agent 的模板 + playbook，全部源自正在运行的真实 agent，即取即用。</p>
+          <div class="tags" data-i18n="kit.tags">Claude Code · 长时运行 Agent · Playbook</div>
           <div class="actions">
-            <a href="https://long-feeds.github.io/feishu-claude-landing/" target="_blank" rel="noopener">在线访问 <span aria-hidden="true">↗</span></a>
-            <a class="muted" href="https://github.com/Long-Feeds/feishu-claude-landing" target="_blank" rel="noopener">代码</a>
+            <a href="https://long-feeds.github.io/feishu-claude-landing/" target="_blank" rel="noopener"><span data-i18n="proj.visit">在线访问</span> <span aria-hidden="true">↗</span></a>
+            <a class="muted" href="https://github.com/Long-Feeds/feishu-claude-landing" target="_blank" rel="noopener" data-i18n="proj.code">代码</a>
           </div>
         </article>
 
-        <a class="card card-more" href="https://github.com/Long-Feeds" target="_blank" rel="noopener" aria-label="在 GitHub 上浏览全部开源项目">
-          <span class="more-title">更多项目 <span class="more-arrow" aria-hidden="true">↗</span></span>
-          <span class="more-sub">在 GitHub 上浏览全部开源工作</span>
+        <a class="card card-more" href="https://github.com/Long-Feeds" target="_blank" rel="noopener" aria-label="在 GitHub 上浏览全部开源项目" data-i18n-aria="more.aria">
+          <span class="more-title"><span data-i18n="more.title">更多项目</span> <span class="more-arrow" aria-hidden="true">↗</span></span>
+          <span class="more-sub" data-i18n="more.sub">在 GitHub 上浏览全部开源工作</span>
         </a>
 
       </div>
@@ -215,6 +225,76 @@
       </span>
     </footer>
   </div>
-  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    /* Bilingual toggle — Chinese ships as the default (unchanged SEO baseline);
+       English is a client-side enhancement. The zh baseline is captured from the
+       shipped HTML at load, so only the English strings are maintained here and
+       the default render is guaranteed byte-identical. Language deep-links via
+       ?lang=en / #en (shareable) and the choice persists in localStorage. */
+    (function(){
+      var EN = {
+        'nav.home': 'Home',
+        'nav.collection': 'Collection',
+        'hero.tagline': 'Engineer building the LLM-agent & Claude Code ecosystem',
+        'hero.intro': 'Focused on AI agents / LLM applications and backend systems. I like turning working ideas into things that are genuinely usable, maintainable, and production-ready — from an auto-built tools site to deep dives into Claude Code’s source.',
+        'daily.desc': 'A tools site that grows every day: an agent autonomously conceives and ships one genuinely useful tool daily, each deployed only after real in-browser integration tests.',
+        'daily.tags': 'Claude Code · Automation · GitHub Pages',
+        'book.name': 'Decoding Claude Code',
+        'book.desc': '“Decoding Claude Code: A Deep Dive into the Anthropic CLI Source” — a technical book that unpacks Claude Code’s agent implementation and internals layer by layer, straight from the source.',
+        'book.tags': 'Agent internals · Source analysis · Technical writing',
+        'kit.desc': 'Keep a Claude Code agent running for months, not minutes — templates and a playbook for always-on agents, all distilled from real agents in production. Ready to use.',
+        'kit.tags': 'Claude Code · Long-running agents · Playbook',
+        'more.title': 'More projects',
+        'more.sub': 'Browse all open-source work on GitHub',
+        'proj.visit': 'Visit',
+        'proj.read': 'Read online',
+        'proj.code': 'Code'
+      };
+      var EN_ARIA = { 'more.aria': 'Browse all open-source projects on GitHub' };
+
+      var textEls = document.querySelectorAll('[data-i18n]');
+      var ariaEls = document.querySelectorAll('[data-i18n-aria]');
+      // snapshot the shipped Chinese content so toggling back is lossless
+      textEls.forEach(function(el){ el._zh = el.textContent; });
+      ariaEls.forEach(function(el){ el._zhAria = el.getAttribute('aria-label'); });
+
+      function setLang(lang){
+        var en = (lang === 'en');
+        document.documentElement.lang = en ? 'en' : 'zh-CN';
+        textEls.forEach(function(el){
+          var k = el.getAttribute('data-i18n');
+          el.textContent = en && EN[k] != null ? EN[k] : el._zh;
+        });
+        ariaEls.forEach(function(el){
+          var k = el.getAttribute('data-i18n-aria');
+          el.setAttribute('aria-label', en && EN_ARIA[k] != null ? EN_ARIA[k] : el._zhAria);
+        });
+        var btn = document.getElementById('langToggle');
+        if (btn){
+          btn.textContent = en ? '中' : 'EN';
+          btn.setAttribute('aria-label', en ? '切换到中文' : 'Switch to English');
+        }
+        try { localStorage.setItem('lang', en ? 'en' : 'zh'); } catch(e){}
+      }
+
+      // resolve initial language: URL (?lang= / #en) > saved > Chinese default
+      var forced = null;
+      try { forced = new URLSearchParams(location.search).get('lang'); } catch(e){}
+      if (!forced && location.hash){
+        var h = location.hash.replace('#','');
+        if (h === 'en' || h === 'zh') forced = h;
+      }
+      var initial = forced;
+      if (!initial){ try { initial = localStorage.getItem('lang'); } catch(e){} }
+      setLang(initial === 'en' ? 'en' : 'zh');
+
+      var toggle = document.getElementById('langToggle');
+      if (toggle) toggle.addEventListener('click', function(){
+        setLang(document.documentElement.lang === 'en' ? 'zh' : 'en');
+      });
+    })();
+  </script>
 </body>
 </html>

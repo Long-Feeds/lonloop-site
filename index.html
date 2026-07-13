@@ -132,6 +132,21 @@
   .card-more .more-arrow{color:var(--accent);display:inline-block;transition:transform .15s ease}
   .card-more:hover .more-arrow{transform:translate(2px,-2px)}
   .card-more .more-sub{color:var(--dim);font-size:13.5px}
+  /* impact stats — "by the numbers"; the tools figure is fetched live from the
+     daily-tools manifest at runtime, with the shipped number as a static fallback */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:520px){.stats{grid-template-columns:1fr}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 22px 20px;display:flex;flex-direction:column;gap:8px;
+    transition:transform .15s ease,border-color .15s ease}
+  .stat:hover{transform:translateY(-3px);border-color:#33405e}
+  .stat .num{font-size:clamp(34px,6vw,44px);font-weight:800;line-height:1;
+    letter-spacing:-.02em;color:var(--accent2)}
+  @supports ((-webkit-background-clip:text) or (background-clip:text)){
+    .stat .num{background:linear-gradient(120deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  }
+  .stat .lbl{color:var(--muted);font-size:14px;font-weight:500;line-height:1.5}
   /* footer */
   footer{margin-top:72px;padding-top:28px;border-top:1px solid var(--line);color:var(--dim);font-size:14px;
     display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
@@ -173,6 +188,24 @@
         <a class="btn btn-ghost" href="mailto:lonx@lonloop.com">lonx@lonloop.com</a>
       </div>
     </header>
+
+    <section class="section">
+      <h2>By the numbers</h2>
+      <div class="stats">
+        <div class="stat">
+          <span class="num" id="stat-tools">23</span>
+          <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
+        </div>
+        <div class="stat">
+          <span class="num">12</span>
+          <span class="lbl" data-i18n="stats.chapters">章 · 逐层拆解 Claude Code 源码</span>
+        </div>
+        <div class="stat">
+          <span class="num" data-i18n="stats.cadenceNum">每日</span>
+          <span class="lbl" data-i18n="stats.cadence">自主交付节奏 · 自 2026 年 6 月起</span>
+        </div>
+      </div>
+    </section>
 
     <section class="section">
       <h2>Selected Projects</h2>
@@ -248,6 +281,10 @@
         'kit.tags': 'Claude Code · Long-running agents · Playbook',
         'more.title': 'More projects',
         'more.sub': 'Browse all open-source work on GitHub',
+        'stats.tools': 'AI tools shipped — each browser-tested',
+        'stats.chapters': 'chapters decoding Claude Code’s source',
+        'stats.cadenceNum': 'Daily',
+        'stats.cadence': 'autonomous shipping cadence — since Jun 2026',
         'proj.visit': 'Visit',
         'proj.read': 'Read online',
         'proj.code': 'Code'
@@ -294,6 +331,21 @@
       if (toggle) toggle.addEventListener('click', function(){
         setLang(document.documentElement.lang === 'en' ? 'zh' : 'en');
       });
+    })();
+
+    /* Live tools count — pull the real figure from the daily-tools manifest so
+       this number stays current on its own; the static value is the fallback and
+       is kept as-is if the fetch is slow, offline, or fails for any reason. */
+    (function(){
+      var el = document.getElementById('stat-tools');
+      if (!el || !window.fetch) return;
+      fetch('https://long-feeds.github.io/daily-tools/manifest.json', {cache:'no-store'})
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(d){
+          var n = d && Array.isArray(d.tools) ? d.tools.length : 0;
+          if (n > 0) el.textContent = String(n);
+        })
+        .catch(function(){ /* keep the static fallback */ });
     })();
   </script>
 </body>

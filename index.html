@@ -151,6 +151,24 @@
       -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   }
   .stat .lbl{color:var(--muted);font-size:14px;font-weight:500;line-height:1.5}
+  /* latest ship — a live, self-updating proof line under the stats: the most
+     recent daily-tools artifact (title + freshness + link), pulled from the same
+     manifest. Hidden until JS confirms it, so nothing goes stale without JS. */
+  .latest-ship{margin-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    text-decoration:none;font-size:14px;padding:12px 18px;background:var(--card);
+    border:1px solid var(--line);border-radius:12px;
+    transition:border-color .15s ease,transform .15s ease}
+  /* re-assert hidden: an author display value would otherwise beat the UA [hidden] rule */
+  .latest-ship[hidden]{display:none}
+  .latest-ship:hover{border-color:#33405e;transform:translateY(-2px)}
+  .latest-ship .ls-label{color:var(--dim);font-weight:700;text-transform:uppercase;
+    letter-spacing:.08em;font-size:11px;white-space:nowrap}
+  .latest-ship .ls-title{color:var(--txt);font-weight:600}
+  .latest-ship:hover .ls-title{color:var(--accent)}
+  .latest-ship .ls-time{color:var(--dim);font-size:12.5px;white-space:nowrap;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .latest-ship .ls-arrow{color:var(--accent);margin-left:auto;transition:transform .15s ease}
+  .latest-ship:hover .ls-arrow{transform:translate(2px,-2px)}
   /* recent activity — live public GitHub feed (client-side); the static link
      inside is the fallback shown if JS is off or the API is slow/unreachable */
   .feed{list-style:none;background:var(--card);border:1px solid var(--line);
@@ -213,7 +231,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">23</span>
+          <span class="num" id="stat-tools">26</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">
@@ -225,6 +243,13 @@
           <span class="lbl" data-i18n="stats.cadence">自主交付节奏 · 自 2026 年 6 月起</span>
         </div>
       </div>
+      <a class="latest-ship" id="statLatest" target="_blank" rel="noopener" hidden>
+        <span class="feed-dot" aria-hidden="true"></span>
+        <span class="ls-label" data-i18n="stats.latest">最新交付</span>
+        <span class="ls-title" id="statLatestTitle"></span>
+        <span class="ls-time" id="statLatestTime"></span>
+        <span class="ls-arrow" aria-hidden="true">↗</span>
+      </a>
     </section>
 
     <section class="section">
@@ -341,6 +366,7 @@
         'stats.chapters': 'chapters decoding Claude Code’s source',
         'stats.cadenceNum': 'Daily',
         'stats.cadence': 'autonomous shipping cadence — since Jun 2026',
+        'stats.latest': 'Latest ship',
         'proj.visit': 'Visit',
         'proj.read': 'Read online',
         'proj.code': 'Code',
@@ -405,19 +431,62 @@
       });
     })();
 
-    /* Live tools count — pull the real figure from the daily-tools manifest so
-       this number stays current on its own; the static value is the fallback and
-       is kept as-is if the fetch is slow, offline, or fails for any reason. */
+    /* Live tools count + latest ship — both pulled from the daily-tools manifest
+       in one request. The count keeps itself current (static value is the JS-off
+       fallback); the "latest ship" line shows the most recent artifact (title +
+       relative freshness + deep link) and stays hidden unless the fetch confirms
+       it, so no stale content is ever shown without JS. Re-localizes on toggle. */
     (function(){
+      if (!window.fetch) return;
       var el = document.getElementById('stat-tools');
-      if (!el || !window.fetch) return;
+      var box = document.getElementById('statLatest');
+      var titleEl = document.getElementById('statLatestTitle');
+      var timeEl = document.getElementById('statLatestTime');
+
+      function relTime(dateStr, en){
+        var d = new Date(dateStr + 'T00:00:00');
+        if (isNaN(d.getTime())) return '';
+        var days = Math.floor((Date.now() - d.getTime()) / 86400000);
+        if (days <= 0) return en ? 'today' : '今天';
+        if (days === 1) return en ? 'yesterday' : '昨天';
+        if (days < 30) return en ? (days + ' days ago') : (days + '天前');
+        var mo = Math.floor(days / 30);
+        return en ? (mo + ' month' + (mo > 1 ? 's' : '') + ' ago') : (mo + '个月前');
+      }
+
+      var latest = null;
+      function renderLatest(){
+        if (!latest) return;
+        var en = document.documentElement.lang === 'en';
+        if (titleEl) titleEl.textContent = latest.title;   // textContent — no HTML injection
+        if (timeEl) timeEl.textContent = relTime(latest.date, en);
+      }
+
       fetch('https://long-feeds.github.io/daily-tools/manifest.json', {cache:'no-store'})
         .then(function(r){ return r.ok ? r.json() : null; })
         .then(function(d){
-          var n = d && Array.isArray(d.tools) ? d.tools.length : 0;
-          if (n > 0) el.textContent = String(n);
+          var tools = d && Array.isArray(d.tools) ? d.tools : [];
+          if (el && tools.length > 0) el.textContent = String(tools.length);
+          // most recent tool by date; path is validated to a relative tools/ prefix
+          var best = null;
+          for (var i = 0; i < tools.length; i++){
+            var t = tools[i];
+            if (t && typeof t.title === 'string' && typeof t.date === 'string'
+                && typeof t.path === 'string' && t.path.indexOf('tools/') === 0
+                && t.path.indexOf('..') === -1){
+              if (!best || t.date > best.date) best = t;
+            }
+          }
+          if (best && box){
+            latest = best;
+            box.setAttribute('href', 'https://long-feeds.github.io/daily-tools/' + best.path);
+            renderLatest();
+            box.hidden = false;
+          }
         })
-        .catch(function(){ /* keep the static fallback */ });
+        .catch(function(){ /* keep the static fallback / line hidden */ });
+
+      document.addEventListener('langchange', renderLatest);
     })();
 
     /* Recent activity — a live feed of public GitHub events. Only events on

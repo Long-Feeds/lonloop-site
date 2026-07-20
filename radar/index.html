@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>雷达 · lonX</title>
+<meta name="description" content="lonX 的雷达 —— AI Agent 生态里值得一看的开源项目、工具与好文，附上一句话讲清它做什么、为什么值得收藏。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="canonical" href="https://lonloop.com/radar/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="雷达 · lonX" />
+<meta property="og:description" content="AI Agent 生态里值得一看的开源项目、工具与好文。" />
+<meta property="og:url" content="https://lonloop.com/radar/" />
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:image:alt" content="lonX 的雷达 —— AI Agent 生态里值得一看的项目、工具与好文" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="雷达 · lonX" />
+<meta name="twitter:description" content="AI Agent 生态里值得一看的开源项目、工具与好文。" />
+<meta name="twitter:image" content="https://lonloop.com/og.png" />
+<link rel="stylesheet" href="./radar.css" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab" aria-current="page">雷达</a>
+    </div>
+  </nav>
+
+  <main class="radar">
+    <div class="page-head">
+      <div class="eyebrow">Radar</div>
+      <h1>雷达</h1>
+      <p>我在 AI Agent 生态里长期扫到的好东西：开源项目、趁手工具、值得读的文章与课程。每条都写清它到底做什么，以及我为什么把它存下来。点卡片直达原站。</p>
+    </div>
+
+    <div class="controls">
+      <div class="filters" role="group" aria-label="按类型筛选">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" class="filter" data-filter="框架" aria-pressed="false">框架</button>
+        <button type="button" class="filter" data-filter="工具" aria-pressed="false">工具</button>
+        <button type="button" class="filter" data-filter="项目" aria-pressed="false">项目</button>
+        <button type="button" class="filter" data-filter="阅读" aria-pressed="false">阅读</button>
+      </div>
+      <div class="search">
+        <input type="search" id="q" aria-label="搜索收藏" placeholder="搜索 agent / TTS / 投研…" autocomplete="off" />
+      </div>
+    </div>
+    <p class="count" id="count" role="status" aria-live="polite"></p>
+
+    <div class="rd-list" id="list">
+      <!-- 每条收藏 = 一张卡片。新增时复制此模板，改 data-type / 链接 / 文案即可。 -->
+
+      <a class="rd-card" data-type="工具" href="https://github.com/Infisical/agent-vault" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">工具</span>
+          <span class="src">github.com/Infisical</span>
+          <span>收藏于 2026-07-07</span>
+        </div>
+        <h2>agent-vault<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">面向 AI agent 的 HTTP 凭证代理 + 保险库，支持 Claude Code、OpenClaw、Hermes 及自建 harness。agent 不再直接持有 API key，改为经 vault 代理鉴权访问，可拦截 prompt injection 导致的密钥外泄。Go 实现，Infisical 出品，约 1.8k star。</p>
+        <p class="why"><b>为什么收藏</b> · 给自建的 agent 车队做统一凭证管理与最小权限。</p>
+      </a>
+
+      <a class="rd-card" data-type="项目" href="https://github.com/calesthio/OpenMontage" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">项目</span>
+          <span class="src">github.com/calesthio</span>
+          <span>收藏于 2026-06-27</span>
+        </div>
+        <h2>OpenMontage<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">号称全球首个开源 agentic 视频制作系统：12 条流水线、52 个工具、500+ agent，把视频生产整条做成多 agent 自动化流程。上榜当天新增约 1,674 star，登 GitHub Trending 日榜前列。</p>
+      </a>
+
+      <a class="rd-card" data-type="项目" href="https://github.com/xbtlin/ai-berkshire" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">项目</span>
+          <span class="src">github.com/xbtlin</span>
+          <span>收藏于 2026-06-26</span>
+        </div>
+        <h2>AI Berkshire<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">基于 Claude Code 的价值投资研究 Skill 合集：把巴菲特、芒格、段永平、李录四位的方法论结构化成多 Agent 并行 + 对抗式投研，主打「一个人 + Claude = 一个投研团队」。2.5k star。README 自报的实盘收益附有免责声明，姑且参考。</p>
+        <p class="why"><b>为什么收藏</b> · 拆它的 skill 结构，喂给自己的投研管线。</p>
+      </a>
+
+      <a class="rd-card" data-type="框架" href="https://github.com/withastro/flue" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">框架</span>
+          <span class="src">github.com/withastro</span>
+          <span>收藏于 2026-06-26</span>
+        </div>
+        <h2>Flue<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">Astro 团队开源的 TypeScript agent harness，自我定位「不是又一个 SDK」：session、tools、<code>SKILL.md</code> 技能、sandbox、subagents、durable execution 全部内置，模型直接写成 <code>anthropic/claude-sonnet</code>，可本地 CLI 跑也可部署到 runtime。6.7k star。</p>
+        <p class="why"><b>为什么收藏</b> · 多 agent 编排的 TS 原生底座参考，和 Omnigent 对照着看。</p>
+      </a>
+
+      <a class="rd-card" data-type="工具" href="https://github.com/chopratejas/headroom" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">工具</span>
+          <span class="src">github.com/chopratejas</span>
+          <span>收藏于 2026-06-19</span>
+        </div>
+        <h2>headroom<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">AI Agent 的「上下文压缩层」：prompt、工具输出、日志、RAG、对话历史送进 LLM 之前先压一道，省 60–95% token 而答案不变。三种接入方式——库调用、本地 proxy 零改码、MCP server，另有 <code>headroom wrap claude·codex·cursor</code> 一键包裹。实现是 Python 编排 + Rust 引擎：统计分析器判定 JSON 数组可压性后做抽取式 k-split、AST 级代码压缩、可逆压缩（原文落本地、prompt 里只留 hash 标记，模型要时再取回）、以及护住 provider KV-cache 前缀的告警器。Apache-2.0，约 3.7 万 star。</p>
+      </a>
+
+      <a class="rd-card" data-type="项目" href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">项目</span>
+          <span class="src">github.com/OpenBMB</span>
+          <span>收藏于 2026-06-15</span>
+        </div>
+        <h2>VoxCPM2<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">OpenBMB（MiniCPM 团队）开源的 2B 参数 Tokenizer-Free TTS，扩散自回归架构：支持 30 语种 + 自动语种识别、用自然语言描述做「声音设计」、可控音色克隆（情感 / 语速 / 表达）、48kHz 录音棚级音质，4090 上 RTF≈0.3 实时流式。Apache-2.0，代码与权重全开源，29.5k star。</p>
+      </a>
+
+      <a class="rd-card" data-type="框架" href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">框架</span>
+          <span class="src">github.com/omnigent-ai</span>
+          <span>收藏于 2026-06-14</span>
+        </div>
+        <h2>Omnigent<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">Databricks 的 Matei Zaharia 团队开源的多 agent meta-harness（Apache-2.0）：统一界面架在 Claude Code、Codex、Pi 及自定义 agent 之上，用「策略」而不是 prompt 做管控，live session 跨终端 / Web / 手机同步并支持实时协作，本地优先、无云依赖。</p>
+        <p class="why"><b>为什么收藏</b> · 做「不止 Claude Code」的多 agent 系统时，可复用的编排、管控与跨端协作底座。</p>
+      </a>
+
+      <a class="rd-card" data-type="工具" href="https://phistory.cc" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">工具</span>
+          <span class="src">phistory.cc</span>
+          <span>收藏于 2026-06-14</span>
+        </div>
+        <h2>Phistory<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">自动归档各家 agent CLI / coding harness（Claude Code、Codex、OpenClaw、Hermes、Kimi、opencode、Pi 等）每个版本的 system prompt 快照与 diff，可逐版本对比提示词和 tool schema 的演变。右上角的「Trace」视图更易读。研究 coding agent 内部机制、追 Claude Code 提示词变更时很趁手。</p>
+      </a>
+
+      <a class="rd-card" data-type="阅读" href="https://www.youtube.com/watch?v=GBd7iuJkW08" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">阅读</span>
+          <span class="src">youtube.com</span>
+          <span>收藏于 2026-06-14</span>
+        </div>
+        <h2>Stanford CS25 V6：从表示学习到世界模型<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">斯坦福公开课 Transformers United V6 的一讲（2026-04-09，Brown 大学 Hazel Nam &amp; Lucas Maes 主讲，约 71 分钟）：世界模型如何从「重建」转向「隐空间预测」（JEPA）。课程主页 web.stanford.edu/class/cs25。</p>
+      </a>
+
+      <a class="rd-card" data-type="框架" href="https://github.com/mindfold-ai/Trellis" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">框架</span>
+          <span class="src">github.com/mindfold-ai</span>
+          <span>收藏于 2026-06-12</span>
+        </div>
+        <h2>Trellis<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">给 Claude Code、Codex、Cursor 等 coding agent 加上「项目常驻记忆 + 工作流」的开源框架。9.8k star。</p>
+      </a>
+
+      <a class="rd-card" data-type="阅读" href="https://simonwillison.net/guides/agentic-engineering-patterns/" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">阅读</span>
+          <span class="src">simonwillison.net</span>
+          <span>收藏于 2026-06-12</span>
+        </div>
+        <h2>Agentic Engineering Patterns<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">Simon Willison 的开放在线书，2026 年 2 月起每周更新 1–2 章：如何用好 Claude Code、Codex 这类 coding agent，拿到可靠、可维护、能上线的结果。核心立场很明确——Agentic Engineering ≠ Vibe Coding。</p>
+      </a>
+
+      <a class="rd-card" data-type="阅读" href="https://x.com/NoraX2026/status/2064644357374833098" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">阅读</span>
+          <span class="src">x.com</span>
+          <span>收藏于 2026-06-12</span>
+        </div>
+        <h2>去 Reddit 看副业的「过程与复盘」<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">一个我实测下来方向性成立的观察：Reddit 的投票制 + 没有粉丝关注机制，天然难长出引流经济，所以副业内容更偏过程、细节、失败与复盘。r/juststart 的月榜几乎全是 journey 帖（「affiliate 站 6 周只赚 €19，下一步？」「建站第 18 个月日志」）。</p>
+        <p class="why"><b>怎么用</b> · 直接进 r/juststart、r/EntrepreneurRideAlong 按 top / month 排；泛区水帖偏多，且营销号也在涌入，老帖普遍比新帖可信。</p>
+      </a>
+
+      <a class="rd-card" data-type="项目" href="https://x.com/laobaishare/status/2063863602977952136" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">项目</span>
+          <span class="src">x.com</span>
+          <span>收藏于 2026-06-09</span>
+        </div>
+        <h2>开源短视频生成器「印钞机」<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">输入一个主题就自动产出短视频的开源项目，8 万+ star。</p>
+      </a>
+
+      <a class="rd-card" data-type="阅读" href="https://x.com/precisox/status/2063286718480949499" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">阅读</span>
+          <span class="src">x.com</span>
+          <span>收藏于 2026-06-09</span>
+        </div>
+        <h2>Claude Code 作者的 28 分钟 Prompting 实战教程<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">来自 Claude Code 作者本人的实战讲解：CLAUDE.md 该怎么写、记忆快捷方式怎么用、如何跑并行会话。</p>
+      </a>
+
+    </div>
+
+    <p class="empty" id="empty" hidden>没有匹配的收藏，换个关键词试试。</p>
+  </main>
+
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span><a href="/">主页</a> · <a href="/collection/">收藏夹</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    (function () {
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.rd-card'));
+      var filters = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+      var search = document.getElementById('q');
+      var count = document.getElementById('count');
+      var empty = document.getElementById('empty');
+      var activeType = 'all';
+
+      // Cache each card's searchable text once, so typing stays cheap.
+      cards.forEach(function (c) {
+        c._text = (c.textContent || '').toLowerCase();
+      });
+
+      function apply() {
+        var q = search.value.trim().toLowerCase();
+        var shown = 0;
+        cards.forEach(function (c) {
+          var okType = activeType === 'all' || c.getAttribute('data-type') === activeType;
+          var okText = !q || c._text.indexOf(q) !== -1;
+          var visible = okType && okText;
+          c.hidden = !visible;
+          if (visible) shown++;
+        });
+        count.textContent = '共 ' + shown + ' 条';
+        empty.hidden = shown !== 0;
+      }
+
+      filters.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeType = btn.getAttribute('data-filter');
+          filters.forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b === btn));
+          });
+          apply();
+        });
+      });
+
+      search.addEventListener('input', apply);
+      apply();
+    })();
+  </script>
+</body>
+</html>

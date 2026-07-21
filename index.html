@@ -147,7 +147,11 @@
     font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
   .chip-ch:hover .ch-n{color:var(--accent)}
   /* impact stats — "by the numbers"; the tools figure is fetched live from the
-     daily-tools manifest at runtime, with the shipped number as a static fallback */
+     daily-tools manifest at runtime. The static fallback is a durable floor
+     ("30+"), not an exact count — so JS-off / crawler views stay honest and
+     don't understate, without needing a bump every time a tool ships (that
+     exact-number chase was a daily-drift treadmill). JS replaces it with the
+     precise live count. Bump the floor only at the next 10-tool milestone. */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   @media(max-width:520px){.stats{grid-template-columns:1fr}}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -261,7 +265,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">26</span>
+          <span class="num" id="stat-tools">30+</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">

@@ -1,0 +1,13 @@
+# lonloop.com — Cloudflare Pages redirect/rewrite rules.
+# Syntax: <from> <to> <status>. Status 200 = rewrite (URL stays put, other
+# content is served); anything 3xx would be a visible redirect.
+
+# The World Monitor mirror is built for "/" but served from "/worldmonitor/".
+# scripts/worldmonitor/lonloop-subpath.patch rewrites the paths the app builds
+# at runtime, but three bundles (gdelt-intel, main, geo-map-data) bake the map
+# data paths in as root-absolute string literals, so the map layer requests
+# /data/countries-50m.json and /data/countries.geojson. Without this rule those
+# miss every static asset, fall through to the SPA fallback, and come back as
+# 200 text/html — the JSON parse then fails and the map never renders.
+# Nothing else on this site serves /data/*, so the whole prefix is safe to bend.
+/data/* /worldmonitor/data/:splat 200

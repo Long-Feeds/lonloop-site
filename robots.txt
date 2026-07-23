@@ -1,6 +1,23 @@
 # lonloop.com — lonX
-# Public portfolio. Crawlers welcome.
+# Public portfolio. Crawlers welcome — with two carve-outs, both added when the
+# site started self-hosting the World Monitor dashboard (2026-07-23).
+# Disallow lines come first on purpose: the standard resolves by longest match,
+# but the ordering also holds for crawlers that stop at the first match.
+
 User-agent: *
+
+# Not a page: /api/* is a server-side proxy to the upstream data API behind
+# /worldmonitor/ (see functions/api/[[path]].js). Every crawl of it would fire a
+# live third-party API call rather than return content. Upstream's own
+# robots.txt disallows /api/ for exactly this reason.
+Disallow: /api/
+
+# /worldmonitor/ is a static mirror of koala73/worldmonitor (AGPL-3.0) that this
+# site serves; its pages already canonicalize to worldmonitor.app, and its docs
+# and marketing text are not this domain's content to be indexed for. Blocking
+# the crawl only affects bots — the dashboard stays fully usable for visitors.
+Disallow: /worldmonitor/
+
 Allow: /
 
 Sitemap: https://lonloop.com/sitemap.xml

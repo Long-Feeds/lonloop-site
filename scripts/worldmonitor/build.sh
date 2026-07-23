@@ -51,5 +51,24 @@ rsync -a --exclude='*.br' --exclude='pro/' "$WORK_DIR/src/dist"/ "$OUT_DIR"/
 # needs an index.html to serve /worldmonitor/.
 cp "$OUT_DIR/dashboard.html" "$OUT_DIR/index.html"
 
+echo "==> repointing cross-origin asset URLs at the local copies"
+# --base cannot reach URLs the app hardcodes with a host. This one fetches the
+# country boundary overrides from upstream's maps host, which only sends CORS
+# headers to *.worldmonitor.app, so the browser blocks it on lonloop.com and
+# the map falls back to unrefined borders. The same file ships in the build, so
+# point at it. Root-absolute paths (/data/, /favico/, /map-styles/, /textures/)
+# need no edit here — ../../\_redirects rewrites those onto /worldmonitor/.
+# Matched by content, not filename: the bundle hash changes every build.
+OVERRIDES_URL="https://maps.worldmonitor.app/country-boundary-overrides.geojson"
+hits="$(grep -rl "$OVERRIDES_URL" "$OUT_DIR" || true)"
+if [ -n "$hits" ]; then
+  printf '%s\n' "$hits" | xargs perl -pi -e \
+    's{\Qhttps://maps.worldmonitor.app/country-boundary-overrides.geojson\E}{/worldmonitor/data/country-boundary-overrides.geojson}g'
+  echo "    rewrote $(printf '%s\n' "$hits" | wc -l | tr -d ' ') file(s)"
+else
+  echo "    nothing to rewrite — upstream may have changed the URL; re-check"
+  echo "    that the map's boundary overrides still load before shipping."
+fi
+
 echo "==> done: $(find "$OUT_DIR" -type f | wc -l | tr -d ' ') files, $(du -sh "$OUT_DIR" | cut -f1)"
 echo "    work dir: $WORK_DIR (delete when finished)"

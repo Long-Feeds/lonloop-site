@@ -3,11 +3,19 @@
 # content is served); anything 3xx would be a visible redirect.
 
 # The World Monitor mirror is built for "/" but served from "/worldmonitor/".
-# scripts/worldmonitor/lonloop-subpath.patch rewrites the paths the app builds
-# at runtime, but three bundles (gdelt-intel, main, geo-map-data) bake the map
-# data paths in as root-absolute string literals, so the map layer requests
-# /data/countries-50m.json and /data/countries.geojson. Without this rule those
-# miss every static asset, fall through to the SPA fallback, and come back as
-# 200 text/html — the JSON parse then fails and the map never renders.
-# Nothing else on this site serves /data/*, so the whole prefix is safe to bend.
-/data/* /worldmonitor/data/:splat 200
+# scripts/worldmonitor/build.sh passes --base=/worldmonitor/, which fixes the
+# paths Vite emits but not the ones the app bakes in as root-absolute string
+# literals: map data, notification icons, map styles, globe textures. Left
+# alone they match no static asset, fall through to the SPA fallback and come
+# back as 200 text/html — the map layer's JSON parse throws and everything else
+# fails silently. Each prefix below exists under /worldmonitor/ and is
+# referenced nowhere else on this site, so bending the whole prefix is safe.
+#
+# Deliberately absent: /assets/ shows up in the bundles only inside a
+# t.includes("/assets/") URL classifier, never as a fetch target; /api/ is a
+# real route served by functions/api/[[path]].js; /home/, /buy/, /docs/ and
+# /embed/ are upstream SPA routes with no local counterpart.
+/data/*        /worldmonitor/data/:splat        200
+/favico/*      /worldmonitor/favico/:splat      200
+/map-styles/*  /worldmonitor/map-styles/:splat  200
+/textures/*    /worldmonitor/textures/:splat    200

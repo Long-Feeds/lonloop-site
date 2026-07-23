@@ -57,6 +57,17 @@
     <div class="rd-list" id="list">
       <!-- 每条收藏 = 一张卡片。新增时复制此模板，改 data-type / 链接 / 文案即可。 -->
 
+      <a class="rd-card" data-type="阅读" href="https://handbook.modular.com/" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">阅读</span>
+          <span class="src">handbook.modular.com</span>
+          <span>收藏于 2026-07-23</span>
+        </div>
+        <h2>LLM Inference Handbook<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">Modular（Mojo 语言 / MAX 推理平台背后的公司）出的开放在线手册，自我定位「技术词典 + 指南 + 参考书」三合一，专治 LLM 推理知识的碎片化——它散在论文、厂商博客、GitHub issue 和 Discord 里，而且大多默认你已经懂半个栈。七大板块：推理基础与指标（TTFT / ITL / TPOT，以及为什么 goodput 比裸吞吐更重要）→ 部署规划（选模型、选 GPU、选推理框架，显存怎么算，Serverless 还是自托管，BYOC 与本地部署）→ 模型准备（量化 / 微调 / 蒸馏）→ 模型交互（OpenAI 与 Anthropic 兼容 API、function calling、结构化输出、MCP）→ 推理优化（continuous batching、chunked prefill、PagedAttention、prefix caching、KV cache offloading、投机解码、prefill-decode 分离、并行策略与推理路由）→ kernel 优化（GPU 架构基础、FlashAttention）→ 基础设施与运维（分布式推理、快速扩缩容、可观测性、多云跨区、成本）。配 16 个可上手玩的交互件：批处理策略模拟器、延迟时间线、上下文窗口模拟器、GPU 显存与 KV cache 计算器、Top-p vs Top-k 对比等。Apache-2.0 开源。</p>
+        <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
+      </a>
+
       <a class="rd-card" data-type="工具" href="https://github.com/Infisical/agent-vault" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">工具</span>

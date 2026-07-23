@@ -1,0 +1,60 @@
+diff --git a/src/bootstrap/secondary-startup.ts b/src/bootstrap/secondary-startup.ts
+index ae9aaba..be1433f 100644
+--- a/src/bootstrap/secondary-startup.ts
++++ b/src/bootstrap/secondary-startup.ts
+@@ -78,6 +78,9 @@ export function initDeferredDashboardFonts(): void {
+ }
+ 
+ export function initVercelAnalytics(): void {
++  // Off-Vercel hosts have no /_vercel/insights endpoint — the injected script
++  // just 404s and logs a console error on every load.
++  if (import.meta.env.VITE_DISABLE_VERCEL_ANALYTICS === 'true') return;
+   if (vercelAnalyticsScheduled || typeof window === 'undefined') return;
+   vercelAnalyticsScheduled = true;
+   scheduleAfterFirstPaint(() => {
+diff --git a/src/components/DeckGLMap.ts b/src/components/DeckGLMap.ts
+index cf6db83..dbe705f 100644
+--- a/src/components/DeckGLMap.ts
++++ b/src/components/DeckGLMap.ts
+@@ -1022,7 +1022,7 @@ export class DeckGLMap {
+   private async initMapLibre(): Promise<void> {
+     if (maplibregl.getRTLTextPluginStatus() === 'unavailable') {
+       maplibregl.setRTLTextPlugin(
+-        '/mapbox-gl-rtl-text.min.js',
++        `${import.meta.env.BASE_URL}mapbox-gl-rtl-text.min.js`,
+         true,
+       );
+     }
+diff --git a/src/main.ts b/src/main.ts
+index 96c14e4..d9cf229 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -488,7 +488,7 @@ if ('__TAURI_INTERNALS__' in window || '__TAURI__' in window) {
+   });
+ }
+ 
+-if (!('__TAURI_INTERNALS__' in window) && !('__TAURI__' in window) && 'serviceWorker' in navigator) {
++if (import.meta.env.VITE_DISABLE_SW !== 'true' && !('__TAURI_INTERNALS__' in window) && !('__TAURI__' in window) && 'serviceWorker' in navigator) {
+   installSwUpdateHandler({ version: __APP_VERSION__ });
+ 
+   const SW_UPDATE_SUCCESS_INTERVAL_MS = 60 * 60 * 1000;
+diff --git a/src/services/i18n.ts b/src/services/i18n.ts
+index deca887..c8b3d83 100644
+--- a/src/services/i18n.ts
++++ b/src/services/i18n.ts
+@@ -187,13 +187,13 @@ export async function initI18n(): Promise<void> {
+       },
+       supportedLngs: [...SUPPORTED_LANGUAGES],
+       nonExplicitSupportedLngs: true,
+-      fallbackLng: 'en',
++      fallbackLng: 'zh',
+       debug: import.meta.env.DEV,
+       interpolation: {
+         escapeValue: false, // not needed for these simple strings
+       },
+       detection: {
+-        order: ['wmQuery', 'wmExplicit', 'navigator'],
++        order: ['wmQuery', 'wmExplicit'],
+         caches: [], // never auto-write — only changeLanguage() persists
+       },
+     });

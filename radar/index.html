@@ -57,6 +57,28 @@
     <div class="rd-list" id="list">
       <!-- 每条收藏 = 一张卡片。新增时复制此模板，改 data-type / 链接 / 文案即可。 -->
 
+      <a class="rd-card" data-type="工具" href="https://github.com/max-sixty/worktrunk" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">工具</span>
+          <span class="src">github.com/max-sixty</span>
+          <span>收藏于 2026-07-27</span>
+        </div>
+        <h2>worktrunk<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">Rust 写的 Git worktree 管理 CLI，专为「同时跑多个 AI 编码 agent」设计：一条命令给每个 agent 开一棵独立 worktree + 分支，各自在自己的工作树里改代码互不踩踏，跑完再合并回主干。约 6.1k star，官网 worktrunk.dev。</p>
+        <p class="why"><b>为什么收藏</b> · 多 agent 并行开发时的 worktree 编排层——重度用 Claude Code 最先撞到的就是这道墙。</p>
+      </a>
+
+      <a class="rd-card" data-type="项目" href="https://github.com/h0ngcha0/hubo" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">项目</span>
+          <span class="src">github.com/h0ngcha0</span>
+          <span>收藏于 2026-07-27</span>
+        </div>
+        <h2>hubo<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">把周伯通的「双手互搏」搬进 coding agent：不是一个 agent 自己审自己，而是实现方与审查方两个持久角色在同一会话里对抗——一方交实现与证据，另一方挑错，来回到每条 review 意见都被 reconcile 收敛，才交到人手上；另有「主审 ↔ 抬杠审」模式专门打掉误报、补回漏检。MIT，2026 年 7 月底刚发布的早期项目（约 26 star），胜在理念而非成熟度。</p>
+        <p class="why"><b>为什么收藏</b> · 对抗式 self-play review 的思路，可借鉴进自建 agent 车队的 code-review 环节。</p>
+      </a>
+
       <a class="rd-card" data-type="阅读" href="https://handbook.modular.com/" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">阅读</span>
@@ -66,6 +88,28 @@
         <h2>LLM Inference Handbook<span class="out" aria-hidden="true">↗</span></h2>
         <p class="excerpt">Modular（Mojo 语言 / MAX 推理平台背后的公司）出的开放在线手册，自我定位「技术词典 + 指南 + 参考书」三合一，专治 LLM 推理知识的碎片化——它散在论文、厂商博客、GitHub issue 和 Discord 里，而且大多默认你已经懂半个栈。七大板块：推理基础与指标（TTFT / ITL / TPOT，以及为什么 goodput 比裸吞吐更重要）→ 部署规划（选模型、选 GPU、选推理框架，显存怎么算，Serverless 还是自托管，BYOC 与本地部署）→ 模型准备（量化 / 微调 / 蒸馏）→ 模型交互（OpenAI 与 Anthropic 兼容 API、function calling、结构化输出、MCP）→ 推理优化（continuous batching、chunked prefill、PagedAttention、prefix caching、KV cache offloading、投机解码、prefill-decode 分离、并行策略与推理路由）→ kernel 优化（GPU 架构基础、FlashAttention）→ 基础设施与运维（分布式推理、快速扩缩容、可观测性、多云跨区、成本）。配 16 个可上手玩的交互件：批处理策略模拟器、延迟时间线、上下文窗口模拟器、GPU 显存与 KV cache 计算器、Top-p vs Top-k 对比等。Apache-2.0 开源。</p>
         <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
+      </a>
+
+      <a class="rd-card" data-type="工具" href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">工具</span>
+          <span class="src">github.com/BerriAI</span>
+          <span>收藏于 2026-07-21</span>
+        </div>
+        <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">开源 AI 网关的事实标准：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。Rust 核心 + Python SDK，约 5.5 万 star，几乎每天都在更新。</p>
+        <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
+      </a>
+
+      <a class="rd-card" data-type="工具" href="https://github.com/diegosouzapw/OmniRoute" target="_blank" rel="noopener">
+        <div class="rd-meta">
+          <span class="badge">工具</span>
+          <span class="src">github.com/diegosouzapw</span>
+          <span>收藏于 2026-07-21</span>
+        </div>
+        <h2>OmniRoute<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">同样是自托管 AI 网关，但更偏「智能选模型」：本地 proxy + OpenAI 兼容端点，BYOK 聚合数百家 provider（含一批带免费额度的），原生对接 Claude Code / Codex / Cursor / Cline / Copilot；差异化在十几种路由策略（成本优先、剩余额度优先、多模型 + 裁判、实时打分自动选）和内置的 prompt 压缩（与同页收录的 headroom 同路）。MIT，TypeScript，约 3.3 万 star。README 里部分指标偏营销口径、免费额度聚合也较脆弱，按需取用。</p>
+        <p class="why"><b>为什么收藏</b> · 和 LiteLLM 并存的另一半：LiteLLM 是生产级接入基础设施，它是 coding-agent 优先、自带压缩的日用款。</p>
       </a>
 
       <a class="rd-card" data-type="工具" href="https://github.com/Infisical/agent-vault" target="_blank" rel="noopener">

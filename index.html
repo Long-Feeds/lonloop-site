@@ -30,17 +30,77 @@
 <meta name="twitter:image" content="https://lonloop.com/og.png" />
 <meta name="twitter:image:alt" content="lonX · AI Application &amp; Backend Engineer — 构建 LLM Agent 与 Claude Code 生态的工程师" />
 
-<!-- Structured data -->
+<!-- Structured data — the machine-readable half of this page. It used to describe
+     only the person (name, title, one GitHub link), so the body of work this page
+     actually exists to show — three shipped projects and the source teardown — was
+     legible to humans but invisible to search engines, profile crawlers and the
+     LLM crawlers that read markup rather than run JS. The @graph below adds each
+     work as its own node, anchored to the same Person by @id so authorship is
+     explicit rather than inferred from page proximity.
+     Every field is read off the live site/repos: URLs are the same ones the cards
+     link to (all verified 200), programmingLanguage comes from each repo's own
+     language stats, descriptions are condensed from the card copy — nothing here
+     is claimed that the page doesn't already say.
+     Deliberately no datePublished/dateModified anywhere: they would need hand-
+     bumping on every ship and would silently rot between runs — the same drift the
+     "40+" stat floor exists to avoid. Re-sync only when a project is added,
+     retired, or its URL moves. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "lonX",
-  "url": "https://lonloop.com/",
-  "jobTitle": "AI Application & Backend Engineer",
-  "description": "构建 LLM Agent 与 Claude Code 生态的工程师。专注 AI Agent / LLM 应用与后端系统。",
-  "sameAs": ["https://github.com/Long-Feeds"],
-  "knowsAbout": ["LLM Agents","Claude Code","Backend Engineering","Go","TypeScript","Python"]
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://lonloop.com/#page",
+      "url": "https://lonloop.com/",
+      "name": "lonX · AI Application & Backend Engineer",
+      "inLanguage": "zh-CN",
+      "mainEntity": {"@id": "https://lonloop.com/#lonx"}
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lonloop.com/#lonx",
+      "name": "lonX",
+      "url": "https://lonloop.com/",
+      "jobTitle": "AI Application & Backend Engineer",
+      "description": "构建 LLM Agent 与 Claude Code 生态的工程师。专注 AI Agent / LLM 应用与后端系统。",
+      "sameAs": ["https://github.com/Long-Feeds"],
+      "knowsAbout": ["LLM Agents","Claude Code","Backend Engineering","Go","TypeScript","Python"]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://lonloop.com/#daily-tools",
+      "name": "Daily Tools",
+      "url": "https://long-feeds.github.io/daily-tools/",
+      "codeRepository": "https://github.com/Long-Feeds/daily-tools",
+      "author": {"@id": "https://lonloop.com/#lonx"},
+      "inLanguage": "zh-CN",
+      "programmingLanguage": ["HTML","JavaScript","CSS"],
+      "description": "每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://lonloop.com/#agent-kit",
+      "name": "Always-On Agent Kit",
+      "url": "https://long-feeds.github.io/feishu-claude-landing/",
+      "codeRepository": "https://github.com/Long-Feeds/feishu-claude-landing",
+      "author": {"@id": "https://lonloop.com/#lonx"},
+      "inLanguage": "zh-CN",
+      "programmingLanguage": "HTML",
+      "description": "让 Claude Code agent 跑数月而非数分钟：把常驻 agent 需要的五套运行系统（记忆协议 / 反馈闭环 / 状态去重 / 护栏 / 防僵尸运维）做成可直接套用的模板与 playbook。"
+    },
+    {
+      "@type": "Book",
+      "@id": "https://lonloop.com/#claude-code-book",
+      "name": "解密 Claude Code：Anthropic CLI 源码深度解析",
+      "url": "https://long-feeds.github.io/claude-code-book/",
+      "sameAs": "https://github.com/Long-Feeds/claude-code-book",
+      "author": {"@id": "https://lonloop.com/#lonx"},
+      "inLanguage": "zh-CN",
+      "about": {"@type": "Thing", "name": "Claude Code CLI 源码"},
+      "description": "基于 2026 年 3 月泄露的 CLI 源码，用 12 章逐层还原 Anthropic agent 的真实实现；每处引用都标注文件路径与行号，只写代码能证实的结论。"
+    }
+  ]
 }
 </script>
 <style>

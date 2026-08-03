@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- URL discovery only — deliberately no <lastmod>, <changefreq> or <priority>.
+
+     Google ignores <changefreq> and <priority> outright, and uses <lastmod> only
+     "if it's consistently and verifiably accurate"; a date it can disprove gets the
+     signal dropped rather than merely discounted. This site has no build step, so
+     every date written here is hand-maintained and starts rotting the next time a
+     page ships: the version this replaced claimed the homepage was last modified
+     2026-07-01 while it had in fact been edited on most days since (2026-08-02 as
+     of this commit) — a daily-updated portfolio telling crawlers it had sat still
+     for a month, which is the opposite of what it wants to say.
+
+     An omitted lastmod is strictly better than a wrong one, and a four-URL sitemap
+     has exactly one job: declare the canonical URL set. Keep it that way — don't
+     "improve" this file by adding dates back unless the site grows a build step
+     that can derive them from git. Re-sync only when a page is added or retired.
+
+     /worldmonitor/ is absent on purpose: robots.txt disallows it (it mirrors
+     someone else's app and canonicalizes elsewhere), so listing it here would ask
+     for a crawl this site has already declined. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://lonloop.com/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://lonloop.com/radar/</loc>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lonloop.com/collection/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://lonloop.com/collection/xianyu-jingji/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
+  <url><loc>https://lonloop.com/</loc></url>
+  <url><loc>https://lonloop.com/radar/</loc></url>
+  <url><loc>https://lonloop.com/collection/</loc></url>
+  <url><loc>https://lonloop.com/collection/xianyu-jingji/</loc></url>
 </urlset>

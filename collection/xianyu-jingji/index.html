@@ -7,6 +7,17 @@
 <meta name="description" content="转自 天机奇谈(@tun2049) 的 X 长文《真实中国：中国小县城沉浮录》，镜像存档于 lonX 收藏夹，方便打不开原站的朋友阅读。" />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0b0d12" />
+<!-- Self-canonical. Every other page on this site had one and this — the only page
+     here with real long-form text, and so the only one with organic search pull —
+     did not. Cloudflare Pages serves this file byte-identically from the apex, from
+     lonloop-site.pages.dev, and from a per-deploy <hash>.lonloop-site.pages.dev that
+     is minted on every ship and never retired (40 of them as of this commit, one
+     more each day this task deploys). All of them answer 200 and all of them serve a
+     robots.txt that allows crawling, so without this line a crawler has ~42 identical
+     copies of the article and no statement of which is authoritative — it picks one
+     by guesswork, and a deploy-hash host can win. The other pages were already
+     immune; this one wasn't. -->
+<link rel="canonical" href="https://lonloop.com/collection/xianyu-jingji/" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="lonX" />
@@ -15,6 +26,45 @@
 <meta property="og:image" content="https://lonloop.com/collection/xianyu-jingji/cover.jpg" />
 <meta property="og:url" content="https://lonloop.com/collection/xianyu-jingji/" />
 <meta property="og:locale" content="zh_CN" />
+
+<!-- Structured data. This page is an archive mirror: ~10k words of someone else's
+     essay, hosted on the personal domain of someone who is job-hunting. Until now
+     the only statement of whose words these are lived in prose inside .attrib —
+     readable by a person, invisible to a search engine or an LLM crawler reading
+     markup. The node below makes the authorship machine-readable and points it at
+     the original author, not at this domain's owner.
+     No "publisher": the work was published on X by its author, so naming lonX there
+     would assert something untrue. An omitted field beats an invented one (same call
+     the homepage graph made in refusing aggregateRating/offers for a rich-result
+     badge it hadn't earned).
+     datePublished is the original's publication date — a fixed historical fact the
+     page already states, not a freshness signal that needs hand-bumping on every
+     ship. It is the opposite case from the sitemap's <lastmod>, which was deleted
+     precisely because it could rot; this date cannot. Re-sync only if the article
+     itself is corrected or retired.
+     Every property below was checked against the live schema.org vocabulary for
+     domain validity on its node type (13/13 valid) before landing. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://lonloop.com/collection/xianyu-jingji/#article",
+  "headline": "真实中国：中国小县城沉浮录",
+  "url": "https://lonloop.com/collection/xianyu-jingji/",
+  "mainEntityOfPage": "https://lonloop.com/collection/xianyu-jingji/",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-06-28",
+  "image": "https://lonloop.com/collection/xianyu-jingji/cover.jpg",
+  "isAccessibleForFree": true,
+  "about": {"@type": "Thing", "name": "中国县域经济"},
+  "author": {
+    "@type": "Person",
+    "name": "天机奇谈",
+    "alternateName": "@tun2049",
+    "sameAs": "https://x.com/tun2049"
+  }
+}
+</script>
 <link rel="stylesheet" href="../reader.css" />
 </head>
 <body>

@@ -336,7 +336,22 @@
       </div>
       <div class="links">
         <a class="btn btn-primary" href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
-        <a class="btn btn-ghost" href="mailto:lonx@lonloop.com">lonx@lonloop.com</a>
+        <!-- Cloudflare's Scrape Shield "Email Address Obfuscation" is on by default for
+             every zone, and it rewrites this link in flight: the visible address is
+             replaced by the literal placeholder "[email protected]" and the href
+             becomes /cdn-cgi/l/email-protection#<hex>, a path that answers 404 on its
+             own. Visitors running JS never see it — Cloudflare's decode script restores
+             the real mailto before anyone can click — but every reader that consumes
+             markup without running JS gets a placeholder pointing at a dead URL: text
+             crawlers, the LLM crawlers the structured data above exists for, and JS-off
+             visitors. On this site that is the *only* contact affordance.
+             Nothing is bought in exchange: the payload is a single-byte XOR keyed on
+             its own first byte, so any real harvester decodes it in three lines and
+             only legitimate readers are left broken.
+             email_off is Cloudflare's own documented opt-out and is the narrowest fix —
+             it turns the feature off for these two links and nothing else. Keep both
+             markers; deleting either silently restores the placeholder. -->
+        <!--email_off--><a class="btn btn-ghost" href="mailto:lonx@lonloop.com">lonx@lonloop.com</a><!--/email_off-->
       </div>
     </header>
 
@@ -481,7 +496,10 @@
       <span>© <span id="y"></span> lonX · Built with Claude Code</span>
       <span>
         <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a> ·
-        <a href="mailto:lonx@lonloop.com">Email</a>
+        <!-- same Cloudflare opt-out as the hero link — see the comment there. This one
+             keeps its "Email" label either way, but without the markers its href still
+             becomes the 404-ing /cdn-cgi/l/email-protection URL for JS-off readers. -->
+        <!--email_off--><a href="mailto:lonx@lonloop.com">Email</a><!--/email_off-->
       </span>
     </footer>
   </div>

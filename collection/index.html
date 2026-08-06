@@ -15,7 +15,26 @@
 <meta property="og:description" content="镜像存档值得一读的好内容，标注原作者与来源。" />
 <meta property="og:url" content="https://lonloop.com/collection/" />
 <meta property="og:image" content="https://lonloop.com/og.png" />
+<!-- Card type. X does not infer a large-image card from OpenGraph alone; its own
+     markup reference is explicit that "if an og:type, og:title and og:description
+     exist in the markup but twitter:card is absent, then a summary card may be
+     rendered" — the small square thumbnail. / and /radar/ have declared
+     summary_large_image since they were built, but the two /collection/ pages
+     never did, so this site rendered a full-width card for its homepage and a
+     thumbnail for the page that actually holds its writing.
+     Only twitter:card is added, deliberately. Every other twitter:* tag has a
+     documented OpenGraph fallback (twitter:title→og:title, :description→
+     og:description, :image→og:image, :image:alt→og:image:alt) and all of those
+     og: tags are already above, so restating them under twitter:* would buy
+     nothing and leave two copies of the same strings to keep in sync — the same
+     drift trap that got <lastmod> deleted from sitemap.xml. Don't "complete" this
+     block by mirroring the other tags.
+     og.png is 1200x630, inside the card's 2:1 / 300x157–4096x4096 / <5MB envelope. -->
+<meta property="og:image:alt" content="lonX · AI Application &amp; Backend Engineer — 构建 LLM Agent 与 Claude Code 生态的工程师" />
 <meta property="og:locale" content="zh_CN" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="./reader.css" />
 </head>
 <body>

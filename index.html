@@ -773,10 +773,25 @@
         var link = '<a href="https://github.com/'+full+'" target="_blank" rel="noopener">'+disp+'</a>';
         var p = ev.payload || {};
         if (ev.type === 'PushEvent'){
-          var n = Number(p.size || p.distinct_size || (p.commits && p.commits.length) || 1);
-          if (!(n >= 1)) n = 1;
-          return en ? ('Pushed '+n+' commit'+(n>1?'s':'')+' to '+link)
-                    : ('向 '+link+' 推送 '+n+' 次提交');
+          /* GitHub has trimmed the PushEvent payload to before/head/push_id/ref/
+             repository_id — size, distinct_size and commits[] are all gone. Verified
+             2026-08-07 against this account and three unrelated ones (torvalds,
+             simonw, sindresorhus): 0 of 62 push events carried any of the three, and
+             every payload had the identical 5-key shape. The old `|| 1` therefore
+             stopped being a fallback and became the printed value: every row asserted
+             exactly "1 commit" — a number this page never received. It happened to
+             match reality (both pipelines commit once per run) but the first
+             multi-commit push would have silently understated it, on the one section
+             of this site whose whole job is to evidence activity.
+             So: print a count only when the payload actually carries one, otherwise
+             state only what is known — that a push happened. If GitHub ever restores
+             the field the count returns on its own, no edit needed. Don't reintroduce
+             a numeric default here. */
+          var n = Number(p.size || p.distinct_size || (p.commits && p.commits.length));
+          if (n >= 1)
+            return en ? ('Pushed '+n+' commit'+(n>1?'s':'')+' to '+link)
+                      : ('向 '+link+' 推送 '+n+' 次提交');
+          return en ? ('Pushed to '+link) : ('向 '+link+' 推送提交');
         }
         if (ev.type === 'PullRequestEvent' && (p.action === 'opened' || p.action === 'reopened'))
           return en ? ('Opened a pull request in '+link) : ('在 '+link+' 发起 Pull Request');

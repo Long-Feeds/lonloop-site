@@ -179,7 +179,10 @@
     background:rgba(91,224,200,.12);color:var(--accent2);border:1px solid rgba(91,224,200,.25)}
   .card .desc{color:var(--muted);font-size:14.5px;margin-top:10px;flex:1}
   .card .tags{color:var(--dim);font-size:12.5px;margin-top:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  .card .actions{display:flex;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+  /* wrap so a card carrying a third action (Daily Tools' test link) never pushes
+     its links past the card edge on a narrow viewport; row-gap is tighter than the
+     column gap so a wrapped row reads as continuation, not a new block */
+  .card .actions{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
   .card .actions a{color:var(--accent);text-decoration:none;font-size:14px;font-weight:600}
   .card .actions a:hover{text-decoration:underline}
   .card .actions a.muted{color:var(--dim)}
@@ -391,13 +394,28 @@
              off the live manifest (37 tools / 31 distinct categories) and each tool's
              own subtitle — nothing here is invented. Deliberately no counts in the
              copy: exact figures start the daily-drift treadmill the "30+" stat floor
-             was introduced to end. Re-sync the exemplars only if one goes offline. -->
+             was introduced to end. Re-sync the exemplars only if one goes offline.
+             The third action is the evidence for this card's strongest sentence —
+             "each carries its own integration test that must pass in real Chromium
+             before it deploys" — which until now the page asserted with nothing to
+             click. Verified 2026-08-08: 49 of 49 tool directories ship a test.mjs
+             (median 11.8KB, largest 67KB), and test/run.mjs launches Playwright
+             Chromium, auto-discovers every one of them and exits 1 on any failed
+             assertion or uncaught page error; the README gates push on it passing.
+             The static href is that runner: it proves the whole sentence, has no
+             date in its path, and so can never rot. JS then upgrades it to the
+             newest tool's own test.mjs (see the manifest block below), because a
+             single tool's assertions are what show the tests are real rather than
+             smoke checks. Both targets are honest for their audience and neither
+             needs hand-bumping — same rule as every other live figure here. -->
+
         <article class="card">
           <div class="name">Daily Tools <span class="badge">LIVE</span></div>
           <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从逻辑电路仿真、傅里叶图形分解到从零实现的反向传播，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
           <div class="tags" data-i18n="daily.tags">自主选题 · 零后端自包含 · Playwright 集成测试 · 无人值守日更</div>
           <div class="actions">
             <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener"><span data-i18n="proj.visit">在线访问</span> <span aria-hidden="true">↗</span></a>
+            <a id="dailyTest" href="https://github.com/Long-Feeds/daily-tools/blob/main/test/run.mjs" target="_blank" rel="noopener"><span data-i18n="daily.test">看集成测试</span> <span aria-hidden="true">↗</span></a>
             <a class="muted" href="https://github.com/Long-Feeds/daily-tools" target="_blank" rel="noopener" data-i18n="proj.code">代码</a>
           </div>
         </article>
@@ -520,6 +538,7 @@
         'hero.intro': 'Focused on AI agents / LLM applications and backend systems. I like turning working ideas into things that are genuinely usable, maintainable, and production-ready — from an auto-built tools site to deep dives into Claude Code’s source.',
         'daily.desc': 'Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — logic-gate simulation, Fourier decomposition of a drawing, backprop implemented from scratch; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.',
         'daily.tags': 'Self-directed · Zero-backend · Playwright-tested · Unattended daily ships',
+        'daily.test': 'See the integration test',
         'book.name': 'Decoding Claude Code',
         'book.desc': 'Reverse-engineering Anthropic’s agent out of the leaked CLI bundle: how sub-agents are spawned, isolated and inherit the parent context, how the streaming main loop is threaded through async generators, and where a tool’s arguments get rejected by Zod strict mode.',
         'book.tags': 'Agent lifecycle · Worktree isolation · Async-generator streaming · Zod strict boundary',
@@ -615,6 +634,7 @@
       var grid = document.getElementById('toolsGrid');
       var showcase = document.getElementById('toolsShowcase');
       var breadthEl = document.getElementById('toolsBreadth');
+      var testLink = document.getElementById('dailyTest');
 
       function relTime(dateStr, en){
         var d = new Date(dateStr + 'T00:00:00');
@@ -713,6 +733,17 @@
             box.setAttribute('href', BASE + latest.path);
             renderLatest();
             box.hidden = false;
+          }
+          /* Point the Daily Tools card's test link at the newest tool's own test
+             instead of the runner, so the proof on offer is always the freshest one
+             shipped. The slug is re-matched against a strict charset before it is
+             concatenated into a URL — path was already checked for a tools/ prefix
+             and no "..", this bounds it further. Any miss leaves the static runner
+             href in place, which is a valid destination on its own. */
+          if (valid.length && testLink){
+            var slug = /^tools\/([A-Za-z0-9._-]+)\/?$/.exec(valid[0].path);
+            if (slug) testLink.href =
+              'https://github.com/Long-Feeds/daily-tools/blob/main/tools/' + slug[1] + '/test.mjs';
           }
           if (valid.length && grid && showcase){   // latest-tools gallery (newest 6)
             recent = valid.slice(0, 6);

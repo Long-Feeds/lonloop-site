@@ -294,7 +294,9 @@
   .feed-item:first-child,.feed-fallback:first-child{border-top:none}
   .feed-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);
     flex:none;box-shadow:0 0 0 3px rgba(91,224,200,.12)}
-  .feed-action{color:var(--muted)}
+  /* min-width:0 lets the action shrink inside the flex row and overflow-wrap
+     keeps a long commit subject breaking instead of pushing past the card */
+  .feed-action{color:var(--muted);min-width:0;overflow-wrap:anywhere}
   .feed-action a{color:var(--txt);text-decoration:none;font-weight:600}
   .feed-action a:hover{color:var(--accent)}
   .feed-time{margin-left:auto;color:var(--dim);font-size:12.5px;white-space:nowrap;
@@ -780,7 +782,7 @@
       var feed = document.getElementById('ghFeed');
       if (!feed || !window.fetch) return;
       // allowlist: full_name -> display label. Gating on this set guarantees no
-      // fork/private repo is ever surfaced and no untrusted string hits innerHTML.
+      // fork/private repo is ever surfaced.
       var ALLOW = {
         'Long-Feeds/daily-tools': 'Daily Tools',
         'Long-Feeds/lonloop-site': 'lonloop-site',
@@ -800,10 +802,28 @@
         return en ? 'just now' : '刚刚';
       }
 
-      function describe(ev, en){
+      /* sha -> first line of that commit's message, filled in by enrich() below.
+         Empty until (and unless) those requests land, which is why every caller
+         treats a miss as "just say a push happened". */
+      var subjects = {};
+
+      // Builds the row's <span class="feed-action">. Returns null for event types
+      // this feed doesn't report, which drops the row.
+      function actionEl(ev, en){
         var full = ev.repo.name, disp = ALLOW[full];   // full is an allowlist key
-        var link = '<a href="https://github.com/'+full+'" target="_blank" rel="noopener">'+disp+'</a>';
         var p = ev.payload || {};
+        var s = document.createElement('span');
+        s.className = 'feed-action';
+        function compose(pre, post){
+          if (pre) s.appendChild(document.createTextNode(pre));
+          var a = document.createElement('a');
+          a.href = 'https://github.com/' + full;
+          a.target = '_blank'; a.rel = 'noopener';
+          a.textContent = disp;                 // our own label, never repo-supplied
+          s.appendChild(a);
+          if (post) s.appendChild(document.createTextNode(post));
+          return s;
+        }
         if (ev.type === 'PushEvent'){
           /* GitHub has trimmed the PushEvent payload to before/head/push_id/ref/
              repository_id — size, distinct_size and commits[] are all gone. Verified
@@ -819,40 +839,114 @@
              state only what is known — that a push happened. If GitHub ever restores
              the field the count returns on its own, no edit needed. Don't reintroduce
              a numeric default here. */
+          /* What that left behind: with the count gone, every push row said only
+             "pushed to <repo>". Two repos fire on a daily timer, so the six rows
+             rendered as three alternating pairs of the same sentence — a section
+             whose whole job is to evidence activity, evidencing two repo names.
+             The subject line is the thing a reader actually wants, and the push
+             payload still carries `head`, so one commits request per repo (below)
+             recovers it. Quoted verbatim and never translated: it's a citation of
+             what was written, not UI copy. Falls through to the old wording
+             whenever the lookup misses — the rate-limited case must not blank out
+             a row that already reads correctly. */
+          var subj = typeof p.head === 'string' ? subjects[p.head] : null;
+          if (subj){
+            compose(en ? 'Pushed to ' : '向 ', en ? ' · ' : ' 推送 · ');
+            var q = document.createElement('span');
+            q.textContent = subj;               // textContent — a commit message is untrusted text
+            s.appendChild(q);
+            return s;
+          }
           var n = Number(p.size || p.distinct_size || (p.commits && p.commits.length));
           if (n >= 1)
-            return en ? ('Pushed '+n+' commit'+(n>1?'s':'')+' to '+link)
-                      : ('向 '+link+' 推送 '+n+' 次提交');
-          return en ? ('Pushed to '+link) : ('向 '+link+' 推送提交');
+            return compose(en ? ('Pushed '+n+' commit'+(n>1?'s':'')+' to ') : '向 ',
+                           en ? '' : (' 推送 '+n+' 次提交'));
+          return compose(en ? 'Pushed to ' : '向 ', en ? '' : ' 推送提交');
         }
         if (ev.type === 'PullRequestEvent' && (p.action === 'opened' || p.action === 'reopened'))
-          return en ? ('Opened a pull request in '+link) : ('在 '+link+' 发起 Pull Request');
+          return compose(en ? 'Opened a pull request in ' : '在 ', en ? '' : ' 发起 Pull Request');
         if (ev.type === 'CreateEvent' && p.ref_type === 'repository')
-          return en ? ('Created '+link) : ('创建仓库 '+link);
+          return compose(en ? 'Created ' : '创建仓库 ', '');
         if (ev.type === 'ReleaseEvent' && p.action === 'published')
-          return en ? ('Published a release in '+link) : ('在 '+link+' 发布 Release');
+          return compose(en ? 'Published a release in ' : '在 ', en ? '' : ' 发布 Release');
         return null;
+      }
+
+      // The six events this feed would show, in order. Also the set enrich() sizes
+      // its requests against, so nothing is fetched for a row nobody sees.
+      function shown(en){
+        var out = [];
+        for (var i=0;i<events.length && out.length<6;i++){
+          var ev = events[i];
+          if (!ev || !ev.repo || !ALLOW[ev.repo.name]) continue;
+          if (!actionEl(ev, en)) continue;     // unreported event type
+          out.push(ev);
+        }
+        return out;
       }
 
       function render(){
         if (!events) return;   // no data yet -> keep the static fallback
-        var en = document.documentElement.lang === 'en', out = [];
-        for (var i=0;i<events.length && out.length<6;i++){
-          var ev = events[i];
-          if (!ev || !ev.repo || !ALLOW[ev.repo.name]) continue;
-          var label = describe(ev, en);
-          if (!label) continue;
-          out.push('<li class="feed-item"><span class="feed-dot" aria-hidden="true"></span>'
-            +'<span class="feed-action">'+label+'</span>'
-            +'<span class="feed-time">'+timeAgo(ev.created_at, en)+'</span></li>');
+        var en = document.documentElement.lang === 'en';
+        var rows = shown(en);
+        if (!rows.length) return;              // nothing to say -> keep the fallback
+        var frag = document.createDocumentFragment();
+        for (var i=0;i<rows.length;i++){
+          var li = document.createElement('li');
+          li.className = 'feed-item';
+          var dot = document.createElement('span');
+          dot.className = 'feed-dot'; dot.setAttribute('aria-hidden','true');
+          var time = document.createElement('span');
+          time.className = 'feed-time'; time.textContent = timeAgo(rows[i].created_at, en);
+          li.appendChild(dot);
+          li.appendChild(actionEl(rows[i], en));
+          li.appendChild(time);
+          frag.appendChild(li);
         }
-        if (out.length) feed.innerHTML = out.join('');
+        feed.textContent = '';                 // drops the static fallback row
+        feed.appendChild(frag);
+      }
+
+      /* One commits request per distinct repo in the six rows — two in practice,
+         hard-capped at three so a busier future never turns a page load into a
+         request fan-out. Each answer is a sha -> subject map; render() then reruns
+         and the rows that matched gain their message. Anything that fails (offline,
+         403 rate-limited, a push to a branch outside the latest commits) simply
+         never populates and those rows keep the wording they already have. */
+      function enrich(){
+        var seen = {}, repos = [], rows = shown(document.documentElement.lang === 'en');
+        for (var i=0;i<rows.length && repos.length<3;i++){
+          var full = rows[i].repo.name;
+          if (rows[i].type !== 'PushEvent' || seen[full]) continue;
+          seen[full] = 1; repos.push(full);
+        }
+        repos.forEach(function(full){
+          fetch('https://api.github.com/repos/'+full+'/commits?per_page=20',
+                {cache:'no-store', headers:{'Accept':'application/vnd.github+json'}})
+            .then(function(r){ return r.ok ? r.json() : null; })
+            .then(function(d){
+              if (!Array.isArray(d)) return;
+              var got = false;
+              for (var i=0;i<d.length;i++){
+                var c = d[i];
+                if (!c || typeof c.sha !== 'string' || !c.commit) continue;
+                if (typeof c.commit.message !== 'string') continue;
+                var line = c.commit.message.split('\n')[0].trim();
+                // length guard only — real subjects run well under this, it just
+                // stops a pathological one from dominating the row
+                if (line.length > 96) line = line.slice(0, 95) + '…';
+                if (line){ subjects[c.sha] = line; got = true; }
+              }
+              if (got) render();
+            })
+            .catch(function(){ /* row keeps its existing wording */ });
+        });
       }
 
       fetch('https://api.github.com/users/Long-Feeds/events/public?per_page=30',
             {cache:'no-store', headers:{'Accept':'application/vnd.github+json'}})
         .then(function(r){ return r.ok ? r.json() : null; })
-        .then(function(d){ if (Array.isArray(d) && d.length){ events = d; render(); } })
+        .then(function(d){ if (Array.isArray(d) && d.length){ events = d; render(); enrich(); } })
         .catch(function(){ /* keep the static fallback */ });
 
       document.addEventListener('langchange', render);

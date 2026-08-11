@@ -83,11 +83,23 @@
 <link rel="stylesheet" href="../reader.css" />
 </head>
 <body>
+  <!-- Site nav, all three tabs. This page was built 2026-07-01, when the nav had
+       two; /radar/ became the third on 2026-07-20 and every other page picked it
+       up, but this one was never revisited, so it has been shipping a nav that
+       silently drops a destination. That matters most here of all: a mirror
+       article exists to be opened from a shared link, so this is the page a
+       first-time visitor is likeliest to land on cold, and it was the one page
+       telling them the site had two sections.
+       The 收藏夹 tab carries aria-current="true", not "page" — this is a child of
+       /collection/, so "current page" would be a claim that is simply false;
+       "true" is the generic "current item in the set", which is what the
+       highlight has always meant here. reader.css styles both identically. -->
   <nav class="topnav">
     <a class="brand" href="/">lonX<span class="dot">.</span></a>
     <div class="tabs">
       <a href="/" class="tab">主页</a>
-      <a href="/collection/" class="tab active">收藏夹</a>
+      <a href="/collection/" class="tab" aria-current="true">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
     </div>
   </nav>
 

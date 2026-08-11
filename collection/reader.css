@@ -24,7 +24,13 @@ a{color:inherit}
 .topnav .tabs{display:flex;gap:6px}
 .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;transition:color .15s ease,background .15s ease}
 .topnav .tab:hover{color:var(--txt)}
-.topnav .tab.active{color:var(--accent);background:var(--chip)}
+/* Current-tab state, keyed on aria-current rather than a bare .active class, so
+   the highlight and the announcement can't drift apart — the state is declared
+   once, in markup screen readers already understand. Matches every aria-current
+   value on purpose: /collection/ uses "page" (this is that page) while the
+   article below it uses "true" (current section, not current page), and both
+   render identically. Same selector as index.html and radar/radar.css. */
+.topnav .tab[aria-current]{color:var(--accent);background:var(--chip)}
 
 /* collection index */
 .collection{max-width:880px;margin:0 auto;padding:40px 24px 96px}

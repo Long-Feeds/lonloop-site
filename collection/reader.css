@@ -1,8 +1,19 @@
 /* lonloop.com — 收藏夹 (Collection) shared styles.
-   Design tokens mirror the home page for visual continuity. */
+   Design tokens mirror the home page for visual continuity.
+   --dim was the one token that did not: this file was created 2026-07-01 with
+   #6b7384, index.html lifted that same value to #808999 two days later in
+   941856e ("fix(a11y): lift --dim tertiary text to meet WCAG AA contrast"),
+   and the fix never reached here — radar.css, written 2026-07-20, copied the
+   corrected value. So the two /collection/ pages carried the already-fixed bug
+   for 40 days. Measured on the rendered DOM: #6b7384 is 3.69:1 on --card,
+   3.87:1 on --bg2 and 4.08:1 on --bg, all below the 4.5:1 AA floor for the
+   12.5–14px text it colors; #808999 is 4.98 / 5.23 / 5.51:1. It stays darker
+   than --muted, so the txt > muted > dim hierarchy is unchanged.
+   Keep all three stylesheets on one value — this drift is only visible by
+   diffing them against each other. */
 :root{
   --bg:#0b0d12; --bg2:#11141b; --card:#151924; --line:#222838;
-  --txt:#e7eaf0; --muted:#9aa3b2; --dim:#6b7384;
+  --txt:#e7eaf0; --muted:#9aa3b2; --dim:#808999;
   --accent:#7c9cff; --accent2:#5be0c8; --chip:#1b2130;
   --radius:16px;
 }

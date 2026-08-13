@@ -28,6 +28,30 @@ body{
 }
 a{color:inherit}
 
+/* Global a11y base — the same block index.html and radar/radar.css carry, and the
+   second fix this file was created just early enough to miss. Both landed as a
+   two-day a11y pass on index.html alone: f72bfc4 (2026-07-06, focus ring) and
+   c414a6f (2026-07-07, reduced motion). reader.css already existed (2026-07-01)
+   and got neither; radar.css, written 2026-07-20, copied the corrected baseline.
+   So for 37 days the two /collection/ pages were the only ones on this site that
+   ignored the reader's OS "reduce motion" setting — measured in Chromium with the
+   preference on: scroll-behavior stayed `smooth` on both, .bm-card and .topnav
+   .tab kept their .15s transitions, while / and /radar/ correctly went still.
+   The ring is the smaller half: Chrome's default `auto 1px` is visible, so this
+   was never invisible focus — it was the site's declared 2px accent ring at 3px
+   offset going missing on the page with the most tab stops in it (a ~10k-word
+   essay of body links). Same rule as --dim above: all three stylesheets carry
+   this block, and the drift is only visible by diffing them against each other. */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+
 /* top nav */
 .topnav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .topnav .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--txt)}

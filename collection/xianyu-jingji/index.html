@@ -121,7 +121,19 @@
       <div class="note">本文为转载存档，仅供打不开原站的朋友阅读；版权归原作者所有，如有侵权请联系删除。</div>
     </div>
 
-    <figure class="cover"><img src="./cover.jpg" alt="真实中国：中国小县城沉浮录 配图" /></figure>
+    <!-- Intrinsic size declared so the browser can reserve this box before the 46KB
+         cover arrives. Without it the figure has no aspect ratio to go on and paints
+         2px tall — just its own borders — then the entire article below snaps down
+         when the image lands. Measured 2026-08-14 with the cover delayed past first
+         paint (real cold-cache case for someone opening a shared link): the body
+         jumped 268px at 1200/768, 141px at 390, 113px at 320, and CLS hit 0.122 at
+         768px — past Google's 0.1 "good" threshold.
+         The attributes supply only the ratio (1189/476); reader.css still owns the
+         rendered size via .article .cover img{width:100%;height:auto}, so the image
+         stays fully responsive and its painted box is byte-identical to before.
+         These must match cover.jpg's real pixel dimensions — re-measure and re-sync
+         if the image is ever replaced, or the reserved box will be the wrong shape. -->
+    <figure class="cover"><img src="./cover.jpg" width="1189" height="476" alt="真实中国：中国小县城沉浮录 配图" /></figure>
 
     <article class="prose">
       <h2>【序章】沉默的大多数</h2>

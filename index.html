@@ -134,12 +134,27 @@
       transition-duration:.01ms !important;
     }
   }
-  /* top nav */
-  .topnav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  /* top nav — the tab labels are 2–3 CJK characters, and a flex item shrinks before
+     its line wraps, so under width pressure the tabs are the first thing to give:
+     each label breaks *between characters* and renders as a vertical stack, with the
+     aria-current pill inflating into a blob around it. This is the only page that
+     hits it — it carries the language toggle on top of the same brand + three tabs
+     the other pages have, and that ~55px is what pushes the row past the viewport.
+     Measured 2026-08-15, before the fix: labels stayed whole down to 370px, split to
+     two lines at 360 (nav 78.8px → 103.5px) and to three at 330 (→ 128.3px). 360×800
+     is the most common phone viewport there is, and this page is the front door.
+     The rule is stated directly: a label is never split (white-space), and a row that
+     no longer fits wraps to the next line instead of being squeezed (flex-wrap, on
+     the nav and on the tab group). Nothing moves at ≥375px — the row still fits there.
+     radar.css and reader.css carry the same nav *without* the toggle and hold all the
+     way to 320px (slack measured the same day: 7px on /radar/, 19px on the two
+     /collection/ pages). They are correct as they stand; give them this same guard the
+     day either one gains a fourth tab or a control of its own. */
+  .topnav{max-width:880px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
   .topnav .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--txt)}
   .topnav .brand .dot{color:var(--accent)}
-  .topnav .tabs{display:flex;gap:6px}
-  .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;transition:color .15s ease,background .15s ease}
+  .topnav .tabs{display:flex;flex-wrap:wrap;gap:6px}
+  .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;white-space:nowrap;transition:color .15s ease,background .15s ease}
   .topnav .tab:hover{color:var(--txt)}
   .topnav .tab[aria-current="page"]{color:var(--accent);background:var(--chip)}
   .nav-right{display:flex;align-items:center;gap:10px}

@@ -744,7 +744,23 @@
           }
           valid.sort(function(a, b){ return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0); });
 
-          if (el && tools.length > 0) el.textContent = String(tools.length);
+          /* Count the tools this page can actually vouch for, not the raw array.
+             Every other live figure here — the latest-ship line, the gallery, the
+             breadth line, the test deep-link — already gates on `valid`; this stat
+             was the one consumer still reading `tools`, and it is the most
+             prominent number on the page. While every entry validates the two are
+             the same number (58 of 58 today), which is why the divergence sat open
+             and unproven since 2026-07-31. Constructed 2026-08-17: corrupt three
+             of the 58 entries the way a generator realistically would — one with
+             its title dropped, one pointing at an externally-hosted URL, one whose
+             path has not been assigned yet — and the page renders "58" here while
+             the breadth line 400px below renders "55 tools · 49 distinct technical
+             domains". Same manifest, same load, two totals, and the larger one is
+             read off entries this page refused to display or link to.
+             Reading `valid` also makes the empty case behave: if nothing validates,
+             the count stays at the static floor instead of asserting a number
+             backed by nothing. Don't put `tools` back. */
+          if (el && valid.length > 0) el.textContent = String(valid.length);
 
           if (valid.length && box){          // latest-ship proof line (newest tool)
             latest = valid[0];

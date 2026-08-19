@@ -43,7 +43,7 @@
      is claimed that the page doesn't already say.
      Deliberately no datePublished/dateModified anywhere: they would need hand-
      bumping on every ship and would silently rot between runs — the same drift the
-     "50+" stat floor exists to avoid. Re-sync only when a project is added,
+     "60+" stat floor exists to avoid. Re-sync only when a project is added,
      retired, or its URL moves. -->
 <script type="application/ld+json">
 {
@@ -226,12 +226,20 @@
   .chip-ch:hover .ch-n{color:var(--accent)}
   /* impact stats — "by the numbers"; the tools figure is fetched live from the
      daily-tools manifest at runtime. The static fallback is a durable floor
-     ("50+"), not an exact count — so JS-off / crawler views stay honest and
+     ("60+"), not an exact count — so JS-off / crawler views stay honest and
      don't understate, without needing a bump every time a tool ships (that
      exact-number chase was a daily-drift treadmill). JS replaces it with the
      precise live count. Bump the floor only at the next 10-tool milestone —
      raised 30+ → 40+ on 2026-07-31 at 41 shipped, 40+ → 50+ on 2026-08-09 at
-     exactly 50 shipped; next bump at 60, not before. */
+     exactly 50 shipped, 50+ → 60+ on 2026-08-19 at exactly 60 shipped; next
+     bump at 70, not before.
+     A floor is only worth having if it is re-sourced, not assumed. Checked the
+     day of this bump, against the repo tree rather than the manifest alone
+     (git/trees/main?recursive=1, untruncated): 60 manifest entries, all 60
+     passing the same validation the live count uses, 60 tool directories, 60
+     test.mjs — a clean 1:1 with nothing on either side unaccounted for. So the
+     label this number carries ("each browser-tested") holds at 60 too, and the
+     JS-off reader is told 60+ where the JS reader is told 60. */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   @media(max-width:520px){.stats{grid-template-columns:1fr}}
   .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
@@ -400,7 +408,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">50+</span>
+          <span class="num" id="stat-tools">60+</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">

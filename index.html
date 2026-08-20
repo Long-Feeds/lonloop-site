@@ -297,6 +297,33 @@
      cards so the two never read as the same thing. The section stays hidden
      until the fetch confirms it, so it never shows empty or stale without JS. */
   .tools-grid{margin-bottom:18px}
+  /* Reserve this section's box while the manifest is still in flight, so the
+     gallery lands in the space already set aside for it instead of shoving the
+     rest of the page down when it arrives.
+     Measured 2026-08-20 with the manifest delayed 6s (the cold, slow-network case
+     — the fetch is cache:'no-store', so every visit pays full network cost): a
+     reader who had scrolled past this point had the content under their eyes
+     pushed 595px down at 1200 and 1020-1118px at 390 — the whole Writing card,
+     book chapters and activity feed shoved off screen mid-read. Chrome's scroll
+     anchoring compensates only the 65px latest-ship insert, not this one.
+     Note this is invisible to Google's CLS (measured 0.0045 "good"): the shift
+     happens entirely below the fold, and CLS is sampled with the viewport parked
+     at the top. Only a reader who has actually scrolled ever sees it.
+     The heights are the section's real rendered size, not an estimate: the grid is
+     3 rows of 126px tiles + 2×16px gaps = 410px at two columns and 6 rows + 5 gaps
+     = 836px at one, and the heading, breadth line and browse-all add a further
+     121px either way — 531px and 957px, splitting on .grid's own 640px breakpoint.
+     Both numbers hold only because .tool pins min-height:126px (see below) — left
+     to the copy, a one-column tile whose subtitle fits one line collapses to 105px
+     and the total drifts day to day. Re-measure and re-sync both if the tile size,
+     the grid gap, or the 6-tile count ever changes.
+     visibility:hidden (not opacity) keeps the empty heading and browse-all link
+     out of the accessibility tree while the box is only a placeholder. The class
+     is added by script, so JS-off readers keep the plain [hidden] section and
+     never see a gap; it is dropped on every settle path, success or failure, so
+     a manifest that never arrives collapses the box rather than stranding it. */
+  #toolsShowcase.reserving{visibility:hidden;min-height:531px}
+  @media(max-width:640px){#toolsShowcase.reserving{min-height:957px}}
   /* breadth line — the quantified backing for the Daily Tools card's "domains
      almost never repeat" claim: total shipped vs. distinct domains, both counted
      live off the manifest's own category field. Sits directly under the heading
@@ -305,9 +332,22 @@
   .tools-breadth{margin:-12px 0 20px;color:var(--muted);font-size:14.5px}
   .tools-breadth[hidden]{display:none}
   .tools-breadth b{color:var(--txt);font-weight:700}
+  /* min-height is the tile's own natural size — 21px meta + 21px title + 41px
+     two-line subtitle + 2×5px gaps + 31px padding — pinned so it is a constant
+     rather than a function of how long today's six subtitles happen to be. At two
+     columns the grid row already stretches siblings to a common height, so tiles
+     measure 126px there regardless; at one column there is no sibling to stretch
+     against, and a subtitle short enough to fit one line collapsed its tile to
+     105px. That made the gallery's total height drift with the day's copy — on
+     2026-08-20 it stepped 955px at 320-540px wide, 915px at 560-580, 895px at
+     600-640 — which .reserving above has to predict before that copy exists.
+     Pinning it makes the reserve structurally correct instead of correct-today,
+     and evens the one-column tiles up to match how they already render at two.
+     A title long enough to wrap to a second line still exceeds this; that costs
+     the reserve ~21px per wrapped tile, against the 595-1118px it removes. */
   .tool{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:16px 18px 15px;text-decoration:none;display:flex;flex-direction:column;gap:5px;
-    transition:transform .15s ease,border-color .15s ease}
+    min-height:126px;transition:transform .15s ease,border-color .15s ease}
   .tool:hover{transform:translateY(-3px);border-color:#33405e}
   /* freshness + domain share one metadata row. The domain pill is the per-tile
      half of the same proof: six tiles, six unrelated engineering domains, visible
@@ -682,6 +722,19 @@
       var breadthEl = document.getElementById('toolsBreadth');
       var testLink = document.getElementById('dailyTest');
 
+      /* Hold the gallery's box open while the fetch is in flight — see the
+         .reserving rule above for the measurement. Every exit from the fetch must
+         call endReserve(): a 500, a 404, an empty or fully-invalid manifest all
+         resolve rather than throw, and leaving the class on would strand a
+         531/957px void where the gallery never appeared. keep=true when tiles
+         rendered; the 10 settle paths are covered by tools/reserve-settle.mjs. */
+      function endReserve(keep){
+        if (!showcase) return;
+        showcase.classList.remove('reserving');
+        showcase.hidden = !keep;
+      }
+      if (showcase){ showcase.classList.add('reserving'); showcase.hidden = false; }
+
       function relTime(dateStr, en){
         var d = new Date(dateStr + 'T00:00:00');
         if (isNaN(d.getTime())) return '';
@@ -810,7 +863,9 @@
           if (valid.length && grid && showcase){   // latest-tools gallery (newest 6)
             recent = valid.slice(0, 6);
             renderTools();
-            showcase.hidden = false;
+            endReserve(true);
+          } else {
+            endReserve(false);                     // nothing to show — collapse the reserved box
           }
           // distinct-domain count over the whole validated set, not just the 6 shown
           if (valid.length && breadthEl){
@@ -828,7 +883,7 @@
             }
           }
         })
-        .catch(function(){ /* keep the static fallback; hidden blocks stay hidden */ });
+        .catch(function(){ endReserve(false); /* keep the static fallback; hidden blocks stay hidden */ });
 
       document.addEventListener('langchange', function(){ renderLatest(); renderTools(); renderBreadth(); });
     })();

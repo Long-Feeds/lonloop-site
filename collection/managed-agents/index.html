@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>规模化 Managed Agents：把「大脑」和「双手」解耦 · 收藏夹 · lonX</title>
+<meta name="description" content="Anthropic 工程博客《Scaling Managed Agents: Decoupling the brain from the hands》中文译介 —— harness 会随模型变强而过时，所以要围绕 session / harness / sandbox 三个稳定接口设计元框架。含原文全部架构图。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<!-- Self-canonical, same reasoning as /collection/xianyu-jingji/: Cloudflare Pages
+     serves this file byte-identically from the apex, from lonloop-site.pages.dev and
+     from every never-retired per-deploy <hash>.lonloop-site.pages.dev, all of them
+     200 and all crawlable. Without this line a crawler has N identical copies and
+     picks the authoritative one by guesswork. -->
+<link rel="canonical" href="https://lonloop.com/collection/managed-agents/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="规模化 Managed Agents：把「大脑」和「双手」解耦" />
+<meta property="og:description" content="Anthropic 工程博客中文译介：harness 编码的假设会随模型变强而过期，Managed Agents 用 session / harness / sandbox 三个接口把它们隔开。" />
+<!-- Shared site og.png rather than a cover of its own. The source article's own
+     og:image is Anthropic's generic wordmark card — mirroring that here would put
+     someone else's brand on a link preview for this domain's page, which is exactly
+     the claim the .attrib block below exists to avoid making. The article's real
+     artwork is its four diagrams, and those are inline where they belong. -->
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:image:alt" content="lonX · AI Application &amp; Backend Engineer — 构建 LLM Agent 与 Claude Code 生态的工程师" />
+<meta property="og:url" content="https://lonloop.com/collection/managed-agents/" />
+<meta property="og:locale" content="zh_CN" />
+
+<!-- Twitter Card — only this tag, deliberately; the rationale (every other twitter:*
+     tag has a documented og: fallback, so restating them would leave two copies of
+     the same strings to drift) lives in /collection/index.html. -->
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Structured data. This page is a Chinese-language commentary/digest of an article
+     published by Anthropic. The markup must not claim authorship of the underlying
+     work: `author` is this site (who wrote the Chinese text), while `citation` and
+     `isBasedOn` point at the English original and name Anthropic as its publisher.
+     Getting this backwards — the easy mistake — would assert to every crawler and
+     LLM that lonloop.com wrote Anthropic's engineering blog.
+     No datePublished bump on edits: the date below is when this digest first
+     shipped, a fixed fact, not a freshness signal needing hand-maintenance (same
+     call as sitemap.xml's deleted <lastmod>). -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://lonloop.com/collection/managed-agents/#article",
+  "headline": "规模化 Managed Agents：把「大脑」和「双手」解耦",
+  "url": "https://lonloop.com/collection/managed-agents/",
+  "mainEntityOfPage": "https://lonloop.com/collection/managed-agents/",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-08-21",
+  "isAccessibleForFree": true,
+  "about": {"@type": "Thing", "name": "AI Agent 基础设施"},
+  "author": {
+    "@type": "Person",
+    "name": "lonX",
+    "url": "https://lonloop.com/"
+  },
+  "isBasedOn": {
+    "@type": "Article",
+    "headline": "Scaling Managed Agents: Decoupling the brain from the hands",
+    "url": "https://www.anthropic.com/engineering/managed-agents",
+    "datePublished": "2026-04-08",
+    "inLanguage": "en",
+    "publisher": {"@type": "Organization", "name": "Anthropic", "url": "https://www.anthropic.com/"}
+  },
+  "citation": "https://www.anthropic.com/engineering/managed-agents"
+}
+</script>
+<link rel="stylesheet" href="../reader.css" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <!-- aria-current="true" (current item in the set), not "page" — this is a child
+           of /collection/, so "current page" would be false. reader.css renders both
+           identically; see its .topnav .tab[aria-current] rule. -->
+      <a href="/collection/" class="tab" aria-current="true">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+    </div>
+  </nav>
+
+  <main class="article">
+    <a class="back" href="/collection/">← 收藏夹</a>
+
+    <h1 class="title">规模化 Managed Agents：把「大脑」和「双手」解耦</h1>
+    <div class="kicker">Anthropic 工程博客 · 中文译介</div>
+
+    <div class="attrib">
+      <div class="row">
+        <span><span class="k">原文</span><span class="v"><a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener">Scaling Managed Agents: Decoupling the brain from the hands</a></span></span>
+      </div>
+      <div class="row">
+        <span><span class="k">作者</span><span class="v">Lance Martin、Gabe Cemaj、Michael Cohen（Anthropic）</span></span>
+      </div>
+      <div class="row">
+        <span><span class="k">来源</span><span class="v">anthropic.com/engineering</span></span>
+        <span><span class="k">发布</span><span class="v">2026-04-08</span></span>
+        <span><span class="k">译介于</span><span class="v">2026-08-21</span></span>
+      </div>
+      <div class="note">本文是对上述英文原文的<b>中文译介与要点梳理</b>，按原文章节顺序逐节展开，并保留原文全部架构图；力求忠实，但表述经过重写，不是逐句全文转载。<b>原文与配图版权归 Anthropic 所有</b>，细节与准确措辞请以<a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener">英文原文</a>为准。如版权方认为不妥，请联系删除。</div>
+    </div>
+
+    <article class="prose">
+
+      <p><b>一句话概括：</b>Agent 的 harness（外壳/脚手架）里塞满了「模型自己做不到什么」的假设，而模型每升级一次，这些假设就过期一批。Anthropic 的 Managed Agents 因此不去赌某一个具体 harness，而是把 agent 拆成 <code>session</code>（会话日志）、<code>harness</code>（循环）、<code>sandbox</code>（执行环境）三样东西，只对它们之间的<b>接口</b>下判断——接口稳定，底下的实现可以随时换掉。</p>
+
+      <h2>起点：harness 里的假设会过期</h2>
+
+      <p>Anthropic 工程博客一直在谈两件事：怎么构建有效的 agent，以及怎么为长周期任务设计 harness。贯穿其中的一条线索是——<b>harness 本质上是在编码「Claude 自己做不到什么」的假设</b>。而这些假设需要被反复质疑，因为模型一变强，它们就会失效。</p>
+
+      <p>原文给了一个很具体的例子：Claude Sonnet 4.5 在感觉到上下文快用完时，会提前草草收尾任务，这种行为有时被称为「上下文焦虑」（context anxiety）。他们的对策是在 harness 里加上下文重置（context resets）。但同一套 harness 换到 Claude Opus 4.5 上，这个行为消失了——那些重置逻辑就成了纯粹的负重（dead weight）。</p>
+
+      <p>既然 harness 注定会继续演化，那就别把系统建在某一版 harness 上。Managed Agents 是 Claude Platform 里的一项托管服务，替你运行长周期 agent，而它对外暴露的是一小组「打算比任何具体实现活得更久」的接口——<b>包括比他们今天自己跑的这套实现活得更久</b>。</p>
+
+      <h2>老问题：为「尚未被想到的程序」做设计</h2>
+
+      <p>这在计算机领域是个老问题：如何为「programs as yet unthought of」（尚未被想到的程序）设计系统。</p>
+
+      <p>几十年前操作系统给出的答案是<b>虚拟化</b>：把硬件抽象成<code>进程</code>、<code>文件</code>这类足够通用的概念，通用到能服务那些当时还不存在的程序。结果是抽象活得比硬件久——<code>read()</code> 并不关心自己读的是 1970 年代的磁盘组还是今天的 SSD。底下的实现自由更替，上层抽象纹丝不动。</p>
+
+      <p>Managed Agents 走的是同一条路，把 agent 的组件也虚拟化了：</p>
+
+      <ul>
+        <li><b>session</b> —— 一份只追加（append-only）的日志，记录发生过的一切；</li>
+        <li><b>harness</b> —— 那个调用 Claude、并把 Claude 的工具调用路由到对应基础设施的循环；</li>
+        <li><b>sandbox</b> —— Claude 能跑代码、改文件的执行环境。</li>
+      </ul>
+
+      <p>三者的实现可以互不干扰地被替换掉。用原文的话说，他们<b>只对这些接口的形状有主见，对接口背后跑什么没有主见</b>。</p>
+
+      <figure class="fig">
+        <img src="./img/fig1-virtualize.png" width="1200" height="1200" alt="Managed Agents 的组件关系图：中心是 Harness，四周连接 Session、Sandbox、Tools（含 Resources / MCP）与 Orchestration" loading="lazy" />
+        <figcaption>Managed Agents 的组件划分：Harness 居中，向外分别连接 Session（会话日志）、Sandbox（执行环境）、Tools + Resources / MCP（工具）与 Orchestration（调度）。图片来源：Anthropic</figcaption>
+      </figure>
+
+      <h2>第一课：别养成一只「宠物」</h2>
+
+      <p>他们最初的做法是把 agent 的所有组件塞进<b>同一个容器</b>——session、harness、sandbox 共享一个环境。这么做有实打实的好处：改文件就是直接的系统调用，而且根本不需要设计任何服务边界。</p>
+
+      <p>但把一切耦合进一个容器，就撞上了基础设施领域的一个老毛病：<b>他们养了一只宠物</b>。</p>
+
+      <p>在「宠物 vs 牲畜」（pets vs cattle）这个经典类比里，宠物是有名字、需要人工照料、丢不起的个体；牲畜则是可互换的。在这里，服务器变成了那只宠物：<b>容器一挂，会话就没了</b>；容器一失去响应，就得把它「救回来」。</p>
+
+      <p>而「救」的过程意味着调试卡死的会话——问题在于，他们唯一的观察窗口是 WebSocket 事件流，这个窗口<b>说不清故障出在哪一层</b>：harness 的 bug、事件流丢包、容器下线，三种情况长得一模一样。要查清楚，工程师就得在容器里开一个 shell；可那个容器里往往同时装着用户数据——于是这条路实际上等于「没有调试能力」。</p>
+
+      <p>第二个问题更结构性：<b>harness 默认 Claude 要处理的东西就跟它待在同一个容器里</b>。当客户希望 Claude 去访问他们自己 VPC 里的资源时，可选项只有两个：要么把网络和 Anthropic 对等互联，要么把这套 harness 搬到客户自己的环境里跑。一个被烘进 harness 的假设，在需要对接不同基础设施时就变成了障碍。</p>
+
+      <h2>解法：把「大脑」和「双手」拆开</h2>
+
+      <p>最终的解法是把三样东西彼此解耦：</p>
+
+      <ul>
+        <li><b>大脑（brain）</b> —— Claude 及其 harness；</li>
+        <li><b>双手（hands）</b> —— 真正执行动作的 sandbox 和工具；</li>
+        <li><b>会话（session）</b> —— 事件日志本身。</li>
+      </ul>
+
+      <p>每一样都变成一个对其它两样几乎不作假设的接口，因而<b>可以独立地故障、独立地被替换</b>。</p>
+
+      <h3>harness 搬出容器</h3>
+
+      <p>解耦之后，harness 不再住在容器里；它调用容器的方式跟调用任何其它工具一样：<code>execute(name, input) → string</code>。</p>
+
+      <p>于是<b>容器变成了牲畜</b>。容器死了，harness 只是接到一个工具调用错误，把它原样交还给 Claude；如果 Claude 决定重试，就用一份标准配方 <code>provision({resources})</code> 起一个新容器。再也不需要把坏掉的容器抢救回来。</p>
+
+      <h3>harness 自己也能崩</h3>
+
+      <p>harness 同样变成了牲畜。因为<b>会话日志坐在 harness 外面</b>，harness 内部就没有任何东西需要在崩溃中幸存：</p>
+
+      <ul>
+        <li>崩了之后用 <code>wake(sessionId)</code> 重新拉起一个；</li>
+        <li>用 <code>getSession(id)</code> 取回事件日志；</li>
+        <li>从最后一个事件继续往下跑。</li>
+      </ul>
+
+      <p>而在 agent 循环运行期间，harness 通过 <code>emitEvent(id, event)</code> 往 session 里写，保证事件有一份持久记录。</p>
+
+      <figure class="fig">
+        <img src="./img/fig2-decouple.png" width="1400" height="1362" alt="Managed Agents 各组件的接口伪代码与实现要求对照表：Session、Orchestration、Harness、Sandbox、Resources、Tools" loading="lazy" />
+        <figcaption>原文列出的接口清单——每一行都写明「伪代码接口」与「什么样的东西可以满足它」：Session 可以是 Postgres / SQLite / 内存数组，Orchestration 可以是 cron / 队列消费者 / 一个 while 循环，Sandbox 可以是本地进程或远程容器。这张表是整篇文章的核心。图片来源：Anthropic</figcaption>
+      </figure>
+
+      <h3>安全边界：凭证必须从沙箱里够不着</h3>
+
+      <p>这一节是我认为原文里最值得单独拎出来的部分。</p>
+
+      <p>在耦合式设计里，Claude 生成的<b>不可信代码</b>和<b>凭证</b>跑在同一个容器里——这意味着一次 prompt injection 只需要说服 Claude 去读一下自己的环境变量就够了。攻击者一旦拿到这些 token，就能开出全新的、不受限的会话，并把活派给它们。</p>
+
+      <p>把 token 权限收窄当然是个显而易见的缓解措施，但原文指出了它的软肋：<b>收窄权限本身又是在编码一条「Claude 拿着受限 token 做不到什么」的假设，而 Claude 正在变得越来越聪明</b>。</p>
+
+      <p>结构性的修法是：让 token <b>从 Claude 生成代码运行的那个沙箱里根本够不着</b>。他们用了两种模式——凭证要么和资源捆绑在一起，要么存放在沙箱之外的 vault 里：</p>
+
+      <ul>
+        <li><b>Git</b>：在沙箱初始化阶段用仓库的 access token 完成 clone，并把它接进本地的 git remote。之后沙箱里的 <code>git push</code> / <code>git pull</code> 照常工作，而 agent 全程<b>没碰过</b>那个 token。</li>
+        <li><b>自定义工具</b>：走 MCP，OAuth token 存在安全 vault 里。Claude 通过一个专用代理调用 MCP 工具，代理接收的是一个<b>与该 session 关联的 token</b>，再凭它去 vault 取出对应凭证、向外部服务发起调用。<b>harness 自始至终不知道任何凭证的存在。</b></li>
+      </ul>
+
+      <h2>session 不等于 Claude 的上下文窗口</h2>
+
+      <p>长周期任务经常会超出 Claude 上下文窗口的长度，而现有的应对手段几乎都要求做出<b>不可逆的取舍</b>。原文回顾了他们此前在 context engineering 上的工作：</p>
+
+      <ul>
+        <li><b>compaction（压缩）</b>：让 Claude 把上下文窗口存成一份摘要；</li>
+        <li><b>memory 工具</b>：让 Claude 把上下文写进文件，从而实现跨会话的学习；</li>
+        <li><b>context trimming（裁剪）</b>：选择性地移除旧的工具结果、思考块等 token。</li>
+      </ul>
+
+      <p>问题在于，「留哪些、丢哪些」这类不可逆决策会导致失败——<b>你很难预知未来的对话轮次会需要哪些 token</b>。一旦消息被 compaction 步骤改写，harness 就把被压缩的消息从上下文窗口里移除了；除非另行存储，否则它们再也找不回来。</p>
+
+      <p>已有的研究给过一个方向：把上下文<b>当作一个活在上下文窗口之外的对象</b>。比如让上下文成为 REPL 里的一个对象，模型通过写代码来过滤、切片，以编程方式访问它。</p>
+
+      <figure class="fig">
+        <img src="./img/fig3-session.png" width="1200" height="316" alt="Session 与 Harness 之间的双向关系：Session 向 Harness 推送 Events，Harness 通过 getEvents 反向查询" loading="lazy" />
+        <figcaption>Session 与 Harness 的关系：事件从 session 流向 harness，而 harness 也可以主动用 <code>getEvents</code> 回头查询——上下文成了一个可反复审问的外部对象。图片来源：Anthropic</figcaption>
+      </figure>
+
+      <p>Managed Agents 里，<b>session 就扮演这个「窗口之外的上下文对象」</b>，只不过它不是存在 sandbox 或 REPL 里，而是持久化在会话日志中。接口 <code>getEvents()</code> 让大脑能够按<b>位置切片</b>去审问上下文，用法相当灵活：</p>
+
+      <ul>
+        <li>从上次读到的地方接着往下读；</li>
+        <li>回卷到某个关键时刻之前几个事件，看清事情的来龙去脉；</li>
+        <li>在执行某个动作之前，重读一遍相关上下文。</li>
+      </ul>
+
+      <p>取回来的事件，还可以在 harness 里先做变换再送进 Claude 的上下文窗口——变换逻辑完全由 harness 定义，包括为了拉高 prompt 缓存命中率而做的上下文组织，以及各种 context engineering。</p>
+
+      <p>原文把这个分工讲得很清楚：<b>session 只负责「可恢复的上下文存储」，harness 负责「任意的上下文管理」</b>。之所以要拆开，是因为他们无法预测未来的模型会需要什么样的 context engineering——所以接口把这部分推给 harness，自己只保证一件事：<b>session 是持久的，且随时可被审问</b>。</p>
+
+      <h2>多个大脑，多双手</h2>
+
+      <h3>多个大脑（many brains）</h3>
+
+      <p>解耦顺手解决了他们最早的一类客户投诉：想让 Claude 访问自家 VPC 里的资源，此前唯一的路就是网络对等互联，因为装着 harness 的容器<b>假定每一样资源都紧挨着自己</b>。harness 一旦搬出容器，这个假设就不存在了。</p>
+
+      <p>同一个改动还带来了性能收益。大脑在容器里时，<b>多少个大脑就要多少个容器</b>：容器没起来之前推理就无法开始，每个会话都要先付一笔完整的容器启动成本；哪怕这个会话压根不会用到 sandbox，也照样得 clone 仓库、把进程拉起来、去服务器拉取待处理事件。</p>
+
+      <p>这段死时间体现在 <b>TTFT</b>（time-to-first-token，从接下任务到吐出第一个响应 token 的等待时长）上——原文特意点明，这是<b>用户感受最尖锐的那种延迟</b>。</p>
+
+      <p>解耦之后，容器改由大脑<b>按需</b>通过一次工具调用（<code>execute(name, input) → string</code>）来创建：用不上容器的会话就不必等它。只要编排层从会话日志里拉到了待处理事件，推理立刻就能开始。</p>
+
+      <blockquote>用这套架构，他们的 <b>p50 TTFT 下降了大约 60%，p95 下降超过 90%</b>。</blockquote>
+
+      <p>而扩展到多个大脑，也就变成了「启动多个无状态 harness，只在需要时才把它们接到双手上」这么简单。</p>
+
+      <h3>多双手（many hands）</h3>
+
+      <p>他们还希望每个大脑能连上<b>多双手</b>。这在实践中意味着 Claude 必须同时推理多个执行环境、并决定把活派到哪儿去——这比在单个 shell 里操作是<b>更难的认知任务</b>。</p>
+
+      <p>原文对这段历史的复盘很有意思：<b>当初之所以把大脑放进单个容器，正是因为早期模型还做不到这件事</b>；而随着智能水平提升，单容器反过来成了瓶颈——那个容器一挂，大脑伸出去的<b>每一只手</b>的状态全都丢了。</p>
+
+      <p>解耦之后，每一只手都只是一个工具：<code>execute(name, input) → string</code>，进去一个名字和输入，回来一个字符串。这个接口能容纳任何自定义工具、任何 MCP server，以及他们自己的工具。</p>
+
+      <blockquote>harness 并不知道那个 sandbox 到底是一个容器、一部手机，还是一个宝可梦模拟器。</blockquote>
+
+      <p>而且因为没有任何一只手被绑死在某个大脑上，<b>大脑之间可以互相传递双手</b>。</p>
+
+      <figure class="fig">
+        <img src="./img/fig4-many.png" width="1200" height="437" alt="多个 Harness 与多个 Sandbox 之间的多对多连接示意" loading="lazy" />
+        <figcaption>多个无状态 harness 与多个 sandbox 之间的多对多关系：大脑与双手的数量、位置都不再被硬绑定。图片来源：Anthropic</figcaption>
+      </figure>
+
+      <h2>结论：Managed Agents 是一个「元框架」</h2>
+
+      <p>回到开头那个老问题：如何为尚未被想到的程序设计系统。操作系统之所以能撑几十年，靠的就是把硬件虚拟化成足够通用的抽象。Managed Agents 想做的是同一件事——设计一个能容纳<b>未来的</b> harness、sandbox 或其它 Claude 周边组件的系统。</p>
+
+      <p>所以原文把它定位成一个 <b>meta-harness（元框架）</b>：<b>它对「Claude 未来需要哪个具体 harness」不持立场</b>，而是提供一组通用接口，让许多不同的 harness 都能跑在上面。文中举了两类例子：Claude Code 是一个优秀的通用 harness，他们自己在各种任务上广泛使用；同时也有研究表明，针对特定任务的 agent harness 在窄领域里表现出色。Managed Agents 打算把这些都容纳进来，并随着 Claude 智能的演进持续匹配。</p>
+
+      <p>元框架的设计意味着——<b>只在 Claude 周围的接口上有主见</b>：</p>
+
+      <ul>
+        <li>他们判断 Claude 会需要<b>操纵状态</b>的能力（这就是 session）；</li>
+        <li>会需要<b>执行计算</b>的能力（这就是 sandbox）；</li>
+        <li>会需要扩展到<b>多个大脑、多双手</b>。</li>
+      </ul>
+
+      <p>接口的设计目标是让这些能力在长时间跨度上可靠且安全地运行。但除此之外，<b>他们对 Claude 究竟需要多少个、以及位于何处的大脑与双手，不作任何假设</b>。</p>
+
+      <hr />
+
+      <h2>译者附记</h2>
+
+      <p>几个我觉得对自建 agent 系统最有借鉴价值的点：</p>
+
+      <ul>
+        <li><b>「harness 编码的是模型的短板」</b>这个视角很锋利。它意味着 harness 里的每一段补丁都自带保质期，值得定期回头做减法——上下文重置那个例子就是活的反面教材。</li>
+        <li><b>把会话日志放到 harness 之外</b>，是让 harness 从「宠物」变成「牲畜」的关键一步。崩了就重启、从最后一个事件续跑，这条链路的前提是日志不跟 harness 同生共死。</li>
+        <li><b>凭证不可达</b>比<b>凭证权限小</b>更靠得住。「收窄 scope」本质上仍是在赌模型做不到某件事，而这个赌注每次模型升级都在贬值；把 token 挪出沙箱才是结构性的修法。</li>
+        <li><b>不可逆的上下文压缩是有代价的</b>。session 作为可按位置切片、反复回读的外部对象，把「存」和「管」拆成两件事——存的那一半保证不丢，管的那一半随模型演进自由更换。</li>
+        <li><b>按需 provision 容器</b>带来的 TTFT 收益（p50 −60%、p95 −90%）大得超出直觉，值得对照检查自己的冷启动路径上有多少「不用也得等」的步骤。</li>
+      </ul>
+
+      <p class="signoff">原文致谢：Written by Lance Martin, Gabe Cemaj, and Michael Cohen；感谢 Nodir Turakulov 与 Jeremy Fox 的讨论，以及 Agents API 团队和 Jake Eaton 的贡献。<br />
+      中文译介：lonX · 完整原文请读 <a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener">anthropic.com/engineering/managed-agents</a></p>
+    </article>
+  </main>
+
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · 中文译介，原文版权归 Anthropic</span>
+    <span><a href="/collection/">← 收藏夹</a> · <a href="/">主页</a></span>
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

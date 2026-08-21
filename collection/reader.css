@@ -110,6 +110,29 @@ a{color:inherit}
 .prose figure{margin:20px 0}
 .prose figure figcaption{color:var(--dim);font-size:13px;text-align:center;margin-top:8px}
 .prose blockquote{border-left:3px solid var(--accent);padding:2px 0 2px 18px;margin:22px 0;color:var(--muted)}
+
+/* figure.fig — for diagrams mirrored from a light-background source.
+   This site is dark; the source diagrams (Anthropic's, and any future mirror's)
+   are drawn as dark ink on near-white, so a bare <img> punches a glaring white
+   rectangle through the page. The wrapper puts them back on the light card they
+   were designed for, which is the honest fix: filter:invert() would flip the
+   accent colour and the monospace type inside them into something the original
+   author never drew, and on the interface table (1400x1362 of code) that is a
+   legibility regression, not a theme adaptation.
+   #f7f5f1 matches the source artwork's own canvas, so the padding reads as part
+   of the figure rather than a frame around it. The caption sits inside the card
+   and therefore needs a dark ink of its own — var(--dim) is tuned for the dark
+   background and would be 1.3:1 here. #5f5b55 on #f7f5f1 is 6.4:1 (AA for the
+   13px it colors, and AAA-adjacent), matching how --dim reads against --card. */
+.prose figure.fig{background:#f7f5f1;border:1px solid var(--line);border-radius:12px;padding:14px;margin:26px 0}
+.prose figure.fig img{width:100%;margin:0;border:none;border-radius:6px;display:block}
+.prose figure.fig figcaption{color:#5f5b55;font-size:13px;line-height:1.65;text-align:left;margin:11px 2px 2px}
+.prose figure.fig figcaption code{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.12);color:#3d3a35}
+
+/* Inline code. reader.css predates any mirrored article with pseudocode in it;
+   without this, `execute(name, input) -> string` renders in the body face at body
+   size and stops looking like an identifier. */
+.prose code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em;background:var(--chip);border:1px solid var(--line);border-radius:5px;padding:1.5px 6px;color:#cdd6f5;overflow-wrap:break-word}
 .prose ul,.prose ol{margin:0 0 20px;padding-left:22px}
 .prose li{margin:6px 0}
 .prose a{color:var(--accent)}

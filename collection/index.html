@@ -55,7 +55,19 @@
     </div>
 
     <div class="bm-list">
-      <!-- 每条收藏 = 一张卡片，点开进入 /collection/<slug>/ 阅读页。新增时复制此模板即可。 -->
+      <!-- 每条收藏 = 一张卡片，点开进入 /collection/<slug>/ 阅读页。新增时复制此模板即可。
+           顺序：最新收藏在最前。 -->
+      <a class="bm-card" href="./managed-agents/">
+        <div class="bm-meta">
+          <span class="badge">中文译介</span>
+          <span>转自 Anthropic 工程博客</span>
+          <span class="src">收藏于 2026-08-21</span>
+        </div>
+        <h2>规模化 Managed Agents：把「大脑」和「双手」解耦</h2>
+        <p class="excerpt">harness 里编码的全是「模型自己做不到什么」的假设，而模型每升级一次就过期一批。Anthropic 把 agent 拆成 session / harness / sandbox 三个接口，让容器和 harness 都从「宠物」变成「牲畜」——附带把 p50 首字延迟砍掉约 60%。含原文全部架构图。</p>
+        <div class="by"><b>来源</b> · anthropic.com · Scaling Managed Agents: Decoupling the brain from the hands</div>
+      </a>
+
       <a class="bm-card" href="./xianyu-jingji/">
         <div class="bm-meta">
           <span class="badge">X 长文</span>

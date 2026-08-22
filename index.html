@@ -477,10 +477,26 @@
              what is actually hard (a per-tool Playwright test gating deploy, zero
              backend, genuine domain breadth) instead of the pipeline in the abstract.
              The three exemplars and the "almost no two share a domain" claim are read
-             off the live manifest (37 tools / 31 distinct categories) and each tool's
-             own subtitle — nothing here is invented. Deliberately no counts in the
-             copy: exact figures start the daily-drift treadmill the "30+" stat floor
-             was introduced to end. Re-sync the exemplars only if one goes offline.
+             off the live manifest (63 tools / 55 distinct categories, re-counted
+             2026-08-22) and each tool's own subtitle — nothing here is invented.
+             Deliberately no counts in the copy: exact figures start the daily-drift
+             treadmill the "60+" stat floor was introduced to end.
+             Exemplar re-sync rule, revised 2026-08-22. It used to read "only if one
+             goes offline", which froze the card on the 2026-07-06/18/20 set (logic
+             gates, Fourier epicycles, backprop) for a month while the pipeline shipped
+             materially harder things — the card was underselling its own ceiling,
+             which is exactly the stale copy this page is maintained to fix. Bounded
+             rather than removed, so it cannot become the daily treadmill the old rule
+             was guarding against: swap only when one goes offline, OR when the set is
+             30+ days old AND the period shipped plainly stronger work — at most one
+             swap per such window, never as filler on a day with nothing else to do.
+             This swap, each read off the tool's own source: software rasterizer
+             (2026-08-18 raster-studio — ten getContext('2d') calls, zero WebGL
+             contexts, its own lede is "这不是 WebGL"), compiler + bytecode VM
+             (2026-08-13 compiler-studio — Pratt parser, upvalues, bytecode, single-
+             step breakpoints), in-browser git core (2026-08-14 git-lab — hashObject()
+             is sha1(type + ' ' + len + NUL + body), git's actual object format, which
+             is why its hashes match real git). All three verified 200 the same day.
              The third action is the evidence for this card's strongest sentence —
              "each carries its own integration test that must pass in real Chromium
              before it deploys" — which until now the page asserted with nothing to
@@ -493,11 +509,13 @@
              newest tool's own test.mjs (see the manifest block below), because a
              single tool's assertions are what show the tests are real rather than
              smoke checks. Both targets are honest for their audience and neither
-             needs hand-bumping — same rule as every other live figure here. -->
+             needs hand-bumping — same rule as every other live figure here.
+             Test coverage re-verified 2026-08-22 off the repo tree (truncated:false):
+             63 of 63 tool directories still ship a test.mjs, 1:1 with the manifest. -->
 
         <article class="card">
           <div class="name">Daily Tools <span class="badge">LIVE</span></div>
-          <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从逻辑电路仿真、傅里叶图形分解到从零实现的反向传播，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
+          <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从软件光栅化渲染器、编译器与字节码虚拟机到浏览器里跑的 git 内核，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
           <div class="tags" data-i18n="daily.tags">自主选题 · 零后端自包含 · Playwright 集成测试 · 无人值守日更</div>
           <div class="actions">
             <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener"><span data-i18n="proj.visit">在线访问</span> <span aria-hidden="true">↗</span></a>
@@ -622,7 +640,7 @@
         'nav.radar': 'Radar',
         'hero.tagline': 'Engineer building the LLM-agent & Claude Code ecosystem',
         'hero.intro': 'Focused on AI agents / LLM applications and backend systems. I like turning working ideas into things that are genuinely usable, maintainable, and production-ready — from an auto-built tools site to deep dives into Claude Code’s source.',
-        'daily.desc': 'Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — logic-gate simulation, Fourier decomposition of a drawing, backprop implemented from scratch; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.',
+        'daily.desc': 'Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — a software rasterizer, a compiler and bytecode VM for a small language, an in-browser git core; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.',
         'daily.tags': 'Self-directed · Zero-backend · Playwright-tested · Unattended daily ships',
         'daily.test': 'See the integration test',
         'book.name': 'Decoding Claude Code',

@@ -22,6 +22,28 @@
 <meta name="twitter:description" content="AI Agent 生态里值得一看的开源项目、工具与好文。" />
 <meta name="twitter:image" content="https://lonloop.com/og.png" />
 <link rel="stylesheet" href="./radar.css" />
+
+<!-- 无 JS 时的降级。这一页的筛选栏、搜索框和「共 N 条」计数全部由页尾那段脚本驱动，
+     关掉 JS 之后它们不是「少了点什么」，而是**在撒谎**：5 个筛选按钮和搜索框照常渲染成
+     可点、可聚焦的控件，按下去却什么都不发生；`#count` 是个空的 role=status/aria-live
+     活区，读屏用户永远等不到那句播报。2026-08-23 的 jsoff 探针把这 6 个死控件 + 1 个哑
+     活区一并量了出来（首次给 /radar/ /collection/ 做 JS-off 全页体检）。
+
+     修法是渐进增强的标准答案——honor 不了的控件就别渲染。放在 head 里的 <noscript>
+     只允许 link/style/meta，且**仅当脚本被禁用时**才解析，所以 JS-on 那条路径逐字节
+     不变：没有闪烁、没有新的可变高度插入点、CLS 与预留面全都不受影响。必须排在
+     radar.css 之后——`.controls{display:none}` 和它的 `display:flex` 同特异性(0,1,0)，
+     靠源序取胜。
+     `.controls` 自带 padding-bottom + border-bottom，是页头与卡片列表之间的那道分隔线；
+     它一藏，分隔线跟着没了，所以把同一份 padding/border 交给下面那条说明行接手，
+     JS-off 的版式节奏与 JS-on 保持一致。
+     体检剩下的两条都判定为「本就正确」，别当缺陷去修：`#empty`（没有匹配的收藏）在
+     无筛选可用时理应保持隐藏；`.rd-card[hidden]` 同理，JS-off 下 19 张卡全展开，
+     那本来就是这一页的完整视图——筛选只会让它更少，不会更多。 -->
+<noscript><style>
+  .controls,#count{display:none}
+  .count.nojs-note{padding-bottom:18px;border-bottom:1px solid var(--line)}
+</style></noscript>
 </head>
 <body>
   <nav class="topnav">
@@ -53,6 +75,11 @@
       </div>
     </div>
     <p class="count" id="count" role="status" aria-live="polite"></p>
+    <!-- body 里的 <noscript>：脚本开启时整块内容根本不会被解析成 DOM（当作文本跳过），
+         所以这行只可能出现在它该出现的那个世界里。刻意不带 role=status —— 它是静态
+         文案，不是活区。也刻意不写「共 19 条」这类数字：那是要人手同步的漂移值，
+         而下面的卡片本来就全在页面上，读者自己数得到。 -->
+    <noscript><p class="count nojs-note">筛选与搜索需要 JavaScript；下面已按收藏时间倒序列出全部收藏。</p></noscript>
 
     <div class="rd-list" id="list">
       <!-- 每条收藏 = 一张卡片。新增时复制此模板，改 data-type / 链接 / 文案即可。 -->

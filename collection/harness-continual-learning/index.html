@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Harness 持续学习：把持续学习的对象从模型参数挪到 harness · 收藏夹 · lonX</title>
+<meta name="description" content="arXiv:2608.19013《Harness Continual Learning: Continual Adaptation Beyond Model Parameters》中文译介 —— 模型冻结不动，改的是 prompt / 记忆 / 技能 / 路由；一次 harness 更新就能让此前稳定的行为失效，作者把它命名为 harness 级遗忘，并用「提案—评估—提交」三道闸把它管起来。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<!-- Self-canonical, same reasoning as the other two /collection/ pages: Cloudflare
+     Pages serves this file byte-identically from the apex, from lonloop-site.pages.dev
+     and from every never-retired per-deploy <hash>.lonloop-site.pages.dev, all 200 and
+     all crawlable. Without this line a crawler has N identical copies and picks the
+     authoritative one by guesswork. -->
+<link rel="canonical" href="https://lonloop.com/collection/harness-continual-learning/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="Harness 持续学习：把持续学习的对象从模型参数挪到 harness" />
+<meta property="og:description" content="arXiv 论文中文译介：模型冻结，harness 演化。一次 prompt / 记忆 / 技能 / 路由的更新就能弄坏此前稳定的行为——作者把它命名为 harness 级遗忘，并给出可调的稳定–可塑闸门。" />
+<!-- Shared site og.png, same call as /collection/managed-agents/: this page's own
+     artwork would have to be the paper's figures, and those are not mirrored here
+     (see the .attrib note on licensing). -->
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:image:alt" content="lonX · AI Application &amp; Backend Engineer — 构建 LLM Agent 与 Claude Code 生态的工程师" />
+<meta property="og:url" content="https://lonloop.com/collection/harness-continual-learning/" />
+<meta property="og:locale" content="zh_CN" />
+
+<!-- Twitter Card — only this tag, deliberately; the rationale (every other twitter:*
+     tag has a documented og: fallback, so restating them would leave two copies of
+     the same strings to drift) lives in /collection/index.html. -->
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Structured data. This page is a Chinese translation/digest of an arXiv preprint.
+     Same rule as /collection/managed-agents/: `author` is this site (who wrote the
+     Chinese text) while `isBasedOn` / `citation` point at the original and name its
+     six authors. Getting this backwards would assert to every crawler and LLM that
+     lonloop.com wrote the paper.
+     No datePublished bump on edits — the date below is when this digest first
+     shipped, a fixed fact, not a freshness signal needing hand-maintenance (same
+     call as sitemap.xml's deleted <lastmod>). -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://lonloop.com/collection/harness-continual-learning/#article",
+  "headline": "Harness 持续学习：把持续学习的对象从模型参数挪到 harness",
+  "url": "https://lonloop.com/collection/harness-continual-learning/",
+  "mainEntityOfPage": "https://lonloop.com/collection/harness-continual-learning/",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-08-24",
+  "isAccessibleForFree": true,
+  "about": {"@type": "Thing", "name": "持续学习与 AI Agent Harness"},
+  "author": {
+    "@type": "Person",
+    "name": "lonX",
+    "url": "https://lonloop.com/"
+  },
+  "isBasedOn": {
+    "@type": "ScholarlyArticle",
+    "headline": "Harness Continual Learning: Continual Adaptation Beyond Model Parameters",
+    "url": "https://arxiv.org/abs/2608.19013",
+    "identifier": "arXiv:2608.19013",
+    "datePublished": "2026-08-19",
+    "inLanguage": "en",
+    "author": [
+      {"@type": "Person", "name": "Borui Kang"},
+      {"@type": "Person", "name": "Jinrui Gu"},
+      {"@type": "Person", "name": "Junhan Lv"},
+      {"@type": "Person", "name": "Wenbin Li"},
+      {"@type": "Person", "name": "Lei Wang"},
+      {"@type": "Person", "name": "Yang Gao"}
+    ],
+    "publisher": {"@type": "Organization", "name": "arXiv", "url": "https://arxiv.org/"}
+  },
+  "citation": "Borui Kang, Jinrui Gu, Junhan Lv, Wenbin Li, Lei Wang, Yang Gao. Harness Continual Learning: Continual Adaptation Beyond Model Parameters. arXiv:2608.19013, 2026."
+}
+</script>
+<link rel="stylesheet" href="../reader.css" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <!-- aria-current="true" (current item in the set), not "page" — this is a child
+           of /collection/, so "current page" would be false. reader.css renders both
+           identically; see its .topnav .tab[aria-current] rule. -->
+      <a href="/collection/" class="tab" aria-current="true">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+    </div>
+  </nav>
+
+  <main class="article">
+    <a class="back" href="/collection/">← 收藏夹</a>
+
+    <h1 class="title">Harness 持续学习：把持续学习的对象从模型参数挪到 harness</h1>
+    <div class="kicker">arXiv:2608.19013 · 中文译介</div>
+
+    <div class="attrib">
+      <div class="row">
+        <span><span class="k">原文</span><span class="v"><a href="https://arxiv.org/abs/2608.19013" target="_blank" rel="noopener">Harness Continual Learning: Continual Adaptation Beyond Model Parameters</a></span></span>
+      </div>
+      <div class="row">
+        <span><span class="k">作者</span><span class="v">Borui Kang、Jinrui Gu、Junhan Lv、Wenbin Li、Lei Wang、Yang Gao</span></span>
+      </div>
+      <div class="row">
+        <span><span class="k">来源</span><span class="v"><a href="https://arxiv.org/abs/2608.19013" target="_blank" rel="noopener">arXiv:2608.19013</a> · cs.LG / cs.AI</span></span>
+        <span><span class="k">提交</span><span class="v">2026-08-19</span></span>
+        <span><span class="k">译介于</span><span class="v">2026-08-24</span></span>
+      </div>
+      <div class="note">本文是对上述英文论文的<b>中文译介</b>，按原文章节顺序（§1–§5）逐节展开，公式改写为文字叙述，实验数据表按原表如实转录。力求忠实，但表述经过重写，不是逐句全文转载；细节与准确措辞请以<a href="https://arxiv.org/abs/2608.19013" target="_blank" rel="noopener">英文原文</a>为准。<br />
+      原文采用 arXiv 默认的 <b>perpetual non-exclusive license</b>（非 CC 协议），该协议只授权 arXiv 分发，<b>并未授予第三方转载权</b>，因此这里<b>不镜像论文原图</b>——四张图请直接看 <a href="https://arxiv.org/html/2608.19013v1" target="_blank" rel="noopener">arXiv 的 HTML 版</a>。版权归原作者所有，如作者认为不妥请联系删除。</div>
+    </div>
+
+    <article class="prose">
+
+      <p><b>一句话概括：</b>过去谈「持续学习」，学的是<b>模型参数</b>；而今天的 agent 还有另一份会随经验变化的状态——由 prompt、记忆、工具、技能、路由规则组成的 <b>harness</b>。这篇论文指出：即便模型一个字节都没动，<b>改一次 harness 也足以让此前稳定可靠的行为失效</b>。作者把这个现象命名为 <b>harness 级遗忘</b>（harness-level forgetting），并给出一套「提案 → 评估 → 提交」的守卫式演化机制：更新先当候选，过了「当前有提升 / 历史不倒退 / 结果合法」三道闸才允许上线。</p>
+
+      <blockquote>如果你已经允许自己的 agent 改写它自己的 prompt、skill 或记忆文件，这篇值得你花时间。<br />—— @omarsar0 在推荐这篇论文时的原话</blockquote>
+
+      <h2>摘要（译）</h2>
+
+      <p>持续学习长期以来是<b>以模型为中心</b>的：把模型参数当成那份随着序列化经验而改变的状态。但现代 agent 还可以通过一层 harness——prompt、记忆、工具、技能与路由规则——来完成适应。由于这些内容<b>共同</b>决定了后续的执行过程，一次 harness 更新即使在模型冻结的前提下，也可能破坏此前可靠的行为。这带出一个新问题：<b>agent 如何在模型之外持续改进自己的状态，同时保住早先习得的行为？</b></p>
+
+      <p>作者据此提出 <b>Harness Continual Learning（HCL）</b>：一种让 harness 围绕冻结的基础模型演化的新持续学习范式，并把由此造成的早期行为损失定义为 <b>harness 级遗忘</b>。HCL 由四个面向执行的组件实例化：<b>任务接口</b>（Task Interface）、<b>经验记忆</b>（Experience Memory）、<b>能力图谱</b>（Capability Map）、<b>自适应路由</b>（Adaptive Router）。在此之上引入<b>守卫式 harness 演化</b>（guarded harness evolution），把「生成更新」与「提交状态」分开：由 <b>Continual Optimizer</b> 根据执行后反馈起草候选 harness，再由 <b>Continual Evaluator</b> 在检查「当前提升、历史保留、有效性」三项之后才决定是否提交。在文本推理、多模态感知、开放世界交互三类任务上的实验显示出能力累积与失败恢复的效果，多个设置下<b>相对基线提升超过 10%</b>。组件消融衡量了每个 harness 组件的贡献；受控的保留度扫描则揭示出可测量的 harness 级遗忘，并表明<b>稳定性–可塑性的取舍可以被显式调节</b>。</p>
+
+      <h2>1 引言：持续学习的对象变了</h2>
+
+      <p>持续学习研究的是「系统如何从序列化的经验中获得能力，同时保住已经学会的行为」。已有的表述基本都通过改变<b>模型参数、表征或架构组件</b>来实现这件事——论文把这条既有路线称为<b>模型中心式持续学习</b>。</p>
+
+      <p>agentic AI 的兴起带来了另一个适应来源：一层决定「基础模型如何接收信息、如何检索经验、如何行动」的<b>外部 harness</b>。prompt、记忆、工具与技能说明、路由策略，都可以在多次交互之间持续存在并不断演化——<b>哪怕基础模型始终冻结</b>。于是 agent 的适应不再局限于模型状态：<b>harness 状态同样会累积经验并重塑未来行为</b>。这让 harness 本身成为持续学习的一个新研究对象。</p>
+
+      <p>作者把这个方向形式化为 <b>HCL</b>：通过在冻结的基础模型周围顺序更新 harness 状态，来获取并保留能力。这里必须和常见的「harness 优化」划清界限——后者通常是<b>为当前目标</b>搜索更好的 prompt、函数或工作流；而 HCL 研究的是<b>一串更新</b>，它关心的不只是下一次更新对当前交互有没有帮助，还包括<b>不断演化的 harness 有没有守住早先那些更新已经做可靠了的行为</b>。</p>
+
+      <p>这个设定带来一个独特的保留问题：<b>harness 的各组件在执行期是耦合的</b>——</p>
+
+      <ul>
+        <li>一次<b>记忆更新</b>可以改变某个早先查询所检索到的证据；</li>
+        <li>一次<b>技能修订</b>可以改变工具的使用方式；</li>
+        <li>一次<b>路由编辑</b>可以弄坏一条此前成功的工作流。</li>
+      </ul>
+
+      <p>因此一个对近期案例有帮助的更新，完全可能在<b>不改动基础模型</b>的情况下，把早先正确的答案、合法的工具调用或成功的动作轨迹变成失败。这就是 <b>harness 级遗忘</b>——它把经典的稳定性–可塑性问题从模型状态<b>延伸到了 harness 状态</b>。</p>
+
+      <p>论文的三条贡献：</p>
+
+      <ul>
+        <li>提出并形式化 <b>Harness Continual Learning</b>，把学习对象从模型状态转移到冻结基础模型周围的 harness 状态；</li>
+        <li>识别出 <b>harness 级遗忘</b>，并提出<b>守卫式 harness 演化</b>——Optimizer 提案、Evaluator 通过「当前 / 历史 / 有效性」三项检查控制提交；</li>
+        <li>在文本推理、多模态感知、开放世界交互上验证：harness 演化确实支持能力累积与失败恢复，同时表现出可测量的遗忘，且稳定性–可塑性取舍可控。</li>
+      </ul>
+
+      <h2>2 相关工作</h2>
+
+      <h3>2.1 Harness 工程</h3>
+
+      <p>当代 agent 系统在基础模型外面套一层运行时 harness，把「推理」变成「面向任务的执行」。跨实现地看，那些常驻的运行时内容通常承担四种功能：<b>接口</b>把原始指令、观察、文档或多模态输入转成 agent 能用的形式；<b>记忆</b>存放交互记录、摘要与可复用的指导；<b>能力注册表</b>描述工具、API、环境动作与习得技能及其调用条件；<b>路由 / 工作流控制器</b>挑选相关的记忆与能力、排定使用顺序、拼装执行上下文。此外还有执行动作的环境适配器，以及在流水线边界检查结果的任务级校验器。</p>
+
+      <p>已有系统各自发展了这套结构的不同部分：ReAct 把推理与环境交互耦合起来；Toolformer、MRKL、HuggingGPT 暴露并协调外部能力；MemGPT、Reflexion、Voyager 则把经验保留成记忆、反馈或可执行技能。这些组件合在一起构成一条耦合的执行流水线——<b>接口决定路由看到什么，记忆与能力描述决定它能选什么，最终的工作流决定模型怎么行动</b>。</p>
+
+      <p>harness 工程也已经在用执行反馈去修订 prompt、声明式程序、记忆、工具使用策略、技能与工作流，近期工作还把这个过程扩展到配置搜索、跨层失败诊断与持续的 agent 改进。这些系统都证明了 harness 是可编辑、且能随经验变好的。<b>但它们的主要目标通常是某个组件的质量、或当前任务上的下一个配置</b>——反复改进本身，并不能为完整的 harness 状态提供一条通用的保留判据。本文的不同之处在于：把<b>整个可变 harness 当作一份统一的持续学习状态</b>，并把「跨越多次已提交更新的保留度」当成显式目标。</p>
+
+      <h3>2.2 模型中心式持续学习</h3>
+
+      <p>模型中心式持续学习让模型适应非平稳的任务或数据流，同时设法保住早先经验带来的能力，核心挑战是<b>灾难性遗忘</b>。既有路线大致分五类：<b>表征类</b>学习跨任务仍然有用的特征或 prompt；<b>架构类</b>隔离、扩展或选择模型组件以减少任务间干扰；<b>优化类</b>改变更新轨迹或用早期任务的信息约束梯度；<b>正则类</b>惩罚那些支撑旧行为的参数或函数发生变化；<b>回放类</b>保留或重建早期样本并混进新数据。近期工作把这些家族扩展到了大语言模型与更广的知识流，<b>但被学习的状态仍然是模型的知识、表征、架构或参数</b>。本文则把持续学习的对象挪到模型之外：<b>基础模型参数保持冻结，harness 状态在明确的获取与保留约束下演化</b>。</p>
+
+      <h2>3 HCL 框架</h2>
+
+      <h3>3.1 定义与问题设定</h3>
+
+      <p>设有一个固定的基础模型 <code>F_θ</code>，以及在第 <code>n</code> 次交互时部署的 harness <code>H_n</code>。模型参数 <code>θ</code> 始终不变，而一次<b>已提交</b>的 harness 更新会影响后续所有交互。<b>HCL 就被定义为：顺序更新已部署的 harness，以获得新行为、同时保住更新前已经可靠的行为。</b></p>
+
+      <p>「此前可靠的行为」可以是一个正确的回答、一次合法的工具调用，或一条满足环境目标的动作轨迹。<b>保留</b>的要求是：在<b>相同的输入与执行条件</b>下重跑，这些行为在后续 harness 更新之后仍然成功。</p>
+
+      <p>形式上，第 <code>n</code> 步的原始交互记为 <code>u_n</code>（指令、观察或多模态输入）。harness 把它转成结构化交互 <code>i_n</code>，再结合选中的记忆与能力拼出执行上下文 <code>z_n</code>；模型与外部运行时执行 <code>z_n</code> 产出结果 <code>y_n</code>；执行后反馈记为 <code>f_n</code>。这一整组交互级对象合起来是 <code>e_n = (u_n, i_n, z_n, y_n, f_n)</code>。</p>
+
+      <p>Optimizer 把更新规则、当前部署的 harness 与可用的交互证据一起交给基础模型，生成<b>候选</b> harness：<code>H̃_(n+1) = O(H_n, e_n)</code>。候选<b>始终与已部署的 harness 分离</b>，直到提交决策做出为止。用 <code>G_n ∈ {0,1}</code> 表示这个决策，则 <code>G_n = 1</code> 时 <code>H_(n+1) = H̃_(n+1)</code>，否则 <code>H_(n+1) = H_n</code>——<b>一个候选只有被提交，才会影响后续交互</b>。</p>
+
+      <p>框架由此分成两半：一半<b>定义</b>已部署的 harness 状态 <code>H_n</code>（指明它有哪些可变内容，并统一版本化）；另一半<b>控制</b>从 <code>H_n</code> 到 <code>H_(n+1)</code> 的更新（提交前检查当前提升、历史保留与有效性）。</p>
+
+      <h3>3.2 作为学习对象的 harness 状态</h3>
+
+      <p>HCL 把可变的 harness 状态组织成 <code>H_n = (I_n, M_n, C_n, R_n)</code> 四个<b>联合版本化</b>的组件。之所以强调「联合」：因为改动其中一个组件可能与其它组件相互作用、并同时影响新行为与已习得的行为，<b>HCL 把所有提议的改动当成一个完整候选 harness 对待</b>——它要么整体替换 <code>H_n</code>，要么<b>一条改动都不进入</b>已部署状态。harness 内容因此不再是一堆各自独立编辑的产物，而是一套协同的持续学习机制。</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <caption>表 1 · 已部署 harness 中四个联合版本化组件的执行功能与可更新内容</caption>
+        <thead>
+          <tr><th>组件</th><th>执行期的功能</th><th>HCL 中被更新的内容</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>任务接口 <code>I_n</code></td><td>把原始交互转成结构化表示</td><td>prompt、任务模板、解析与归一化规则</td></tr>
+          <tr><td>经验记忆 <code>M_n</code></td><td>提供可复用的具体交互与抽象指导</td><td>原始交互记录、LLM 生成的抽象记忆条目</td></tr>
+          <tr><td>能力图谱 <code>C_n</code></td><td>提供外部操作与可复用的内部技能</td><td>从抽象记忆中提炼出的内部技能</td></tr>
+          <tr><td>自适应路由 <code>R_n</code></td><td>挑选并组织记忆与能力</td><td>路由 prompt、选择标准、工作流模板</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>3.2.1 任务接口（Task Interface）</h3>
+
+      <p>任务接口是 harness 的输入处理层，把原始任务交互 <code>u_n</code> 转成三元组 <code>i_n = (x_n, g_n, k_n)</code>：<code>x_n</code> 是可用输入，<code>g_n</code> 是任务要达成什么，<code>k_n</code> 记录约束——输出格式、合法的工具用法、环境限制等。<code>I_n</code> 内部规定了一个 LLM 解析器完成这次转换所用的 prompt、任务模板与解析归一化规则。</p>
+
+      <p>它的价值在于把异构的任务数据映射到统一表示，让相关输入、目标与约束<b>显式化</b>，从而使不同形态的任务能在同一条持续学习流水线里被处理。由于接口更新会改变任务被理解的方式，<code>I_n</code> 必须与 harness 一起版本化。</p>
+
+      <h3>3.2.2 经验记忆（Experience Memory）</h3>
+
+      <p>从持续学习的角度，HCL 把累积的经验组织成互补的两种形态：<code>M_n = (M_n^raw, M_n^abs)</code>。</p>
+
+      <ul>
+        <li><b>原始记忆</b> <code>M_n^raw</code> 存原始任务输入 <code>u_n</code>、产出的回答或动作轨迹 <code>y_n</code>，以及随后的环境或校验器反馈 <code>f_n</code>。为了让记忆收集简单、存储有界，它<b>按到达顺序、每个任务只保留固定条数</b>。这些记录保存了关于「成功行为」与「遇到过的失败」的任务级证据，帮助 agent 复用早先解法、避免重犯错误。</li>
+        <li><b>抽象记忆</b> <code>M_n^abs</code> 由 LLM 对原始记忆做总结产生，把反复出现的模式固化成<b>有作用域的指导</b>——输出惯例、可靠的推理套路、需要避开的常见错误。随着新的原始交互写入，总结过程会为相关的未来任务产生新的或更新过的抽象条目。</li>
+      </ul>
+
+      <p>分工很清楚：<b>原始记忆负责回放与行为恢复，抽象记忆负责跨任务的泛化迁移</b>。</p>
+
+      <h3>3.2.3 能力图谱（Capability Map）</h3>
+
+      <p>能力图谱按<b>来源</b>把能力分成两类：<code>C_n = (C_n^outer, C_n^inner)</code>。</p>
+
+      <ul>
+        <li><b>外部能力</b>把冻结的模型接到外部资源上——API、检索服务、感知模型、计算器、环境动作。每一条都写明其功能、预期输入输出、调用协议、可用条件与已知限制。</li>
+        <li><b>内部能力</b>是从抽象记忆里进一步提炼出来的<b>可复用技能</b>：LLM 把相关的抽象记忆合并成更通用的技能，带有明确的输入、输出、执行步骤与适用范围。这一步把早先交互累积的<b>知识</b>变成了能被直接调用的<b>过程</b>。</li>
+      </ul>
+
+      <p>与只有一个预定义外部操作库的静态能力表不同，<code>C_n</code> 能<b>通过经验扩张自己的可执行技能集</b>——这条「累积知识 ⇄ 内部能力」的动态连接，正是冻结模型的 agent 得以持续获取、精炼并迁移技能的原因。</p>
+
+      <h3>3.2.4 自适应路由（Adaptive Router）</h3>
+
+      <p>路由把前三者接到实际执行上：给定结构化交互 <code>i_n</code>，它从 <code>M_n</code> 取相关经验、从 <code>C_n</code> 选能力，组织成执行上下文 <code>z_n = R_n(i_n, M_n, C_n)</code>——其中包含结构化任务表示、选中的经验与能力，以及执行所用的工作流。</p>
+
+      <p>关键在于：<b>随着 <code>M_n</code> 与 <code>C_n</code> 演化，「哪些经验和能力对某个任务有用、该怎么组织」也会随之改变</b>。每次交互时，<code>R_n</code> 用 LLM 配合自己的路由 prompt、选择标准与工作流模板，把执行策略适配到当前任务和当前可用内容上；而这些路由规格本身也可以跨交互被修订——<b>路由与记忆、能力图谱一同演化</b>。</p>
+
+      <h3>3.3 守卫式 harness 演化</h3>
+
+      <p>一次 harness 更新可能在改善当前行为的同时，让早先任务上原本可靠的行为退化。作者因此引入<b>守卫式 harness 演化</b>，用「提案 → 评估 → 提交」把「生成更新」和「上线部署」分开：拿到反馈后，Continual Optimizer 产出一个<b>隔离的候选 harness</b>；Continual Evaluator 只在它同时满足「当前提升 / 历史保留 / 有效性」时才提交，否则 <code>H_n</code> 原样留在线上。<b>这让保留度成为 harness 演化的显式前提，而不是默认「对当前任务有用的更新对早先任务也安全」。</b></p>
+
+      <h3>3.3.1 Continual Optimizer：候选生成</h3>
+
+      <p>交互反馈只说明当次执行成没成功，<b>并不说明 harness 该怎么改</b>。Optimizer 用一套 prompt 模板把已部署的 harness <code>H_n</code> 与交互证据 <code>e_n</code> 交给基础模型，让它结合反馈分析执行结果、检视执行上下文，判断哪些 harness 组件需要修订——可能是改任务接口里的 prompt 或解析规则，可能是往记忆里记录或总结经验，可能是在能力图谱里增删技能，也可能是调整路由的选择与工作流规则。</p>
+
+      <p>当多个组件都需要修订时，为了在提供多种更新方向的同时限制 LLM 调用次数，作者用了一个简单的<b>顺序策略</b>：按预定义顺序逐个考虑选中的组件；对每个组件，Optimizer 一次一个地生成至多 <code>K</code> 个备选，<b>每个备选只替换候选 harness 中的该组件、其余保持不变</b>再做评估；得分最高且可接受的那个被保留，作为修订下一个组件的基础；若某组件没有任何备选通过闸门，该组件保持不变。整个过程中 <code>H_n</code> 岿然不动，直到最终候选完成评估并被提交。</p>
+
+      <h3>3.3.2 Continual Evaluator：历史评估与提交</h3>
+
+      <p>Evaluator 检查三个互补的方面：<b>当前提升</b>衡量候选是否更好地解决了当前任务；<b>历史保留</b>检查此前可靠的行为有没有被保住；<b>有效性</b>确保更新后的 harness 及其输出仍然可用。<code>H_n</code> 与候选 <code>H̃_(n+1)</code> 在<b>相同的模型、解码、工具、环境与随机种子</b>条件下评估，以构成受控对比。三项<b>全部</b>满足，候选才能替换 <code>H_n</code>。</p>
+
+      <p><b>① 当前提升。</b>令 <code>V_n</code> 为当前任务的验证集，<code>P(H, V_n)</code> 为 harness <code>H</code> 在其上的表现，则提升量 <code>Δ_n = P(H̃_(n+1), V_n) − P(H_n, V_n)</code>；满足 <code>Δ_n ≥ δ_n</code> 即通过，<code>δ_n</code> 是预设的最小提升。视任务不同，<code>P</code> 可以是答案准确率、工具调用成功率或环境完成度。</p>
+
+      <p><b>② 历史保留。</b>当前任务的提升并不能说明候选保住了早先习得的行为。Evaluator 因此维护一个紧凑的<b>锚点集</b> <code>A_n</code>：每个锚点包含一个此前观察过的案例的原始输入与成功判据，从而可以在已部署 harness 与候选 harness 下<b>各重跑一遍</b>。每个任务结束时，锚点按预设比例从「此前成功」与「此前失败」的案例中抽取；若某一组数量不够，空缺由另一组补足。<b>锚点只用于评估，在候选生成阶段不可见</b>——这一条很关键，否则就是拿考题当复习资料。</p>
+
+      <p>对每个锚点 <code>a</code>，定义二值成功指示 <code>q(H, a) ∈ {0,1}</code>。候选造成的历史损失就是「<b>被 <code>H_n</code> 解决、却在候选下失败</b>」的锚点计数 <code>D_n</code>。满足 <code>D_n ≤ B_n</code> 即通过保留判据，<code>B_n</code> 是预设的历史损失容忍度。<b><code>B_n = 0</code> 意味着候选必须保住 <code>H_n</code> 当前解决的每一个锚点。</b></p>
+
+      <p><b>③ 有效性检查。</b>候选还必须可执行、且符合任务与运行时要求。检查集 <code>L_n</code> 里的每一项 <code>ℓ</code> 给出 0/1 判定，覆盖产物语法、输出 schema 合规、合法工具使用、任务约束与环境一致性。</p>
+
+      <p>三项合起来构成候选级的提交决策：<b>当且仅当</b> <code>Δ_n ≥ δ_n</code> 且 <code>D_n ≤ B_n</code> 且所有有效性检查全过时，该候选可提交。这是一道<b>硬性准入闸门</b>。当有多个候选过闸，Evaluator 用一个综合当前表现、有效性与历史保留的合成分排序，取最高者提交为 <code>H_(n+1)</code>，同分随机决胜；若无一候选过闸，<code>H_n</code> 继续在线。</p>
+
+      <h3>3.4 与模型中心式持续学习的对应关系</h3>
+
+      <p>HCL 借用了模型侧持续学习的若干互补原则，但用 harness 机制而非参数更新来实现它们：</p>
+
+      <ul>
+        <li><b>回放类</b>保留早期样本 → <b>经验记忆</b>存下具体交互供日后复用；</li>
+        <li><b>表征类</b>学习支持跨任务迁移的抽象 → <b>能力图谱</b>把累积经验转成可复用技能，并与外部能力合并；</li>
+        <li><b>架构类</b>组织可复用模块以减少干扰 → HCL 把这些例程表示成可调用的能力，由<b>自适应路由</b>为每次交互挑选并编排；</li>
+        <li><b>优化 / 正则类</b>用早期任务的信息约束更新 → HCL 用 <b>Optimizer + Evaluator</b> 做同一件事：前者从当前反馈提出候选改动，后者在当前验证集与历史锚点上测试它。</li>
+      </ul>
+
+      <p>作者强调这些对应是<b>概念层面的、并非一一对应的实现</b>。更重要的是，HCL 把这些原则收进了一个<b>统一的系统级表述</b>：传统方法常把回放、表征、架构、优化、正则当成五个独立的解法家族，而 HCL 在同一个「获取–保留」目标下，让它们在一个不断演化的 harness 内部协同工作——把持续学习从参数适应，扩展到<b>agent 基础设施的协同演化</b>。</p>
+
+      <h2>4 实验</h2>
+
+      <p>实验分两种体制：<b>ALFWorld</b> 与 <b>Minecraft</b> 考察开放世界交互中的能力累积、复用与失败恢复；<b>文本推理</b>与<b>多模态感知</b>用受控任务流、对此前见过的任务反复评测，使 harness 级遗忘与稳定性–可塑性取舍<b>可直接测量</b>。</p>
+
+      <p>值得注意的是作者刻意<b>换用了不同的基础模型</b>，以检验 HCL 是否跨模型家族与规模成立，而非依赖某个特定模型：ALFWorld 用 Qwen3.5-9B；Minecraft 与主多模态实验用 Qwen3.6-27B；文本推理用 DeepSeek-V4-Flash；组件消融用 Qwen3.5-4B。<b>每个设置内部，所有对比共用同一个基础模型，且全程冻结——因此任何适应都只来自 harness 更新，而非模型训练。</b></p>
+
+      <h3>4.1 评测协议</h3>
+
+      <p>每条任务流上只有<b>一个</b> harness 围绕同一个基础模型顺序演化。记 <code>H^(s)</code> 为学完任务 <code>D_s</code> 之后部署的 harness；每个阶段末尾，在<b>当前任务与所有此前见过的任务</b>上评测它，得到 <code>R_(s,j)</code>（<code>j ≤ s</code>）。<b>当前任务的验证案例与历史锚点只供 Evaluator 判断候选能否提交；最终测试集与二者不相交，只用于汇报。</b></p>
+
+      <p>对度量在同一量纲上的任务流，汇报两项指标：<b>最终平均表现 Avg_T</b>（全流程结束后所有任务分数的均值）与<b>平均旧任务遗忘 Fgt_T</b>（每个早先任务从其历史最好成绩到最终成绩的平均跌幅）。Zero-shot 与 Static Harness 不做顺序更新，故遗忘一栏记为「–」。</p>
+
+      <p>两个配置贯穿全文，<b>唯一差别就是历史损失容忍度 <code>B_n</code></b>：<b>Stability-HCL</b> 取 <code>B_n = 0</code>，任何让已解决锚点失败的候选一律拒绝；<b>Plasticity-HCL</b> 取 <code>B_n = ∞</code>，只要当前提升与有效性达标，锚点损失不构成阻拦。</p>
+
+      <h3>4.2.1 ALFWorld</h3>
+
+      <p>文本版 ALFWorld，每回合最多 50 步。持续流按 Pick-and-Place → Look-in-Light → Clean → Heat → Cool → Two-object 六类任务顺序推进，每类用 10 个训练回合做顺序适应；每阶段后在所有已见类别上评测，最终成绩在官方的 134 个评测回合上汇报。</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <caption>表 2 · ALFWorld 最终表现与 harness 级遗忘（冻结模型：Qwen3.5-9B，单位 %）</caption>
+        <thead>
+          <tr><th>方法</th><th>Pick</th><th>Look</th><th>Clean</th><th>Heat</th><th>Cool</th><th>Two-object</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Static Harness</td><td>95.80</td><td>66.70</td><td>25.80</td><td>26.10</td><td>9.50</td><td>58.80</td><td>47.12</td><td>–</td></tr>
+          <tr><td>RAG 基线</td><td>95.80</td><td>83.30</td><td>41.90</td><td>39.10</td><td>14.30</td><td>58.80</td><td>55.56</td><td><b>1.74</b></td></tr>
+          <tr><td>MemP</td><td>95.80</td><td>83.30</td><td>48.40</td><td>34.80</td><td>9.50</td><td>47.10</td><td>53.15</td><td>5.18</td></tr>
+          <tr><td>MemRL</td><td>87.50</td><td>66.70</td><td>29.00</td><td><b>60.90</b></td><td>23.80</td><td>41.20</td><td>51.51</td><td>5.64</td></tr>
+          <tr><td>Stability-HCL（本文）</td><td><b>100.00</b></td><td><b>83.30</b></td><td><b>51.60</b></td><td>30.40</td><td><b>28.60</b></td><td>76.50</td><td>61.74</td><td>2.64</td></tr>
+          <tr><td>Plasticity-HCL（本文）</td><td><b>100.00</b></td><td>77.80</td><td>41.90</td><td>39.10</td><td>19.00</td><td><b>100.00</b></td><td><b>62.98</b></td><td>10.94</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>结论有两层。第一层：<b>复用过去的经验能改善静态 harness，但不足以支撑广泛的持续适应</b>。RAG 把最终均值从 47.12% 抬到 55.56%，并且在几个自适应基线里遗忘最低——<b>但纯检索改不了可复用的过程与路由规则</b>。MemP 与 MemRL 也各自改善了某些类别，但在整条流上波动很大。</p>
+
+      <p>第二层：两个 HCL 配置通过<b>演化完整的 harness</b>取得更强的总体表现。Plasticity-HCL 拿到最高的 62.98% 并解决了全部 Two-object 回合（100%），显示出对最新任务最强的适应力——<b>但遗忘也最大（10.94）</b>。Stability-HCL 以 61.74% 逼近它，在六类中的四类表现最好，同时把平均遗忘压到 2.64。<b>由于模型冻结、两个配置只差一个 <code>B_n</code>，这组对比直接证明了 Evaluator 能显式控制稳定性–可塑性取舍。</b></p>
+
+      <h3>4.2.2 Minecraft</h3>
+
+      <p>用 Qwen3.6-27B 跑一条 50 任务的 Minecraft 课程，覆盖资源采集、合成、挖矿、工具使用、放置物体、冶炼，以及多个相互依赖操作的复合任务。每次交互后环境反馈存入经验记忆，用于精炼可复用能力与执行工作流；<b>此前验证通过的技能测试被保留为历史锚点——一次能力新增或修订，只有在改善当前目标、且继续通过所有适用的历史测试时才被提交</b>。</p>
+
+      <p>结果有两个数：</p>
+
+      <ul>
+        <li><b>课程推进</b>：Static Harness 跟着 HCL 走了 15 个任务后<b>卡死不动</b>；HCL <b>完成全部 50 个</b>，从采集、合成一路推进到持久化资产与协同的多步执行。</li>
+        <li><b>执行效率</b>：整条 50 任务课程的累计环境动作数，HCL <b>83</b>，MemRL 88，MemP 91（越低越好）。在靠后的多步任务上，HCL 避免了重复的诊断、合成与恢复动作——这条更低的曲线反映的是<b>对累积经验更高效的复用</b>，而不是牺牲了进度。</li>
+      </ul>
+
+      <p>作者特意说明：两个基线是<b>在本文的 harness 里复现</b>的，而非直接跑官方仓库，以保证任务接口、能力库与环境栈一致、只有记忆管理不同。</p>
+
+      <h3>4.3.1 文本推理</h3>
+
+      <p>文本流顺序为 MuSiQue → ProofWriter → GSM8K → HotpotQA，覆盖多跳问答、逻辑演绎、数学推理与知识密集问答。每个任务用 250 例适应、50 例验证、500 例测试，基础模型 DeepSeek-V4-Flash 全程冻结，HCL 只更新四个 harness 组件。</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <caption>表 3 · 四任务文本推理流的最终表现（冻结模型：DeepSeek-V4-Flash，单位 %）</caption>
+        <thead>
+          <tr><th>方法</th><th>MuSiQue</th><th>ProofWriter</th><th>GSM8K</th><th>HotpotQA</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>DeepSeek-V4-Flash Zero-shot</td><td><b>35.00</b></td><td>42.80</td><td>49.40</td><td>54.80</td><td>45.50</td><td>–</td></tr>
+          <tr><td>Stability-HCL（本文）</td><td>27.60</td><td>73.00</td><td>50.40</td><td>57.80</td><td>52.20</td><td><b>0.00</b></td></tr>
+          <tr><td>Plasticity-HCL（本文）</td><td>29.00</td><td><b>77.00</b></td><td><b>92.00</b></td><td><b>60.80</b></td><td><b>64.70</b></td><td>0.07</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>Stability-HCL 要求所有被接受的更新都保住锚点集上的表现，把平均遗忘压到 <b>0.00</b>；代价是适应被大幅限制，最终均值 52.20%，低于 Plasticity-HCL 的 64.70%。但它<b>仍然高于 45.50% 的 zero-shot 基线</b>——说明「在完全保住已测行为的前提下获取新行为」是可行的，不是零和。</p>
+
+      <p>Plasticity-HCL 放松保留要求、允许更激进的更新，把最终均值从 52.20% 推到 64.70%，而平均遗忘<b>只有 0.07</b>。（注意 MuSiQue 一栏：两个 HCL 配置都低于 zero-shot——作为流的第一个任务，它是被后续更新影响最久的那个。）</p>
+
+      <h3>4.3.2 多模态感知</h3>
+
+      <p>多模态流顺序为 COCO 目标检测 → COCO 图像描述 → RefCOCO 视觉定位 → VQAv2，Qwen3.6-27B 全程冻结，同样是 250 / 50 / 500 的划分。这里额外对比了 DGG——一个面向顺序多任务持续学习的近期自适应方法。</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <caption>表 4 · 四任务多模态感知流的最终表现（冻结模型：Qwen3.6-27B，单位 %）</caption>
+        <thead>
+          <tr><th>方法</th><th>检测</th><th>描述</th><th>定位</th><th>VQAv2</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Qwen3.6-27B Zero-shot</td><td>4.27</td><td>25.47</td><td>43.00</td><td><b>84.87</b></td><td>39.40</td><td>–</td></tr>
+          <tr><td>DGG</td><td>29.58</td><td>29.77</td><td>48.96</td><td>62.60</td><td>42.73</td><td>0.26</td></tr>
+          <tr><td>Plasticity-HCL（本文）</td><td>64.14</td><td>37.31</td><td>90.60</td><td>79.80</td><td>67.96</td><td>0.81</td></tr>
+          <tr><td>Stability-HCL（本文）</td><td><b>65.34</b></td><td><b>39.41</b></td><td><b>91.60</b></td><td>79.33</td><td><b>68.92</b></td><td><b>0.22</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>两个 HCL 配置的最终均值都大幅超过 Zero-shot 与 DGG，<b>最大增益出现在检测与定位</b>——正是那些需要把空间信息组织成任务特定输出格式的任务（检测从 4.27% 到 65.34%）。描述任务也有改善，说明演化中的组件能在同一条任务流里支撑不同的多模态目标与输出格式。</p>
+
+      <p>唯一 Zero-shot 更强的是 VQAv2：冻结模型本来就擅长直接的图问答。<b>但两个 HCL 配置在 VQAv2 上的保持度都远好于 DGG</b>（79.80 / 79.33 对 62.60）。这里还出现了一个与文本流相反的现象：<b>Stability-HCL 同时拿下最高均值（68.92%）与最低遗忘（0.22）</b>——严格保留在这条流上没有付出性能代价。</p>
+
+      <h3>4.4 稳定性–可塑性取舍</h3>
+
+      <p>这一节只动一个旋钮：把历史损失容忍度固定为 <code>b</code>，扫 <code>b ∈ {0, 1, 3, ∞}</code>，其余条件全部锁死。其中当前提升判据 <code>δ_n</code> 要求<b>至少多做对两个验证案例</b>；有效性判据要求候选达到<b>至少 90.00% 的输出格式合规率</b>，且不引入任何语法、工具使用或环境违规。<code>b = 0</code> 与 <code>b = ∞</code> 即前文的 Stability / Plasticity 配置；<code>b = 1</code> 与 <code>b = 3</code> 允许每个候选分别最多新增 1 个和 3 个失败锚点。本节每任务用 300 适应 / 80 验证 / 600 测试，每个早先任务配 80 个锚点。</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <caption>表 5 · 不同固定历史损失容忍度 <code>b</code> 下的表现（其余实验条件全部不变，单位 %）</caption>
+        <thead>
+          <tr><th>容忍度 <code>b</code></th><th>MuSiQue</th><th>ProofWriter</th><th>GSM8K</th><th>HotpotQA</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>b = 0</code></td><td>27.83</td><td>73.33</td><td>84.33</td><td><b>59.50</b></td><td>61.25</td><td><b>0.39</b></td></tr>
+          <tr><td><code>b = 1</code></td><td>24.83</td><td>77.50</td><td><b>92.33</b></td><td>59.17</td><td><b>63.46</b></td><td>1.22</td></tr>
+          <tr><td><code>b = 3</code></td><td>26.83</td><td><b>79.83</b></td><td>83.00</td><td>58.50</td><td>62.04</td><td>2.00</td></tr>
+          <tr><td><code>b = ∞</code></td><td><b>28.33</b></td><td>71.00</td><td>82.00</td><td>59.17</td><td>60.13</td><td>3.45</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>这张表是全文最反直觉的一处。<b>放宽 <code>b</code> 确实单调地削弱保留——平均遗忘从 0.39 一路升到 3.45；但最终表现并不跟着涨</b>：最高的 63.46% 出现在 <code>b = 1</code>，而完全不设限的 <code>b = ∞</code> 只有 60.13%，甚至低于最严格的 <code>b = 0</code>。</p>
+
+      <p>作者给出的一种解释是：<b>每次提交的更新都会改变后续的演化轨迹</b>。没有历史约束时，那些局部有利的更新可能<b>覆盖掉可复用的 harness 内容</b>，既削弱了保留度，也削弱了后续任务可用的经验与能力。因此一个<b>适中</b>的 <code>b</code> 才是最优点——它给适应留了余地，又不允许过度的历史损失。</p>
+
+      <p>论文也诚实交代了 <code>b = 0</code> 下仍有 0.39 遗忘的原因：<b>约束只覆盖有限的锚点集，而遗忘是在另一批历史测试案例上度量的</b>——保住 <code>H_n</code> 当前解决的所有锚点，并不能保证 <code>A_n</code> 未覆盖到的历史案例上行为不变。</p>
+
+      <h3>4.5 消融实验</h3>
+
+      <p>在受控多模态流上用 Qwen3.5-4B 做组件消融：从 Full HCL 出发，每次禁用一个组件的更新、其余三个保持自适应。</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <caption>表 6 · 组件消融（<code>I</code> 任务接口、<code>M</code> 经验记忆、<code>C</code> 能力图谱、<code>R</code> 自适应路由；✓ 表示该组件可更新，✗ 表示禁用其更新）</caption>
+        <thead>
+          <tr><th>配置</th><th><code>I</code></th><th><code>M</code></th><th><code>C</code></th><th><code>R</code></th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Zero-shot</td><td>–</td><td>–</td><td>–</td><td>–</td><td>34.84</td><td>–</td></tr>
+          <tr><td>去掉接口更新</td><td>✗</td><td>✓</td><td>✓</td><td>✓</td><td>62.37</td><td>0.11</td></tr>
+          <tr><td>去掉记忆更新</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td><td>62.28</td><td>0.83</td></tr>
+          <tr><td>去掉能力更新</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td><b>63.12</b></td><td><b>0.06</b></td></tr>
+          <tr><td>去掉路由更新</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>62.77</td><td>0.14</td></tr>
+          <tr><td>Full HCL</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><b>63.41</b></td><td>0.45</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>Full HCL 拿到最高的 63.41%，说明四个组件的贡献是<b>互补</b>的。禁用<b>经验记忆</b>或<b>任务接口</b>造成的最终表现下降最大；其中去掉记忆更新还把遗忘推到 0.83，<b>说明演化中的记忆同时支撑了行为的获取与保留</b>。禁用能力图谱或路由的影响较小但一致——作者推测能力更新影响小是因为这条多模态流对可复用可执行过程的依赖，远不如 Minecraft 课程那么重。</p>
+
+      <p>这里有一处方法论提醒值得单独记下：<b>几个消融配置的遗忘比 Full HCL 更低，纯粹是因为限制可编辑组件也限制了适应幅度</b>。<b>因此「遗忘更低」本身并不说明这是一个更好的演化 harness，必须与最终表现一起看。</b></p>
+
+      <h2>5 结论</h2>
+
+      <p>论文把 <b>HCL</b> 表述为一种新的持续学习范式：随序列经验演化的是 <b>agent harness</b> 而非模型参数。框架把可变的 harness 组件视为一份统一演化的状态，并把候选生成与评估提交分离，<b>使历史保留成为部署的显式条件</b>。实验表明 harness 演化能累积能力、能从失败中恢复，同时<b>在冻结模型下也会造成可测量的遗忘</b>；显式控制历史损失则让 HCL 得以在稳定与可塑之间取得平衡。</p>
+
+      <p>作者同时点名了尚未解决的挑战：<b>更高效的保留度评估</b>、<b>harness 内容的整合（consolidation）</b>，以及<b>更长交互流上的评测</b>。</p>
+
+      <hr />
+
+      <h2>译者附记</h2>
+
+      <p>几个我觉得对「自己在跑会改写自身 prompt / 技能 / 记忆的 agent」的人最有用的点：</p>
+
+      <ul>
+        <li><b>「harness 级遗忘」这个命名本身就是这篇的主要贡献。</b>只要你的 agent 有自改 prompt、自写记忆、自增技能的能力，你就已经在无意识地做 HCL 了——只是没有 Evaluator，也没有锚点集。改一次 prompt 让本周的任务更顺，同时悄悄弄坏了三周前那条已经稳定的路径，这件事在没有历史回归测试的系统里<b>根本不会被观测到</b>。</li>
+        <li><b>「锚点只用于评估、候选生成阶段不可见」是全篇最容易被实现者省掉、也最不能省的一条。</b>一旦让提案方看到锚点，它就会去迎合锚点，保留度指标随即失去意义——这和把测试集喂给训练是同一类错误。</li>
+        <li><b>表 5 值得反复看：不设限的更新（<code>b = ∞</code>）最终表现最差。</b>它给出的直觉是——每次提交都在改变后续演化的轨迹，局部最优的自改会吃掉后面要用的复用材料。「每次都采纳看起来更好的那个改动」不是一个安全的默认策略，<b>留一条窄缝（<code>b = 1</code>）反而最好</b>。</li>
+        <li><b>「所有改动打包成一个候选，要么整体上线、要么一条都不进」</b>比逐个组件各改各的更保守，也更容易归因。四个组件在执行期是耦合的，分开提交等于放弃了对交互效应的控制。</li>
+        <li><b>遗忘低 ≠ 更好。</b>§4.5 那句提醒适用于任何自改系统的自评指标：把可改动面缩小，退化自然变少，但那是因为你没在学。这两个数必须成对汇报。</li>
+        <li>一处实践成本的提醒：这套机制的代价是<b>每次候选都要在验证集和锚点集上重跑一遍</b>。论文用了每任务 80 个锚点——放到真实系统里，这就是一条必须自动化、否则一定会被跳过的回归流水线。</li>
+      </ul>
+
+      <p class="signoff">原文：Borui Kang、Jinrui Gu、Junhan Lv、Wenbin Li、Lei Wang、Yang Gao，<a href="https://arxiv.org/abs/2608.19013" target="_blank" rel="noopener">《Harness Continual Learning: Continual Adaptation Beyond Model Parameters》</a>，arXiv:2608.19013，2026-08-19 提交。<br />
+      线索来自 <a href="https://x.com/omarsar0" target="_blank" rel="noopener">@omarsar0</a> 的推荐。<br />
+      中文译介：lonX · 完整原文与全部图表请读 <a href="https://arxiv.org/abs/2608.19013" target="_blank" rel="noopener">arxiv.org/abs/2608.19013</a></p>
+    </article>
+  </main>
+
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · 中文译介，原文版权归论文作者</span>
+    <span><a href="/collection/">← 收藏夹</a> · <a href="/">主页</a></span>
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

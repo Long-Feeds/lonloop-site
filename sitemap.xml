@@ -10,8 +10,11 @@
      of this commit) — a daily-updated portfolio telling crawlers it had sat still
      for a month, which is the opposite of what it wants to say.
 
-     An omitted lastmod is strictly better than a wrong one, and a four-URL sitemap
-     has exactly one job: declare the canonical URL set. Keep it that way — don't
+     An omitted lastmod is strictly better than a wrong one, and this sitemap has
+     exactly one job: declare the canonical URL set. (Deliberately not "a four-URL
+     sitemap", as this read until 2026-08-24 — it was written at four entries and
+     was already stale at five, which is the same hand-maintained-number rot the
+     paragraph above is about.) Keep it that way — don't
      "improve" this file by adding dates back unless the site grows a build step
      that can derive them from git. Re-sync only when a page is added or retired.
 
@@ -24,4 +27,5 @@
   <url><loc>https://lonloop.com/collection/</loc></url>
   <url><loc>https://lonloop.com/collection/xianyu-jingji/</loc></url>
   <url><loc>https://lonloop.com/collection/managed-agents/</loc></url>
+  <url><loc>https://lonloop.com/collection/harness-continual-learning/</loc></url>
 </urlset>

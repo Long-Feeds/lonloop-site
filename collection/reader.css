@@ -97,6 +97,17 @@ a{color:inherit}
 .attrib a{color:var(--accent);text-decoration:none}
 .attrib a:hover{text-decoration:underline}
 .attrib .note{color:var(--dim);font-size:12.5px;line-height:1.6;margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+/* Links inside .note keep their underline at rest — everywhere else in .attrib the
+   rule above strips it. In .row that is fine: an --accent link sits next to --txt
+   body, so colour alone still separates them. Inside .note the surrounding text is
+   --dim (#808999) and the link is --accent (#7c9cff), which is 1.35:1 against each
+   other — far under the 3:1 that WCAG 1.4.1 requires when colour is the only cue.
+   axe flags it as a serious link-in-text-block, and it went unseen for weeks
+   because /collection/managed-agents/ was missing from a11y.mjs's page list.
+   An underline is a non-colour distinguisher, which is what the criterion actually
+   asks for; brightening --accent would instead have to clear 3:1 against --dim and
+   would drag every other link on the site with it. */
+.attrib .note a{text-decoration:underline}
 
 .article h1.title{font-size:clamp(26px,5vw,36px);line-height:1.28;letter-spacing:-.01em;font-weight:800;margin-bottom:10px}
 .article .kicker{color:var(--accent2);font-weight:600;font-size:12.5px;letter-spacing:.1em;margin-bottom:26px}

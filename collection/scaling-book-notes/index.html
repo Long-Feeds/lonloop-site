@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>把大模型跑起来要算几笔账：《How to Scale Your Model》精读笔记 · 收藏夹 · lonX</title>
+<meta name="description" content="读 Google DeepMind《How to Scale Your Model》时自己整理的一份中文笔记。不是译文——从「算术强度 ≈ 一次矩阵乘里的 token 数」这一个式子出发，串起 roofline、TPU 内存层级、collective 代价模型、Transformer 的参数/算力/显存三本账，以及训练怎么切、推理为什么是另一个世界。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<!-- Self-canonical, same reasoning as the other /collection/ pages: Cloudflare Pages
+     serves this file byte-identically from the apex, from lonloop-site.pages.dev and
+     from every never-retired per-deploy <hash>.lonloop-site.pages.dev, all 200 and all
+     crawlable. Without this line a crawler has N identical copies and picks the
+     authoritative one by guesswork. -->
+<link rel="canonical" href="https://lonloop.com/collection/scaling-book-notes/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="把大模型跑起来要算几笔账：《How to Scale Your Model》精读笔记" />
+<meta property="og:description" content="一个式子撑起半本书：权重矩阵乘的算术强度约等于这一批的 token 数。理解了它，roofline、GQA、continuous batching、prefill/decode 分离全都是同一件事的推论。" />
+<!-- Shared site og.png, same call as the other digests: this page's own artwork would
+     have to be the book's figures, and those are deliberately not mirrored here (see
+     the .attrib note). -->
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:image:alt" content="lonX · AI Application &amp; Backend Engineer — 构建 LLM Agent 与 Claude Code 生态的工程师" />
+<meta property="og:url" content="https://lonloop.com/collection/scaling-book-notes/" />
+<meta property="og:locale" content="zh_CN" />
+
+<!-- Twitter Card — only this tag, deliberately; rationale in /collection/index.html. -->
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Structured data. NOTE the difference from the other two /collection/ pages: those
+     are digests that follow their source section by section, so they carry `isBasedOn`.
+     This page is original commentary *about* a book — my own explanation of the
+     underlying systems concepts, organised my own way — so the book is a `citation`
+     and a `mentions`, not something this text is a derivative rendering of. `author`
+     is still this site, for the same reason as always: getting it backwards would
+     assert to every crawler and LLM that lonloop.com wrote the book.
+     No datePublished bump on edits — the date below is when these notes first shipped,
+     a fixed fact, not a freshness signal needing hand-maintenance. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://lonloop.com/collection/scaling-book-notes/#article",
+  "headline": "把大模型跑起来要算几笔账：《How to Scale Your Model》精读笔记",
+  "url": "https://lonloop.com/collection/scaling-book-notes/",
+  "mainEntityOfPage": "https://lonloop.com/collection/scaling-book-notes/",
+  "inLanguage": "zh-CN",
+  "datePublished": "2026-08-25",
+  "isAccessibleForFree": true,
+  "about": {"@type": "Thing", "name": "大语言模型的系统性能与并行化"},
+  "author": {
+    "@type": "Person",
+    "name": "lonX",
+    "url": "https://lonloop.com/"
+  },
+  "mentions": {
+    "@type": "Book",
+    "name": "How to Scale Your Model: A Systems View of LLMs on TPUs",
+    "url": "https://jax-ml.github.io/scaling-book/",
+    "inLanguage": "en",
+    "datePublished": "2025",
+    "publisher": {"@type": "Organization", "name": "Google DeepMind"},
+    "author": [
+      {"@type": "Person", "name": "Jacob Austin"},
+      {"@type": "Person", "name": "Sholto Douglas"},
+      {"@type": "Person", "name": "Roy Frostig"},
+      {"@type": "Person", "name": "Anselm Levskaya"},
+      {"@type": "Person", "name": "Charlie Chen"},
+      {"@type": "Person", "name": "Sharad Vikram"},
+      {"@type": "Person", "name": "Federico Lebron"},
+      {"@type": "Person", "name": "Peter Choy"},
+      {"@type": "Person", "name": "Vinay Ramasesh"},
+      {"@type": "Person", "name": "Albert Webson"},
+      {"@type": "Person", "name": "Reiner Pope"}
+    ]
+  },
+  "citation": "Austin et al., \"How to Scale Your Model\", Google DeepMind, online, 2025. https://jax-ml.github.io/scaling-book/"
+}
+</script>
+<link rel="stylesheet" href="../reader.css" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <!-- aria-current="true" (current item in the set), not "page" — this is a child
+           of /collection/, so "current page" would be false. -->
+      <a href="/collection/" class="tab" aria-current="true">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+    </div>
+  </nav>
+
+  <main class="article">
+    <a class="back" href="/collection/">← 收藏夹</a>
+
+    <h1 class="title">把大模型跑起来要算几笔账：《How to Scale Your Model》精读笔记</h1>
+    <div class="kicker">读书笔记 · 非译文</div>
+
+    <div class="attrib">
+      <div class="row">
+        <span><span class="k">原书</span><span class="v"><a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">How to Scale Your Model: A Systems View of LLMs on TPUs</a></span></span>
+      </div>
+      <div class="row">
+        <span><span class="k">作者</span><span class="v">Jacob Austin、Sholto Douglas、Roy Frostig、Anselm Levskaya、Charlie Chen、Sharad Vikram、Federico Lebron、Peter Choy、Vinay Ramasesh、Albert Webson、Reiner Pope</span></span>
+      </div>
+      <div class="row">
+        <span><span class="k">出品</span><span class="v">Google DeepMind · 2025</span></span>
+        <span><span class="k">原文地址</span><span class="v"><a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">jax-ml.github.io/scaling-book</a></span></span>
+        <span><span class="k">笔记写于</span><span class="v">2026-08-25</span></span>
+      </div>
+      <div class="note"><b>这不是译文。</b>这是我自己读完之后写的一份中文笔记——概念、推导和取舍都用我自己的话重新讲了一遍，组织顺序也是我自己的，不对应原书章节。物理事实与公式（带宽、算术强度、<code>6ND</code>、KV cache 大小之类）本身不受版权保护，可以自由复述；但原书的行文、图表与习题<b>不在这里</b>。<br />
+      因此本页<b>不镜像原书任何插图</b>，也不逐节转录。每一节末尾都有「⟶ 原书对应章节」的直达链接，想读原汁原味的、想做习题的、想看图的，请直接点过去读<a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">英文原书</a>——它免费、公开、写得比这份笔记好得多。<br />
+      原书版权归 Google DeepMind 与各位作者所有。学术引用请用：Austin et al., “How to Scale Your Model”, Google DeepMind, online, 2025.</div>
+    </div>
+
+    <article class="prose">
+
+      <p><b>一句话概括：</b>这本书讲的是「一个模型跑在真实硬件上，时间到底花在哪」。它的价值不在于教你调参，而在于让你<b>在写代码之前就能用纸笔估出</b>：这次训练要多少卡、跑多少天；这个模型自己部署要多少显存、能扛多少并发；某个想法是不是根本不可能快起来。我读下来最大的收获是发现<b>整本书几乎可以由一个式子推出来</b>——所以这份笔记就从那个式子开始讲。</p>
+
+      <h2>0. 先说结论：那个式子</h2>
+
+      <p>做一次权重矩阵乘：输入是 <code>B</code> 个 token 的激活 <code>[B, D]</code>，权重是 <code>[D, F]</code>。</p>
+
+      <ul>
+        <li><b>算力开销</b>：每个输出元素要做 <code>D</code> 次乘加，一次乘加算 2 FLOPs，输出有 <code>B×F</code> 个元素 → 共 <code>2·B·D·F</code> FLOPs。</li>
+        <li><b>搬运开销</b>：bf16 下每个数 2 字节。要搬的是激活 <code>2BD</code>、权重 <code>2DF</code>、结果 <code>2BF</code> 字节。</li>
+      </ul>
+
+      <p>推理解码时 <code>B</code> 通常远小于 <code>D</code> 和 <code>F</code>，权重那一项 <code>2DF</code> 完全压倒另外两项。于是<b>算术强度</b>（arithmetic intensity，每搬运一字节能摊到多少次浮点运算）就是：</p>
+
+      <p><code>I = 2·B·D·F / (2·D·F) = B</code></p>
+
+      <p>这个结果干净得有点吓人：<b>一次权重矩阵乘的算术强度，约等于你这一批喂进去的 token 数</b>。<code>D</code> 和 <code>F</code> 全约掉了——模型多大根本不影响这个比值。</p>
+
+      <p>为什么这件事重要？因为每块加速器都有一个<b>临界算术强度</b> <code>I* = 峰值算力 ÷ 内存带宽</code>。低于它，芯片在等内存；高于它，芯片在算数。把公开规格代进去：</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-1" tabindex="0">
+      <table>
+        <caption id="tbl-1">表 1 · 几款加速器的临界算术强度（bf16 稠密峰值 ÷ HBM 带宽，厂商公开规格，取整）</caption>
+        <thead>
+          <tr><th>芯片</th><th>bf16 峰值</th><th>HBM 带宽</th><th><code>I*</code>（FLOPs/字节）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>NVIDIA A100 80GB</td><td>312 TFLOP/s</td><td>2.0 TB/s</td><td>≈ 156</td></tr>
+          <tr><td>NVIDIA H100 SXM</td><td>990 TFLOP/s</td><td>3.35 TB/s</td><td>≈ 295</td></tr>
+          <tr><td>TPU v5e</td><td>197 TFLOP/s</td><td>820 GB/s</td><td>≈ 240</td></tr>
+          <tr><td>TPU v5p</td><td>459 TFLOP/s</td><td>2.76 TB/s</td><td>≈ 166</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>数量级都在<b>一两百到三百</b>。结合上面那个 <code>I ≈ B</code>，直接得到一条可以贴在显示器上的经验法则：</p>
+
+      <blockquote><b>喂给一次矩阵乘的 token 数如果不到两三百，你买的算力就基本是浪费的——芯片大部分时间在等 HBM。</b></blockquote>
+
+      <p>后面所有内容——为什么要 batching、为什么 GQA 能救命、为什么 decode 比 prefill 难十倍、为什么会有 continuous batching 和投机解码——<b>全都是这一条的推论</b>。这也是我认为这本书最值钱的地方：它把一堆看起来互不相干的工程 trick，还原成同一个约束下的不同解法。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/roofline/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 1 · All About Rooflines</a></p>
+
+      <hr />
+
+      <h2>1. Roofline：三个上限，不是一个</h2>
+
+      <p>「性能」这个词太糊，roofline 模型把它拆成三个各自独立的物理上限：</p>
+
+      <ol>
+        <li><b>算力上限</b>：芯片每秒能做多少次浮点运算（OPs/s）。</li>
+        <li><b>带宽上限</b>：每秒能在内存和计算单元之间搬多少字节（bytes/s）。</li>
+        <li><b>容量上限</b>：总共能放下多少字节（bytes）。</li>
+      </ol>
+
+      <p>前两个决定<b>快不快</b>，第三个决定<b>能不能跑</b>。一个算子的实际耗时是</p>
+
+      <p><code>T ≈ max( FLOPs ÷ 峰值算力 , 字节数 ÷ 带宽 )</code></p>
+
+      <p>取 <code>max</code> 而不是相加，是因为现代芯片能让搬运和计算重叠——理想情况下慢的那个把快的那个完全遮住。画成图就是一条折线：横轴算术强度，左半段是斜率为带宽的上升直线（<b>访存受限</b>），右半段是算力峰值的水平线（<b>算力受限</b>），拐点就是 <code>I*</code>。</p>
+
+      <h3>为什么矩阵乘幸运，逐元素运算不幸</h3>
+
+      <p>把常见算子的算术强度排一排，差距是数量级级别的：</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-2" tabindex="0">
+      <table>
+        <caption id="tbl-2">表 2 · 常见算子的算术强度量级（bf16）</caption>
+        <thead>
+          <tr><th>算子</th><th>算术强度</th><th>结论</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>逐元素加 / 乘</td><td><code>≈ 1/6</code>（读两个写一个 = 6 字节换 1 FLOP）</td><td>永远访存受限</td></tr>
+          <tr><td>激活函数、LayerNorm</td><td><code>O(1)</code></td><td>永远访存受限</td></tr>
+          <tr><td>权重矩阵乘（batch <code>B</code>）</td><td><code>≈ B</code></td><td>取决于 batch</td></tr>
+          <tr><td>方阵乘 <code>N×N</code></td><td><code>≈ N/3</code></td><td><code>N</code> 够大就算力受限</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>逐元素运算的强度是个<b>不随规模变化的小常数</b>——张量放大一万倍，它照样是 1/6。这就是<b>算子融合</b>（fusion）唯一的存在理由：把 <code>norm → matmul → activation → 残差</code> 这一串融成一个 kernel，中间结果留在片上不落 HBM，几个访存受限的小算子就被合并进一次搬运里。你在 XLA / torch.compile 里看到的绝大部分优化，本质都是在做这件事。</p>
+
+      <h3>用它来否定想法</h3>
+
+      <p>roofline 最实用的用法其实是<b>快速证伪</b>。任何「我加个轻量模块应该不影响速度」的直觉，都可以先算一下这个模块要搬多少字节：如果它是逐元素的、又要完整读写一遍激活，那它的耗时就等于「激活字节数 ÷ 带宽」，跟它算得多不多毫无关系。很多「理论上只增加 2% FLOPs」的改动，实测掉速 30%，原因都在这。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/roofline/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 1 · All About Rooflines</a></p>
+
+      <hr />
+
+      <h2>2. 硬件的心智模型：为什么长这样</h2>
+
+      <h3>脉动阵列：把 <code>I*</code> 撑高的代价</h3>
+
+      <p>TPU 的核心是 <b>MXU</b>（矩阵乘单元），一个典型 128×128 的<b>脉动阵列</b>：数据从一边流进去，在阵列里逐级传递、每经过一个单元做一次乘加，从另一边流出结果。它的好处是一个数据一旦进来，会被<b>复用上百次</b>而不需要重新访存——这正是把算术强度撑到几百的硬件基础。</p>
+
+      <p>代价是它<b>只擅长矩阵乘</b>。所以芯片旁边还得配一个 <b>VPU</b>（向量单元）处理激活、归一化这些逐元素的活。你的模型里但凡有 MXU 干不了的形状，就得掉到 VPU 上跑，算力差着一两个数量级。这解释了为什么「维度对齐到 128 的倍数」这种听起来很迷信的建议是真有效的——形状不对齐，阵列就有一部分在空转。</p>
+
+      <h3>内存层级：真正的战场</h3>
+
+      <p>从快到慢大致是：<b>寄存器 → 片上 SRAM（TPU 叫 VMEM，GPU 叫 SMEM/L2）→ HBM → 主机内存 → 别的机器</b>。每往下一级，容量涨一两个数量级，带宽掉一个数量级。</p>
+
+      <p>所有高性能 kernel 的写法都是同一套路：<b>把数据切成能塞进片上 SRAM 的 tile，搬一次，在上面把所有能做的计算全做完，再搬下一块</b>。FlashAttention 之所以快，不是因为它减少了 FLOPs（它反而增加了一点重算），而是因为它避免了把 <code>S×S</code> 的注意力矩阵写回 HBM——它把这个中间结果一直留在片上。这是 roofline 思维最漂亮的一次应用：<b>用更多的算力换更少的搬运，在访存受限的区域里是稳赚的</b>。</p>
+
+      <h3>芯片之间：环面（torus）与树</h3>
+
+      <p>单芯片放不下模型，就得连起来。这里 TPU 和 GPU 走了两条不同的路，理解这个差别对选并行策略很关键：</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-3" tabindex="0">
+      <table>
+        <caption id="tbl-3">表 3 · 两种互联拓扑的性格差异</caption>
+        <thead>
+          <tr><th>维度</th><th>TPU Pod（2D/3D 环面）</th><th>GPU 集群（节点内全连 + 节点间网络）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>连接方式</td><td>每芯片只连上下左右邻居，边缘绕回</td><td>节点内 NVLink 全互联，节点间 InfiniBand/以太网</td></tr>
+          <tr><td>带宽分布</td><td>相对<b>均匀</b>，没有断崖</td><td><b>陡峭</b>：节点内极快，出了节点掉一个数量级</td></tr>
+          <tr><td>扩展性</td><td>加芯片同时加链路，对分带宽随规模增长</td><td>受限于网络层级与收敛比</td></tr>
+          <tr><td>对策略的影响</td><td>大规模集合通信代价可预测</td><td>必须把重通信的并行方式<b>关在节点内</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>环面的关键性质是<b>没有「跨节点」这个断崖</b>。GPU 集群上你必须精心设计「什么并行放节点内、什么放节点外」，而 TPU 上更多是在一个连续的 mesh 上切维度。这也是为什么同一套并行策略从 GPU 挪到 TPU（或反过来）常常要重新调——不是软件问题，是拓扑性格不同。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/tpus/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 2 · How to Think About TPUs</a> ｜ <a href="https://jax-ml.github.io/scaling-book/gpus/" target="_blank" rel="noopener">Part 12 · How to Think About GPUs</a></p>
+
+      <hr />
+
+      <h2>3. 通信的代价模型：四个集合操作</h2>
+
+      <p>一旦模型被切到多个芯片上，就需要集合通信（collective）把碎片拼回去。只要记住四个，以及一条反直觉的结论。</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-4" tabindex="0">
+      <table>
+        <caption id="tbl-4">表 4 · 四个集合操作（<code>V</code> = 完整数据体积，<code>N</code> = 设备数，<code>W</code> = 单链路带宽）</caption>
+        <thead>
+          <tr><th>操作</th><th>做什么</th><th>环形算法耗时</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AllGather</td><td>每人有 <code>1/N</code>，最后每人都有全部</td><td><code>≈ V/W</code></td></tr>
+          <tr><td>ReduceScatter</td><td>每人有全量，求和后每人留 <code>1/N</code></td><td><code>≈ V/W</code></td></tr>
+          <tr><td>AllReduce</td><td>= ReduceScatter + AllGather</td><td><code>≈ 2V/W</code></td></tr>
+          <tr><td>AllToAll</td><td>每人给每人发一份不同的数据</td><td><code>≈ V/W</code> 量级</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>反直觉的结论在耗时那一列：<b><code>N</code> 不在里面</b>。环形算法分 <code>N-1</code> 步，每步只传 <code>1/N</code> 的数据，乘起来 <code>N</code> 就约掉了。也就是说 <b>AllReduce 的代价只取决于数据体积，几乎不取决于有多少台机器参与</b>。这是数据并行能扩到上万卡的根本原因——否则每加一倍机器通信翻一倍，几百卡就到头了。</p>
+
+      <p>（现实里 <code>N</code> 通过延迟项和拓扑跳数还是会有影响，小消息尤其明显。但对训练里那些几百 MB 的梯度块，体积项完全主导。）</p>
+
+      <p>算并行策略的通信开销时，我习惯只问两个问题：<b>每一步要过线的字节是多少？它正比于参数量还是正比于 token 数？</b>下一节会看到，这个区分直接决定了策略怎么组合。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/sharding/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 3 · Sharded Matrices and How to Multiply Them</a></p>
+
+      <hr />
+
+      <h2>4. Transformer 的三本账</h2>
+
+      <p>要估任何东西，先得会算这三笔。记号：<code>D</code> = 隐藏维度，<code>F</code> = FFN 中间维度，<code>L</code> = 层数，<code>S</code> = 序列长度，<code>B</code> = batch。</p>
+
+      <h3>第一本：参数量</h3>
+
+      <p>每层里，注意力的 Q/K/V/O 四个投影各是 <code>D×D</code>，共 <code>4D²</code>；FFN 上下投影是 <code>2DF</code>，用 SwiGLU 这类门控结构则是 <code>3DF</code>。取常见的 <code>F ≈ 4D</code>（门控结构通常把 <code>F</code> 缩到 <code>8D/3</code> 以保持参数量不变），每层大约 <code>12D²</code>，全模型 <code>≈ 12LD²</code>，另加词表嵌入 <code>V·D</code>。</p>
+
+      <h3>第二本：训练算力，也就是 <code>6ND</code></h3>
+
+      <p>这个著名的估算可以两行推出来。前向时每个参数对每个 token 参与一次乘加 = <b>2 FLOPs</b>；反向要算两个梯度（对输入的、对权重的），工作量约是前向的两倍 = <b>4 FLOPs</b>。合计<b>每参数每 token 约 6 FLOPs</b>：</p>
+
+      <p><code>训练总算力 ≈ 6 × 参数量 × 训练 token 数</code></p>
+
+      <p>拿它估一次真实训练：70B 模型、15T token → <code>6 × 70e9 × 15e12 ≈ 6.3e24</code> FLOPs。假设 8192 张 H100、MFU（实际算力利用率）40%：<code>8192 × 990e12 × 0.4 ≈ 3.2e18</code> FLOP/s。两者一除，<b>约 23 天</b>。用一个信封背面就得到了和公开报告同量级的答案——这就是这本书想教给你的能力。</p>
+
+      <p>注意 <code>6ND</code> 不含注意力里那两个 <code>S×S</code> 的矩阵乘，它们是 <code>O(S²)</code> 的。序列短时可以忽略，序列一长就会反超 FFN 成为主项——长上下文训练贵得不成比例，根子在这。</p>
+
+      <h3>第三本：显存，以及 KV cache 为什么是主角</h3>
+
+      <p>推理时显存分两块：<b>权重</b>（固定，bf16 下 = 2 × 参数量字节）和 <b>KV cache</b>（随并发和上下文线性增长）。后者每 token 的大小是：</p>
+
+      <p><code>2（K 和 V）× L × H_kv × d_head × 2 字节</code></p>
+
+      <p>关键是 <code>H_kv</code>——KV 头的数量。多头注意力（MHA）里它等于总头数；<b>GQA</b> 让多个 Q 头共享一组 KV 头，这个数就掉下来了。以 Llama-3-70B 的配置（<code>L=80</code>，64 个 Q 头，<code>H_kv=8</code>，<code>d_head=128</code>）实算：</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-5" tabindex="0">
+      <table>
+        <caption id="tbl-5">表 5 · GQA 对 KV cache 的影响（按 Llama-3-70B 结构，bf16）</caption>
+        <thead>
+          <tr><th>方案</th><th>KV 头数</th><th>每 token</th><th>8K 上下文单条</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>若用 MHA</td><td>64</td><td>2.5 MiB</td><td>20 GiB</td></tr>
+          <tr><td>实际用 GQA</td><td>8</td><td>320 KiB</td><td>2.5 GiB</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>8 倍差距。在 8×H100（640 GB）上：权重占 140 GB，剩下约 500 GB 全给 KV，<b>能装下约 190 条 8K 并发</b>；换成 MHA 只剩 23 条。GQA 不是什么精度上的小让步，它是<b>让长上下文服务在经济上成立的前提</b>。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/transformers/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 4 · All the Transformer Math You Need to Know</a></p>
+
+      <hr />
+
+      <h2>5. 训练怎么切：五种切法与它们的账单</h2>
+
+      <p>核心矛盾很简单：<b>单卡放不下，多卡要通信。</b>每种并行都是在「省多少显存」和「多花多少通信」之间选一个点。我把它们放在一张表里对比，关键看最后一列——<b>通信量正比于参数还是正比于 token</b>。</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-6" tabindex="0">
+      <table>
+        <caption id="tbl-6">表 6 · 五种并行策略（<code>P</code> = 参数量，<code>N</code> = 并行度）</caption>
+        <thead>
+          <tr><th>策略</th><th>切什么</th><th>显存收益</th><th>每步通信</th><th>正比于</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>数据并行 DP</td><td>切 batch，模型全复制</td><td>无</td><td>AllReduce 梯度 <code>≈ 2P</code></td><td>参数</td></tr>
+          <tr><td>完全分片 FSDP / ZeRO-3</td><td>切参数+梯度+优化器态</td><td><code>÷N</code>，收益最大</td><td><code>≈ 3P</code></td><td>参数</td></tr>
+          <tr><td>张量并行 TP</td><td>切 <code>D</code>/<code>F</code> 维</td><td><code>÷N</code></td><td>每层 AllReduce 激活</td><td><b>token</b></td></tr>
+          <tr><td>流水并行 PP</td><td>切层</td><td><code>÷N</code></td><td>只传边界激活，极小</td><td>token（很小）</td></tr>
+          <tr><td>专家并行 EP（MoE）</td><td>切专家</td><td><code>÷N</code></td><td>两次 AllToAll</td><td>token</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>怎么读这张表</h3>
+
+      <p><b>DP 和 FSDP 的通信正比于参数量</b>，与 batch 无关。所以<b>把每卡 batch 调大，通信就被摊薄了</b>——这是数据并行唯一也是最重要的调参方向。反过来，卡多到每卡 batch 只剩几条时，DP 的效率会断崖式下跌。</p>
+
+      <p><b>TP 的通信正比于 token 数</b>，而且是<b>每层都要来一次</b>。这意味着它对链路延迟极其敏感，一旦跨出高速域（GPU 的节点、TPU 的一小片 mesh）立刻崩盘。所以铁律是：<b>TP 只在最快的那一层互联里用，并行度一般不超过单节点卡数（如 8）。</b></p>
+
+      <p><b>PP 通信最省</b>，但它有独有的问题——<b>流水气泡</b>。<code>N</code> 个阶段、<code>M</code> 个微批次时，空转比例约 <code>(N-1)/(M+N-1)</code>。要把气泡压到 10% 以下，微批次数得是阶段数的十倍左右，这又反过来要求全局 batch 足够大。PP 省的是带宽，花的是调度复杂度。</p>
+
+      <h3>组合起来的次序</h3>
+
+      <p>实践中这几种是叠着用的（所谓 3D/4D 并行），排布次序几乎总是按<b>互联速度从快到慢</b>来分配：</p>
+
+      <ol>
+        <li><b>最内层（节点内 / mesh 内小片）→ TP</b>：它最吃带宽，必须占最快的线。</li>
+        <li><b>中间层 → FSDP</b>：通信量中等且可与计算重叠。</li>
+        <li><b>最外层（跨机架 / 跨集群）→ PP</b>：通信最少，扛得住慢链路。</li>
+        <li>MoE 的 <b>EP</b> 通常和 TP 同层或稍外。</li>
+      </ol>
+
+      <p>把这个次序记住，比记住任何具体配置都有用——换了硬件，按互联层级重新套一遍就行。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/training/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 5 · How to Parallelize a Transformer for Training</a> ｜ <a href="https://jax-ml.github.io/scaling-book/applied-training/" target="_blank" rel="noopener">Part 6 · Training LLaMA 3 on TPUs</a></p>
+
+      <hr />
+
+      <h2>6. 推理是另一个世界</h2>
+
+      <p>这是我认为最容易被低估的一章。<b>推理不是「训练去掉反向」</b>——它内部还分成两个瓶颈完全相反的阶段。</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-7" tabindex="0">
+      <table>
+        <caption id="tbl-7">表 7 · Prefill 与 Decode 是两种不同的负载</caption>
+        <thead>
+          <tr><th></th><th>Prefill（读提示词）</th><th>Decode（逐字生成）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>一次处理</td><td>整个 prompt，几百上千 token</td><td>每条序列 1 个 token</td></tr>
+          <tr><td>算术强度</td><td>高（<code>≈</code> prompt 长度）</td><td>低（<code>≈</code> 并发数）</td></tr>
+          <tr><td>瓶颈</td><td><b>算力受限</b></td><td><b>访存受限</b></td></tr>
+          <tr><td>决定的指标</td><td>首字延迟 TTFT</td><td>吐字速度 TPOT</td></tr>
+          <tr><td>加卡有用吗</td><td>有用</td><td>只在能提高并发时有用</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>回到开头那个式子 <code>I ≈ B</code>：decode 时的 <code>B</code> 就是<b>当前同时在生成的序列条数</b>。单条请求 <code>B=1</code>，算术强度 1，而芯片需要两三百——<b>算力利用率不到 1%</b>。这时候你每生成一个 token，都要把<b>整个模型的权重完整读一遍</b>，只为了做那么一点点乘法。</p>
+
+      <p>由此可以直接推出 decode 的速度上限，而且这个估算准得惊人：</p>
+
+      <p><code>每 token 耗时 ≈ 模型字节数 ÷ HBM 带宽</code></p>
+
+      <p>70B 模型 bf16 = 140 GB，8×H100 聚合带宽约 26.8 TB/s → 约 5.2 ms/token，<b>约 190 token/s</b>，且这个数<b>在并发拉满之前几乎不随并发变化</b>（因为读权重的开销被所有序列共享）。这解释了两件事：为什么量化到 int8/fp8 能几乎线性地提升解码速度（字节数减半，时间减半），以及为什么单用户体验到的速度提不上去时，加卡往往没用——你需要的是<b>把更多请求塞进同一次权重读取里</b>。</p>
+
+      <h3>于是所有推理优化都指向同一个方向</h3>
+
+      <ul>
+        <li><b>Continuous batching</b>：不等一整批做完，谁生成完了就立刻换新请求进来，让 <code>B</code> 时刻保持高位。这是吞吐提升最大的单项优化。</li>
+        <li><b>PagedAttention</b>：KV cache 按页分配而非按最长长度预留，消除碎片 → 同样显存能装更多并发 → <code>B</code> 更大。</li>
+        <li><b>GQA / MQA</b>：见上一节，KV 小了并发就能大。</li>
+        <li><b>量化</b>：直接砍掉「模型字节数」这一项。</li>
+        <li><b>投机解码</b>：用小模型草拟 <code>k</code> 个 token，大模型<b>一次性并行验证</b>。它不减少总 FLOPs（反而增加），但把 decode 的 <code>B</code> 从 1 变成 <code>k</code>——<b>在访存受限区里，这些额外的算力是免费的</b>。这是「用算力换搬运」思路的又一次胜利。</li>
+        <li><b>Prefill / Decode 分离部署</b>：两个阶段瓶颈相反，混在一起会互相拖累（长 prefill 会卡住所有人的吐字）。拆到不同机器上，各自按各自的瓶颈配硬件。</li>
+      </ul>
+
+      <p>最后是<b>延迟与吞吐的取舍</b>：加大并发能提高吞吐，但排队和单步耗时会让单用户变慢。这两者构成一条帕累托前沿，<b>没有普适最优点</b>——聊天产品往左选低延迟，批量离线任务往右选高吞吐。先明确 SLA，再选工作点。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/inference/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 7 · All About Transformer Inference</a> ｜ <a href="https://jax-ml.github.io/scaling-book/applied-inference/" target="_blank" rel="noopener">Part 8 · Serving LLaMA 3-70B on TPUs</a></p>
+
+      <hr />
+
+      <h2>7. 落到代码：profiling 与 JAX</h2>
+
+      <p>纸面估算的价值，在于它给你一个<b>可以被证伪的预期</b>。真正的工作流是：<b>先估算 → 再测量 → 差距超过 2 倍就说明有你没想到的东西</b>。</p>
+
+      <p>看 profile 时我通常按这个顺序问：</p>
+
+      <ol>
+        <li><b>MFU 是多少？</b>实测 FLOP/s ÷ 峰值。训练能到 40–50% 算健康，低于 25% 一定有事。</li>
+        <li><b>时间花在哪类算子上？</b>如果大量时间在逐元素算子上，说明融合没做好。</li>
+        <li><b>通信和计算重叠了吗？</b>看 collective 是否和计算 kernel 并行。没重叠说明有同步点卡住了。</li>
+        <li><b>有没有意外的排布转换？</b>切分方式不匹配时框架会插入隐式的重排，这类开销最阴险。</li>
+      </ol>
+
+      <p>JAX 这边值得学的是它的<b>声明式分片</b>：你用 <code>jax.sharding</code> 描述「这个张量的这一维切在 mesh 的哪个轴上」，编译器自己推导需要插哪些集合通信。好处是<b>并行策略变成了几行配置而不是一次重写</b>，坏处是你必须能看懂它推导出来的结果——而看懂它，靠的正是前面几节那套代价模型。</p>
+
+      <p><a href="https://jax-ml.github.io/scaling-book/profiling/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 9 · How to Profile TPU Programs</a> ｜ <a href="https://jax-ml.github.io/scaling-book/jax-stuff/" target="_blank" rel="noopener">Part 10 · Programming TPUs in JAX</a></p>
+
+      <hr />
+
+      <h2>8. 怎么配合原书读</h2>
+
+      <p>原书全部 13 章都在<a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">这里</a>免费公开，附带大量图示和<b>带答案的习题</b>——习题是精华，这份笔记完全没有覆盖，强烈建议直接做。章节对照：</p>
+
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-8" tabindex="0">
+      <table>
+        <caption id="tbl-8">表 8 · 原书章节与本文各节的对应关系</caption>
+        <thead>
+          <tr><th>原书章节</th><th>本文对应</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">Part 0 · 引言</a></td><td>§0</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/roofline/" target="_blank" rel="noopener">Part 1 · Rooflines</a></td><td>§0、§1</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/tpus/" target="_blank" rel="noopener">Part 2 · TPUs</a></td><td>§2</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/sharding/" target="_blank" rel="noopener">Part 3 · 分片矩阵</a></td><td>§3</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/transformers/" target="_blank" rel="noopener">Part 4 · Transformer 数学</a></td><td>§4</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/training/" target="_blank" rel="noopener">Part 5 · 训练并行</a></td><td>§5</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/applied-training/" target="_blank" rel="noopener">Part 6 · 训练 LLaMA 3</a></td><td>§4（<code>6ND</code> 实算）</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/inference/" target="_blank" rel="noopener">Part 7 · 推理</a></td><td>§6</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/applied-inference/" target="_blank" rel="noopener">Part 8 · 服务 LLaMA 3-70B</a></td><td>§6</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/profiling/" target="_blank" rel="noopener">Part 9 · Profiling</a></td><td>§7</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/jax-stuff/" target="_blank" rel="noopener">Part 10 · JAX 编程</a></td><td>§7</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/conclusion/" target="_blank" rel="noopener">Part 11 · 结语与延伸</a></td><td>—</td></tr>
+          <tr><td><a href="https://jax-ml.github.io/scaling-book/gpus/" target="_blank" rel="noopener">Part 12 · GPUs</a></td><td>§2</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <p>如果只有一小时，我的建议是：<b>读 Part 1，然后跳到 Part 7</b>。roofline 给你工具，推理那章让你看到这个工具能拆开多少个平时想不明白的现象。中间几章更像参考手册，等真的要动手切模型时再回头查。</p>
+
+      <p class="signoff">以上是我自己的理解与取舍，出错的部分算我的。原书写得非常好，也非常慷慨地免费公开了——真想学明白，请去读<a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">原书</a>，顺手给作者一个 star。</p>
+
+    </article>
+  </main>
+
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span><a href="/">主页</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

@@ -51,12 +51,27 @@
     <div class="page-head">
       <div class="eyebrow">Collection</div>
       <h1>收藏夹</h1>
-      <p>镜像存档一些值得一读的好内容，标注原作者与来源。很多原文在墙外，这里让打不开的朋友也能直接读到全文。转载仅供阅读，版权归原作者所有，如有侵权请联系删除。</p>
+      <!-- 两类内容，措辞要同时罩住：①镜像/译介（转载原文，标注来源）②读书笔记（我自己
+           写的，原文不转）。别把这段改回只说「转载」——scaling-book-notes 那条不是转载。 -->
+      <p>存档一些值得一读的好内容，标注原作者与来源。很多原文在墙外，这里让打不开的朋友也能直接读到全文；另有几篇是我自己写的读书笔记，卡片上会注明，原文不转载。转载部分仅供阅读，版权归原作者所有，如有侵权请联系删除。</p>
     </div>
 
     <div class="bm-list">
       <!-- 每条收藏 = 一张卡片，点开进入 /collection/<slug>/ 阅读页。新增时复制此模板即可。
            顺序：最新收藏在最前。 -->
+      <!-- 这条和其它几条体例不同：不是译介/镜像，是我自己写的读书笔记，原文一个字
+           都没转。badge 因此写「读书笔记」，excerpt 里也明说了。别把它改成「中文译介」。 -->
+      <a class="bm-card" href="./scaling-book-notes/">
+        <div class="bm-meta">
+          <span class="badge">读书笔记</span>
+          <span>读 Google DeepMind《How to Scale Your Model》</span>
+          <span class="src">写于 2026-08-25</span>
+        </div>
+        <h2>把大模型跑起来要算几笔账：《How to Scale Your Model》精读笔记</h2>
+        <p class="excerpt">一个式子撑起半本书：权重矩阵乘的算术强度约等于这一批的 token 数——模型多大都约掉了。而芯片需要两三百才不空转。理解了这一条，roofline、GQA、continuous batching、投机解码、prefill/decode 分离，全都是同一个约束下的不同解法。<b>非译文</b>，是我自己的理解与取舍，每节附原书对应章节直达链接。</p>
+        <div class="by"><b>原书</b> · jax-ml.github.io · Austin et al., Google DeepMind, 2025（免费公开）</div>
+      </a>
+
       <a class="bm-card" href="./harness-continual-learning/">
         <div class="bm-meta">
           <span class="badge">论文译介</span>

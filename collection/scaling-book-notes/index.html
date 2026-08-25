@@ -1045,6 +1045,14 @@
             <li><b>张量高</b> → 算力受限，此时才是真的满了。</li>
           </ul>
           <p>而 <code>SM_ACTIVE</code>（也就是 <code>nvidia-smi</code> 那个数）在两种情况下都会很高，<b>所以它区分不出这两者，参考价值最低</b>。</p>
+
+          <p><b>方法四：如果你在用 vLLM，它直接把答案报给你。</b>OpenAI 兼容服务默认开着 Prometheus 端点，<code>curl localhost:8000/metrics</code> 就能看到（<code>--disable-log-stats</code> 会关掉）。最值钱的是这一个：</p>
+
+          <p><code>vllm:iteration_tokens_total</code> —— 每个 engine step 实际处理了多少 token 的直方图。<b>这就是本文开头那个 <code>I ≈ B</code> 里的 <code>B</code>，等于直接读出了你的算术强度。</b>把它的均值和脊点那 150~300 一比，是不是访存受限当场就有答案，连算都不用算。</p>
+
+          <p>另外几个配着看：<code>vllm:num_requests_running</code>（当前并发）、<code>vllm:generation_tokens</code>（算吞吐用，配合上面手算 MFU）、<code>vllm:kv_cache_usage_perc</code>（KV 还剩多少空间，决定你还能不能往上加并发）。</p>
+
+          <p>做投机解码的话还有 <code>vllm:spec_decode_*</code> 一族，可以直接量出接受率而不用猜（不同版本字段名有出入，早期版本有现成的 <code>draft_acceptance_rate</code>，新版是按草稿位置分桶的计数，得自己除一下）。真正的验收还是 A/B 打开前后的 <code>vllm:request_time_per_output_token_seconds</code>——<b>那才是用户体感的吐字速度</b>。</p>
         </div>
       </details>
 

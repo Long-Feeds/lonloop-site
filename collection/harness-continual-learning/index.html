@@ -183,9 +183,11 @@
 
       <p>HCL 把可变的 harness 状态组织成 <code>H_n = (I_n, M_n, C_n, R_n)</code> 四个<b>联合版本化</b>的组件。之所以强调「联合」：因为改动其中一个组件可能与其它组件相互作用、并同时影响新行为与已习得的行为，<b>HCL 把所有提议的改动当成一个完整候选 harness 对待</b>——它要么整体替换 <code>H_n</code>，要么<b>一条改动都不进入</b>已部署状态。harness 内容因此不再是一堆各自独立编辑的产物，而是一套协同的持续学习机制。</p>
 
-      <div class="tbl-wrap">
+      <!-- 每个 .tbl-wrap 都带 tabindex/role/aria-labelledby 三件套 —— 理由写在
+           reader.css 的 .tbl-wrap 规则旁边。新增表格时照抄这三个属性，别只抄外层 div。 -->
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-1" tabindex="0">
       <table>
-        <caption>表 1 · 已部署 harness 中四个联合版本化组件的执行功能与可更新内容</caption>
+        <caption id="tbl-1">表 1 · 已部署 harness 中四个联合版本化组件的执行功能与可更新内容</caption>
         <thead>
           <tr><th>组件</th><th>执行期的功能</th><th>HCL 中被更新的内容</th></tr>
         </thead>
@@ -287,9 +289,9 @@
 
       <p>文本版 ALFWorld，每回合最多 50 步。持续流按 Pick-and-Place → Look-in-Light → Clean → Heat → Cool → Two-object 六类任务顺序推进，每类用 10 个训练回合做顺序适应；每阶段后在所有已见类别上评测，最终成绩在官方的 134 个评测回合上汇报。</p>
 
-      <div class="tbl-wrap">
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-2" tabindex="0">
       <table>
-        <caption>表 2 · ALFWorld 最终表现与 harness 级遗忘（冻结模型：Qwen3.5-9B，单位 %）</caption>
+        <caption id="tbl-2">表 2 · ALFWorld 最终表现与 harness 级遗忘（冻结模型：Qwen3.5-9B，单位 %）</caption>
         <thead>
           <tr><th>方法</th><th>Pick</th><th>Look</th><th>Clean</th><th>Heat</th><th>Cool</th><th>Two-object</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
         </thead>
@@ -325,9 +327,9 @@
 
       <p>文本流顺序为 MuSiQue → ProofWriter → GSM8K → HotpotQA，覆盖多跳问答、逻辑演绎、数学推理与知识密集问答。每个任务用 250 例适应、50 例验证、500 例测试，基础模型 DeepSeek-V4-Flash 全程冻结，HCL 只更新四个 harness 组件。</p>
 
-      <div class="tbl-wrap">
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-3" tabindex="0">
       <table>
-        <caption>表 3 · 四任务文本推理流的最终表现（冻结模型：DeepSeek-V4-Flash，单位 %）</caption>
+        <caption id="tbl-3">表 3 · 四任务文本推理流的最终表现（冻结模型：DeepSeek-V4-Flash，单位 %）</caption>
         <thead>
           <tr><th>方法</th><th>MuSiQue</th><th>ProofWriter</th><th>GSM8K</th><th>HotpotQA</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
         </thead>
@@ -347,9 +349,9 @@
 
       <p>多模态流顺序为 COCO 目标检测 → COCO 图像描述 → RefCOCO 视觉定位 → VQAv2，Qwen3.6-27B 全程冻结，同样是 250 / 50 / 500 的划分。这里额外对比了 DGG——一个面向顺序多任务持续学习的近期自适应方法。</p>
 
-      <div class="tbl-wrap">
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-4" tabindex="0">
       <table>
-        <caption>表 4 · 四任务多模态感知流的最终表现（冻结模型：Qwen3.6-27B，单位 %）</caption>
+        <caption id="tbl-4">表 4 · 四任务多模态感知流的最终表现（冻结模型：Qwen3.6-27B，单位 %）</caption>
         <thead>
           <tr><th>方法</th><th>检测</th><th>描述</th><th>定位</th><th>VQAv2</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
         </thead>
@@ -370,9 +372,9 @@
 
       <p>这一节只动一个旋钮：把历史损失容忍度固定为 <code>b</code>，扫 <code>b ∈ {0, 1, 3, ∞}</code>，其余条件全部锁死。其中当前提升判据 <code>δ_n</code> 要求<b>至少多做对两个验证案例</b>；有效性判据要求候选达到<b>至少 90.00% 的输出格式合规率</b>，且不引入任何语法、工具使用或环境违规。<code>b = 0</code> 与 <code>b = ∞</code> 即前文的 Stability / Plasticity 配置；<code>b = 1</code> 与 <code>b = 3</code> 允许每个候选分别最多新增 1 个和 3 个失败锚点。本节每任务用 300 适应 / 80 验证 / 600 测试，每个早先任务配 80 个锚点。</p>
 
-      <div class="tbl-wrap">
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-5" tabindex="0">
       <table>
-        <caption>表 5 · 不同固定历史损失容忍度 <code>b</code> 下的表现（其余实验条件全部不变，单位 %）</caption>
+        <caption id="tbl-5">表 5 · 不同固定历史损失容忍度 <code>b</code> 下的表现（其余实验条件全部不变，单位 %）</caption>
         <thead>
           <tr><th>容忍度 <code>b</code></th><th>MuSiQue</th><th>ProofWriter</th><th>GSM8K</th><th>HotpotQA</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
         </thead>
@@ -395,9 +397,9 @@
 
       <p>在受控多模态流上用 Qwen3.5-4B 做组件消融：从 Full HCL 出发，每次禁用一个组件的更新、其余三个保持自适应。</p>
 
-      <div class="tbl-wrap">
+      <div class="tbl-wrap" role="region" aria-labelledby="tbl-6" tabindex="0">
       <table>
-        <caption>表 6 · 组件消融（<code>I</code> 任务接口、<code>M</code> 经验记忆、<code>C</code> 能力图谱、<code>R</code> 自适应路由；✓ 表示该组件可更新，✗ 表示禁用其更新）</caption>
+        <caption id="tbl-6">表 6 · 组件消融（<code>I</code> 任务接口、<code>M</code> 经验记忆、<code>C</code> 能力图谱、<code>R</code> 自适应路由；✓ 表示该组件可更新，✗ 表示禁用其更新）</caption>
         <thead>
           <tr><th>配置</th><th><code>I</code></th><th><code>M</code></th><th><code>C</code></th><th><code>R</code></th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
         </thead>

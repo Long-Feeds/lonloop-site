@@ -113,6 +113,42 @@
   .dg .bx-w{fill:rgba(233,180,110,.14);stroke:#e9b46e;stroke-width:1.2}
   .dg .lw{fill:#e9b46e}
   @media (max-width:560px){ .dg .ls{font-size:12.5px} .dg .l{font-size:13px} .dg .m{font-size:12px} }
+
+  /* 术语表. The grid collapses to one column on narrow screens — a nowrap <dt>
+     beside a wrapping <dd> in two columns squeezes the definition to a sliver
+     on a phone. Don't switch this to a <table>: reader.css sets white-space:
+     nowrap on every td except the first, which would force each definition
+     onto one unwrappable line. */
+  .prose .gloss{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:26px 0}
+  .prose .gloss .hd{font-size:13.5px;font-weight:700;color:var(--txt);margin:0 0 4px}
+  .prose .gloss .sub{font-size:12.5px;color:var(--dim);margin:0 0 14px;line-height:1.6}
+  .prose .gloss dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 16px}
+  .prose .gloss dt{color:var(--accent);font-weight:700;font-size:14.5px;white-space:nowrap}
+  .prose .gloss dd{margin:0;color:var(--muted);font-size:14.5px;line-height:1.7}
+  .prose .gloss dd b{color:#c8cfdc}
+  @media (max-width:520px){
+    .prose .gloss dl{grid-template-columns:1fr;gap:0}
+    .prose .gloss dt{margin-bottom:2px}
+    .prose .gloss dd{margin:0 0 12px}
+  }
+
+  /* 展开式细讲. Native <details> on purpose — no JS on this site, and a closed
+     <details> still has its text in the DOM, so Ctrl+F and crawlers find it.
+     list-style:none + ::marker reset kills the default triangle in both
+     WebKit and Gecko; the ▸ is drawn as a rotating span instead. */
+  .prose details.exp{background:var(--bg2);border:1px solid var(--line);border-radius:12px;margin:24px 0;overflow:hidden}
+  .prose details.exp > summary{cursor:pointer;padding:14px 18px;font-size:14.5px;font-weight:600;color:var(--accent);list-style:none;display:flex;gap:9px;align-items:flex-start;line-height:1.55}
+  .prose details.exp > summary::-webkit-details-marker{display:none}
+  .prose details.exp > summary::marker{content:""}
+  .prose details.exp > summary:hover{color:#9db4ff}
+  .prose details.exp > summary .tri{flex:0 0 auto;transition:transform .18s ease;margin-top:.1em}
+  .prose details.exp[open] > summary .tri{transform:rotate(90deg)}
+  .prose details.exp[open] > summary{border-bottom:1px solid var(--line)}
+  .prose details.exp .body{padding:4px 18px 6px}
+  .prose details.exp .body p{font-size:15.5px;line-height:1.85;margin:14px 0}
+  .prose details.exp .body ul,.prose details.exp .body ol{font-size:15.5px;line-height:1.85;margin:14px 0}
+  .prose details.exp .body table{font-size:13.5px}
+  @media (prefers-reduced-motion:reduce){.prose details.exp > summary .tri{transition:none}}
 </style>
 </head>
 <body>
@@ -154,13 +190,29 @@
 
       <p><b>一句话概括：</b>这本书讲的是「一个模型跑在真实硬件上，时间到底花在哪」。它的价值不在于教你调参，而在于让你<b>在写代码之前就能用纸笔估出</b>：这次训练要多少卡、跑多少天；这个模型自己部署要多少显存、能扛多少并发；某个想法是不是根本不可能快起来。我读下来最大的收获是发现<b>整本书几乎可以由一个式子推出来</b>——所以这份笔记就从那个式子开始讲。</p>
 
+      <div class="gloss">
+        <p class="hd">先约定九个词</p>
+        <p class="sub">这几个词后面每一节都会用到，先在这里说清楚，正文里就不重复解释了。已经熟的可以直接跳过。</p>
+        <dl>
+          <dt>token</dt><dd>模型处理文字的最小单位，大致相当于一个词或半个词（中文通常一两个字一个）。模型不是一个字一个字读，而是一个 token 一个 token 读。</dd>
+          <dt>参数 / 权重</dt><dd>模型里训练出来的那一大堆数字，本质是很多个矩阵。「70B 模型」就是说它有 700 亿个这样的数。<b>权重是死的、固定的</b>，每次推理都得把它读一遍。</dd>
+          <dt>激活</dt><dd>数据流过模型时产生的<b>中间结果</b>。权重是固定的，激活是随着输入变的——你问的问题不同，激活就不同。</dd>
+          <dt>梯度</dt><dd>训练时算出来的「这个参数该往哪个方向调、调多少」。<b>只有训练有梯度，推理没有。</b></dd>
+          <dt>FLOPs</dt><dd>浮点运算次数，就是「做了多少次加减乘除」。<code>FLOP/s</code>（带斜杠）是每秒能做多少次，衡量芯片多能算。</dd>
+          <dt>带宽</dt><dd>每秒能搬多少字节数据。注意它和算力是<b>两回事</b>：芯片能算得飞快，但数据喂不进来照样干等——这份笔记基本就是在讲这件事。</dd>
+          <dt>显存 / HBM</dt><dd>显卡上的内存，模型权重就住在这儿。HBM 是它的技术名（高带宽内存）。容量决定你<b>能不能</b>跑，带宽决定<b>跑多快</b>。</dd>
+          <dt>batch / 并发</dt><dd>一次同时处理多少条数据。训练时叫 batch（批大小），推理时更常说「并发」——同时在伺候多少个用户。<b>这个数是全篇的主角。</b></dd>
+          <dt>bf16</dt><dd>一种数字格式，<b>每个数占 2 字节</b>。模型现在基本都用它存权重，所以「70B 参数」≈「140 GB」。后面所有字节数都按它算。</dd>
+        </dl>
+      </div>
+
       <h2>0. 先说结论：那个式子</h2>
 
-      <p>做一次权重矩阵乘：输入是 <code>B</code> 个 token 的激活 <code>[B, D]</code>，权重是 <code>[D, F]</code>。</p>
+      <p>做一次<b>权重矩阵乘</b>（模型里最主要的运算：把输入的一批数据乘上一个权重矩阵，Transformer 里绝大部分时间都花在这上面）：输入是 <code>B</code> 个 token 的激活 <code>[B, D]</code>（<code>B</code> 行 <code>D</code> 列的一张表），权重是 <code>[D, F]</code>。</p>
 
       <ul>
-        <li><b>算力开销</b>：每个输出元素要做 <code>D</code> 次乘加，一次乘加算 2 FLOPs，输出有 <code>B×F</code> 个元素 → 共 <code>2·B·D·F</code> FLOPs。</li>
-        <li><b>搬运开销</b>：bf16 下每个数 2 字节。要搬的是激活 <code>2BD</code>、权重 <code>2DF</code>、结果 <code>2BF</code> 字节。</li>
+        <li><b>算力开销</b>：每个输出元素要做 <code>D</code> 次<b>乘加</b>（乘一下再加到累计值上，矩阵乘就是由一堆乘加组成的），一次乘加算 2 FLOPs，输出有 <code>B×F</code> 个元素 → 共 <code>2·B·D·F</code> FLOPs。</li>
+        <li><b>搬运开销</b>：bf16 下每个数 2 字节。要搬的是激活 <code>2BD</code>、权重 <code>2DF</code>、结果 <code>2BF</code> 字节。（「搬运」指把数据从显存挪到芯片的计算单元里——<b>数据不搬过去，芯片就没法算</b>。）</li>
       </ul>
 
       <p>推理解码时 <code>B</code> 通常远小于 <code>D</code> 和 <code>F</code>，权重那一项 <code>2DF</code> 完全压倒另外两项。于是<b>算术强度</b>（arithmetic intensity，每搬运一字节能摊到多少次浮点运算）就是：</p>
@@ -243,7 +295,7 @@
         <li><b>容量上限</b>：总共能放下多少字节（bytes）。</li>
       </ol>
 
-      <p>前两个决定<b>快不快</b>，第三个决定<b>能不能跑</b>。一个算子的实际耗时是</p>
+      <p>前两个决定<b>快不快</b>，第三个决定<b>能不能跑</b>。一个<b>算子</b>（operator，指一次具体的运算，比如「一次矩阵乘」「一次加法」「一次 LayerNorm」——模型就是由成千上万个算子串起来的）的实际耗时是</p>
 
       <p><code>T ≈ max( FLOPs ÷ 峰值算力 , 字节数 ÷ 带宽 )</code></p>
 
@@ -315,7 +367,7 @@
       </table>
       </div>
 
-      <p>逐元素运算的强度是个<b>不随规模变化的小常数</b>——张量放大一万倍，它照样是 1/6。这就是<b>算子融合</b>（fusion）唯一的存在理由：把 <code>norm → matmul → activation → 残差</code> 这一串融成一个 kernel，中间结果留在片上不落 HBM，几个访存受限的小算子就被合并进一次搬运里。你在 XLA / torch.compile 里看到的绝大部分优化，本质都是在做这件事。</p>
+      <p>逐元素运算（对每个数各做各的，比如整个张量统一加个数、统一过一遍激活函数）的强度是个<b>不随规模变化的小常数</b>——<b>张量</b>（多维数组，模型里的数据和权重都以这个形式存在）放大一万倍，它照样是 1/6。这就是<b>算子融合</b>（fusion）唯一的存在理由：把 <code>norm → matmul → activation → 残差</code> 这一串融成一个 <b>kernel</b>（在芯片上实际跑起来的一段计算程序），中间结果留在片上不落 HBM，几个访存受限的小算子就被合并进一次搬运里。你在 XLA / torch.compile（两个深度学习编译器，分别来自 JAX/TensorFlow 阵营和 PyTorch）里看到的绝大部分优化，本质都是在做这件事。</p>
 
       <h3>用它来否定想法</h3>
 
@@ -336,6 +388,8 @@
       <h3>内存层级：真正的战场</h3>
 
       <p>从快到慢大致是：<b>寄存器 → 片上 SRAM（TPU 叫 VMEM，GPU 叫 SMEM/L2）→ HBM → 主机内存 → 别的机器</b>。每往下一级，容量涨一两个数量级，带宽掉一个数量级。</p>
+
+      <p>这几个名字听着唬人，其实就是<b>离计算单元的远近</b>：寄存器紧挨着计算单元、快到几乎不要钱但只放得下几个数；<b>SRAM</b> 是刻在芯片上的高速小内存（TPU 管自己那块叫 VMEM，GPU 叫 SMEM 或 L2 缓存），几十 MB；再往外才是显存 HBM，几十上百 GB 但慢得多。可以类比成<b>手边 → 桌上 → 书架 → 仓库</b>。</p>
 
       <figure class="dg">
       <svg viewBox="0 0 660 268" role="img" aria-labelledby="dg3t dg3d">
@@ -383,11 +437,11 @@
       <figcaption>容量和带宽是反着走的。所有高性能 kernel 都在做同一件事：<b>把数据切成能塞进上面两层的 tile，搬一次，把能做的算全做完</b>。FlashAttention 快，不是因为 FLOPs 少，而是因为它没让 <code>S×S</code> 那个中间结果掉到 HBM 这一层。</figcaption>
       </figure>
 
-      <p>所有高性能 kernel 的写法都是同一套路：<b>把数据切成能塞进片上 SRAM 的 tile，搬一次，在上面把所有能做的计算全做完，再搬下一块</b>。FlashAttention 之所以快，不是因为它减少了 FLOPs（它反而增加了一点重算），而是因为它避免了把 <code>S×S</code> 的注意力矩阵写回 HBM——它把这个中间结果一直留在片上。这是 roofline 思维最漂亮的一次应用：<b>用更多的算力换更少的搬运，在访存受限的区域里是稳赚的</b>。</p>
+      <p>所有高性能 kernel 的写法都是同一套路：<b>把数据切成能塞进片上 SRAM 的 tile（小块），搬一次，在上面把所有能做的计算全做完，再搬下一块</b>。<b>FlashAttention</b>（一种被普遍采用的注意力加速实现）之所以快，不是因为它减少了 FLOPs（它反而增加了一点重算），而是因为它避免了把 <code>S×S</code> 那张<b>注意力矩阵</b>写回 HBM——序列有 <code>S</code> 个 token，每个 token 都要和其它所有 token 算一次相关度，于是中间会产生一张 <code>S×S</code> 的大表；序列一长这张表大得吓人（<code>S=8192</code> 时单头就是 6700 万个数）。FlashAttention 把它拆成小块、一直留在片上算完，从不整张落地。这是 roofline 思维最漂亮的一次应用：<b>用更多的算力换更少的搬运，在访存受限的区域里是稳赚的</b>。</p>
 
       <h3>芯片之间：环面（torus）与树</h3>
 
-      <p>单芯片放不下模型，就得连起来。这里 TPU 和 GPU 走了两条不同的路，理解这个差别对选并行策略很关键：</p>
+      <p>单芯片放不下模型，就得连起来。这里 TPU 和 GPU 走了两条不同的路，理解这个差别对选并行策略很关键。先解释两个词：<b>环面（torus）</b>是把芯片排成网格、再把每一行每一列的<b>首尾接起来</b>形成的环状结构（想象一张纸卷成筒、再把筒的两头接成甜甜圈），好处是任意两点之间的最远距离被砍掉一半、而且没有「边缘节点」；<b>NVLink</b> 是 NVIDIA 用来连同一台机器内几张卡的高速专线，<b>InfiniBand</b> 则是连不同机器的网络，后者比前者慢一个数量级。</p>
 
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-3" tabindex="0">
       <table>
@@ -470,7 +524,7 @@
 
       <h2>3. 通信的代价模型：四个集合操作</h2>
 
-      <p>一旦模型被切到多个芯片上，就需要集合通信（collective）把碎片拼回去。只要记住四个，以及一条反直觉的结论。</p>
+      <p>一旦模型被切到多个芯片上，就需要<b>集合通信</b>（collective）把碎片拼回去——指的是「一群设备一起参与的、有固定套路的数据交换动作」，跟点对点发消息不同，它是全体同时进场的。只要记住四个，以及一条反直觉的结论。</p>
 
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-4" tabindex="0">
       <table>
@@ -489,7 +543,28 @@
 
       <p>反直觉的结论在耗时那一列：<b><code>N</code> 不在里面</b>。环形算法分 <code>N-1</code> 步，每步只传 <code>1/N</code> 的数据，乘起来 <code>N</code> 就约掉了。也就是说 <b>AllReduce 的代价只取决于数据体积，几乎不取决于有多少台机器参与</b>。这是数据并行能扩到上万卡的根本原因——否则每加一倍机器通信翻一倍，几百卡就到头了。</p>
 
-      <p>（现实里 <code>N</code> 通过延迟项和拓扑跳数还是会有影响，小消息尤其明显。但对训练里那些几百 MB 的梯度块，体积项完全主导。）</p>
+      <details class="exp">
+        <summary><span class="tri">▸</span>展开：为什么加机器不加通信时间？用 4 台机器走一遍</summary>
+        <div class="body">
+          <p>这个结论第一次看几乎不可信——「大家都要拿到全部数据，人越多不是越慢吗？」<b>关键在于「每人只负责一小段」。</b>设有 4 台机器，每台手里有一份 <code>V</code> 字节的梯度，目标是让每台最后都拿到<b>四份相加</b>的结果。</p>
+
+          <p>先把每台机器的 <code>V</code> 切成 4 小块，编号 ①②③④。机器排成一个圈，每台只跟右邻居说话。</p>
+
+          <p><b>第一阶段：ReduceScatter（边传边加）。</b>第 1 拍，机器 A 把自己的①传给 B，B 收到后加到自己的①上；同时 B 把②传给 C、C 把③传给 D、D 把④传给 A——<b>四条线同时在用，谁也没闲着</b>。第 2 拍、第 3 拍重复这个动作。3 拍之后，每台机器手上都有<b>某一块的完整总和</b>（比如 D 手里的①已经是四台的①加在一起了）。</p>
+
+          <p><b>第二阶段：AllGather（把结果转一圈）。</b>现在每台各有一块正确答案，再沿着圈传 3 拍，每台就集齐了四块。</p>
+
+          <p>现在算账。<b>每一拍只传一小块，也就是 <code>V/4</code>。</b>两个阶段各 3 拍，共 6 拍，每台机器总共发出 <code>6 × V/4 = 1.5V</code> 字节，约等于 <code>2V</code>。</p>
+
+          <p>换成 100 台呢？切成 100 块，每阶段 99 拍——<b>拍数变多了，但每拍传的东西小了 100 倍</b>。总量还是 <code>2 × 99/100 × V ≈ 2V</code>。这就是 <code>N</code> 约掉的原因：<b>机器数同时出现在分子（拍数）和分母（每拍大小）上。</b></p>
+
+          <p>另一个容易忽略的点：<b>所有链路是并行工作的</b>。不是一台机器吭哧吭哧发给所有人，而是每台都只跟邻居收发，全场的线同时在跑。所以决定墙上时间的是「每台设备要吐出多少字节 ÷ 它那条线的带宽」，跟总人数无关。</p>
+
+          <p>这也顺带解释了为什么 <b>AllReduce ≈ 2V</b> 而 AllGather 和 ReduceScatter 各是 <code>V</code>——因为 AllReduce 就是上面那两个阶段拼起来的。</p>
+        </div>
+      </details>
+
+      <p>（现实里 <code>N</code> 还是会通过两个次要因素影响耗时：<b>延迟项</b>——每一拍都有固定的启动开销，拍数多了就累积；<b>拓扑跳数</b>——数据要多绕几个芯片。消息很小的时候这两项会冒头。但对训练里那些几百 MB 的梯度块，上面的体积项完全主导。）</p>
 
       <p>算并行策略的通信开销时，我习惯只问两个问题：<b>每一步要过线的字节是多少？它正比于参数量还是正比于 token 数？</b>下一节会看到，这个区分直接决定了策略怎么组合。</p>
 
@@ -499,15 +574,23 @@
 
       <h2>4. Transformer 的三本账</h2>
 
-      <p>要估任何东西，先得会算这三笔。记号：<code>D</code> = 隐藏维度，<code>F</code> = FFN 中间维度，<code>L</code> = 层数，<code>S</code> = 序列长度，<code>B</code> = batch。</p>
+      <p>要估任何东西，先得会算这三笔。先说记号——Transformer 由 <code>L</code> 个结构相同的<b>层</b>堆起来，每层里有<b>注意力</b>和 <b>FFN</b>（前馈网络，就是两个连着的矩阵乘）两个部件：</p>
+
+      <ul>
+        <li><code>D</code> = <b>隐藏维度</b>：每个 token 在模型内部被表示成一个多长的数字向量。常见 4096、8192。<b>这是模型「宽度」。</b></li>
+        <li><code>F</code> = <b>FFN 中间维度</b>：FFN 内部先把 <code>D</code> 撑宽到 <code>F</code> 再压回来，通常 <code>F ≈ 4D</code>。</li>
+        <li><code>L</code> = <b>层数</b>，模型「深度」。70B 级别通常 80 层。</li>
+        <li><code>S</code> = <b>序列长度</b>：这次处理多少个 token（就是俗称的「上下文长度」）。</li>
+        <li><code>B</code> = <b>batch</b>：同时处理多少条序列。</li>
+      </ul>
 
       <h3>第一本：参数量</h3>
 
-      <p>每层里，注意力的 Q/K/V/O 四个投影各是 <code>D×D</code>，共 <code>4D²</code>；FFN 上下投影是 <code>2DF</code>，用 SwiGLU 这类门控结构则是 <code>3DF</code>。取常见的 <code>F ≈ 4D</code>（门控结构通常把 <code>F</code> 缩到 <code>8D/3</code> 以保持参数量不变），每层大约 <code>12D²</code>，全模型 <code>≈ 12LD²</code>，另加词表嵌入 <code>V·D</code>。</p>
+      <p>每层里，注意力的 <b>Q/K/V/O 四个投影</b>各是 <code>D×D</code>，共 <code>4D²</code>（<b>投影</b>就是「乘一个矩阵把向量变成另一个向量」；Q/K/V/O 分别叫 query、key、value、output，下面会讲它们干嘛的）；FFN 上下投影是 <code>2DF</code>，用 <b>SwiGLU</b> 这类<b>门控结构</b>（多用一个矩阵算出一组「闸门」系数去缩放另一路的输出，效果更好但多一个矩阵）则是 <code>3DF</code>。取常见的 <code>F ≈ 4D</code>（门控结构通常把 <code>F</code> 缩到 <code>8D/3</code> 以保持参数量不变），每层大约 <code>12D²</code>，全模型 <code>≈ 12LD²</code>，另加<b>词表嵌入</b> <code>V·D</code>（把每个词映射成向量的那张查找表，<code>V</code> 是词表大小，通常十几万）。</p>
 
       <h3>第二本：训练算力，也就是 <code>6ND</code></h3>
 
-      <p>这个著名的估算可以两行推出来。前向时每个参数对每个 token 参与一次乘加 = <b>2 FLOPs</b>；反向要算两个梯度（对输入的、对权重的），工作量约是前向的两倍 = <b>4 FLOPs</b>。合计<b>每参数每 token 约 6 FLOPs</b>：</p>
+      <p>这个著名的估算可以两行推出来。训练一步分<b>前向</b>（把数据喂进去算出答案）和<b>反向</b>（从答案的误差倒推回去，算出每个参数该怎么调）两趟。前向时每个参数对每个 token 参与一次乘加 = <b>2 FLOPs</b>；反向要算两个梯度（一个是「误差该继续往前一层传多少」，一个是「这个参数本身该调多少」），工作量约是前向的两倍 = <b>4 FLOPs</b>。合计<b>每参数每 token 约 6 FLOPs</b>：</p>
 
       <p><code>训练总算力 ≈ 6 × 参数量 × 训练 token 数</code></p>
 
@@ -517,11 +600,37 @@
 
       <h3>第三本：显存，以及 KV cache 为什么是主角</h3>
 
+      <details class="exp">
+        <summary><span class="tri">▸</span>展开：注意力在干什么，以及 KV cache 是从哪冒出来的</summary>
+        <div class="body">
+          <p>要理解为什么 KV cache 是显存大户，得先知道注意力这一步在算什么。</p>
+
+          <p><b>注意力要解决的问题是：</b>模型读到「它」这个字时，得知道这个「它」指的是前面哪个东西。所以每个 token 都要回头看看前面所有 token，挑出跟自己相关的。</p>
+
+          <p>具体做法是给每个 token 算三个向量，各由一个权重矩阵乘出来：</p>
+          <ul>
+            <li><b>Q（query，查询）</b>：我想找什么样的信息。</li>
+            <li><b>K（key，键）</b>：我这里有什么样的信息，用来被别人匹配。</li>
+            <li><b>V（value，值）</b>：如果别人匹配上我了，我实际交出去的内容。</li>
+          </ul>
+
+          <p>可以类比查字典：拿你的 <b>Q</b> 去和前面每个 token 的 <b>K</b> 逐个比对，算出一串「相关度打分」；打分高的说明相关，然后按这个分数<b>加权平均</b>它们的 <b>V</b>，就是这个 token 注意力的输出。前面提到那张 <code>S×S</code> 的大表，装的就是「每个 token 对每个 token 的打分」。</p>
+
+          <p><b>现在关键的一步来了。</b>生成第 500 个 token 时，你需要前面 499 个 token 的 K 和 V。但——<b>第 3 个 token 的 K 和 V，只取决于第 3 个 token 自己</b>，跟你现在生成到第几个毫无关系。也就是说它们<b>算过一次之后永远不会变</b>。</p>
+
+          <p>那每生成一个字就把前面几百个 token 的 K、V 重算一遍，就是纯粹的浪费。<b>于是干脆把它们存下来——这就是 KV cache。</b>名字很直白：缓存起来的 K 和 V。</p>
+
+          <p>代价是它<b>会一直长</b>：每多生成一个 token 就往里追加一份，每多接一个并发用户就多一整份。所以它和权重完全不同——<b>权重是固定的 140 GB，KV cache 是随着「聊多久 × 多少人在聊」线性膨胀的</b>。长上下文服务真正的显存压力全在这儿。</p>
+
+          <p>还有一个细节：注意力不是只做一遍，而是分成多个<b>头</b>（head）并行做，每个头关注不同类型的关系，各自有自己的 Q、K、V。所以 KV cache 要按<b>头数</b>再乘一遍——下面公式里的 <code>H_kv</code> 和 <code>d_head</code>（每个头的向量长度）就是这么来的。</p>
+        </div>
+      </details>
+
       <p>推理时显存分两块：<b>权重</b>（固定，bf16 下 = 2 × 参数量字节）和 <b>KV cache</b>（随并发和上下文线性增长）。后者每 token 的大小是：</p>
 
       <p><code>2（K 和 V）× L × H_kv × d_head × 2 字节</code></p>
 
-      <p>关键是 <code>H_kv</code>——KV 头的数量。多头注意力（MHA）里它等于总头数；<b>GQA</b> 让多个 Q 头共享一组 KV 头，这个数就掉下来了。以 Llama-3-70B 的配置（<code>L=80</code>，64 个 Q 头，<code>H_kv=8</code>，<code>d_head=128</code>）实算：</p>
+      <p>关键是 <code>H_kv</code>——KV 头的数量。<b>MHA</b>（multi-head attention，多头注意力，最原始的做法）里每个头都有自己的 K 和 V，所以它等于总头数；<b>GQA</b>（grouped-query attention，分组查询注意力）让<b>好几个 Q 头共用同一组 K/V</b>——查询还是各查各的，但被查的那份「资料」共享，于是要缓存的东西成倍减少，效果几乎没损失。这个数就掉下来了。以 Llama-3-70B 的配置（<code>L=80</code>，64 个 Q 头，<code>H_kv=8</code>，<code>d_head=128</code>）实算：</p>
 
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-5" tabindex="0">
       <table>
@@ -544,7 +653,19 @@
 
       <h2>5. 训练怎么切：五种切法与它们的账单</h2>
 
-      <p>核心矛盾很简单：<b>单卡放不下，多卡要通信。</b>每种并行都是在「省多少显存」和「多花多少通信」之间选一个点。我把它们放在一张表里对比，关键看最后一列——<b>通信量正比于参数还是正比于 token</b>。</p>
+      <p>核心矛盾很简单：<b>单卡放不下，多卡要通信。</b>每种并行都是在「省多少显存」和「多花多少通信」之间选一个点。</p>
+
+      <p>先用一句话说清五种切法各自在切什么——<b>它们的区别就是「拿刀往哪个方向砍」</b>：</p>
+
+      <ul>
+        <li><b>数据并行（DP）</b>：模型不切，每张卡都放一整份，<b>切的是数据</b>。四张卡各算四分之一的数据，算完把梯度对一下。</li>
+        <li><b>完全分片（FSDP / ZeRO-3）</b>：<b>切参数</b>。每张卡只存模型的四分之一，谁要用到哪部分，临时找大家要过来拼齐，用完就扔。省显存最狠。</li>
+        <li><b>张量并行（TP）</b>：<b>把单个矩阵横着或竖着劈开</b>，四张卡各算一块，拼起来才是完整结果。</li>
+        <li><b>流水并行（PP）</b>：<b>切层</b>。第 1 张卡算前 20 层，算完把结果传给第 2 张卡接着算——像工厂流水线。</li>
+        <li><b>专家并行（EP）</b>：只有 <b>MoE</b>（mixture of experts，混合专家：模型里养着一堆「专家」小网络，每个 token 只激活其中一两个，从而参数很多但计算不多）模型才有，<b>切的是专家</b>，每张卡管几个专家，token 要去哪个专家就把它发过去。</li>
+      </ul>
+
+      <p>下表把它们放在一起对比，关键看最后一列——<b>通信量正比于参数还是正比于 token</b>。表里的<b>「优化器态」</b>指训练时为每个参数额外维护的辅助数据（如动量），用 Adam 时它比参数本身还大一两倍，所以能不能分片它对显存影响很大。</p>
 
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-6" tabindex="0">
       <table>
@@ -659,7 +780,34 @@
 
       <p><b>TP 的通信正比于 token 数</b>，而且是<b>每层都要来一次</b>。这意味着它对链路延迟极其敏感，一旦跨出高速域（GPU 的节点、TPU 的一小片 mesh）立刻崩盘。所以铁律是：<b>TP 只在最快的那一层互联里用，并行度一般不超过单节点卡数（如 8）。</b></p>
 
-      <p><b>PP 通信最省</b>，但它有独有的问题——<b>流水气泡</b>。<code>N</code> 个阶段、<code>M</code> 个微批次时，空转比例约 <code>(N-1)/(M+N-1)</code>。要把气泡压到 10% 以下，微批次数得是阶段数的十倍左右，这又反过来要求全局 batch 足够大。PP 省的是带宽，花的是调度复杂度。</p>
+      <details class="exp">
+        <summary><span class="tri">▸</span>展开：一个矩阵劈成两半，为什么还能算对？以及那次 AllReduce 是哪来的</summary>
+        <div class="body">
+          <p>「把矩阵切开分给几张卡」听起来很悬——结果还能对吗？答案是能，而且有<b>两种切法</b>，代价完全不同。这是理解 TP 的关键。</p>
+
+          <p>设要算 <code>Y = X · W</code>，<code>X</code> 是输入，<code>W</code> 是权重矩阵。</p>
+
+          <p><b>切法一：竖着切（按列）。</b>把 <code>W</code> 从中间竖着劈成左右两半 <code>W₁</code>、<code>W₂</code>。卡 1 算 <code>X·W₁</code>，卡 2 算 <code>X·W₂</code>。两边算出来的正好是最终结果的<b>左半边和右半边</b>，各自完整、拼起来就完事——<b>全程不需要通信</b>。</p>
+
+          <p><b>切法二：横着切（按行）。</b>把 <code>W</code> 横着劈成上下两半，同时把 <code>X</code> 竖着劈成两半。卡 1 算 <code>X₁·W₁</code>，卡 2 算 <code>X₂·W₂</code>。这次两边算出来的都是<b>整个结果的形状，但都只是「一部分贡献」</b>——真正的答案是这两个加起来。<b>于是必须做一次 AllReduce 把它们相加。</b></p>
+
+          <p>看出门道了吗：<b>竖着切免费，横着切要通信。</b>那为什么不全用竖着切？因为 FFN 是<b>两个矩阵乘连在一起</b>的（先撑宽到 <code>F</code>，再压回 <code>D</code>）。妙处在于：</p>
+
+          <ul>
+            <li>第一个矩阵<b>竖着切</b> → 免费，输出天然按列分好；</li>
+            <li>这个分好的输出，正好就是第二个矩阵<b>横着切</b>所需要的输入形状 → 直接接上，中间不用重排；</li>
+            <li>只在第二个矩阵之后<b>付一次 AllReduce</b>。</li>
+          </ul>
+
+          <p>所以一层 FFN 只付一次通信，而不是两次。注意力那边同理，按<b>头</b>切——每张卡管几个完整的头，最后 O 投影时汇总一次。</p>
+
+          <p><b>那为什么每层都躲不掉？</b>因为层与层之间夹着 LayerNorm、激活函数这些<b>非线性</b>运算。非线性的意思是「不能先各算各的再相加」——必须先把完整的结果拼齐，才能往下走。所以每一层结尾都得同步一次，<code>L</code> 层就是 <code>L</code> 次。</p>
+
+          <p>这也解释了那条铁律：这些 AllReduce 传的是<b>激活</b>（正比于 token 数），而且一层一次、密集发生，任何一点链路延迟都会被乘上 <code>L</code> 倍放大。放进 NVLink 内部（几百 GB/s）没问题，一旦跨到机器之间（几十 GB/s）就是灾难。</p>
+        </div>
+      </details>
+
+      <p><b>PP 通信最省</b>，但它有独有的问题——<b>流水气泡</b>（bubble，指流水线开头和结尾那段「后面的人还没活干 / 前面的人已经干完」的空转时间）。<code>N</code> 个阶段、<code>M</code> 个<b>微批次</b>（把一批数据再切成更小的小份，一份份地送进流水线——不切的话流水线上永远只有一件工件，后面三个阶段全在等）时，空转比例约 <code>(N-1)/(M+N-1)</code>。要把气泡压到 10% 以下，微批次数得是阶段数的十倍左右，这又反过来要求全局 batch 足够大。PP 省的是带宽，花的是调度复杂度。</p>
 
       <figure class="dg">
       <svg viewBox="0 0 660 250" role="img" aria-labelledby="dg6t dg6d">
@@ -721,6 +869,15 @@
       <h2>6. 推理是另一个世界</h2>
 
       <p>这是我认为最容易被低估的一章。<b>推理不是「训练去掉反向」</b>——它内部还分成两个瓶颈完全相反的阶段。</p>
+
+      <p>先说这两个阶段是什么。你给模型发一段话，它的处理分成两步：</p>
+
+      <ul>
+        <li><b>Prefill（预填充）</b>：把你输入的<b>整段提示词一次性读进去</b>，建立起前面说的 KV cache。这一步一次处理成百上千个 token，所以矩阵很大、芯片很忙。它决定了你按下回车后<b>多久看到第一个字</b>。</li>
+        <li><b>Decode（解码）</b>：开始<b>一个字一个字往外吐</b>。每吐一个字都要把整个模型重新过一遍，但这一遍只处理 1 个 token。它决定了字<b>往外冒得快不快</b>。</li>
+      </ul>
+
+      <p>行业里给这两件事各起了个缩写：<b>TTFT</b>（time to first token，首字延迟）和 <b>TPOT</b>（time per output token，每个字的间隔）。前者由 prefill 决定，后者由 decode 决定。</p>
 
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-7" tabindex="0">
       <table>
@@ -791,15 +948,45 @@
       <h3>于是所有推理优化都指向同一个方向</h3>
 
       <ul>
-        <li><b>Continuous batching</b>：不等一整批做完，谁生成完了就立刻换新请求进来，让 <code>B</code> 时刻保持高位。这是吞吐提升最大的单项优化。</li>
-        <li><b>PagedAttention</b>：KV cache 按页分配而非按最长长度预留，消除碎片 → 同样显存能装更多并发 → <code>B</code> 更大。</li>
-        <li><b>GQA / MQA</b>：见上一节，KV 小了并发就能大。</li>
-        <li><b>量化</b>：直接砍掉「模型字节数」这一项。</li>
-        <li><b>投机解码</b>：用小模型草拟 <code>k</code> 个 token，大模型<b>一次性并行验证</b>。它不减少总 FLOPs（反而增加），但把 decode 的 <code>B</code> 从 1 变成 <code>k</code>——<b>在访存受限区里，这些额外的算力是免费的</b>。这是「用算力换搬运」思路的又一次胜利。</li>
-        <li><b>Prefill / Decode 分离部署</b>：两个阶段瓶颈相反，混在一起会互相拖累（长 prefill 会卡住所有人的吐字）。拆到不同机器上，各自按各自的瓶颈配硬件。</li>
+        <li><b>Continuous batching（连续批处理）</b>：不等一整批做完，谁生成完了就立刻换新请求进来，让 <code>B</code> 时刻保持高位。对比一下：老做法是「凑够 8 个人一起发车，全部到站才发下一趟」，中间有人早早下车了座位也空着；新做法是<b>有人下车就马上让下一个人补上</b>。这是吞吐提升最大的单项优化。</li>
+        <li><b>PagedAttention（分页注意力）</b>：KV cache 按小页分配，而不是一上来就按「这个对话最长可能到 8000 字」预留一大块。后者会造成大量<b>碎片</b>（占着没用满的空间），前者用多少给多少 → 同样显存能装更多并发 → <code>B</code> 更大。思路是从操作系统的虚拟内存分页借来的。</li>
+        <li><b>GQA / MQA</b>：见上一节，KV 小了并发就能大。（MQA 是 multi-query attention，GQA 的极端版——<b>所有</b> Q 头只共享一组 K/V。）</li>
+        <li><b>量化</b>：把权重从 bf16 的 2 字节压成 int8 的 1 字节、甚至 fp8/int4 更少（用更粗的精度存同一个数，略损效果换体积）。直接砍掉「模型字节数」这一项，而那正是 decode 耗时公式的分子。</li>
+        <li><b>投机解码</b>（speculative decoding，也叫推测解码）：用一个小模型先草拟 <code>k</code> 个 token，大模型<b>一次性并行验证</b>这几个。它不减少总 FLOPs（反而增加），但把 decode 的 <code>B</code> 从 1 变成 <code>k</code>——<b>在访存受限区里，这些额外的算力是免费的</b>。这是「用算力换搬运」思路的又一次胜利，下面展开讲。</li>
+        <li><b>Prefill / Decode 分离部署</b>：两个阶段瓶颈相反，混在一起会互相拖累（有人发来一篇长文档做 prefill，会把同一台机器上所有人的吐字都卡住）。拆到不同机器上，各自按各自的瓶颈配硬件。</li>
       </ul>
 
-      <p>最后是<b>延迟与吞吐的取舍</b>：加大并发能提高吞吐，但排队和单步耗时会让单用户变慢。这两者构成一条帕累托前沿，<b>没有普适最优点</b>——聊天产品往左选低延迟，批量离线任务往右选高吞吐。先明确 SLA，再选工作点。</p>
+      <details class="exp">
+        <summary><span class="tri">▸</span>展开：投机解码为什么能「白嫖」？——它其实是在花你本来就浪费掉的算力</summary>
+        <div class="body">
+          <p>投机解码第一眼看着像作弊：<b>多算了一堆东西，反而更快了？</b>要理解它，得先接受前面那个结论——decode 时你的芯片<b>算力利用率不到 1%</b>，99% 的时间在等 HBM 把权重搬过来。</p>
+
+          <p>换句话说：<b>你已经付钱买了那些算力，但一直没用上。</b>投机解码就是去把这块闲置的产能利用起来。</p>
+
+          <p><b>它怎么运作：</b></p>
+          <ol>
+            <li>找一个又小又快的「草稿模型」（比如同系列的 1B 小模型），让它<b>连着猜 5 个 token</b>。它便宜，猜 5 个几乎不花时间。</li>
+            <li>把这 5 个候选<b>一次性</b>塞给大模型。注意——大模型这一次前向要处理 5 个 token，而不是 1 个。<b>但它读权重的次数还是一次。</b></li>
+            <li>大模型顺便就算出了「在每个位置上我自己会选什么」。逐个比对：从头开始，猜对的直接采纳，<b>一直到第一个猜错的地方为止</b>，错的那个用大模型自己的答案替换。</li>
+            <li>假设前 3 个猜对了：这一轮就<b>一口气产出了 4 个 token</b>，而代价只是<b>一次</b>权重读取。</li>
+          </ol>
+
+          <p><b>关键的账在这里。</b>回忆 decode 的耗时公式：<code>每步耗时 ≈ 模型字节数 ÷ 带宽</code>——它<b>跟这一步处理几个 token 无关</b>，因为瓶颈是搬权重，不是算数。所以：</p>
+
+          <ul>
+            <li>老办法：一次权重读取 → 1 个 token。</li>
+            <li>投机解码：一次权重读取 → 平均 2～3 个 token。</li>
+          </ul>
+
+          <p>那多出来的计算量呢？确实多了 5 倍，<b>但它是从那 99% 的闲置算力里出的，不占用瓶颈资源</b>，所以基本不体现在耗时上。这就是「免费」的含义——不是没有成本，而是<b>成本花在了你本来就在浪费的那一项上</b>。</p>
+
+          <p><b>还有一个常被误解的点：输出质量不会下降。</b>因为最终采纳哪个 token 是<b>大模型说了算</b>的，草稿模型只负责提议。猜错了就丢掉重来，所以结果和不用投机解码时在统计上是一致的——它是纯粹的加速，不是精度换速度。</p>
+
+          <p>反过来说，什么时候它会失效？<b>当你的并发已经很高时。</b>那时 <code>B</code> 本来就大、芯片已经接近算力受限，闲置算力没了，投机解码就从「白嫖」变成「真花钱」，收益迅速缩水。所以它主要用在<b>低并发、追求单用户速度</b>的场景。</p>
+        </div>
+      </details>
+
+      <p>最后是<b>延迟与吞吐的取舍</b>（<b>延迟</b>=单个用户等多久，<b>吞吐</b>=整台机器每秒能服务多少 token）：加大并发能提高吞吐，但排队和单步耗时会让单用户变慢。这两者构成一条<b>帕累托前沿</b>（指一条「已经没法白赚」的边界——落在上面时，想让任何一项变好就必然要牺牲另一项），<b>没有普适最优点</b>——聊天产品往左选低延迟，批量离线任务往右选高吞吐。先明确 <b>SLA</b>（service level agreement，你对用户承诺的服务指标，比如「95% 的请求首字在 1 秒内」），再选工作点。</p>
 
       <p><a href="https://jax-ml.github.io/scaling-book/inference/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 7 · All About Transformer Inference</a> ｜ <a href="https://jax-ml.github.io/scaling-book/applied-inference/" target="_blank" rel="noopener">Part 8 · Serving LLaMA 3-70B on TPUs</a></p>
 
@@ -809,16 +996,16 @@
 
       <p>纸面估算的价值，在于它给你一个<b>可以被证伪的预期</b>。真正的工作流是：<b>先估算 → 再测量 → 差距超过 2 倍就说明有你没想到的东西</b>。</p>
 
-      <p>看 profile 时我通常按这个顺序问：</p>
+      <p><b>profiling</b>（性能剖析）就是用工具录一段程序的运行过程，看每一微秒花在哪个算子上——相当于给程序做一次心电图。看 profile 时我通常按这个顺序问：</p>
 
       <ol>
-        <li><b>MFU 是多少？</b>实测 FLOP/s ÷ 峰值。训练能到 40–50% 算健康，低于 25% 一定有事。</li>
+        <li><b>MFU 是多少？</b>（model FLOPs utilization，实测 FLOP/s ÷ 芯片峰值，也就是「这些卡有几成力气真用上了」。）训练能到 40–50% 算健康，低于 25% 一定有事。</li>
         <li><b>时间花在哪类算子上？</b>如果大量时间在逐元素算子上，说明融合没做好。</li>
-        <li><b>通信和计算重叠了吗？</b>看 collective 是否和计算 kernel 并行。没重叠说明有同步点卡住了。</li>
-        <li><b>有没有意外的排布转换？</b>切分方式不匹配时框架会插入隐式的重排，这类开销最阴险。</li>
+        <li><b>通信和计算重叠了吗？</b>看 collective 是否和计算 kernel 并行。理想情况下传数据的同时芯片还在算别的；没重叠说明卡在了某个必须等所有人到齐的<b>同步点</b>上。</li>
+        <li><b>有没有意外的排布转换？</b>同一份数据在显存里怎么摆（哪一维在前、切在哪张卡上）叫它的<b>排布</b>。当上下游算子对排布的要求对不上时，框架会<b>偷偷插入一次重排</b>把数据搬来搬去——它不出现在你的代码里，却实实在在吃带宽。这类开销最阴险。</li>
       </ol>
 
-      <p>JAX 这边值得学的是它的<b>声明式分片</b>：你用 <code>jax.sharding</code> 描述「这个张量的这一维切在 mesh 的哪个轴上」，编译器自己推导需要插哪些集合通信。好处是<b>并行策略变成了几行配置而不是一次重写</b>，坏处是你必须能看懂它推导出来的结果——而看懂它，靠的正是前面几节那套代价模型。</p>
+      <p>JAX 这边值得学的是它的<b>声明式分片</b>：你先把所有卡组织成一个逻辑网格（<b>mesh</b>，比如把 32 张卡看成 4×8 的一张网，两个轴各起个名字），然后用 <code>jax.sharding</code> 描述「这个张量的这一维切在 mesh 的哪个轴上」，编译器自己推导需要插哪些集合通信。好处是<b>并行策略变成了几行配置而不是一次重写</b>，坏处是你必须能看懂它推导出来的结果——而看懂它，靠的正是前面几节那套代价模型。</p>
 
       <p><a href="https://jax-ml.github.io/scaling-book/profiling/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 9 · How to Profile TPU Programs</a> ｜ <a href="https://jax-ml.github.io/scaling-book/jax-stuff/" target="_blank" rel="noopener">Part 10 · Programming TPUs in JAX</a></p>
 

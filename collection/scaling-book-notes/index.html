@@ -1018,6 +1018,36 @@
         <li><b>有没有意外的排布转换？</b>同一份数据在显存里怎么摆（哪一维在前、切在哪张卡上）叫它的<b>排布</b>。当上下游算子对排布的要求对不上时，框架会<b>偷偷插入一次重排</b>把数据搬来搬去——它不出现在你的代码里，却实实在在吃带宽。这类开销最阴险。</li>
       </ol>
 
+      <details class="exp">
+        <summary><span class="tri">▸</span>展开：不装 profiler，30 秒判断自己是不是访存受限</summary>
+        <div class="body">
+          <p>先重复一遍那个陷阱：<b><code>nvidia-smi</code> 显示 100% 完全不能说明算力用满了。</b>它只表示「有 kernel 在跑」，而 decode 时 kernel 一直在跑、一直在等内存。<b>看到 100% 是正常现象，不是没有余量的证据。</b></p>
+
+          <p><b>方法一：手算 MFU（不需要任何工具）。</b>推理时每个参数每个 token 约 2 FLOPs（只有前向），所以：</p>
+
+          <p><code>实测 FLOP/s ≈ 2 × 参数量 × 每秒产出 token 数</code></p>
+
+          <p>举例：70B 模型跑在 8×H100 上，实测总吞吐 500 token/s。<br />
+          实测算力 = <code>2 × 70e9 × 500 = 7e13</code> = 70 TFLOP/s。<br />
+          峰值 = <code>8 × 990e12 ≈ 7.9e15</code>。<br />
+          <b>MFU ≈ 0.9%</b> —— 算力有 99% 在闲着，投机解码这类「花算力换搬运」的手段有巨大空间。</p>
+
+          <p><b>方法二：加并发看吞吐（最实用，也不用工具）。</b>把并发翻一倍，看总 token/s：</p>
+          <ul>
+            <li><b>接近翻倍</b> → 你在访存受限区，权重读取被更多请求摊薄了，<b>还有余量</b>。</li>
+            <li><b>基本不动</b> → 撞到算力天花板了，真的满了。</li>
+          </ul>
+          <p>因为在访存受限区，每步耗时由「读一遍权重」决定，<b>跟这步捎带处理几个 token 几乎无关</b>——所以加并发是近乎免费的。这条一测就知道。</p>
+
+          <p><b>方法三：真要看指标，看这两个。</b>DCGM 里同时盯 <code>PIPE_TENSOR_ACTIVE</code>（矩阵乘单元活跃度）和 <code>DRAM_ACTIVE</code>（显存活跃度）：</p>
+          <ul>
+            <li><b>显存高、张量低</b> → 访存受限。这是 decode 的典型指纹。</li>
+            <li><b>张量高</b> → 算力受限，此时才是真的满了。</li>
+          </ul>
+          <p>而 <code>SM_ACTIVE</code>（也就是 <code>nvidia-smi</code> 那个数）在两种情况下都会很高，<b>所以它区分不出这两者，参考价值最低</b>。</p>
+        </div>
+      </details>
+
       <p>JAX 这边值得学的是它的<b>声明式分片</b>：你先把所有卡组织成一个逻辑网格（<b>mesh</b>，比如把 32 张卡看成 4×8 的一张网，两个轴各起个名字），然后用 <code>jax.sharding</code> 描述「这个张量的这一维切在 mesh 的哪个轴上」，编译器自己推导需要插哪些集合通信。好处是<b>并行策略变成了几行配置而不是一次重写</b>，坏处是你必须能看懂它推导出来的结果——而看懂它，靠的正是前面几节那套代价模型。</p>
 
       <p><a href="https://jax-ml.github.io/scaling-book/profiling/" target="_blank" rel="noopener">⟶ 原书对应章节：Part 9 · How to Profile TPU Programs</a> ｜ <a href="https://jax-ml.github.io/scaling-book/jax-stuff/" target="_blank" rel="noopener">Part 10 · Programming TPUs in JAX</a></p>

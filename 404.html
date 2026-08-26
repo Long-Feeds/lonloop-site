@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>页面不存在 · lonX</title>
+<meta name="description" content="lonloop.com 上没有这个地址对应的内容。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+
+<!-- Why this file exists at all.
+
+     Cloudflare Pages resolves a request that matches no static asset by looking
+     for the nearest 404.html, walking up from the requested directory to the
+     project root. Finding none, it falls back to serving the root index.html
+     with a 200. That is what this site did until 2026-08-26, for *every*
+     nonexistent path: /a-typo, /collection/gone/, /radar/missing all answered
+     200 text/html with the full homepage. Measured that day, four bogus paths,
+     four identical 68,991-byte homepages.
+
+     Two things were wrong with that, and only the second is about SEO:
+       1. A reader who follows a stale or mistyped link lands silently on the
+          homepage with the wrong URL still in the address bar and no signal
+          that anything failed. On a portfolio whose whole job is to be the
+          front door for a job search, that is a real person hitting a real
+          dead end and being told nothing.
+       2. Every wrong URL became, to a crawler, another 200-status duplicate of
+          the homepage — the textbook soft 404. Search engines are explicit that
+          a not-found page must answer with a 404 status; a 200 invites them to
+          index unbounded copies of one page.
+
+     Pages honours this filename specifically: with it present, unmatched
+     requests get this document *and* a real 404 status code. Nothing else needs
+     to change — _redirects keeps its four worldmonitor rewrite prefixes and all
+     four still resolve to real assets (verified the day this landed), because
+     rewrite rules are evaluated before the not-found fallback is ever reached.
+
+     Three constraints this page has that no other page on the site has:
+
+     * Every URL in it must be root-absolute. This one document is served at
+       arbitrary paths — /a, /b/c/, /b/c/d/e/ — so a relative href resolves
+       against whatever the visitor mistyped. There is deliberately no
+       stylesheet link for the same reason; the CSS is inline both so it cannot
+       resolve wrong and so the page still renders when the thing that failed
+       was the network itself.
+     * No JavaScript. An error page's one job is to render, immediately, under
+       whatever conditions produced the error. It also means there is nothing
+       here that can render as a dead control the way /radar/'s filter bar did
+       before 2026-08-23.
+     * No canonical, and noindex. The other pages carry <link rel="canonical">;
+       an error page must not claim to be a copy of anything. The noindex is not
+       redundant with the 404 status: /404.html is also a static asset in its
+       own right, so requesting that exact path returns it with a 200, and
+       without this tag that one URL could be indexed as a genuine page.
+       Deliberately not solved with a robots.txt Disallow — a blocked crawl
+       cannot read the noindex it is being blocked from seeing.
+
+     Design tokens, nav and footer are copied from radar.css rather than
+     imported, so this page stays one visual family with the rest of the site
+     while owning its own bytes. Keep them in sync by hand if the palette moves.
+     The footer carries no year: the other five pages fill © <span id="y"> from
+     script, which this page has none of, and a hand-written year is the same
+     rot that got <lastmod> deleted from sitemap.xml. -->
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<style>
+  :root{
+    --bg:#0b0d12; --bg2:#11141b; --card:#151924; --line:#222838;
+    --txt:#e7eaf0; --muted:#9aa3b2; --dim:#808999;
+    --accent:#7c9cff; --accent2:#5be0c8; --chip:#1b2130;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:radial-gradient(1200px 600px at 80% -10%, #1a2030 0%, var(--bg) 55%) no-repeat, var(--bg);
+    color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+    /* this page is far shorter than any other on the site, so the shared
+       min-height:100vh alone would leave the footer floating mid-viewport with
+       empty space under it. Column flex with a growing main pins it to the
+       bottom on a tall screen and lets it flow normally on a short one. */
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+    }
+  }
+
+  /* top nav — identical to /radar/ and /collection/: brand plus the same three
+     tabs, no language toggle. None of them is aria-current: this page is not
+     any of those destinations. */
+  .topnav{max-width:880px;margin:0 auto;width:100%;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .topnav .brand{font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none;color:var(--txt)}
+  .topnav .brand .dot{color:var(--accent)}
+  .topnav .tabs{display:flex;gap:6px}
+  .topnav .tab{text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;padding:7px 14px;border-radius:999px;transition:color .15s ease,background .15s ease}
+  .topnav .tab:hover{color:var(--txt)}
+
+  /* page shell */
+  .shell{max-width:880px;margin:0 auto;width:100%;flex:1;padding:56px 24px 96px}
+  .code{color:var(--accent2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
+  h1{font-size:clamp(30px,6vw,44px);letter-spacing:-.02em;margin:10px 0 12px;font-weight:800}
+  .lede{color:var(--muted);font-size:16px;max-width:560px}
+
+  .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+  .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15px;
+    padding:11px 18px;border-radius:12px;transition:transform .15s ease,border-color .15s ease,background .15s ease}
+  .btn-primary{background:var(--accent);color:#0a0c11}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--accent);transform:translateY(-2px)}
+
+  .site-foot{max-width:880px;margin:0 auto;width:100%;padding:26px 24px 40px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;color:var(--dim);font-size:13.5px}
+  .site-foot a{color:var(--muted);text-decoration:none}
+  .site-foot a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <p class="code">Error 404</p>
+    <h1>这个页面不存在</h1>
+    <p class="lede">你打开的地址在 lonloop.com 上没有对应的内容 —— 可能是链接拼错了，也可能这个页面已经改名或下线。</p>
+    <div class="links">
+      <a class="btn btn-primary" href="/">回到主页</a>
+      <a class="btn btn-ghost" href="/collection/">收藏夹</a>
+      <a class="btn btn-ghost" href="/radar/">雷达</a>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <span>© lonX · Built with Claude Code</span>
+    <span><a href="/">主页</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
+  </footer>
+</body>
+</html>

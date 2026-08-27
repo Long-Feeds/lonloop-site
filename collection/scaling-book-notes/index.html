@@ -879,11 +879,17 @@
 
       <p>行业里给这两件事各起了个缩写：<b>TTFT</b>（time to first token，首字延迟）和 <b>TPOT</b>（time per output token，每个字的间隔）。前者由 prefill 决定，后者由 decode 决定。</p>
 
+      <!-- 第一列的表头此前是空的 <th></th>。这一列装的是被比较的维度（一次处理 /
+           算术强度 / 瓶颈 / …），读屏软件按列播报时会先念列头，空表头就是念一句空白：
+           「算力受限」听上去没有归属，而这张表的全部信息量恰恰在「哪个维度上算力受限」。
+           axe 的 empty-table-header 在 zh/en × 1200/390 四轮里各命中一次。
+           「维度」不是新造的词：同页表 3（两种互联拓扑的性格差异）是结构完全相同的
+           对比矩阵，它的第一列表头就叫「维度」——全站 14 张表里只有这一张漏了名字。 -->
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-7" tabindex="0">
       <table>
         <caption id="tbl-7">表 7 · Prefill 与 Decode 是两种不同的负载</caption>
         <thead>
-          <tr><th></th><th>Prefill（读提示词）</th><th>Decode（逐字生成）</th></tr>
+          <tr><th>维度</th><th>Prefill（读提示词）</th><th>Decode（逐字生成）</th></tr>
         </thead>
         <tbody>
           <tr><td>一次处理</td><td>整个 prompt，几百上千 token</td><td>每条序列 1 个 token</td></tr>

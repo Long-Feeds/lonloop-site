@@ -41,7 +41,20 @@
      LLM that lonloop.com wrote Anthropic's engineering blog.
      No datePublished bump on edits: the date below is when this digest first
      shipped, a fixed fact, not a freshness signal needing hand-maintenance (same
-     call as sitemap.xml's deleted <lastmod>). -->
+     call as sitemap.xml's deleted <lastmod>).
+     `author.@id` is the Person node the homepage graph defines (ProfilePage →
+     #lonx, the entity that already owns the three shipped projects) — canonical
+     rationale for all three lonX-authored pieces in /collection/ lives here.
+     Without that @id this page mints a *second*, anonymous "lonX": schema.org
+     treats @id and sameAs as identity and `url` as an ordinary property, so two
+     nodes agreeing on name and url still never merge, and the writing ends up
+     hanging off an entity unrelated to the person this site exists to show —
+     exactly the "explicit rather than inferred from page proximity" failure the
+     homepage @graph was built to avoid, one level down.
+     `name`/`url` deliberately stay next to the @id instead of collapsing into a
+     bare {"@id": …} reference: that shorthand is only safe on the homepage, where
+     the full node sits in the same @graph. Here it does not, and Article requires
+     author.name — a bare reference would drop it. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -56,6 +69,7 @@
   "about": {"@type": "Thing", "name": "AI Agent 基础设施"},
   "author": {
     "@type": "Person",
+    "@id": "https://lonloop.com/#lonx",
     "name": "lonX",
     "url": "https://lonloop.com/"
   },

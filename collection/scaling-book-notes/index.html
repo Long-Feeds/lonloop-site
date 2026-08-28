@@ -37,7 +37,12 @@
      is still this site, for the same reason as always: getting it backwards would
      assert to every crawler and LLM that lonloop.com wrote the book.
      No datePublished bump on edits — the date below is when these notes first shipped,
-     a fixed fact, not a freshness signal needing hand-maintenance. -->
+     a fixed fact, not a freshness signal needing hand-maintenance.
+     `author.@id` anchors these notes to the same Person node the homepage graph
+     defines (#lonx), so the writing and the shipped projects resolve to one entity
+     instead of two that merely share a name; `name`/`url` stay beside it because
+     Article requires author.name. Full rationale, once, in
+     /collection/managed-agents/. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -52,6 +57,7 @@
   "about": {"@type": "Thing", "name": "大语言模型的系统性能与并行化"},
   "author": {
     "@type": "Person",
+    "@id": "https://lonloop.com/#lonx",
     "name": "lonX",
     "url": "https://lonloop.com/"
   },

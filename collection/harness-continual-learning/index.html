@@ -190,18 +190,27 @@
       <p>HCL 把可变的 harness 状态组织成 <code>H_n = (I_n, M_n, C_n, R_n)</code> 四个<b>联合版本化</b>的组件。之所以强调「联合」：因为改动其中一个组件可能与其它组件相互作用、并同时影响新行为与已习得的行为，<b>HCL 把所有提议的改动当成一个完整候选 harness 对待</b>——它要么整体替换 <code>H_n</code>，要么<b>一条改动都不进入</b>已部署状态。harness 内容因此不再是一堆各自独立编辑的产物，而是一套协同的持续学习机制。</p>
 
       <!-- 每个 .tbl-wrap 都带 tabindex/role/aria-labelledby 三件套 —— 理由写在
-           reader.css 的 .tbl-wrap 规则旁边。新增表格时照抄这三个属性，别只抄外层 div。 -->
+           reader.css 的 .tbl-wrap 规则旁边。新增表格时照抄这三个属性，别只抄外层 div。
+           表格内部同样有一套必须照抄的写法（2026-08-30 补齐，本篇 6 张 + scaling 篇
+           8 张一次动完）：thead 的表头是 <th scope="col">，而**每行的第一格是
+           <th scope="row"> 不是 <td>**。这一列装的是行的名字（组件名 / 方法名 /
+           被扫的参数），不是数据。少了它，读屏在表格模式下逐格播报时只念得出列头：
+           表 2 里那个 60.90 会被念成「HotpotQA · 60.90」，而「这是 MemRL 的分数」
+           这半句在无障碍树里根本不存在——一张对比表的全部意义恰恰在于哪一行。
+           为什么 axe 一直报 0 violation：axe 没有「数据表该有行表头」这条规则（它
+           无法可靠区分布局表与数据表），所以那份绿报告对这一面是沉默，不是通过。
+           判据落在无障碍树上而不是属性字符串上，理由同 08-27 那次表头具名。 -->
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-1" tabindex="0">
       <table>
         <caption id="tbl-1">表 1 · 已部署 harness 中四个联合版本化组件的执行功能与可更新内容</caption>
         <thead>
-          <tr><th>组件</th><th>执行期的功能</th><th>HCL 中被更新的内容</th></tr>
+          <tr><th scope="col">组件</th><th scope="col">执行期的功能</th><th scope="col">HCL 中被更新的内容</th></tr>
         </thead>
         <tbody>
-          <tr><td>任务接口 <code>I_n</code></td><td>把原始交互转成结构化表示</td><td>prompt、任务模板、解析与归一化规则</td></tr>
-          <tr><td>经验记忆 <code>M_n</code></td><td>提供可复用的具体交互与抽象指导</td><td>原始交互记录、LLM 生成的抽象记忆条目</td></tr>
-          <tr><td>能力图谱 <code>C_n</code></td><td>提供外部操作与可复用的内部技能</td><td>从抽象记忆中提炼出的内部技能</td></tr>
-          <tr><td>自适应路由 <code>R_n</code></td><td>挑选并组织记忆与能力</td><td>路由 prompt、选择标准、工作流模板</td></tr>
+          <tr><th scope="row">任务接口 <code>I_n</code></th><td>把原始交互转成结构化表示</td><td>prompt、任务模板、解析与归一化规则</td></tr>
+          <tr><th scope="row">经验记忆 <code>M_n</code></th><td>提供可复用的具体交互与抽象指导</td><td>原始交互记录、LLM 生成的抽象记忆条目</td></tr>
+          <tr><th scope="row">能力图谱 <code>C_n</code></th><td>提供外部操作与可复用的内部技能</td><td>从抽象记忆中提炼出的内部技能</td></tr>
+          <tr><th scope="row">自适应路由 <code>R_n</code></th><td>挑选并组织记忆与能力</td><td>路由 prompt、选择标准、工作流模板</td></tr>
         </tbody>
       </table>
       </div>
@@ -299,15 +308,15 @@
       <table>
         <caption id="tbl-2">表 2 · ALFWorld 最终表现与 harness 级遗忘（冻结模型：Qwen3.5-9B，单位 %）</caption>
         <thead>
-          <tr><th>方法</th><th>Pick</th><th>Look</th><th>Clean</th><th>Heat</th><th>Cool</th><th>Two-object</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+          <tr><th scope="col">方法</th><th scope="col">Pick</th><th scope="col">Look</th><th scope="col">Clean</th><th scope="col">Heat</th><th scope="col">Cool</th><th scope="col">Two-object</th><th scope="col">最终均值 ↑</th><th scope="col">平均遗忘 ↓</th></tr>
         </thead>
         <tbody>
-          <tr><td>Static Harness</td><td>95.80</td><td>66.70</td><td>25.80</td><td>26.10</td><td>9.50</td><td>58.80</td><td>47.12</td><td>–</td></tr>
-          <tr><td>RAG 基线</td><td>95.80</td><td>83.30</td><td>41.90</td><td>39.10</td><td>14.30</td><td>58.80</td><td>55.56</td><td><b>1.74</b></td></tr>
-          <tr><td>MemP</td><td>95.80</td><td>83.30</td><td>48.40</td><td>34.80</td><td>9.50</td><td>47.10</td><td>53.15</td><td>5.18</td></tr>
-          <tr><td>MemRL</td><td>87.50</td><td>66.70</td><td>29.00</td><td><b>60.90</b></td><td>23.80</td><td>41.20</td><td>51.51</td><td>5.64</td></tr>
-          <tr><td>Stability-HCL（本文）</td><td><b>100.00</b></td><td><b>83.30</b></td><td><b>51.60</b></td><td>30.40</td><td><b>28.60</b></td><td>76.50</td><td>61.74</td><td>2.64</td></tr>
-          <tr><td>Plasticity-HCL（本文）</td><td><b>100.00</b></td><td>77.80</td><td>41.90</td><td>39.10</td><td>19.00</td><td><b>100.00</b></td><td><b>62.98</b></td><td>10.94</td></tr>
+          <tr><th scope="row">Static Harness</th><td>95.80</td><td>66.70</td><td>25.80</td><td>26.10</td><td>9.50</td><td>58.80</td><td>47.12</td><td>–</td></tr>
+          <tr><th scope="row">RAG 基线</th><td>95.80</td><td>83.30</td><td>41.90</td><td>39.10</td><td>14.30</td><td>58.80</td><td>55.56</td><td><b>1.74</b></td></tr>
+          <tr><th scope="row">MemP</th><td>95.80</td><td>83.30</td><td>48.40</td><td>34.80</td><td>9.50</td><td>47.10</td><td>53.15</td><td>5.18</td></tr>
+          <tr><th scope="row">MemRL</th><td>87.50</td><td>66.70</td><td>29.00</td><td><b>60.90</b></td><td>23.80</td><td>41.20</td><td>51.51</td><td>5.64</td></tr>
+          <tr><th scope="row">Stability-HCL（本文）</th><td><b>100.00</b></td><td><b>83.30</b></td><td><b>51.60</b></td><td>30.40</td><td><b>28.60</b></td><td>76.50</td><td>61.74</td><td>2.64</td></tr>
+          <tr><th scope="row">Plasticity-HCL（本文）</th><td><b>100.00</b></td><td>77.80</td><td>41.90</td><td>39.10</td><td>19.00</td><td><b>100.00</b></td><td><b>62.98</b></td><td>10.94</td></tr>
         </tbody>
       </table>
       </div>
@@ -337,12 +346,12 @@
       <table>
         <caption id="tbl-3">表 3 · 四任务文本推理流的最终表现（冻结模型：DeepSeek-V4-Flash，单位 %）</caption>
         <thead>
-          <tr><th>方法</th><th>MuSiQue</th><th>ProofWriter</th><th>GSM8K</th><th>HotpotQA</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+          <tr><th scope="col">方法</th><th scope="col">MuSiQue</th><th scope="col">ProofWriter</th><th scope="col">GSM8K</th><th scope="col">HotpotQA</th><th scope="col">最终均值 ↑</th><th scope="col">平均遗忘 ↓</th></tr>
         </thead>
         <tbody>
-          <tr><td>DeepSeek-V4-Flash Zero-shot</td><td><b>35.00</b></td><td>42.80</td><td>49.40</td><td>54.80</td><td>45.50</td><td>–</td></tr>
-          <tr><td>Stability-HCL（本文）</td><td>27.60</td><td>73.00</td><td>50.40</td><td>57.80</td><td>52.20</td><td><b>0.00</b></td></tr>
-          <tr><td>Plasticity-HCL（本文）</td><td>29.00</td><td><b>77.00</b></td><td><b>92.00</b></td><td><b>60.80</b></td><td><b>64.70</b></td><td>0.07</td></tr>
+          <tr><th scope="row">DeepSeek-V4-Flash Zero-shot</th><td><b>35.00</b></td><td>42.80</td><td>49.40</td><td>54.80</td><td>45.50</td><td>–</td></tr>
+          <tr><th scope="row">Stability-HCL（本文）</th><td>27.60</td><td>73.00</td><td>50.40</td><td>57.80</td><td>52.20</td><td><b>0.00</b></td></tr>
+          <tr><th scope="row">Plasticity-HCL（本文）</th><td>29.00</td><td><b>77.00</b></td><td><b>92.00</b></td><td><b>60.80</b></td><td><b>64.70</b></td><td>0.07</td></tr>
         </tbody>
       </table>
       </div>
@@ -359,13 +368,13 @@
       <table>
         <caption id="tbl-4">表 4 · 四任务多模态感知流的最终表现（冻结模型：Qwen3.6-27B，单位 %）</caption>
         <thead>
-          <tr><th>方法</th><th>检测</th><th>描述</th><th>定位</th><th>VQAv2</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+          <tr><th scope="col">方法</th><th scope="col">检测</th><th scope="col">描述</th><th scope="col">定位</th><th scope="col">VQAv2</th><th scope="col">最终均值 ↑</th><th scope="col">平均遗忘 ↓</th></tr>
         </thead>
         <tbody>
-          <tr><td>Qwen3.6-27B Zero-shot</td><td>4.27</td><td>25.47</td><td>43.00</td><td><b>84.87</b></td><td>39.40</td><td>–</td></tr>
-          <tr><td>DGG</td><td>29.58</td><td>29.77</td><td>48.96</td><td>62.60</td><td>42.73</td><td>0.26</td></tr>
-          <tr><td>Plasticity-HCL（本文）</td><td>64.14</td><td>37.31</td><td>90.60</td><td>79.80</td><td>67.96</td><td>0.81</td></tr>
-          <tr><td>Stability-HCL（本文）</td><td><b>65.34</b></td><td><b>39.41</b></td><td><b>91.60</b></td><td>79.33</td><td><b>68.92</b></td><td><b>0.22</b></td></tr>
+          <tr><th scope="row">Qwen3.6-27B Zero-shot</th><td>4.27</td><td>25.47</td><td>43.00</td><td><b>84.87</b></td><td>39.40</td><td>–</td></tr>
+          <tr><th scope="row">DGG</th><td>29.58</td><td>29.77</td><td>48.96</td><td>62.60</td><td>42.73</td><td>0.26</td></tr>
+          <tr><th scope="row">Plasticity-HCL（本文）</th><td>64.14</td><td>37.31</td><td>90.60</td><td>79.80</td><td>67.96</td><td>0.81</td></tr>
+          <tr><th scope="row">Stability-HCL（本文）</th><td><b>65.34</b></td><td><b>39.41</b></td><td><b>91.60</b></td><td>79.33</td><td><b>68.92</b></td><td><b>0.22</b></td></tr>
         </tbody>
       </table>
       </div>
@@ -382,13 +391,13 @@
       <table>
         <caption id="tbl-5">表 5 · 不同固定历史损失容忍度 <code>b</code> 下的表现（其余实验条件全部不变，单位 %）</caption>
         <thead>
-          <tr><th>容忍度 <code>b</code></th><th>MuSiQue</th><th>ProofWriter</th><th>GSM8K</th><th>HotpotQA</th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+          <tr><th scope="col">容忍度 <code>b</code></th><th scope="col">MuSiQue</th><th scope="col">ProofWriter</th><th scope="col">GSM8K</th><th scope="col">HotpotQA</th><th scope="col">最终均值 ↑</th><th scope="col">平均遗忘 ↓</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>b = 0</code></td><td>27.83</td><td>73.33</td><td>84.33</td><td><b>59.50</b></td><td>61.25</td><td><b>0.39</b></td></tr>
-          <tr><td><code>b = 1</code></td><td>24.83</td><td>77.50</td><td><b>92.33</b></td><td>59.17</td><td><b>63.46</b></td><td>1.22</td></tr>
-          <tr><td><code>b = 3</code></td><td>26.83</td><td><b>79.83</b></td><td>83.00</td><td>58.50</td><td>62.04</td><td>2.00</td></tr>
-          <tr><td><code>b = ∞</code></td><td><b>28.33</b></td><td>71.00</td><td>82.00</td><td>59.17</td><td>60.13</td><td>3.45</td></tr>
+          <tr><th scope="row"><code>b = 0</code></th><td>27.83</td><td>73.33</td><td>84.33</td><td><b>59.50</b></td><td>61.25</td><td><b>0.39</b></td></tr>
+          <tr><th scope="row"><code>b = 1</code></th><td>24.83</td><td>77.50</td><td><b>92.33</b></td><td>59.17</td><td><b>63.46</b></td><td>1.22</td></tr>
+          <tr><th scope="row"><code>b = 3</code></th><td>26.83</td><td><b>79.83</b></td><td>83.00</td><td>58.50</td><td>62.04</td><td>2.00</td></tr>
+          <tr><th scope="row"><code>b = ∞</code></th><td><b>28.33</b></td><td>71.00</td><td>82.00</td><td>59.17</td><td>60.13</td><td>3.45</td></tr>
         </tbody>
       </table>
       </div>
@@ -407,15 +416,15 @@
       <table>
         <caption id="tbl-6">表 6 · 组件消融（<code>I</code> 任务接口、<code>M</code> 经验记忆、<code>C</code> 能力图谱、<code>R</code> 自适应路由；✓ 表示该组件可更新，✗ 表示禁用其更新）</caption>
         <thead>
-          <tr><th>配置</th><th><code>I</code></th><th><code>M</code></th><th><code>C</code></th><th><code>R</code></th><th>最终均值 ↑</th><th>平均遗忘 ↓</th></tr>
+          <tr><th scope="col">配置</th><th scope="col"><code>I</code></th><th scope="col"><code>M</code></th><th scope="col"><code>C</code></th><th scope="col"><code>R</code></th><th scope="col">最终均值 ↑</th><th scope="col">平均遗忘 ↓</th></tr>
         </thead>
         <tbody>
-          <tr><td>Zero-shot</td><td>–</td><td>–</td><td>–</td><td>–</td><td>34.84</td><td>–</td></tr>
-          <tr><td>去掉接口更新</td><td>✗</td><td>✓</td><td>✓</td><td>✓</td><td>62.37</td><td>0.11</td></tr>
-          <tr><td>去掉记忆更新</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td><td>62.28</td><td>0.83</td></tr>
-          <tr><td>去掉能力更新</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td><b>63.12</b></td><td><b>0.06</b></td></tr>
-          <tr><td>去掉路由更新</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>62.77</td><td>0.14</td></tr>
-          <tr><td>Full HCL</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><b>63.41</b></td><td>0.45</td></tr>
+          <tr><th scope="row">Zero-shot</th><td>–</td><td>–</td><td>–</td><td>–</td><td>34.84</td><td>–</td></tr>
+          <tr><th scope="row">去掉接口更新</th><td>✗</td><td>✓</td><td>✓</td><td>✓</td><td>62.37</td><td>0.11</td></tr>
+          <tr><th scope="row">去掉记忆更新</th><td>✓</td><td>✗</td><td>✓</td><td>✓</td><td>62.28</td><td>0.83</td></tr>
+          <tr><th scope="row">去掉能力更新</th><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td><b>63.12</b></td><td><b>0.06</b></td></tr>
+          <tr><th scope="row">去掉路由更新</th><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>62.77</td><td>0.14</td></tr>
+          <tr><th scope="row">Full HCL</th><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><b>63.41</b></td><td>0.45</td></tr>
         </tbody>
       </table>
       </div>

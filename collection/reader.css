@@ -204,6 +204,26 @@ a{color:inherit}
 .prose th,.prose td{padding:8px 12px;border-top:1px solid var(--line);text-align:right;white-space:nowrap}
 .prose th:first-child,.prose td:first-child{text-align:left;white-space:normal;min-width:8.5em}
 .prose thead th{background:var(--chip);color:var(--muted);font-weight:600;font-size:13px}
+/* Row headers, added 2026-08-30 with the <th scope="row"> pass on all 14 tables.
+   Purely a semantics fix, so it must move zero pixels — and exactly one property
+   would have moved. The two rules above already cover a tbody <th> for padding,
+   border, alignment, wrapping and min-width (they name th and td together, and
+   `th:first-child` catches the new cells), and `thead th` — the rule that gives a
+   header its chip background, muted colour and 13px face — deliberately does not
+   reach into tbody. That leaves font-weight: the UA stylesheet ships
+   `th{font-weight:bold}` and nothing here was overriding it, so these 68 cells
+   would have gone bold. Measured before this rule existed: the HCL digest's
+   document grew 21px at 390/768/900 (15687->15708, 23577->23598) because the
+   wider bold text rewrapped inside min-width:8.5em.
+   Not bolding them is also the right call on its own terms. The first column is
+   already the only one that is left-aligned and allowed to wrap while every other
+   column is right-aligned and nowrap — that pairing is what already reads as "this
+   cell labels the row", and it was chosen deliberately (see the comment above).
+   Bolding 14 tables across two long articles would be a visual redesign smuggled
+   in under an accessibility fix; screen readers needed the <th>, not the weight.
+   `inherit` rather than 400 so the cells keep tracking the body face if it ever
+   changes, exactly as the <td>s they replaced did. */
+.prose tbody th{font-weight:inherit}
 .prose table code{font-size:.85em;padding:1px 5px}
 /* Wide tables break out of the 720px measure once the viewport can pay for it.
    Measured: the six tables in the HCL digest want 670px each except the 9-column

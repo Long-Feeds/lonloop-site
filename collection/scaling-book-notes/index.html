@@ -266,17 +266,25 @@
 
       <p>为什么这件事重要？因为每块加速器都有一个<b>临界算术强度</b> <code>I* = 峰值算力 ÷ 内存带宽</code>。低于它，芯片在等内存；高于它，芯片在算数。把公开规格代进去：</p>
 
+      <!-- 本篇 8 张表的写法与 HCL 那篇完全一致，新增表格时整套照抄，别只抄外层 div：
+           外层 .tbl-wrap 带 tabindex/role/aria-labelledby（理由在 reader.css 的
+           .tbl-wrap 规则旁），表内 thead 用 <th scope="col">，**每行第一格用
+           <th scope="row"> 而不是 <td>**（2026-08-30 两篇 14 张表一次补齐）。
+           第一列装的是行的名字——芯片型号、算子、被比较的维度、并行策略——不是数据。
+           少了它，读屏逐格播报只念得出列头：表 7 里的「算力受限」会失去「这说的是
+           *瓶颈* 这一维」，而这张对比表的信息量全在维度上。完整理由见 HCL 那篇同
+           位置的注释。 -->
       <div class="tbl-wrap" role="region" aria-labelledby="tbl-1" tabindex="0">
       <table>
         <caption id="tbl-1">表 1 · 几款加速器的临界算术强度（bf16 稠密峰值 ÷ HBM 带宽，厂商公开规格，取整）</caption>
         <thead>
-          <tr><th>芯片</th><th>bf16 峰值</th><th>HBM 带宽</th><th><code>I*</code>（FLOPs/字节）</th></tr>
+          <tr><th scope="col">芯片</th><th scope="col">bf16 峰值</th><th scope="col">HBM 带宽</th><th scope="col"><code>I*</code>（FLOPs/字节）</th></tr>
         </thead>
         <tbody>
-          <tr><td>NVIDIA A100 80GB</td><td>312 TFLOP/s</td><td>2.0 TB/s</td><td>≈ 156</td></tr>
-          <tr><td>NVIDIA H100 SXM</td><td>990 TFLOP/s</td><td>3.35 TB/s</td><td>≈ 295</td></tr>
-          <tr><td>TPU v5e</td><td>197 TFLOP/s</td><td>820 GB/s</td><td>≈ 240</td></tr>
-          <tr><td>TPU v5p</td><td>459 TFLOP/s</td><td>2.76 TB/s</td><td>≈ 166</td></tr>
+          <tr><th scope="row">NVIDIA A100 80GB</th><td>312 TFLOP/s</td><td>2.0 TB/s</td><td>≈ 156</td></tr>
+          <tr><th scope="row">NVIDIA H100 SXM</th><td>990 TFLOP/s</td><td>3.35 TB/s</td><td>≈ 295</td></tr>
+          <tr><th scope="row">TPU v5e</th><td>197 TFLOP/s</td><td>820 GB/s</td><td>≈ 240</td></tr>
+          <tr><th scope="row">TPU v5p</th><td>459 TFLOP/s</td><td>2.76 TB/s</td><td>≈ 166</td></tr>
         </tbody>
       </table>
       </div>
@@ -362,13 +370,13 @@
       <table>
         <caption id="tbl-2">表 2 · 常见算子的算术强度量级（bf16）</caption>
         <thead>
-          <tr><th>算子</th><th>算术强度</th><th>结论</th></tr>
+          <tr><th scope="col">算子</th><th scope="col">算术强度</th><th scope="col">结论</th></tr>
         </thead>
         <tbody>
-          <tr><td>逐元素加 / 乘</td><td><code>≈ 1/6</code>（读两个写一个 = 6 字节换 1 FLOP）</td><td>永远访存受限</td></tr>
-          <tr><td>激活函数、LayerNorm</td><td><code>O(1)</code></td><td>永远访存受限</td></tr>
-          <tr><td>权重矩阵乘（batch <code>B</code>）</td><td><code>≈ B</code></td><td>取决于 batch</td></tr>
-          <tr><td>方阵乘 <code>N×N</code></td><td><code>≈ N/3</code></td><td><code>N</code> 够大就算力受限</td></tr>
+          <tr><th scope="row">逐元素加 / 乘</th><td><code>≈ 1/6</code>（读两个写一个 = 6 字节换 1 FLOP）</td><td>永远访存受限</td></tr>
+          <tr><th scope="row">激活函数、LayerNorm</th><td><code>O(1)</code></td><td>永远访存受限</td></tr>
+          <tr><th scope="row">权重矩阵乘（batch <code>B</code>）</th><td><code>≈ B</code></td><td>取决于 batch</td></tr>
+          <tr><th scope="row">方阵乘 <code>N×N</code></th><td><code>≈ N/3</code></td><td><code>N</code> 够大就算力受限</td></tr>
         </tbody>
       </table>
       </div>
@@ -453,13 +461,13 @@
       <table>
         <caption id="tbl-3">表 3 · 两种互联拓扑的性格差异</caption>
         <thead>
-          <tr><th>维度</th><th>TPU Pod（2D/3D 环面）</th><th>GPU 集群（节点内全连 + 节点间网络）</th></tr>
+          <tr><th scope="col">维度</th><th scope="col">TPU Pod（2D/3D 环面）</th><th scope="col">GPU 集群（节点内全连 + 节点间网络）</th></tr>
         </thead>
         <tbody>
-          <tr><td>连接方式</td><td>每芯片只连上下左右邻居，边缘绕回</td><td>节点内 NVLink 全互联，节点间 InfiniBand/以太网</td></tr>
-          <tr><td>带宽分布</td><td>相对<b>均匀</b>，没有断崖</td><td><b>陡峭</b>：节点内极快，出了节点掉一个数量级</td></tr>
-          <tr><td>扩展性</td><td>加芯片同时加链路，对分带宽随规模增长</td><td>受限于网络层级与收敛比</td></tr>
-          <tr><td>对策略的影响</td><td>大规模集合通信代价可预测</td><td>必须把重通信的并行方式<b>关在节点内</b></td></tr>
+          <tr><th scope="row">连接方式</th><td>每芯片只连上下左右邻居，边缘绕回</td><td>节点内 NVLink 全互联，节点间 InfiniBand/以太网</td></tr>
+          <tr><th scope="row">带宽分布</th><td>相对<b>均匀</b>，没有断崖</td><td><b>陡峭</b>：节点内极快，出了节点掉一个数量级</td></tr>
+          <tr><th scope="row">扩展性</th><td>加芯片同时加链路，对分带宽随规模增长</td><td>受限于网络层级与收敛比</td></tr>
+          <tr><th scope="row">对策略的影响</th><td>大规模集合通信代价可预测</td><td>必须把重通信的并行方式<b>关在节点内</b></td></tr>
         </tbody>
       </table>
       </div>
@@ -536,13 +544,13 @@
       <table>
         <caption id="tbl-4">表 4 · 四个集合操作（<code>V</code> = 完整数据体积，<code>N</code> = 设备数，<code>W</code> = 单链路带宽）</caption>
         <thead>
-          <tr><th>操作</th><th>做什么</th><th>环形算法耗时</th></tr>
+          <tr><th scope="col">操作</th><th scope="col">做什么</th><th scope="col">环形算法耗时</th></tr>
         </thead>
         <tbody>
-          <tr><td>AllGather</td><td>每人有 <code>1/N</code>，最后每人都有全部</td><td><code>≈ V/W</code></td></tr>
-          <tr><td>ReduceScatter</td><td>每人有全量，求和后每人留 <code>1/N</code></td><td><code>≈ V/W</code></td></tr>
-          <tr><td>AllReduce</td><td>= ReduceScatter + AllGather</td><td><code>≈ 2V/W</code></td></tr>
-          <tr><td>AllToAll</td><td>每人给每人发一份不同的数据</td><td><code>≈ V/W</code> 量级</td></tr>
+          <tr><th scope="row">AllGather</th><td>每人有 <code>1/N</code>，最后每人都有全部</td><td><code>≈ V/W</code></td></tr>
+          <tr><th scope="row">ReduceScatter</th><td>每人有全量，求和后每人留 <code>1/N</code></td><td><code>≈ V/W</code></td></tr>
+          <tr><th scope="row">AllReduce</th><td>= ReduceScatter + AllGather</td><td><code>≈ 2V/W</code></td></tr>
+          <tr><th scope="row">AllToAll</th><td>每人给每人发一份不同的数据</td><td><code>≈ V/W</code> 量级</td></tr>
         </tbody>
       </table>
       </div>
@@ -642,11 +650,11 @@
       <table>
         <caption id="tbl-5">表 5 · GQA 对 KV cache 的影响（按 Llama-3-70B 结构，bf16）</caption>
         <thead>
-          <tr><th>方案</th><th>KV 头数</th><th>每 token</th><th>8K 上下文单条</th></tr>
+          <tr><th scope="col">方案</th><th scope="col">KV 头数</th><th scope="col">每 token</th><th scope="col">8K 上下文单条</th></tr>
         </thead>
         <tbody>
-          <tr><td>若用 MHA</td><td>64</td><td>2.5 MiB</td><td>20 GiB</td></tr>
-          <tr><td>实际用 GQA</td><td>8</td><td>320 KiB</td><td>2.5 GiB</td></tr>
+          <tr><th scope="row">若用 MHA</th><td>64</td><td>2.5 MiB</td><td>20 GiB</td></tr>
+          <tr><th scope="row">实际用 GQA</th><td>8</td><td>320 KiB</td><td>2.5 GiB</td></tr>
         </tbody>
       </table>
       </div>
@@ -677,14 +685,14 @@
       <table>
         <caption id="tbl-6">表 6 · 五种并行策略（<code>P</code> = 参数量，<code>N</code> = 并行度）</caption>
         <thead>
-          <tr><th>策略</th><th>切什么</th><th>显存收益</th><th>每步通信</th><th>正比于</th></tr>
+          <tr><th scope="col">策略</th><th scope="col">切什么</th><th scope="col">显存收益</th><th scope="col">每步通信</th><th scope="col">正比于</th></tr>
         </thead>
         <tbody>
-          <tr><td>数据并行 DP</td><td>切 batch，模型全复制</td><td>无</td><td>AllReduce 梯度 <code>≈ 2P</code></td><td>参数</td></tr>
-          <tr><td>完全分片 FSDP / ZeRO-3</td><td>切参数+梯度+优化器态</td><td><code>÷N</code>，收益最大</td><td><code>≈ 3P</code></td><td>参数</td></tr>
-          <tr><td>张量并行 TP</td><td>切 <code>D</code>/<code>F</code> 维</td><td><code>÷N</code></td><td>每层 AllReduce 激活</td><td><b>token</b></td></tr>
-          <tr><td>流水并行 PP</td><td>切层</td><td><code>÷N</code></td><td>只传边界激活，极小</td><td>token（很小）</td></tr>
-          <tr><td>专家并行 EP（MoE）</td><td>切专家</td><td><code>÷N</code></td><td>两次 AllToAll</td><td>token</td></tr>
+          <tr><th scope="row">数据并行 DP</th><td>切 batch，模型全复制</td><td>无</td><td>AllReduce 梯度 <code>≈ 2P</code></td><td>参数</td></tr>
+          <tr><th scope="row">完全分片 FSDP / ZeRO-3</th><td>切参数+梯度+优化器态</td><td><code>÷N</code>，收益最大</td><td><code>≈ 3P</code></td><td>参数</td></tr>
+          <tr><th scope="row">张量并行 TP</th><td>切 <code>D</code>/<code>F</code> 维</td><td><code>÷N</code></td><td>每层 AllReduce 激活</td><td><b>token</b></td></tr>
+          <tr><th scope="row">流水并行 PP</th><td>切层</td><td><code>÷N</code></td><td>只传边界激活，极小</td><td>token（很小）</td></tr>
+          <tr><th scope="row">专家并行 EP（MoE）</th><td>切专家</td><td><code>÷N</code></td><td>两次 AllToAll</td><td>token</td></tr>
         </tbody>
       </table>
       </div>
@@ -895,14 +903,14 @@
       <table>
         <caption id="tbl-7">表 7 · Prefill 与 Decode 是两种不同的负载</caption>
         <thead>
-          <tr><th>维度</th><th>Prefill（读提示词）</th><th>Decode（逐字生成）</th></tr>
+          <tr><th scope="col">维度</th><th scope="col">Prefill（读提示词）</th><th scope="col">Decode（逐字生成）</th></tr>
         </thead>
         <tbody>
-          <tr><td>一次处理</td><td>整个 prompt，几百上千 token</td><td>每条序列 1 个 token</td></tr>
-          <tr><td>算术强度</td><td>高（<code>≈</code> prompt 长度）</td><td>低（<code>≈</code> 并发数）</td></tr>
-          <tr><td>瓶颈</td><td><b>算力受限</b></td><td><b>访存受限</b></td></tr>
-          <tr><td>决定的指标</td><td>首字延迟 TTFT</td><td>吐字速度 TPOT</td></tr>
-          <tr><td>加卡有用吗</td><td>有用</td><td>只在能提高并发时有用</td></tr>
+          <tr><th scope="row">一次处理</th><td>整个 prompt，几百上千 token</td><td>每条序列 1 个 token</td></tr>
+          <tr><th scope="row">算术强度</th><td>高（<code>≈</code> prompt 长度）</td><td>低（<code>≈</code> 并发数）</td></tr>
+          <tr><th scope="row">瓶颈</th><td><b>算力受限</b></td><td><b>访存受限</b></td></tr>
+          <tr><th scope="row">决定的指标</th><td>首字延迟 TTFT</td><td>吐字速度 TPOT</td></tr>
+          <tr><th scope="row">加卡有用吗</th><td>有用</td><td>只在能提高并发时有用</td></tr>
         </tbody>
       </table>
       </div>
@@ -1082,22 +1090,22 @@
       <table>
         <caption id="tbl-8">表 8 · 原书章节与本文各节的对应关系</caption>
         <thead>
-          <tr><th>原书章节</th><th>本文对应</th></tr>
+          <tr><th scope="col">原书章节</th><th scope="col">本文对应</th></tr>
         </thead>
         <tbody>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">Part 0 · 引言</a></td><td>§0</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/roofline/" target="_blank" rel="noopener">Part 1 · Rooflines</a></td><td>§0、§1</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/tpus/" target="_blank" rel="noopener">Part 2 · TPUs</a></td><td>§2</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/sharding/" target="_blank" rel="noopener">Part 3 · 分片矩阵</a></td><td>§3</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/transformers/" target="_blank" rel="noopener">Part 4 · Transformer 数学</a></td><td>§4</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/training/" target="_blank" rel="noopener">Part 5 · 训练并行</a></td><td>§5</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/applied-training/" target="_blank" rel="noopener">Part 6 · 训练 LLaMA 3</a></td><td>§4（<code>6ND</code> 实算）</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/inference/" target="_blank" rel="noopener">Part 7 · 推理</a></td><td>§6</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/applied-inference/" target="_blank" rel="noopener">Part 8 · 服务 LLaMA 3-70B</a></td><td>§6</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/profiling/" target="_blank" rel="noopener">Part 9 · Profiling</a></td><td>§7</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/jax-stuff/" target="_blank" rel="noopener">Part 10 · JAX 编程</a></td><td>§7</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/conclusion/" target="_blank" rel="noopener">Part 11 · 结语与延伸</a></td><td>—</td></tr>
-          <tr><td><a href="https://jax-ml.github.io/scaling-book/gpus/" target="_blank" rel="noopener">Part 12 · GPUs</a></td><td>§2</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener">Part 0 · 引言</a></th><td>§0</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/roofline/" target="_blank" rel="noopener">Part 1 · Rooflines</a></th><td>§0、§1</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/tpus/" target="_blank" rel="noopener">Part 2 · TPUs</a></th><td>§2</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/sharding/" target="_blank" rel="noopener">Part 3 · 分片矩阵</a></th><td>§3</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/transformers/" target="_blank" rel="noopener">Part 4 · Transformer 数学</a></th><td>§4</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/training/" target="_blank" rel="noopener">Part 5 · 训练并行</a></th><td>§5</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/applied-training/" target="_blank" rel="noopener">Part 6 · 训练 LLaMA 3</a></th><td>§4（<code>6ND</code> 实算）</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/inference/" target="_blank" rel="noopener">Part 7 · 推理</a></th><td>§6</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/applied-inference/" target="_blank" rel="noopener">Part 8 · 服务 LLaMA 3-70B</a></th><td>§6</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/profiling/" target="_blank" rel="noopener">Part 9 · Profiling</a></th><td>§7</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/jax-stuff/" target="_blank" rel="noopener">Part 10 · JAX 编程</a></th><td>§7</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/conclusion/" target="_blank" rel="noopener">Part 11 · 结语与延伸</a></th><td>—</td></tr>
+          <tr><th scope="row"><a href="https://jax-ml.github.io/scaling-book/gpus/" target="_blank" rel="noopener">Part 12 · GPUs</a></th><td>§2</td></tr>
         </tbody>
       </table>
       </div>

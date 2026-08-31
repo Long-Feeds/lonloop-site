@@ -58,9 +58,16 @@
      Design tokens, nav and footer are copied from radar.css rather than
      imported, so this page stays one visual family with the rest of the site
      while owning its own bytes. Keep them in sync by hand if the palette moves.
-     The footer carries no year: the other five pages fill © <span id="y"> from
+     The footer carries no year: the other seven pages fill © <span id="y"> from
      script, which this page has none of, and a hand-written year is the same
-     rot that got <lastmod> deleted from sitemap.xml. -->
+     rot that got <lastmod> deleted from sitemap.xml.
+     "Seven" was measured 2026-08-31, not counted from memory — and the "five"
+     it replaces was never true, not merely stale: three articles landed on
+     08-21/24/25, so on 08-26 when this file shipped the real figure was already
+     seven. A count written from a mental picture of the site is wrong the day
+     it is typed. Re-measure with comments stripped before trusting a grep here:
+     the phrase above quotes <span id="y">, so a naive grep -l counts this very
+     page among the ones that fill the year. -->
 <meta name="robots" content="noindex" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 

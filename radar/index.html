@@ -82,7 +82,27 @@
     <noscript><p class="count nojs-note">筛选与搜索需要 JavaScript；下面已按收藏时间倒序列出全部收藏。</p></noscript>
 
     <div class="rd-list" id="list">
-      <!-- 每条收藏 = 一张卡片。新增时复制此模板，改 data-type / 链接 / 文案即可。 -->
+      <!-- 每条收藏 = 一张卡片。新增时复制此模板，改 data-type / 链接 / 文案即可。
+
+           ⚠️ star 数一律写成「只升不降的下限」(6k+ / 5 万+)，不写精确值。
+           2026-09-02 实测:这一页 10 张卡写着手抄的精确 star 数,全部已经漂移,
+           其中三张漂到离谱——OmniRoute 写「约 3.3 万」实为 6.0 万、headroom 写
+           「约 3.7 万」实为 6.8 万、ai-berkshire 写「2.5k」实为 1.6 万(6.4 倍)。
+           首页 stat 那个 `70+` floor 当初就是为了终结这种每日漂移才引入的,同一
+           条规则本该管到这里;而这一页自己的 <noscript> 注释里早就写着「刻意不写
+           『共 19 条』这类数字:那是要人手同步的漂移值」——**规则写在本页源码里,
+           下面十张卡照样违反它**。同页的「印钞机」卡写「8 万+ star」,是这一页
+           自己给出的正确形式。
+           下限只会往低了说,因此永远为真;跨一个量级档位时才需要抬,不是每天核。
+           唯一的例外是 hubo 的「约 26 star」:那个数不是装饰,它是「早期项目、
+           胜在理念而非成熟度」这句判断的证据本身,写成下限就没意义了。
+
+           ⚠️ 外链搬家 linkcheck 看不见。headroom 的仓库已从 chopratejas 个人账号
+           转移到 headroomlabs-ai 组织,GitHub 永久保留旧路径的 301,于是
+           linkcheck.py 跟随重定向后照样报 200——它和一个真正健在的链接在探针眼里
+           一模一样,而卡片上那行可见出处「github.com/chopratejas」已经指错了人。
+           判据补在 movedlinks.py:不跟随重定向、逐跳记录 301/308(压平 http→https、
+           www、尾斜杠这类等价写法),GitHub repo 另比一层 API canonical full_name。 -->
 
       <a class="rd-card" data-type="工具" href="https://github.com/max-sixty/worktrunk" target="_blank" rel="noopener">
         <div class="rd-meta">
@@ -91,7 +111,7 @@
           <span>收藏于 2026-07-27</span>
         </div>
         <h2>worktrunk<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">Rust 写的 Git worktree 管理 CLI，专为「同时跑多个 AI 编码 agent」设计：一条命令给每个 agent 开一棵独立 worktree + 分支，各自在自己的工作树里改代码互不踩踏，跑完再合并回主干。约 6.1k star，官网 worktrunk.dev。</p>
+        <p class="excerpt">Rust 写的 Git worktree 管理 CLI，专为「同时跑多个 AI 编码 agent」设计：一条命令给每个 agent 开一棵独立 worktree + 分支，各自在自己的工作树里改代码互不踩踏，跑完再合并回主干。6k+ star，官网 worktrunk.dev。</p>
         <p class="why"><b>为什么收藏</b> · 多 agent 并行开发时的 worktree 编排层——重度用 Claude Code 最先撞到的就是这道墙。</p>
       </a>
 
@@ -124,7 +144,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">开源 AI 网关的事实标准：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。Rust 核心 + Python SDK，约 5.5 万 star，几乎每天都在更新。</p>
+        <p class="excerpt">开源 AI 网关的事实标准：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。Rust 核心 + Python SDK，5 万+ star，几乎每天都在更新。</p>
         <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
       </a>
 
@@ -135,7 +155,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>OmniRoute<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">同样是自托管 AI 网关，但更偏「智能选模型」：本地 proxy + OpenAI 兼容端点，BYOK 聚合数百家 provider（含一批带免费额度的），原生对接 Claude Code / Codex / Cursor / Cline / Copilot；差异化在十几种路由策略（成本优先、剩余额度优先、多模型 + 裁判、实时打分自动选）和内置的 prompt 压缩（与同页收录的 headroom 同路）。MIT，TypeScript，约 3.3 万 star。README 里部分指标偏营销口径、免费额度聚合也较脆弱，按需取用。</p>
+        <p class="excerpt">同样是自托管 AI 网关，但更偏「智能选模型」：本地 proxy + OpenAI 兼容端点，BYOK 聚合数百家 provider（含一批带免费额度的），原生对接 Claude Code / Codex / Cursor / Cline / Copilot；差异化在十几种路由策略（成本优先、剩余额度优先、多模型 + 裁判、实时打分自动选）和内置的 prompt 压缩（与同页收录的 headroom 同路）。MIT，TypeScript，5 万+ star。README 里部分指标偏营销口径、免费额度聚合也较脆弱，按需取用。</p>
         <p class="why"><b>为什么收藏</b> · 和 LiteLLM 并存的另一半：LiteLLM 是生产级接入基础设施，它是 coding-agent 优先、自带压缩的日用款。</p>
       </a>
 
@@ -146,7 +166,7 @@
           <span>收藏于 2026-07-07</span>
         </div>
         <h2>agent-vault<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">面向 AI agent 的 HTTP 凭证代理 + 保险库，支持 Claude Code、OpenClaw、Hermes 及自建 harness。agent 不再直接持有 API key，改为经 vault 代理鉴权访问，可拦截 prompt injection 导致的密钥外泄。Go 实现，Infisical 出品，约 1.8k star。</p>
+        <p class="excerpt">面向 AI agent 的 HTTP 凭证代理 + 保险库，支持 Claude Code、OpenClaw、Hermes 及自建 harness。agent 不再直接持有 API key，改为经 vault 代理鉴权访问，可拦截 prompt injection 导致的密钥外泄。Go 实现，Infisical 出品，2k+ star。</p>
         <p class="why"><b>为什么收藏</b> · 给自建的 agent 车队做统一凭证管理与最小权限。</p>
       </a>
 
@@ -157,7 +177,7 @@
           <span>收藏于 2026-06-27</span>
         </div>
         <h2>OpenMontage<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">号称全球首个开源 agentic 视频制作系统：12 条流水线、52 个工具、500+ agent，把视频生产整条做成多 agent 自动化流程。上榜当天新增约 1,674 star，登 GitHub Trending 日榜前列。</p>
+        <p class="excerpt">号称全球首个开源 agentic 视频制作系统：12 条流水线、52 个工具、500+ agent，把视频生产整条做成多 agent 自动化流程。收藏当天登上 GitHub Trending 日榜前列（当日新增约 1,674 star），此后一路涨到 5 万+。</p>
       </a>
 
       <a class="rd-card" data-type="项目" href="https://github.com/xbtlin/ai-berkshire" target="_blank" rel="noopener">
@@ -167,7 +187,7 @@
           <span>收藏于 2026-06-26</span>
         </div>
         <h2>AI Berkshire<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">基于 Claude Code 的价值投资研究 Skill 合集：把巴菲特、芒格、段永平、李录四位的方法论结构化成多 Agent 并行 + 对抗式投研，主打「一个人 + Claude = 一个投研团队」。2.5k star。README 自报的实盘收益附有免责声明，姑且参考。</p>
+        <p class="excerpt">基于 Claude Code 的价值投资研究 Skill 合集：把巴菲特、芒格、段永平、李录四位的方法论结构化成多 Agent 并行 + 对抗式投研，主打「一个人 + Claude = 一个投研团队」。1.5 万+ star。README 自报的实盘收益附有免责声明，姑且参考。</p>
         <p class="why"><b>为什么收藏</b> · 拆它的 skill 结构，喂给自己的投研管线。</p>
       </a>
 
@@ -178,18 +198,18 @@
           <span>收藏于 2026-06-26</span>
         </div>
         <h2>Flue<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">Astro 团队开源的 TypeScript agent harness，自我定位「不是又一个 SDK」：session、tools、<code>SKILL.md</code> 技能、sandbox、subagents、durable execution 全部内置，模型直接写成 <code>anthropic/claude-sonnet</code>，可本地 CLI 跑也可部署到 runtime。6.7k star。</p>
+        <p class="excerpt">Astro 团队开源的 TypeScript agent harness，自我定位「不是又一个 SDK」：session、tools、<code>SKILL.md</code> 技能、sandbox、subagents、durable execution 全部内置，模型直接写成 <code>anthropic/claude-sonnet</code>，可本地 CLI 跑也可部署到 runtime。8k+ star。</p>
         <p class="why"><b>为什么收藏</b> · 多 agent 编排的 TS 原生底座参考，和 Omnigent 对照着看。</p>
       </a>
 
-      <a class="rd-card" data-type="工具" href="https://github.com/chopratejas/headroom" target="_blank" rel="noopener">
+      <a class="rd-card" data-type="工具" href="https://github.com/headroomlabs-ai/headroom" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">工具</span>
-          <span class="src">github.com/chopratejas</span>
+          <span class="src">github.com/headroomlabs-ai</span>
           <span>收藏于 2026-06-19</span>
         </div>
         <h2>headroom<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">AI Agent 的「上下文压缩层」：prompt、工具输出、日志、RAG、对话历史送进 LLM 之前先压一道，省 60–95% token 而答案不变。三种接入方式——库调用、本地 proxy 零改码、MCP server，另有 <code>headroom wrap claude·codex·cursor</code> 一键包裹。实现是 Python 编排 + Rust 引擎：统计分析器判定 JSON 数组可压性后做抽取式 k-split、AST 级代码压缩、可逆压缩（原文落本地、prompt 里只留 hash 标记，模型要时再取回）、以及护住 provider KV-cache 前缀的告警器。Apache-2.0，约 3.7 万 star。</p>
+        <p class="excerpt">AI Agent 的「上下文压缩层」：prompt、工具输出、日志、RAG、对话历史送进 LLM 之前先压一道：coding agent 场景省约 20%，JSON / 日志这类结构化输出省 60–95%，答案不变。三种接入方式——库调用、本地 proxy 零改码、MCP server，另有 <code>headroom wrap claude·codex·cursor</code> 一键包裹。实现是 Python 编排 + Rust 引擎：统计分析器判定 JSON 数组可压性后做抽取式 k-split、AST 级代码压缩、可逆压缩（原文落本地、prompt 里只留 hash 标记，模型要时再取回）、以及护住 provider KV-cache 前缀的告警器。Apache-2.0，6 万+ star。</p>
       </a>
 
       <a class="rd-card" data-type="项目" href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noopener">
@@ -199,7 +219,7 @@
           <span>收藏于 2026-06-15</span>
         </div>
         <h2>VoxCPM2<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">OpenBMB（MiniCPM 团队）开源的 2B 参数 Tokenizer-Free TTS，扩散自回归架构：支持 30 语种 + 自动语种识别、用自然语言描述做「声音设计」、可控音色克隆（情感 / 语速 / 表达）、48kHz 录音棚级音质，4090 上 RTF≈0.3 实时流式。Apache-2.0，代码与权重全开源，29.5k star。</p>
+        <p class="excerpt">OpenBMB（MiniCPM 团队）开源的 2B 参数 Tokenizer-Free TTS，扩散自回归架构：支持 30 语种 + 自动语种识别、用自然语言描述做「声音设计」、可控音色克隆（情感 / 语速 / 表达）、48kHz 录音棚级音质，4090 上 RTF≈0.3 实时流式。Apache-2.0，代码与权重全开源，3 万+ star。</p>
       </a>
 
       <a class="rd-card" data-type="框架" href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">
@@ -240,7 +260,7 @@
           <span>收藏于 2026-06-12</span>
         </div>
         <h2>Trellis<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">给 Claude Code、Codex、Cursor 等 coding agent 加上「项目常驻记忆 + 工作流」的开源框架。9.8k star。</p>
+        <p class="excerpt">给 Claude Code、Codex、Cursor 等 coding agent 加上「项目常驻记忆 + 工作流」的开源框架。1.4 万+ star。</p>
       </a>
 
       <a class="rd-card" data-type="阅读" href="https://simonwillison.net/guides/agentic-engineering-patterns/" target="_blank" rel="noopener">

@@ -102,7 +102,28 @@
            linkcheck.py 跟随重定向后照样报 200——它和一个真正健在的链接在探针眼里
            一模一样,而卡片上那行可见出处「github.com/chopratejas」已经指错了人。
            判据补在 movedlinks.py:不跟随重定向、逐跳记录 301/308(压平 http→https、
-           www、尾斜杠这类等价写法),GitHub repo 另比一层 API canonical full_name。 -->
+           www、尾斜杠这类等价写法),GitHub repo 另比一层 API canonical full_name。
+
+           ⚠️ star 之外的数字同样会漂——手抄的「上游特征数」是同一台跑步机。
+           2026-09-03 实测:两张卡的功能计数已经全部过期,而且**都是往少了说**,
+           把人家的项目卖低了。OpenMontage 卡写「12 条流水线、52 个工具、500+ agent」,
+           上游 README 今天自报的是「10+ production pipelines / 100+ production
+           tools / 700+ agent skill and production-knowledge files」(Pipelines 表
+           实列 11 行);其中「500+ agent」还把**文件**说成了**agent**——那不只是数字
+           过期,是类别说错。LLM Inference Handbook 卡写「配 16 个可上手玩的交互件」,
+           而首页 Interactive tools 今天实列 21 个。
+           同卡的「七大板块」两路独立核过仍为真(侧栏 7 项 + 上游 repo docs/ 下 7 个
+           板块目录),不动;VoxCPM2 卡的 2B / 30 语种 / 48kHz / RTF≈0.3 也逐条核过,
+           全部与上游 README 一致。
+           规则与 star 那条完全相同:上游自己发布了下限就照引(10+/100+/700+ 是上游
+           原文),只能自己数出来的就写成只升不降的下限(交互件 20+)。
+
+           为什么 starfloor.mjs 对这三个数完全沉默:它的卡片正则只收 github.com 的
+           href——handbook 那张压根不在它的取样里(19 张卡它只看 12 张);而它认「star
+           声明」的两条规则是「后紧跟 star」或「下限形式且收在句读上」,「12 条流水线」
+           两条都不满足。**判据只覆盖它自己有规则的那些面**,同形第五次。
+           新判据在 upstreamnums.mjs:19 张卡全收,每个阿拉伯数字逐个归类,归不进已知
+           类别的一律判**失败**(不是判通过)——清单外的新数字必须先写下理由才能上线。 -->
 
       <a class="rd-card" data-type="工具" href="https://github.com/max-sixty/worktrunk" target="_blank" rel="noopener">
         <div class="rd-meta">
@@ -133,7 +154,7 @@
           <span>收藏于 2026-07-23</span>
         </div>
         <h2>LLM Inference Handbook<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">Modular（Mojo 语言 / MAX 推理平台背后的公司）出的开放在线手册，自我定位「技术词典 + 指南 + 参考书」三合一，专治 LLM 推理知识的碎片化——它散在论文、厂商博客、GitHub issue 和 Discord 里，而且大多默认你已经懂半个栈。七大板块：推理基础与指标（TTFT / ITL / TPOT，以及为什么 goodput 比裸吞吐更重要）→ 部署规划（选模型、选 GPU、选推理框架，显存怎么算，Serverless 还是自托管，BYOC 与本地部署）→ 模型准备（量化 / 微调 / 蒸馏）→ 模型交互（OpenAI 与 Anthropic 兼容 API、function calling、结构化输出、MCP）→ 推理优化（continuous batching、chunked prefill、PagedAttention、prefix caching、KV cache offloading、投机解码、prefill-decode 分离、并行策略与推理路由）→ kernel 优化（GPU 架构基础、FlashAttention）→ 基础设施与运维（分布式推理、快速扩缩容、可观测性、多云跨区、成本）。配 16 个可上手玩的交互件：批处理策略模拟器、延迟时间线、上下文窗口模拟器、GPU 显存与 KV cache 计算器、Top-p vs Top-k 对比等。Apache-2.0 开源。</p>
+        <p class="excerpt">Modular（Mojo 语言 / MAX 推理平台背后的公司）出的开放在线手册，自我定位「技术词典 + 指南 + 参考书」三合一，专治 LLM 推理知识的碎片化——它散在论文、厂商博客、GitHub issue 和 Discord 里，而且大多默认你已经懂半个栈。七大板块：推理基础与指标（TTFT / ITL / TPOT，以及为什么 goodput 比裸吞吐更重要）→ 部署规划（选模型、选 GPU、选推理框架，显存怎么算，Serverless 还是自托管，BYOC 与本地部署）→ 模型准备（量化 / 微调 / 蒸馏）→ 模型交互（OpenAI 与 Anthropic 兼容 API、function calling、结构化输出、MCP）→ 推理优化（continuous batching、chunked prefill、PagedAttention、prefix caching、KV cache offloading、投机解码、prefill-decode 分离、并行策略与推理路由）→ kernel 优化（GPU 架构基础、FlashAttention）→ 基础设施与运维（分布式推理、快速扩缩容、可观测性、多云跨区、成本）。配 20+ 个可上手玩的交互件：批处理策略模拟器、延迟时间线、上下文窗口模拟器、GPU 显存与 KV cache 计算器、Top-p vs Top-k 对比等。Apache-2.0 开源。</p>
         <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
       </a>
 
@@ -177,7 +198,7 @@
           <span>收藏于 2026-06-27</span>
         </div>
         <h2>OpenMontage<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">号称全球首个开源 agentic 视频制作系统：12 条流水线、52 个工具、500+ agent，把视频生产整条做成多 agent 自动化流程。收藏当天登上 GitHub Trending 日榜前列（当日新增约 1,674 star），此后一路涨到 5 万+。</p>
+        <p class="excerpt">号称全球首个开源 agentic 视频制作系统：上游自报 10+ 条流水线、100+ 个生产工具、700+ 个 agent 技能与知识文件，把视频生产整条做成多 agent 自动化流程。收藏当天登上 GitHub Trending 日榜前列（当日新增约 1,674 star），此后一路涨到 5 万+。</p>
       </a>
 
       <a class="rd-card" data-type="项目" href="https://github.com/xbtlin/ai-berkshire" target="_blank" rel="noopener">

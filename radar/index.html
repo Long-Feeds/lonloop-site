@@ -123,7 +123,27 @@
            声明」的两条规则是「后紧跟 star」或「下限形式且收在句读上」,「12 条流水线」
            两条都不满足。**判据只覆盖它自己有规则的那些面**,同形第五次。
            新判据在 upstreamnums.mjs:19 张卡全收,每个阿拉伯数字逐个归类,归不进已知
-           类别的一律判**失败**(不是判通过)——清单外的新数字必须先写下理由才能上线。 -->
+           类别的一律判**失败**(不是判通过)——清单外的新数字必须先写下理由才能上线。
+
+           ⚠️ 而「写下理由」本身也会写错,而且写错的那条比没写更危险。
+           2026-09-04 实测:上面那份豁免清单里有一条
+             ['Agentic Engineering Patterns', '2026 年 2 月起每周更新 1–2 章',
+              '起始时点 + 作者自述的更新节奏;节奏不是库存计数,章数本身刻意没写']
+           理由**方向反了**。恰恰因为「节奏」是一句**现在时的、关于别人未来行为**的
+           断言,它比库存计数烂得更快:计数漂了只是把人家说少了(还能读),节奏一旦停
+           就直接变成假话。上游实测——16 章里 15 章生在 2026-02-23~03-21 的四周内,
+           之后只有 04-18 补的 1 章,全书 Last modified 停在 04-18(距今 139 天),
+           而卡片还在对读者说「每周更新 1–2 章」。那条豁免把全页最易腐的一句话
+           静音了整整四个月,期间 upstreamnums 每天照打 19 卡 0 fail。
+           还有一层类别错(同 09-03 的「上游发布的是哪种量」):上游原话是
+           "I hope to add more chapters at a rate of 1-2 a week"——发布的是**愿望**,
+           被抄成了**节奏**。
+           ⇒ 改写规矩:节奏类断言一律落到**已发生的事实**上(「四周内写出 15 章」)
+           或**写明观测日期的观察**(「到 2026-09-04 只在 4 月补过 1 章」)——前者冻结,
+           后者只会变旧、不会变假。判据侧同步收口:EXEMPT 每条必须归进一个白名单
+           类别(spec/license/quote/past/dated/ident),cadence(节奏)与 plan(路线图)
+           列入**禁用类别**,写了就报红。豁免不再是「写一句听着合理的话」,
+           是「归进一个已经论证过不会漂的类别」。 -->
 
       <a class="rd-card" data-type="工具" href="https://github.com/max-sixty/worktrunk" target="_blank" rel="noopener">
         <div class="rd-meta">
@@ -291,7 +311,7 @@
           <span>收藏于 2026-06-12</span>
         </div>
         <h2>Agentic Engineering Patterns<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">Simon Willison 的开放在线书，2026 年 2 月起每周更新 1–2 章：如何用好 Claude Code、Codex 这类 coding agent，拿到可靠、可维护、能上线的结果。核心立场很明确——Agentic Engineering ≠ Vibe Coding。</p>
+        <p class="excerpt">Simon Willison 的开放在线书：如何用好 Claude Code、Codex 这类 coding agent，拿到可靠、可维护、能上线的结果。核心立场很明确——Agentic Engineering ≠ Vibe Coding。作者开篇帖里说的是「希望每周加 1–2 章」；实际节奏是 2 月底起四周内密集写出 15 章，此后到 2026-09-04 只在 4 月补过 1 章。当已成型的参考书读，别当追更中的连载——每章页脚自带 Created / Last modified，可自己核。</p>
       </a>
 
       <a class="rd-card" data-type="阅读" href="https://x.com/NoraX2026/status/2064644357374833098" target="_blank" rel="noopener">

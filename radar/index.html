@@ -143,7 +143,41 @@
            后者只会变旧、不会变假。判据侧同步收口:EXEMPT 每条必须归进一个白名单
            类别(spec/license/quote/past/dated/ident),cadence(节奏)与 plan(路线图)
            列入**禁用类别**,写了就报红。豁免不再是「写一句听着合理的话」,
-           是「归进一个已经论证过不会漂的类别」。 -->
+           是「归进一个已经论证过不会漂的类别」。
+
+           ⚠️ 2026-09-06:这次不是断言烂了,是**它引的那个源烂了**——而「引的是上游原话」
+           这条豁免理由在形式上永远成立,于是判据永远不会红。
+           headroom 卡写「coding agent 场景省约 20%,JSON / 日志省 60–95%」「三种接入方式
+           ——库调用、本地 proxy、MCP server」。这三样逐字来自上游 GitHub **repo
+           description**,而那行 one-liner 今天仍逐字如此("20% fewer tokens for coding
+           agents, 60-95% fewer tokens for JSON... Library, proxy, MCP server")。
+           但上游自己维护的 README 早就走远了:Proof 表(种子固定 --seed 20260902、离线
+           可复跑)给的是四个 agent 场景 21% / 30% / 42% / 57%,重复 JSON 与日志行
+           "Repeated JSON arrays and log lines clear 90%";"What it does" 把
+           Library / Proxy / **Agent wrap** / MCP server 四条并列,而卡片把 wrap 降级成
+           「另有…」。于是卡片拿最低那一档当「coding agent 场景」的代表,把人家卖低了
+           近三倍;「三种」也已经不是四种。附带一处更直接的错:卡片写
+           「wrap claude·codex·cursor 一键包裹」,而上游兼容表里 Cursor 标的是
+           **Manual setup**(它只帮你起 proxy 并打印 base URL,仍要自己填进 Cursor 设置)。
+           ⇒ **一个项目可以有多个自述面,它们会各自漂到不同的时间点。** 09-03 学到的是
+           「抄上游数字前先问上游发布的是哪种量」,今天要多问一句「**上游在哪儿发布的、
+           那一面还有人维护吗**」——README 是作者天天改的,repo 那行 one-liner 是发布日
+           写完就没人再看的。
+           改法两条:① 数字落到 **dated**(写明「2026-09-06 核时」+ 指名那份可复跑的基准),
+           只会变旧不会变假;② **接入方式那句直接删掉计数,只留枚举**——枚举漏了只是不全,
+           写了计数才会变假,这正是首页 Daily Tools 卡「刻意不写数字」的老规矩。
+           判据侧两处收口:① upstreamnums 的 quote 类别从此必须带第 5 格**归属区间**——
+           quote 敢说「不会漂」的前提是**卡片把它呈现成引文**,读者看得见这是别人的话
+           才会自己掂量;而「省约 20%」在卡上没有任何归属语,读者读到的是本站的测量结论,
+           豁免辩护的却是「别人的话」,这条缝里什么都不会报错。归属字面要逐字在卡上,
+           且必须含住引文本身。② 新建 cnnum.mjs:中文数词给清单报的数从此有人量。
+           「三种接入方式」烂在 upstreamnums **自己写明不覆盖**的那一面上(09-03 原话:
+           「中文数字…逐个归类会淹没在噪声里」),同形第六次。「噪声太多」不是不覆盖的
+           理由,是该换取样口径的理由——只收「数词 + 量词 + 后面跟着一串枚举」这一类,
+           其余进 EXEMPT 写类别。今天三条已登记并每天现量:handbook「七大板块」= 7(侧栏
+           顶层,JS 渲染,走 Playwright)、OmniRoute「数百家」= 356、OmniRoute「十几种」
+           = 19 —— 最后这条**正贴着天花板**(「十几」上界 19),上游再加一种这张卡立刻
+           变假,以前没有任何本地信号会亮,现在有了。 -->
 
       <a class="rd-card" data-type="工具" href="https://github.com/max-sixty/worktrunk" target="_blank" rel="noopener">
         <div class="rd-meta">
@@ -250,7 +284,7 @@
           <span>收藏于 2026-06-19</span>
         </div>
         <h2>headroom<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">AI Agent 的「上下文压缩层」：prompt、工具输出、日志、RAG、对话历史送进 LLM 之前先压一道：coding agent 场景省约 20%，JSON / 日志这类结构化输出省 60–95%，答案不变。三种接入方式——库调用、本地 proxy 零改码、MCP server，另有 <code>headroom wrap claude·codex·cursor</code> 一键包裹。实现是 Python 编排 + Rust 引擎：统计分析器判定 JSON 数组可压性后做抽取式 k-split、AST 级代码压缩、可逆压缩（原文落本地、prompt 里只留 hash 标记，模型要时再取回）、以及护住 provider KV-cache 前缀的告警器。Apache-2.0，6 万+ star。</p>
+        <p class="excerpt">AI Agent 的「上下文压缩层」：prompt、工具输出、日志、RAG、对话历史送进 LLM 之前先压一道，答案不变。上游自带一份种子固定、可离线复跑的基准，2026-09-06 核时 agent 场景省 21%–57%（代码搜索最低，SRE 事故排查最高）；重复的 JSON 数组与日志行另算，上游自述能到 90%。接入方式——库调用、本地 proxy 零改码、<code>headroom wrap</code> 一键包裹（Claude Code / Codex 等；Cursor 上游标的是「手工配置」，仍要自己填 base URL）、MCP server。实现是 Python 编排 + Rust 引擎：统计分析器判定 JSON 数组可压性后做抽取式 k-split、AST 级代码压缩、可逆压缩（原文落本地、prompt 里只留 hash 标记，模型要时再取回）、以及护住 provider KV-cache 前缀的告警器。Apache-2.0，6 万+ star。</p>
       </a>
 
       <a class="rd-card" data-type="项目" href="https://github.com/OpenBMB/VoxCPM" target="_blank" rel="noopener">

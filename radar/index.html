@@ -328,6 +328,31 @@
         <p class="excerpt">斯坦福公开课 Transformers United V6 的一讲（2026-04-09，Brown 大学 Hazel Nam &amp; Lucas Maes 主讲，约 71 分钟）：世界模型如何从「重建」转向「隐空间预测」（JEPA）。课程主页 web.stanford.edu/class/cs25。</p>
       </a>
 
+      <!-- Trellis — 2026-09-08 re-sourced from the face upstream actually maintains.
+           这张卡自 2026-06-12 建 radar 起从没动过，写的是「项目常驻记忆 + 工作流」这个
+           笼统标签（当时读的是 repo 那行 one-liner，它今天已经改成 "The best agent
+           harness."，和卡上写的也对不上了）。承 09-06 headroom 那条教训：一个项目有多
+           个自述面，repo description 是发布日写完就没人看的那面，README 才是作者天天
+           改的那面（README.md 上游最后一次提交 2026-08-27，与最后一次代码 push 同日）。
+           ⚠️ 三个路径**刻意拆成 `.trellis/` + `spec/` / `tasks/` / `workspace/` 四个短 chip**：
+           行内 code 是不可断的长 token,写成 `.trellis/workspace/`(19 字符/161px)会在 320 档
+           把整页顶出 35px 横滚(hscan 当场抓到)。试过给 `.rd-card code` 加
+           overflow-wrap:break-word —— 横滚是没了,但 390 档它把 chip 从中间劈成两截、
+           末尾那个 `/` 单独成一个带边框的碎片,更难看,已回退。**窄档的解法是缩短 token,
+           不是允许它断。**
+           下面每一句都逐字取自今天的 README：`.trellis/spec/` 自动注入约定、
+           `.trellis/tasks/` 存 PRD / 实现与评审上下文 / 状态、`.trellis/workspace/`
+           的 journal 存项目记忆（"Why Trellis?" 表）；四段循环与各段的子 agent、
+           implement "no git commit"、check "runs lint, type-check, and tests,
+           self-fixing where it can"、finish 的 trellis-update-spec 回写（"How It
+           Works"）；ablate / restore 与「拿它做用/不用对照」（FAQ "Can I temporarily
+           compare a project with and without Trellis?"）。
+           **刻意不写任何计数**：README 自报 22 个平台且上游拿 registry 守着这个数，
+           但「枚举漏了只是不全，写了计数才会变假」（09-06 headroom 定的规矩），所以
+           平台只枚举 + 「等」，四段循环也只列不数。AGPL-3.0 是新增信息：同页 headroom /
+           VoxCPM2 / Omnigent 都标了许可证，这张卡此前没有，而 AGPL 恰恰是读者要不要
+           采用时第一个要问的（API license=AGPL-3.0 与 README 页脚两路同标，2026-09-08 核）。
+           star 仍是只升不降的下限（今日 14522，1.4 万+ 仍为真，下一次 bump 在 2 万）。 -->
       <a class="rd-card" data-type="框架" href="https://github.com/mindfold-ai/Trellis" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">框架</span>
@@ -335,7 +360,7 @@
           <span>收藏于 2026-06-12</span>
         </div>
         <h2>Trellis<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">给 Claude Code、Codex、Cursor 等 coding agent 加上「项目常驻记忆 + 工作流」的开源框架。1.4 万+ star。</p>
+        <p class="excerpt">给 Claude Code、Codex、Cursor 等 coding agent 装一层「留在仓库里的工程约束」：约定、任务与记忆都写进仓库根下的 <code>.trellis/</code>——<code>spec/</code> 存团队约定，每次会话按需注入、不必重复交代；<code>tasks/</code> 存任务的 PRD、实现与评审上下文和状态；<code>workspace/</code> 的 journal 记住上次干到哪。三者都随仓库走，一个人调顺的规矩全队可用。干活时是一条带闸的循环，每段自动调起对应的 skill 或子 agent：brainstorm 一次只问一个问题问出 PRD → implement 照 PRD 写代码、不替你 <code>git commit</code> → check 拿 diff 对着 spec 复核并跑 lint / 类型检查 / 测试、能自修就自修 → finish 把这轮新学到的规矩回写进 spec。另有 <code>trellis ablate</code> / <code>restore</code>，能把项目里 Trellis 的那套整体临时摘掉再精确还原，上游给的用法就是拿它做「用 / 不用」的对照。AGPL-3.0，1.4 万+ star。</p>
       </a>
 
       <a class="rd-card" data-type="阅读" href="https://simonwillison.net/guides/agentic-engineering-patterns/" target="_blank" rel="noopener">

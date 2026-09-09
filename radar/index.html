@@ -384,14 +384,47 @@
         <p class="why"><b>怎么用</b> · 直接进 r/juststart、r/EntrepreneurRideAlong 按 top / month 排；泛区水帖偏多，且营销号也在涌入，老帖普遍比新帖可信。</p>
       </a>
 
-      <a class="rd-card" data-type="项目" href="https://x.com/laobaishare/status/2063863602977952136" target="_blank" rel="noopener">
+      <!-- MoneyPrinterTurbo —— 2026-09-09 重新接源。这张卡此前是全页唯一「说不出自己讲的
+           是哪个项目」的一条：标题只有一个绰号「开源短视频生成器『印钞机』」，正文 30 字
+           （全页第二短的卡也有 58 字、中位数 174），href 指的是 x.com 上第三方的一条推荐帖
+           而不是项目本身——而它 data-type 写着「项目」，本页开篇又承诺「每条都写清它到底做
+           什么…点卡片直达原站」。同页另两张 x.com 卡（Reddit 副业观察、Prompting 教程）
+           类型是「阅读」，帖子本身就是被收藏的那个东西，自洽；这一张不是。
+
+           顺带补上一个此前谁也看不见的盲区：starfloor.mjs 的卡片正则只认 href 为
+           github.com/<owner>/<repo> 的卡，于是这张卡里那句「8 万+ star」从建卡起就在**唯一
+           一条 star 判据的取样范围之外**——又一次「绿色报告的可信度上限 = 它的输入集覆盖
+           度」。改成仓库链接后它自动进扫，不必给判据打补丁。
+
+           考据（一手，别再重挖）：那条推文自己不带项目链接（唯一的 t.co 解出来指回推文自
+           己的配图），项目名只出现在配图里；把图取下来看，是 harry0703/MoneyPrinterTurbo
+           的 README 截图（MIT 徽章 + GitHub Trending #1 Repository Of The Day）。推文里
+           写的「80000+ stars」正是卡上那个「8 万+」的来源——即这张卡引的一直是第三方转述
+           的数，不是项目自己在维护的那一面（承 09-08 Trellis 同一条教训）。
+
+           文案逐条读自今天的上游 README（最后一次提交 2026-09-06，与代码 push 同期＝确实
+           在维护的那一面）与 GitHub API：MIT、121,650 star（按本页规矩写成只升不降的下限
+           「12 万+」）、最近一版 v1.3.6 / 2026-09-02。活跃度**只落成已发生的事实**（发版日 +
+           README 最后改动日），不写「仍在活跃维护」这类现在时断言——upstreamnums 的
+           BANNED_KINDS 里 `cadence` 一条正是禁这个：作者一停笔它就成假话，而本地没有任何
+           信号会提醒。照 09-06 定的规矩**不写任何计数**：画幅、模型、网关、TTS、素材源
+           一律只枚举 +「等」，枚举漏了只是不全，写了计数才会变假（今天草稿里原本有一句
+           「拆成六段」，删它靠的是记性——所以顺手给 cnnum 的量词表补了 份|段，见
+           mut-cnnum3.sh）。赞助那句不是抹黑：README 里 11 处带 aff= / track_id= / utm_ 的推广链接，
+           读者挑接入方式时确实要分辨，同页 OmniRoute 卡的「部分指标偏营销口径」是同一处
+           理。SKILL.md 那条实测过：docs/skill/SKILL.md 返回 200，frontmatter 的 name /
+           description / compatibility 齐备，正文要求 agent「装好、配好、生成、把 MP4 交回
+           来，别停在给命令」。<code> chip 只用了 SKILL.md（8 字符），在 09-08 量出的「320
+           档约 13 个等宽字符」预算内。 -->
+      <a class="rd-card" data-type="项目" href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">项目</span>
-          <span class="src">x.com</span>
+          <span class="src">github.com/harry0703</span>
           <span>收藏于 2026-06-09</span>
         </div>
-        <h2>开源短视频生成器「印钞机」<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">输入一个主题就自动产出短视频的开源项目，8 万+ star。</p>
+        <h2>MoneyPrinterTurbo<span class="out" aria-hidden="true">↗</span></h2>
+        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口除 WebUI、API、CLI 外还给了一份 <code>SKILL.md</code>——丢给能读技能文档的 agent，装环境、填配置、出片全由它自己做完。MIT，12 万+ star；最近一版 v1.3.6 发在 2026-09-02，README 最后一次改动 2026-09-06。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
+        <p class="why"><b>为什么收藏</b> · 脚本 / 配音 / 素材 / 字幕 / 配乐 / 发布每一段都能单独换件，是这条链上最完整的公开参照物；而「把一份 SKILL.md 丢给 agent、让它自己跑完」被它列为正式入口，正是这页在追的那条线。</p>
       </a>
 
       <a class="rd-card" data-type="阅读" href="https://x.com/precisox/status/2063286718480949499" target="_blank" rel="noopener">

@@ -197,7 +197,7 @@
           <span>收藏于 2026-07-27</span>
         </div>
         <h2>hubo<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">把周伯通的「双手互搏」搬进 coding agent：不是一个 agent 自己审自己，而是实现方与审查方两个持久角色在同一会话里对抗——一方交实现与证据，另一方挑错，来回到每条 review 意见都被 reconcile 收敛，才交到人手上；另有「主审 ↔ 抬杠审」模式专门打掉误报、补回漏检。MIT，2026 年 7 月底刚发布的早期项目（约 26 star），胜在理念而非成熟度。</p>
+        <p class="excerpt">把周伯通的「双手互搏」搬进 coding agent：不是一个 agent 自己审自己，而是实现方与审查方两个持久角色在同一会话里对抗——实现方交代码与验证证据，审查方独立只读、只认真实 diff 与证据，回编号成条的 findings；另有协调方在中间传话，把没结掉的意见带进下一轮。循环不会自己提前收工：要么每条 finding 都被 reconcile，要么撞上只有人能拍板的产品 / 需求 / 技术方向问题。此外还有「主审 ↔ 抬杠审」模式，专门打掉误报、补回漏检；两者都必须显式调用，平时的提示词不受影响。形态是挂进 coding agent 的插件 / 技能而非独立工具，Claude Code、Codex、GitHub Copilot CLI、OpenClaw、OpenCode 等各给了一行安装命令。MIT，26 star；从首版到 v0.4.6 全部发在 2026-07-25 – 07-29，2026-09-10 核时其后再无新提交——当思路参照物读，别当在维护的依赖。</p>
         <p class="why"><b>为什么收藏</b> · 对抗式 self-play review 的思路，可借鉴进自建 agent 车队的 code-review 环节。</p>
       </a>
 

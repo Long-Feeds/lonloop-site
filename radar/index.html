@@ -415,7 +415,32 @@
            理。SKILL.md 那条实测过：docs/skill/SKILL.md 返回 200，frontmatter 的 name /
            description / compatibility 齐备，正文要求 agent「装好、配好、生成、把 MP4 交回
            来，别停在给命令」。<code> chip 只用了 SKILL.md（8 字符），在 09-08 量出的「320
-           档约 13 个等宽字符」预算内。 -->
+           档约 13 个等宽字符」预算内。
+           ⚠️ 2026-09-11 复诊：上面那句「README 最后一次改动 2026-09-06」**今天已经假了**，
+           被 cadence.mjs 当天判红（上游 README 最后一次提交已是 09-10）。它 09-09 写上卡，
+           09-10 就过期——**存活一天**。这不是手滑，是这条声明本身选错了锚点，两层：
+           ① 它是 latest 类（最高级）声明，容忍上限恒等于 0：上游一动它立刻假，中间要等
+              判据下一次跑完才有人知道。而 MPT 的 README 提交间隔实测 1–3 天（09-10×2 /
+              09-06 / 09-05 / 09-02×3 / 08-31），预期寿命比「每天跑一次的判据」还短——
+              **登记了可机验的源 ≠ 这条声明适合留在页面上；route ② 的前提是容忍上限 > 0。**
+           ② 更要命的是它**证不了它想证的那件事**。写它的本意是「我引的是上游今天还在
+              维护的那一面」（承 09-08 Trellis 教训）。可把 09-10 那两笔提交点开看，内容是
+              **加了 OfoxAI、AstraFlow 两行赞助位**、给一张截图 URL 补了个 ?ver= 缓存参数——
+              产品内容一个字没动。⇒ **「文件最后一次改动日」不是「这一面还有人维护」的证据，
+              它只是「这个文件被写过」**；把广告位轮换算进维护证据，恰恰是这张卡下一句正
+              提醒读者提防的那些链接在推着日期走。
+           ⇒ 改法不是把日期 bump 到 09-10（那就是跑步机，明天再假一次），是**换锚点**：
+           「上游最后一次改 README 是哪天」是别人天天在动的量，写死在卡上必假；
+           「我最后一次照着上游核这张卡是哪天」是**自己的、已发生的动作**，写死了永远为真。
+           读者要的那条信息（这段描述有多新）几乎没损失，腐烂性却是天壤之别。同页 headroom
+           卡的「2026-09-06 核时…」早就是这个形式，本页有先例、不引入新语汇。
+           维护证据改由**发版日**承担：v1.3.6 / 2026-09-02 是产品事件而不是文件被写过，
+           且 MPT 发版间隔实测 10–20 天（v1.3.5 08-22、v1.3.4 08-12、v1.3.3 07-24），
+           容忍上限真的 > 0，留给 cadence 现量是合适的。
+           今天顺手把整段描述照 09-10 那版 README 重核了一遍（SKILL.md / Pexels / Pixabay /
+           Edge TTS / OpenRouter / Ollama / LiteLLM / TikTok / Instagram / YouTube Shorts /
+           MIT 逐条仍在；09-06 新增的 Kokoro TTS provider 不影响「Edge TTS 打底」这句），
+           所以那句「按 2026-09-11 核过」是真做了才敢写。 -->
       <a class="rd-card" data-type="项目" href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">项目</span>
@@ -423,7 +448,7 @@
           <span>收藏于 2026-06-09</span>
         </div>
         <h2>MoneyPrinterTurbo<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口除 WebUI、API、CLI 外还给了一份 <code>SKILL.md</code>——丢给能读技能文档的 agent，装环境、填配置、出片全由它自己做完。MIT，12 万+ star；最近一版 v1.3.6 发在 2026-09-02，README 最后一次改动 2026-09-06。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
+        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口除 WebUI、API、CLI 外还给了一份 <code>SKILL.md</code>——丢给能读技能文档的 agent，装环境、填配置、出片全由它自己做完。MIT，12 万+ star；最近一版 v1.3.6 发在 2026-09-02，本段描述按 2026-09-11 的上游 README 核过。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
         <p class="why"><b>为什么收藏</b> · 脚本 / 配音 / 素材 / 字幕 / 配乐 / 发布每一段都能单独换件，是这条链上最完整的公开参照物；而「把一份 SKILL.md 丢给 agent、让它自己跑完」被它列为正式入口，正是这页在追的那条线。</p>
       </a>
 

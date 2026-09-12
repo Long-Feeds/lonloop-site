@@ -219,7 +219,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">开源 AI 网关的事实标准：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。Rust 核心 + Python SDK，5 万+ star，几乎每天都在更新。</p>
+        <p class="excerpt">开源 AI 网关的事实标准：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」说的是方向、不是现状：README 与写给贡献者的 ARCHITECTURE.md 通篇不含 rust，后者画出的请求链整条是 Python；<code>litellm-rust/</code> 自述为「staged 实现」，并写明「Python 仍然拥有配置、重试、路由策略、日志、回调、花费追踪与插件，直到每条 Rust 路径拿到 parity 覆盖与生产证据」——上一句列的成本追踪、重试、负载均衡，逐条都在这张清单上。选型时按 Python 网关评估。以上按 2026-09-12 的上游核过，当日语言构成 Python 84% / Rust 0.96%。5 万+ star，几乎每天都在更新。</p>
         <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
       </a>
 

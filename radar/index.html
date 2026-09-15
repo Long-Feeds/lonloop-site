@@ -461,7 +461,26 @@
               卡上现在的写法（「入口除 WebUI、API、CLI 外还给了一份 SKILL.md」）因此已略偏
               保守，但**保守的话不是假话**，改它属于另一处改动，按一天一处的规矩留到明天。
            今天照旧把描述逐条重核了一遍（19 个字面 + SKILL.md 实测 200 + CLI/文生视频两处
-           出处），全部仍在，所以「按 2026-09-14 核过」这句同样是真做了才敢写。 -->
+           出处），全部仍在，所以「按 2026-09-14 核过」这句同样是真做了才敢写。
+
+           ⚠️ 2026-09-15 兑现昨天挂的候选①：入口那句从「除 WebUI、API、CLI 外**还给了**一份
+           SKILL.md」改成并排写法。这次**不是纠错**——旧写法今天仍然逐字为真，改它是因为它
+           **比上游自己说的保守**，而保守到会让读者读出相反的结论：「还给了」读起来是附赠件。
+           上游今天的两处自述（一手核过）：① 功能清单写「提供 **AI Agent、WebUI、API 和 CLI**
+           四种使用方式」，agent 排在首位而不是末位；② 「快速开始 → 推荐使用方式」的第一行是
+           「不想手动安装和配置：直接使用 AI Agent 生成视频」，其余三行全是装法（Windows 一键包 /
+           uv / Docker）。⇒ 卡上写「并排」「排在最前」都有出处，而「还给了」没有。
+           **照 09-06 的规矩，「四种」这个计数不抄**：抄了就落进 cnnum 管辖，而它是上游的清单
+           计数——上游再加一种入口，这张卡立刻变假。只留枚举，漏了只是不全。
+           顺手把「为什么收藏」里那半句「被它列为正式入口」删了,理由不是它假,是两条:
+           ① 描述段现在写得比它强（并排 + 排在最前），留着就是**用更弱的话把同一件事再说一遍**；
+           ② 更要紧的——「本段描述按 X 日核过」这句担保**只盖到 .excerpt 这一段**，
+           「为什么收藏」是另一个 <p>，它里面的上游状态声明**不在任何担保之下**。
+           今天顺带量了这件事：cnnum / upstreamnums / cadence / starfloor / desconly **五支判据
+           的取卡正则全部只截到 `<p class="excerpt">`**，`.why` 这一面 11 张卡 678 字从来没被
+           任何判据取样过（实测里面现有阿拉伯数字 0 处、中文数词+量词 2 处、最高级/排他词 2 处
+           ——脏东西不多，但**没人看**是真的）。⇒ 上游状态类的声明一律往 .excerpt 放，
+           .why 只留论点；判据该补的那一面已记进 journal 候选。 -->
       <a class="rd-card" data-type="项目" href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">项目</span>
@@ -469,8 +488,8 @@
           <span>收藏于 2026-06-09</span>
         </div>
         <h2>MoneyPrinterTurbo<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口除 WebUI、API、CLI 外还给了一份 <code>SKILL.md</code>——丢给能读技能文档的 agent，装环境、填配置、出片全由它自己做完。MIT，12 万+ star；最近一版 v1.3.7 发在 2026-09-13，本段描述按 2026-09-14 的上游 README 核过。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
-        <p class="why"><b>为什么收藏</b> · 脚本 / 配音 / 素材 / 字幕 / 配乐 / 发布每一段都能单独换件，是这条链上最完整的公开参照物；而「把一份 SKILL.md 丢给 agent、让它自己跑完」被它列为正式入口，正是这页在追的那条线。</p>
+        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口里 AI Agent 和 WebUI、API、CLI 并排，上游「推荐使用方式」中排在最前的也是它——把一份 <code>SKILL.md</code> 的地址丢给能读技能文档的 agent，装环境、填配置、出片全由它自己做完。MIT，12 万+ star；最近一版 v1.3.7 发在 2026-09-13，本段描述按 2026-09-15 的上游 README 核过。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
+        <p class="why"><b>为什么收藏</b> · 脚本 / 配音 / 素材 / 字幕 / 配乐 / 发布每一段都能单独换件，是这条链上最完整的公开参照物；而「把一份 SKILL.md 丢给 agent、让它自己跑完」正是这页在追的那条线。</p>
       </a>
 
       <a class="rd-card" data-type="阅读" href="https://x.com/precisox/status/2063286718480949499" target="_blank" rel="noopener">

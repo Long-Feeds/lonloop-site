@@ -232,17 +232,30 @@
      precise live count. Bump the floor only at the next 10-tool milestone —
      raised 30+ → 40+ on 2026-07-31 at 41 shipped, 40+ → 50+ on 2026-08-09 at
      exactly 50 shipped, 50+ → 60+ on 2026-08-19 at exactly 60 shipped, 60+ →
-     70+ on 2026-09-01 at exactly 70 shipped; next bump at 80, not before.
+     70+ on 2026-09-01 at exactly 70 shipped, 70+ → 80+ on 2026-09-19 at 87
+     shipped; next bump at 90, not before.
+     This one is late, and the reason is worth keeping: the 80th tool shipped
+     without anything noticing. Every prior bump was made the day the milestone
+     was hit, by hand; the only assertion that ever looked at this number with
+     JS off — tools/verify-floor-live.mjs — reads the expected value out of
+     this very file, so it can prove "what renders == what is written" and
+     never "what is written is still current". It stayed green at 70+ through
+     17 more tools, while the JS-on path (tools/verify-live.mjs) checked the
+     real count every day. The gap only ever showed to the JS-off reader and
+     to crawlers that do not execute JS — i.e. exactly the audience the floor
+     exists for. That script now also asserts the floor equals the last crossed
+     milestone, so the next bump announces itself instead of waiting to be
+     remembered.
      A floor is only worth having if it is re-sourced, not assumed. Checked the
      day of this bump, against the repo tree rather than the manifest alone
-     (git/trees/main?recursive=1, untruncated): 70 manifest entries, all 70
+     (git/trees/main?recursive=1, untruncated): 87 manifest entries, all 87
      passing the same validation the live count uses (title/date/relative
      tools/ path — see the fetch block below; the count reads `valid`, not the
      raw array, so the floor has to be re-sourced against that same gate),
-     70 tool directories, 70 test.mjs — a clean 1:1 with nothing on either side
+     87 tool directories, 87 test.mjs — a clean 1:1 with nothing on either side
      unaccounted for. So the label this number carries ("each browser-tested")
-     holds at 70 too, and the JS-off reader is told 70+ where the JS reader is
-     told 70. Distinct categories at this bump: 62.
+     holds at 87 too, and the JS-off reader is told 80+ where the JS reader is
+     told 87. Distinct categories at this bump: 79.
      Verifying a bump: read #stat-tools out of the rendered DOM with JS off,
      never grep. This comment necessarily quotes every prior floor, so a grep
      for the old value matches the bump commit itself and "passes" on a page
@@ -458,7 +471,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">70+</span>
+          <span class="num" id="stat-tools">80+</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">

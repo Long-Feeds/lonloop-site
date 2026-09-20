@@ -616,6 +616,17 @@
       <article class="card card-writing">
         <div class="name"><span data-i18n="book.name">解密 Claude Code</span></div>
         <p class="desc" data-i18n="writing.desc">《解密 Claude Code：Anthropic CLI 源码深度解析》—— 基于 2026 年 3 月泄露的 CLI 源码，用 12 章逐层还原 Anthropic agent 的真实实现；每处引用都标注文件路径与行号，只写代码能证实的结论。</p>
+        <!-- A chip is a label on a link: it is named by the chapter it opens, not by
+             what an earlier survey chapter called that subsystem. 2026-09-20: 08 read
+             "IDE Bridge" in both languages, but 08-bridge is titled "Remote Control
+             Bridge——云端远程控制架构" and covers driving the local CLI from
+             claude.ai (src/bridge/, `claude remote-control`, the Environments API);
+             IDE plugins appear there only as one lower-latency local case. "IDE
+             Bridge" came from chapter 01's survey line "Bridge — IDE 的眼睛和手".
+             10's Chinese read 「内存」 (RAM) where the chapter says 「记忆」 (memory
+             across sessions) — the English side already had it right. Kept honest by
+             tools/verify-chapters-live.mjs: it re-reads each chapter's own H1, and the
+             upstream chapter count behind the "12" in BY THE NUMBERS. -->
         <div class="chips">
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/01-architecture.html" target="_blank" rel="noopener"><span class="ch-n">01</span><span data-i18n="writing.ch1">架构全景</span></a>
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/02-startup.html" target="_blank" rel="noopener"><span class="ch-n">02</span><span data-i18n="writing.ch2">启动与性能</span></a>
@@ -624,9 +635,9 @@
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/05-permissions.html" target="_blank" rel="noopener"><span class="ch-n">05</span><span data-i18n="writing.ch5">权限系统</span></a>
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/06-agents.html" target="_blank" rel="noopener"><span class="ch-n">06</span><span data-i18n="writing.ch6">Agent 子系统</span></a>
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/07-ink-ui.html" target="_blank" rel="noopener"><span class="ch-n">07</span><span data-i18n="writing.ch7">终端 UI</span></a>
-          <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/08-bridge.html" target="_blank" rel="noopener"><span class="ch-n">08</span><span data-i18n="writing.ch8">IDE Bridge</span></a>
+          <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/08-bridge.html" target="_blank" rel="noopener"><span class="ch-n">08</span><span data-i18n="writing.ch8">远程控制 Bridge</span></a>
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/09-mcp.html" target="_blank" rel="noopener"><span class="ch-n">09</span><span data-i18n="writing.ch9">MCP 协议</span></a>
-          <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/10-plugins-skills-memory.html" target="_blank" rel="noopener"><span class="ch-n">10</span><span data-i18n="writing.ch10">插件 / 技能 / 内存</span></a>
+          <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/10-plugins-skills-memory.html" target="_blank" rel="noopener"><span class="ch-n">10</span><span data-i18n="writing.ch10">插件 / 技能 / 记忆</span></a>
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/11-special-features.html" target="_blank" rel="noopener"><span class="ch-n">11</span><span data-i18n="writing.ch11">特色功能</span></a>
           <a class="chip chip-ch" href="https://long-feeds.github.io/claude-code-book/chapters/12-reflections.html" target="_blank" rel="noopener"><span class="ch-n">12</span><span data-i18n="writing.ch12">工程启示录</span></a>
         </div>
@@ -704,7 +715,7 @@
         'writing.ch5': 'Permissions',
         'writing.ch6': 'Agent Subsystem',
         'writing.ch7': 'Terminal UI',
-        'writing.ch8': 'IDE Bridge',
+        'writing.ch8': 'Remote Control Bridge',
         'writing.ch9': 'MCP Protocol',
         'writing.ch10': 'Plugins / Skills / Memory',
         'writing.ch11': 'Special Features',

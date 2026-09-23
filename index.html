@@ -83,7 +83,6 @@
       "@id": "https://lonloop.com/#agent-kit",
       "name": "Always-On Agent Kit",
       "url": "https://long-feeds.github.io/feishu-claude-landing/",
-      "codeRepository": "https://github.com/Long-Feeds/feishu-claude-landing",
       "author": {"@id": "https://lonloop.com/#lonx"},
       "inLanguage": "zh-CN",
       "programmingLanguage": "HTML",
@@ -629,14 +628,30 @@
              section) instead of a generic pitch, and its primary action deep-links
              straight to that section rather than the page top — the same move that
              turned the book's chapter chips into a navigable index. If the kit's
-             five systems ever change, re-sync the tags line with them. -->
+             five systems ever change, re-sync the tags line with them. Count the
+             systems the upstream lead sentence names ("the five operational
+             systems"), NOT the cards in that grid — the grid is six now, because
+             "Templates, not theory" is a delivery format, not a system.
+
+             The second action used to read "代码"/"Code" and point here through the
+             shared proj.code key. It was a promise this link cannot keep: that repo
+             holds exactly two blobs — .nojekyll (0B) and the 27KB index.html that IS
+             the page the FIRST action already opens (verified byte-identical, sha256
+             1a6cf7f7…). So both actions opened one document, and the one labelled
+             "code" handed a reader the source of a sales page, not the kit. The kit's
+             implementation is private, so there is no public code link to give —
+             the honest move is to name what the link opens, hence its own kit.src
+             key. proj.code is correct at its other three call sites (daily-tools,
+             book ×2); do not "fix" it there. The JSON-LD entry asserted the same
+             thing to machines via codeRepository and was dropped for the same
+             reason — url already points at the live page. -->
         <article class="card">
           <div class="name">Always-On Agent Kit <span class="badge">LIVE</span></div>
           <p class="desc" data-i18n="kit.desc">让 Claude Code agent 跑数月而非数分钟：把常驻 agent 真正需要的五套运行系统做成可直接套用的模板与 playbook，每条都抽取自一支每天真实开火的 agent 舰队。</p>
           <div class="tags" data-i18n="kit.tags">记忆协议 · 反馈闭环 · 状态去重 · 护栏 · 防僵尸运维</div>
           <div class="actions">
             <a href="https://long-feeds.github.io/feishu-claude-landing/#features" target="_blank" rel="noopener"><span data-i18n="kit.cta">看五套系统</span> <span aria-hidden="true">↗</span></a>
-            <a class="muted" href="https://github.com/Long-Feeds/feishu-claude-landing" target="_blank" rel="noopener" data-i18n="proj.code">代码</a>
+            <a class="muted" href="https://github.com/Long-Feeds/feishu-claude-landing" target="_blank" rel="noopener" data-i18n="kit.src">落地页源码</a>
           </div>
         </article>
 
@@ -739,6 +754,7 @@
         'kit.desc': 'Keep a Claude Code agent running for months, not minutes — the five operational systems an always-on agent actually needs, as ready-to-paste templates and a playbook, each extracted from a fleet firing daily in production.',
         'kit.tags': 'Memory protocol · Feedback loop · State & dedup · Guardrails · Anti-zombie ops',
         'kit.cta': 'See the five systems',
+        'kit.src': 'Landing page source',
         'more.title': 'More projects',
         'more.sub': 'Browse all open-source work on GitHub',
         'stats.tools': 'AI tools shipped — each browser-tested',

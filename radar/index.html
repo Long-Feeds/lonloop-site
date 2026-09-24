@@ -374,6 +374,26 @@
         <p class="excerpt">给 Claude Code、Codex、Cursor 等 coding agent 装一层「留在仓库里的工程约束」：约定、任务与记忆都写进仓库根下的 <code>.trellis/</code>——<code>spec/</code> 存团队约定，每次会话按需注入、不必重复交代；<code>tasks/</code> 存任务的 PRD、实现与评审上下文和状态；<code>workspace/</code> 的 journal 记住上次干到哪。三者都随仓库走，一个人调顺的规矩全队可用。干活时是一条带闸的循环，每段自动调起对应的 skill 或子 agent：brainstorm 一次只问一个问题问出 PRD → implement 照 PRD 写代码、不替你 <code>git commit</code> → check 拿 diff 对着 spec 复核并跑 lint / 类型检查 / 测试、能自修就自修 → finish 把这轮新学到的规矩回写进 spec。另有 <code>trellis ablate</code> / <code>restore</code>，能把项目里 Trellis 的那套整体临时摘掉再精确还原，上游给的用法就是拿它做「用 / 不用」的对照。AGPL-3.0，1.4 万+ star。</p>
       </a>
 
+      <!-- Agentic Engineering Patterns —— 2026-09-24 把一条「读者无法再复核」的自述收回。
+           09-17 上游把每章页脚的 Created / Last modified 整块撤了，这张卡当天照实写了
+           「无法再自行复核」，verify-cadence-live 的 D 层也从此每天红在取证源上（连红 7 天，
+           而 README 立的规矩是「一份天天红的清单等于没有清单」）。今天逐章现抓才发现：
+           **取证源不是没了，是换了地方**——16 章全都仍带 <meta property="og:updated_time">，
+           0 章缺。此前刻意不用它是对的（09-11 的教训：别拿「最后修改」冒充「何时写的」），
+           但那条教训禁的是把它**当作** Created，不是禁止用它做别的推断。
+           这次用的是一条单向不等式：一个页面不可能先被改、后被写出来，所以
+           updated >= created。于是 15 章 updated <= 2026-03-21 ⇒ 这 15 章在 03-21 前**必定
+           已存在**；全书 16 章 ⇒ 此后**至多**新增 1 章。卡上那两个数（15 / 1）正落在这个
+           区间的紧边上，与现量相符。
+           ⚠️ 这条量法**证不到**的（写在这里，免得下一个人把它当成等价替代）：
+           ① 某一章具体写于哪天——只拿得到上界，所以「2 月底起」「四周内」「4 月补过」这几个
+              措辞仍只是 09-04 那次页脚取证留下的**自锚过去式**，今天只验证了不矛盾；
+           ② 若上游删一章又补一章，总数不变，这条计数式看不出来。
+           它**能**证的第三件事反而是这张卡最吃重的那句推荐（「当已成型的参考书读」）：
+           2026-09-24 实测 16 章里 0 章的 updated 晚于卡上的快照日 2026-09-04 ——
+           也就是说「没在追更」不再只是 09-04 的旧观察，而是今天的现量。
+           判据 tools/verify-cadence-live.mjs D/G 两层照此重接（D 层从「量不到」改成真的量，
+           G 层守着「卡上点名的那个信号在上游确实还在」）。 -->
       <a class="rd-card" data-type="阅读" href="https://simonwillison.net/guides/agentic-engineering-patterns/" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">阅读</span>
@@ -381,7 +401,7 @@
           <span>收藏于 2026-06-12</span>
         </div>
         <h2>Agentic Engineering Patterns<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">Simon Willison 的开放在线书：如何用好 Claude Code、Codex 这类 coding agent，拿到可靠、可维护、能上线的结果。核心立场很明确——Agentic Engineering ≠ Vibe Coding。作者开篇帖里说的是「希望每周加 1–2 章」；实际节奏是 2 月底起四周内密集写出 15 章，此后到 2026-09-04 只在 4 月补过 1 章。当已成型的参考书读，别当追更中的连载。上面这个节奏数自每章页脚的 Created 日期，2026-09-17 核时上游已把页脚撤掉，无法再自行复核。</p>
+        <p class="excerpt">Simon Willison 的开放在线书：如何用好 Claude Code、Codex 这类 coding agent，拿到可靠、可维护、能上线的结果。核心立场很明确——Agentic Engineering ≠ Vibe Coding。作者开篇帖里说的是「希望每周加 1–2 章」；实际节奏是 2 月底起四周内密集写出 15 章，此后到 2026-09-04 只在 4 月补过 1 章。当已成型的参考书读，别当追更中的连载。上面这个节奏原数自每章页脚的 Created 日期，上游已在 2026-09-17 核时撤掉页脚；改用每章仍带的 og:updated_time 复核——「改过」不会早于「写出来」，据此仍能框住分布：2026-09-24 实测 15 章的最后改动都停在 3 月 21 日及以前、另一章停在 4 月 18 日，与上面两个数相符；且快照之后无一章被动过。</p>
       </a>
 
       <a class="rd-card" data-type="阅读" href="https://x.com/NoraX2026/status/2064644357374833098" target="_blank" rel="noopener">

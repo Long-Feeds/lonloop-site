@@ -98,6 +98,17 @@
       "inLanguage": "zh-CN",
       "about": {"@type": "Thing", "name": "Claude Code CLI 源码"},
       "description": "基于 2026 年 3 月泄露的 CLI 源码，用 12 章逐层还原 Anthropic agent 的真实实现；每处引用都标注文件路径与行号，只写代码能证实的结论。"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://lonloop.com/collection/scaling-book-notes/#article",
+      "headline": "把大模型跑起来要算几笔账：《How to Scale Your Model》精读笔记",
+      "url": "https://lonloop.com/collection/scaling-book-notes/",
+      "author": {"@id": "https://lonloop.com/#lonx"},
+      "inLanguage": "zh-CN",
+      "datePublished": "2026-08-25",
+      "isAccessibleForFree": true,
+      "description": "读 Google DeepMind《How to Scale Your Model》时自己整理的一份中文笔记，非译文：从「一次权重矩阵乘的算术强度 ≈ 这一批的 token 数」出发，串起 roofline、四种集合通信的代价模型、Transformer 的参数 / 算力 / 显存三本账，以及训练切分与推理部署。"
     }
   ]
 }
@@ -213,6 +224,11 @@
      the chapter chips reuse the hero .chip token to convey the book's breadth
      (the real 12-chapter TOC), so it reads as depth rather than a repeat card */
   .card-writing .chips{margin-top:16px}
+  /* Writing now holds two stacked full-width cards (the book, then the reading
+     notes). This section has no .grid wrapper, so the gap has to come from the
+     cards themselves; 16px is .grid's gap, so the rhythm matches the one
+     Selected Projects sets directly above. */
+  .card-writing + .card-writing{margin-top:16px}
   /* the chapter chips are deep links straight into each chapter, so the TOC is a
      navigable index rather than decoration. Built on the base .chip token so both
      stay one visual family; the monospace number prefix distinguishes them from the
@@ -705,6 +721,54 @@
           <a class="muted" href="https://github.com/Long-Feeds/claude-code-book" target="_blank" rel="noopener" data-i18n="proj.code">代码</a>
         </div>
       </article>
+
+      <!-- 《How to Scale Your Model》精读笔记 — the site's second piece of original
+           long-form writing, and until today the only one with no route from the front
+           door. It lives at /collection/scaling-book-notes/, and this page's one link
+           into /collection/ is the nav tab labelled 收藏夹, whose own page opens
+           「存档一些值得一读的好内容，标注原作者与来源」 — a repost archive. So the single
+           original article on that shelf was being announced to every visitor as
+           somebody else's work. This card is a re-shelving, not a new claim.
+
+           ⚠️ This reopens something the 2026-08-08 journal recorded as a standing
+           no-go: 「`/collection/` 挂首页 Writing 区已论证否决（是转载不是原创）」. That
+           rejection is NOT being overruled — it is about hanging the /collection/ *hub*
+           (four entries, three of them reposts or translations) on a job-seeking front
+           page, which really would present other people's writing as authored work.
+           This does the opposite: one article, named; the hub stays where it is. What
+           changed is the premise underneath the ban. scaling-book-notes shipped
+           2026-08-25 — seventeen days AFTER that line was written — and is the first
+           thing on that shelf the parenthetical 「（是转载不是原创）」 does not describe.
+           The article says so in its own voice, above the fold: 「读书笔记 · 非译文」,
+           「这不是译文。…概念、推导和取舍都用我自己的话重新讲了一遍，组织顺序也是我自己
+           的，不对应原书章节」 — and it mirrors none of the book's figures by design.
+           Re-litigate this card by re-reading that page: the day it stops being 非译文,
+           the card goes. A ban keeps its force from its reason, not from its age.
+
+           Every figure in the copy is read off the article, 2026-09-25: 9 sections
+           (9 <h2>, and 9 「⟶ 原书对应章节」 deep links home to the source book, one per
+           section), 7 SVG diagrams built inline in the page (1.6KB–9.4KB of markup
+           each, zero <img>), 0 figures taken from the book. The one-equation framing
+           is the article's own headline claim (§0「先说结论：那个式子」), not ours.
+
+           The primary action is the first in-site link any card on this page carries,
+           so it gets → where every other action gets ↗: that arrow is this site's only
+           signal for "this leaves the site", and spending it on an internal page turns
+           it into decoration. The secondary action opens the free source book on
+           purpose — the article's whole posture is 「请直接点过去读英文原书」, so a notes
+           card that hid the original would be posing as a substitute for it. proj.read
+           is reused (same verb, same meaning). The badge reuses the .badge token that
+           LIVE uses because 非译文 is the same kind of marker and is the single most
+           load-bearing word on this card. -->
+      <article class="card card-writing">
+        <div class="name"><span data-i18n="notes.name">《How to Scale Your Model》精读笔记</span> <span class="badge" data-i18n="notes.badge">非译文</span></div>
+        <p class="desc" data-i18n="notes.desc">读 Google DeepMind《How to Scale Your Model》时自己整理的中文笔记：从「一次权重矩阵乘的算术强度 ≈ 这一批的 token 数」这一个式子出发，推出 roofline 的三个上限、四种集合通信各自的代价、Transformer 的参数 / 算力 / 显存三本账，以及训练怎么切、推理为什么是另一个世界。九节、七张自绘示意图，不镜像原书任何插图，每节末尾直达原书对应章节。</p>
+        <div class="tags" data-i18n="notes.tags">算术强度 · roofline · collective 代价模型 · 并行切分 · prefill / decode 分离</div>
+        <div class="actions">
+          <a href="/collection/scaling-book-notes/"><span data-i18n="proj.read">在线阅读</span> <span aria-hidden="true">&rarr;</span></a>
+          <a class="muted" href="https://jax-ml.github.io/scaling-book/" target="_blank" rel="noopener"><span data-i18n="notes.src">原书（免费公开）</span> <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
     </section>
 
     <section class="section">
@@ -779,7 +843,12 @@
         'writing.ch9': 'MCP Protocol',
         'writing.ch10': 'Plugins / Skills / Memory',
         'writing.ch11': 'Special Features',
-        'writing.ch12': 'Engineering Lessons'
+        'writing.ch12': 'Engineering Lessons',
+        'notes.name': 'Reading Notes: How to Scale Your Model',
+        'notes.badge': 'Not a translation',
+        'notes.desc': 'My own notes from reading Google DeepMind\u2019s How to Scale Your Model, written in Chinese. It starts from a single equation \u2014 the arithmetic intensity of a weight matmul \u2248 the number of tokens in the batch \u2014 and derives roofline\u2019s three ceilings, what each of the four collectives costs, the Transformer\u2019s three budgets (parameters / FLOPs / memory), how training gets sharded, and why inference is a different world. Nine sections, seven diagrams drawn for this page, none of the book\u2019s own figures reproduced, and every section ends with a deep link into the chapter it came from.',
+        'notes.tags': 'Arithmetic intensity \u00b7 Roofline \u00b7 Collective cost model \u00b7 Sharding \u00b7 Prefill / decode split',
+        'notes.src': 'The book (free, online)'
       };
       var EN_ARIA = { 'more.aria': 'Browse all open-source projects on GitHub' };
 

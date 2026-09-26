@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>旅行 · lonX</title>
+<meta name="description" content="lonX 的旅行攻略 —— 走过的路线整理成对下一个人有用的东西：怎么排、每天看什么、容易踩的坑，不是流水账游记。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="canonical" href="https://lonloop.com/travel/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="旅行 · lonX" />
+<meta property="og:description" content="走过的路线整理成对下一个人有用的东西：怎么排、每天看什么、容易踩的坑。" />
+<meta property="og:url" content="https://lonloop.com/travel/" />
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:image:alt" content="lonX · AI Application &amp; Backend Engineer — 构建 LLM Agent 与 Claude Code 生态的工程师" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="./travel.css" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+      <a href="/travel/" class="tab" aria-current="page">旅行</a>
+    </div>
+  </nav>
+
+  <main class="travel">
+    <div class="page-head">
+      <div class="eyebrow">Travel</div>
+      <h1>旅行</h1>
+      <p>走过的路线整理成攻略：怎么排、每天看什么、容易在哪里踩坑。不写「第几天我几点起床」这种流水账，只留对下一个计划同一趟路线的人有用的部分。</p>
+    </div>
+
+    <div class="trip-list">
+      <a class="trip-card" href="./taiwan-9-days/">
+        <div class="tc-meta">
+          <span class="badge">环岛路线</span>
+          <span>9 天 8 晚 · 台北／台中／日月潭／台南／高雄</span>
+        </div>
+        <h2>台湾九日环岛全攻略</h2>
+        <p class="excerpt">以台北为起点和终点，串起东北角、台中、日月潭、台南、高雄，用高铁把西半部主要城市连成一圈。逐日路线、每站介绍、容易踩的坑（夜市开市日、票券分段、天灯轨道安全）都写在里面。</p>
+        <div class="tags">城市＋自然＋夜市均衡 · 第一次环岛适用 · 含逐日路线图</div>
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span>
+      <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a> ·
+      <!--email_off--><a href="mailto:lonx@lonloop.com">Email</a><!--/email_off-->
+    </span>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

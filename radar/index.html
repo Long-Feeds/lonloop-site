@@ -308,6 +308,24 @@
         <p class="excerpt">OpenBMB（MiniCPM 团队）开源的 2B 参数 Tokenizer-Free TTS，扩散自回归架构：支持 30 语种 + 自动语种识别、用自然语言描述做「声音设计」、可控音色克隆（情感 / 语速 / 表达）、48kHz 录音棚级音质，4090 上 RTF≈0.3 实时流式。Apache-2.0，代码与权重全开源，3 万+ star。</p>
       </a>
 
+      <!-- Omnigent —— 归属方这一句 2026-09-26 撤回重写。原文写的是「Databricks 的
+           Matei Zaharia 团队开源的」，两处都站不住，而本站从未为它记过出处（收藏于
+           2026-06-14，这张卡此前没有任何注释）：
+             ① **上游自己的署名根本不是这么写的**。omnigent.ai 页脚逐字写着 "Built by
+                the Databricks AI team, Neon and the Omnigent Contributors." —— 三方，
+                且**没有任何一处提到 Matei Zaharia**；repo README 全文同样搜不到
+                "Matei" / "Zaharia"。新句子就是这行署名的中文对译，不是本站的概括。
+             ② **被点名的那个人并不在领导这个项目**。他在 repo 里只有 **2 个 commit**
+                （2026-06-22 "Fix Pi Databricks GPT-5.5 caps"、2026-07-17 让 agent
+                info 面板改成 hover 出现），排名在 contributors 前 100 名之外；而前几名
+                （PattaraS 742 / serena-ruan 467 / TomeHirata 391 / dbczumar 327）里
+                确有多人公开挂着 Databricks —— 所以**「Databricks」那一半是对的，错的
+                是把它收窄到一个具体的人头上**，而那个人的真实足迹恰好是两个顺手补丁。
+           Neon 是这次一并补上的：上游署的三方里它是唯一一个本站整句漏掉的组织，
+           而漏掉合作方与张冠李戴属于同一件事——都在改写别人对自己工作的署名。
+           复议办法：重读 omnigent.ai 页脚那一行。上游改署名，这句就跟着改；这是**读**
+           上游怎么说，不是**推断**谁该拿功劳（组织架构上谁向谁汇报，公开链接证不了，
+           本页也不该拿它当据）。由 tools/verify-attrib-live.mjs 每日盯住。 -->
       <a class="rd-card" data-type="框架" href="https://github.com/omnigent-ai/omnigent" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">框架</span>
@@ -315,7 +333,7 @@
           <span>收藏于 2026-06-14</span>
         </div>
         <h2>Omnigent<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">Databricks 的 Matei Zaharia 团队开源的多 agent meta-harness（Apache-2.0）：统一界面架在 Claude Code、Codex、Pi 及自定义 agent 之上，用「策略」而不是 prompt 做管控，live session 跨终端 / Web / 手机同步并支持实时协作，本地优先、无云依赖。</p>
+        <p class="excerpt">Databricks AI 团队、Neon 与社区贡献者共同开源的多 agent meta-harness（Apache-2.0）：统一界面架在 Claude Code、Codex、Pi 及自定义 agent 之上，用「策略」而不是 prompt 做管控，live session 跨终端 / Web / 手机同步并支持实时协作，本地优先、无云依赖。</p>
         <p class="why"><b>为什么收藏</b> · 做「不止 Claude Code」的多 agent 系统时，可复用的编排、管控与跨端协作底座。</p>
       </a>
 

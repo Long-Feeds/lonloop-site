@@ -20,6 +20,20 @@
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="stylesheet" href="../travel.css" />
 
+<!-- author 必须是**自描述**的，不能只写一个 @id。这一页的 @graph 里只有 Article 这一个
+     节点，而 #lonx 的 Person 节点住在首页——**另一份文档**。JSON-LD 的 @id 引用只在同一
+     张图里解析，所以单读这一页的消费者看到的是「作者 = 一个没有类型、没有名字的标识
+     符」，而 author.name 是 Google Article 富结果的必填项。改成与 /collection/ 那四篇
+     **逐字同形**的自描述 Person（四篇 4/4 都是这个写法），这一页于是能独立成立，不依赖
+     爬虫恰好也抓过首页。
+     publisher 一并去掉，不是漏写：那四篇 4/4 都不声明 publisher，而这里原本写的同样是
+     一个解析不到东西的裸 @id——保留它只会在第二个字段上留下同一个缺陷。本站的 Article
+     由作者本人发布，author 已经把这件事说完了。
+     发现过程留档：这条是 2026-09-27 把 verify-schema-live 的文章名单从手写 slug 改成
+     全站普查之后，第一次跑就红的那 4 条（4 host × 1）。那支判据 2026-08-28 建立时的
+     注释里就写着「纯 @id 引用会丢掉 author.name，那是最容易踩错的写法」——**它一直
+     认得这个错，只是此前没被指到这一页上**。
+     ⚠️ 注释只能待在 <script> 外面：JSON 没有注释语法，写进去 JSON.parse 当场就废。 -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -29,8 +43,7 @@
       "@id": "https://lonloop.com/travel/taiwan-9-days/#article",
       "headline": "台湾九日环岛全攻略",
       "description": "以台北为起点和终点，串起东北角、台中、日月潭、台南、高雄的九日环岛路线：逐日路线、每站介绍、以及容易踩的坑。",
-      "author": {"@id": "https://lonloop.com/#lonx"},
-      "publisher": {"@id": "https://lonloop.com/#lonx"},
+      "author": {"@type": "Person", "@id": "https://lonloop.com/#lonx", "name": "lonX", "url": "https://lonloop.com/"},
       "mainEntityOfPage": "https://lonloop.com/travel/taiwan-9-days/",
       "inLanguage": "zh-CN",
       "datePublished": "2026-09-25",

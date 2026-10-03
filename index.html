@@ -248,8 +248,8 @@
      raised 30+ → 40+ on 2026-07-31 at 41 shipped, 40+ → 50+ on 2026-08-09 at
      exactly 50 shipped, 50+ → 60+ on 2026-08-19 at exactly 60 shipped, 60+ →
      70+ on 2026-09-01 at exactly 70 shipped, 70+ → 80+ on 2026-09-19 at 87
-     shipped, 80+ → 90+ on 2026-09-22 at exactly 90 shipped; next bump at 100,
-     not before.
+     shipped, 80+ → 90+ on 2026-09-22 at exactly 90 shipped, 90+ → 100+ on
+     2026-10-03 at 101 shipped; next bump at 110, not before.
      This one is late, and the reason is worth keeping: the 80th tool shipped
      without anything noticing. Every prior bump was made the day the milestone
      was hit, by hand; the only assertion that ever looked at this number with
@@ -267,19 +267,21 @@
      entry is short — there is no story to tell about it.
      A floor is only worth having if it is re-sourced, not assumed. Checked the
      day of this bump, against the repo tree rather than the manifest alone
-     (git/trees/main?recursive=1, untruncated): 90 manifest entries, all 90
+     (git/trees/main?recursive=1, untruncated): 101 manifest entries, all 101
      passing the same validation the live count uses (title/date/relative
      tools/ path — see the fetch block below; the count reads `valid`, not the
      raw array, so the floor has to be re-sourced against that same gate — raw
-     array 90, valid 90, 0 rejected), 90 tool directories, 90 test.mjs — a clean
-     1:1 with nothing on either side unaccounted for. So the label this number
-     carries ("each browser-tested") holds at 90 too. Distinct categories at
-     this bump: 82 (was 79 at the 80+ bump).
-     This bump lands exactly on the milestone, so today the floor equals the
-     real count and the JS-off reader is told 90+ where the JS reader is told
-     90 — the tightest it ever is. That is the intended shape: it goes back to
-     being a strict lower bound with the next tool, and it is why the floor is
-     written "90+" and never "90".
+     array 101, valid 101, 0 rejected), 101 tool directories, 101 test.mjs — a
+     clean 1:1 with nothing on either side unaccounted for. So the label this
+     number carries ("each browser-tested") holds at 101 too. Distinct
+     categories at this bump: 93 (was 82 at the 90+ bump).
+     This bump is one tool past the milestone, and not because nothing noticed:
+     the 100th tool (2026-10-01) was built on time but sat unpushed in the
+     daily-tools checkout until 2026-10-02, together with the 99th and 101st.
+     The floor tracks what is published, not what is built — so it moved the
+     first day the published manifest crossed 100, and is already a strict
+     lower bound again (100+ against a live 101), which is why it is written
+     "100+" and never "100".
      Verifying a bump: read #stat-tools out of the rendered DOM with JS off,
      never grep. This comment necessarily quotes every prior floor, so a grep
      for the old value matches the bump commit itself and "passes" on a page
@@ -496,7 +498,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">90+</span>
+          <span class="num" id="stat-tools">100+</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">

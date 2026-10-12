@@ -187,3 +187,14 @@ a{color:inherit}
 .photos img{cursor:zoom-in}
 .lightbox{position:fixed;inset:0;z-index:50;background:rgba(5,7,10,.92);display:flex;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
 .lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:6px}
+
+/* 机票卡片 */
+.flights{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:12px 0 20px}
+.flight{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.flight .f-k{color:var(--accent2);font-size:12.5px;font-weight:700;margin-bottom:6px}
+.flight .f-r{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;color:var(--txt);font-size:15.5px;line-height:1.5}
+.flight .f-a{color:var(--dim)}
+.flight .f-m{color:var(--dim);font-size:13px;margin-top:6px}
+.langsw{margin:6px 0 0;font-size:13px;color:var(--dim)}
+.langsw a{color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--dim)}
+.langsw b{color:var(--txt)}

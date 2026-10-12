@@ -200,3 +200,4 @@ a{color:inherit}
 .langsw b{color:var(--txt)}
 
 .prose .flight-links{font-size:14px;color:var(--muted);margin:0 0 18px;line-height:1.8}
+.flight .f-m a{color:var(--accent)}

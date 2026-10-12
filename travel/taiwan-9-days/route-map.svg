@@ -1,0 +1,100 @@
+<svg viewBox="0 0 610 1110" role="img" aria-label="台湾岛地图，标出九日路线：台北经高铁到台中、日月潭、台南、高雄，然后自驾经垦丁、台东、花莲、太鲁阁沿东海岸回到台北">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"></path>
+            </marker>
+            <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--accent2)"></path>
+            </marker>
+          </defs>
+
+          <path d="M 476.0 62.5 Q 496.6 85.0 528.2 100.0 Q 559.8 115.0 564.0 145.0 Q 568.1 175.0 554.4 205.0 Q 540.6 235.0 520.0 272.5 Q 499.3 310.0 485.6 347.5 Q 471.8 385.0 474.6 410.5 Q 477.3 436.0 460.8 478.0 Q 444.3 520.0 430.6 565.0 Q 416.8 610.0 403.1 655.0 Q 389.3 700.0 368.7 737.5 Q 348.1 775.0 327.5 812.5 Q 306.8 850.0 293.1 887.5 Q 279.3 925.0 272.4 985.0 Q 265.5 1045.0 247.7 1037.5 Q 229.8 1030.0 213.3 1000.0 Q 196.8 970.0 176.2 940.0 Q 155.5 910.0 134.9 887.5 Q 114.3 865.0 110.2 854.5 Q 106.0 844.0 93.7 817.0 Q 81.3 790.0 70.3 760.0 Q 59.3 730.0 52.4 692.5 Q 45.5 655.0 42.8 617.5 Q 40.0 580.0 49.6 542.5 Q 59.3 505.0 73.0 467.5 Q 86.8 430.0 107.4 385.0 Q 128.0 340.0 155.5 302.5 Q 183.0 265.0 224.2 227.5 Q 265.5 190.0 313.6 152.5 Q 361.8 115.0 408.6 77.5 Q 455.3 40.0 476.0 62.5 Z"
+            fill="var(--bg2)" stroke="var(--line)" stroke-width="2"></path>
+
+          <!-- 前半段：公共交通（实线，主色） -->
+          <line pathLength="1" class="rt" style="--i:0" x1="373" y1="98" x2="443" y2="105.5" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arrow)"></line>
+          <text class="rt" style="--i:0" x="408" y="132" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace">第1天 抵达</text>
+
+          <line pathLength="1" class="rt" style="--i:1" x1="448" y1="126" x2="224" y2="373" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arrow)"></line>
+          <text class="rt" style="--i:1" x="410" y="185" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace" transform="rotate(-48 410 185)">高铁 第3天</text>
+
+          <line pathLength="1" class="rt" style="--i:2" x1="222" y1="393" x2="277" y2="468" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3" opacity=".6" marker-end="url(#arrow)" marker-start="url(#arrow)"></line>
+          <text class="rt" style="--i:2" x="232" y="440" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace">第4天 日月潭</text>
+
+          <line pathLength="1" class="rt" style="--i:3" x1="212" y1="395" x2="100" y2="720" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arrow)"></line>
+          <text class="rt" style="--i:3" x="130" y="560" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace" transform="rotate(-73 130 560)">高铁 第4天晚</text>
+
+          <line pathLength="1" class="rt" style="--i:4" x1="97" y1="740" x2="112" y2="831.8" stroke="var(--accent)" stroke-width="2.2" marker-end="url(#arrow)"></line>
+          <text class="rt" style="--i:4" x="55" y="790" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace">第5天</text>
+
+          <!-- 后半段：自驾（副色） -->
+          <line pathLength="1" class="rt" style="--i:5" x1="125" y1="852" x2="244" y2="1002" stroke="var(--accent2)" stroke-width="2.4" marker-end="url(#arrow2)"></line>
+          <text class="rt" style="--i:5" x="157" y="935" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace" transform="rotate(52 157 935)">自驾 第6天</text>
+
+          <line pathLength="1" class="rt" style="--i:6" x1="262" y1="1000" x2="318" y2="808" stroke="var(--accent2)" stroke-width="2.4" marker-end="url(#arrow2)"></line>
+          <text class="rt" style="--i:6" x="262" y="912" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace" transform="rotate(-74 262 912)">南回公路</text>
+
+          <line pathLength="1" class="rt" style="--i:7" x1="330" y1="788" x2="468" y2="446" stroke="var(--accent2)" stroke-width="2.4" marker-end="url(#arrow2)"></line>
+          <text class="rt" style="--i:7" x="420" y="640" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace" transform="rotate(-68 420 640)">自驾 第7天</text>
+
+          <line pathLength="1" class="rt" style="--i:8" x1="470" y1="420" x2="458" y2="130" stroke="var(--accent2)" stroke-width="2.4" marker-end="url(#arrow2)"></line>
+          <text class="rt" style="--i:8" x="500" y="300" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace">自驾 第8天</text>
+
+          <g>
+            <rect x="437.5" y="378.4" width="8" height="8" fill="none" stroke="var(--dim)" stroke-width="1.6" transform="rotate(45 441.5 382.4)"></rect>
+            <text x="410" y="371" font-size="12.5" fill="var(--dim)">太鲁阁</text>
+            <rect x="248.6" y="573.3" width="8" height="8" fill="none" stroke="var(--dim)" stroke-width="1.6" transform="rotate(45 252.6 577.3)"></rect>
+            <text x="262" y="581" font-size="12.5" fill="var(--dim)">阿里山</text>
+          </g>
+
+          <g class="nodes" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif">
+            <circle cx="371.2" cy="106.1" r="12" fill="var(--accent)"></circle>
+            <text x="371.2" y="110.6" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">1</text>
+            <text x="371.2" y="87" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">桃园机场</text>
+
+            <circle cx="456.5" cy="114.1" r="14" fill="var(--accent2)"></circle>
+            <text x="456.5" y="119.1" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">1</text>
+            <text x="456.5" y="60" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">台北（第1–2、9天）</text>
+
+            <circle cx="217.0" cy="385.7" r="12" fill="var(--accent)"></circle>
+            <text x="217.0" y="390.2" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">3</text>
+            <text x="217.0" y="368" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">台中</text>
+
+            <circle cx="283.5" cy="474.7" r="11" fill="var(--accent)"></circle>
+            <text x="283.5" y="478.9" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">4</text>
+            <text x="309" y="480" text-anchor="start" font-size="15" font-weight="700" fill="var(--txt)">日月潭</text>
+
+            <circle cx="94.2" cy="730.1" r="12" fill="var(--accent)"></circle>
+            <text x="94.2" y="734.6" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">5</text>
+            <text x="94.2" y="712" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">台南</text>
+
+            <circle cx="114.7" cy="841.8" r="12" fill="var(--accent)"></circle>
+            <text x="114.7" y="846.3" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">5</text>
+            <text x="90" y="866" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">高雄（取车）</text>
+
+            <circle cx="252" cy="1012" r="11" fill="var(--accent2)"></circle>
+            <text x="252" y="1016.2" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">6</text>
+            <text x="228" y="1060" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">垦丁</text>
+
+            <circle cx="322" cy="796" r="12" fill="var(--accent2)"></circle>
+            <text x="322" y="800.5" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">6</text>
+            <text x="262" y="776" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">台东（宿）</text>
+
+            <circle cx="470" cy="434" r="12" fill="var(--accent2)"></circle>
+            <text x="470" y="438.5" text-anchor="middle" font-size="13" font-weight="600" fill="var(--bg)">7</text>
+            <text x="520" y="440" text-anchor="middle" font-size="15" font-weight="700" fill="var(--txt)">花莲（宿）</text>
+          </g>
+
+          <g transform="translate(555,175)">
+            <line x1="0" y1="18" x2="0" y2="-16" stroke="var(--dim)" stroke-width="1.6"></line>
+            <path d="M0,-16 L-5,-6 L5,-6 Z" fill="var(--dim)"></path>
+            <text x="0" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dim)" font-family="ui-monospace,monospace">N</text>
+          </g>
+
+          <g transform="translate(60,1030)">
+            <line x1="0" y1="0" x2="269.5" y2="0" stroke="var(--dim)" stroke-width="1.6"></line>
+            <line x1="0" y1="-5" x2="0" y2="5" stroke="var(--dim)" stroke-width="1.6"></line>
+            <line x1="269.5" y1="-5" x2="269.5" y2="5" stroke="var(--dim)" stroke-width="1.6"></line>
+            <text x="134.7" y="-9" text-anchor="middle" font-size="11" fill="var(--dim)" font-family="ui-monospace,monospace">100 km</text>
+          </g>
+        </svg>

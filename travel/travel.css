@@ -120,3 +120,40 @@ a{color:inherit}
 @media (max-width:520px){
   .travel,.article,.site-foot{padding-left:18px;padding-right:18px}
 }
+
+/* 逐日时间轴 + 景点卡片（台湾九日环岛页） */
+.prose ol.timeline{list-style:none;padding:0;margin:0 0 26px;border-left:2px solid var(--line)}
+.prose ol.timeline li{display:flex;gap:14px;margin:0;padding:6px 0 6px 16px;position:relative;line-height:1.6}
+.prose ol.timeline li::before{content:"";position:absolute;left:-6px;top:15px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.prose ol.timeline .t{flex:0 0 74px;color:var(--accent2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;padding-top:2px}
+.prose ol.timeline .d{flex:1;font-size:15.5px;color:#d7dbe4}
+.spot{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 18px;margin:0 0 20px}
+.spot-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:8px}
+.prose .spot h3{margin:0;font-size:19px}
+.spot .time-badge{color:var(--accent2);font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.prose .spot .spot-intro{margin:0 0 12px;font-size:16px;line-height:1.8}
+.spot-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;margin-bottom:14px}
+.spot-cols h4{font-size:13px;color:var(--dim);font-weight:700;letter-spacing:.06em;margin:0 0 4px}
+.prose .spot-cols ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.prose .spot-cols li{margin:3px 0}
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.prose .photos figure{margin:0}
+.photos img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--chip)}
+.photos figcaption{color:var(--dim);font-size:11.5px;line-height:1.5;margin-top:6px}
+.photos figcaption a{color:var(--dim)}
+@media (max-width:600px){
+  .spot{padding:16px 16px 14px}
+  .spot-cols{grid-template-columns:1fr}
+  .prose ol.timeline .t{flex-basis:62px}
+}
+
+/* 路线图：滚动进视口后按行程顺序逐段画出（无 JS／减少动效时直接静态显示） */
+.mapfig.anim .rt,.mapfig.anim .nodes{opacity:0}
+.mapfig.anim.play .nodes{animation:rt-fade .6s ease forwards}
+.mapfig.anim.play line.rt{stroke-dasharray:1;stroke-dashoffset:1;animation:rt-draw .9s ease forwards;animation-delay:calc(.5s + var(--i) * .75s)}
+.mapfig.anim.play line.rt[stroke-dasharray="4 3"]{animation-name:rt-fade;stroke-dasharray:.06 .04;stroke-dashoffset:0}
+.mapfig.anim.play text.rt{animation:rt-fade .5s ease forwards;animation-delay:calc(.9s + var(--i) * .75s)}
+@keyframes rt-draw{0%{opacity:1;stroke-dashoffset:1}100%{opacity:1;stroke-dashoffset:0}}
+@keyframes rt-fade{to{opacity:1}}
+.mapfig .replay{margin-top:12px;background:var(--chip);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 14px;font:inherit;font-size:12.5px;cursor:pointer}
+.mapfig .replay:hover{color:var(--txt);border-color:var(--accent)}

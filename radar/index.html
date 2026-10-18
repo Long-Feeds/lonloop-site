@@ -97,6 +97,7 @@
            下限只会往低了说,因此永远为真;跨一个量级档位时才需要抬,不是每天核。
            唯一的例外是 hubo 的「约 26 star」:那个数不是装饰,它是「早期项目、
            胜在理念而非成熟度」这句判断的证据本身,写成下限就没意义了。
+           (2026-10-18 起这个精确值改成了带核对日期的 dated 观察,理由见 hubo 卡前注释。)
 
            ⚠️ 外链搬家 linkcheck 看不见。headroom 的仓库已从 chopratejas 个人账号
            转移到 headroomlabs-ai 组织,GitHub 永久保留旧路径的 301,于是
@@ -191,6 +192,22 @@
         <p class="why"><b>为什么收藏</b> · 多 agent 并行开发时的 worktree 编排层——重度用 Claude Code 最先撞到的就是这道墙。</p>
       </a>
 
+      <!-- hubo —— 2026-10-18:star 数改成 dated,停更那一半按今天重核。
+           上一版写「MIT，26 star；…2026-09-10 核时其后再无新提交」。26 是本页 star 规则唯一的
+           具名豁免(starfloor.mjs 的 EXACT_OK):这个数本身就是「当思路参照物读」的证据,写成下限
+           就什么都没说。可它是**现在时**的精确值,上游涨一颗就假——10-17 的 sweep 量到 27,
+           verify-hubo-live 从此每天红同一条,而一份天天红的清单等于没有清单。差一颗读者看不出来,
+           改它不为那一颗,为的是这个数从此不用再追。
+           ⇒ 并进卡上已有的那个 dated 子句:「2026-10-18 核时其后再无新提交，27 star」。和同页
+           MPT、headroom 一样锚在本站自己的核对动作上,上游再涨 star 它只会变旧、不会变假。
+           停更那一半同日重核:/repos pushed_at 仍是 2026-07-29T07:18:04Z(81 天没有任何 push),
+           /releases 十条全落在 07-25~07-29、首条仍是 v0.4.6,无 open PR;README 自那以后没动过,
+           上面描述的每一条照旧成立。日期从 09-10 挪到 10-18,是因为今天真的又核了一遍。
+           ⚠️ 判据侧多了一个约束:GitHub 已不再向仓库所有者以外的人开放 stargazer 列表(今天实测
+           REST /stargazers 对第三方仓库一律 404,GraphQL stargazers.totalCount 返回 0),「某天
+           有多少 star」事后**无法回算**。所以 verify-hubo-live 与 starfloor 对这个数的口径是:核对
+           当天必须等于上游现值,之后只核它没有虚高(≤ 现值 + 2)。数字与日期另登记在 starfloor 的
+           EXACT_OK(asOf / observed),只改卡不改登记会红。 -->
       <a class="rd-card" data-type="项目" href="https://github.com/h0ngcha0/hubo" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">项目</span>
@@ -198,7 +215,7 @@
           <span>收藏于 2026-07-27</span>
         </div>
         <h2>hubo<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">把周伯通的「双手互搏」搬进 coding agent：不是一个 agent 自己审自己，而是实现方与审查方两个持久角色在同一会话里对抗——实现方交代码与验证证据，审查方独立只读、只认真实 diff 与证据，回编号成条的 findings；另有协调方在中间传话，把没结掉的意见带进下一轮。循环不会自己提前收工：要么每条 finding 都被 reconcile，要么撞上只有人能拍板的产品 / 需求 / 技术方向问题。此外还有「主审 ↔ 抬杠审」模式，专门打掉误报、补回漏检；两者都必须显式调用，平时的提示词不受影响。形态是挂进 coding agent 的插件 / 技能而非独立工具，Claude Code、Codex、GitHub Copilot CLI、OpenClaw、OpenCode 等各给了一行安装命令。MIT，26 star；从首版到 v0.4.6 全部发在 2026-07-25 – 07-29，2026-09-10 核时其后再无新提交——当思路参照物读，别当在维护的依赖。</p>
+        <p class="excerpt">把周伯通的「双手互搏」搬进 coding agent：不是一个 agent 自己审自己，而是实现方与审查方两个持久角色在同一会话里对抗——实现方交代码与验证证据，审查方独立只读、只认真实 diff 与证据，回编号成条的 findings；另有协调方在中间传话，把没结掉的意见带进下一轮。循环不会自己提前收工：要么每条 finding 都被 reconcile，要么撞上只有人能拍板的产品 / 需求 / 技术方向问题。此外还有「主审 ↔ 抬杠审」模式，专门打掉误报、补回漏检；两者都必须显式调用，平时的提示词不受影响。形态是挂进 coding agent 的插件 / 技能而非独立工具，Claude Code、Codex、GitHub Copilot CLI、OpenClaw、OpenCode 等各给了一行安装命令。MIT；从首版到 v0.4.6 全部发在 2026-07-25 – 07-29，2026-10-18 核时其后再无新提交，27 star——当思路参照物读，别当在维护的依赖。</p>
         <p class="why"><b>为什么收藏</b> · 对抗式 self-play review 的思路，可借鉴进自建 agent 车队的 code-review 环节。</p>
       </a>
 

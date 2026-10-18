@@ -215,3 +215,12 @@ a{color:inherit}
 .bk-tag.free{color:var(--muted);background:var(--chip);border-color:var(--line)}
 .bk-b{margin:8px 0 0;font-size:14.5px;line-height:1.8;color:var(--muted)}
 .bk-b b{color:var(--txt);font-weight:600}
+
+.bk-t{margin:10px 0 2px;overflow-x:auto}
+.bk-t table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+.bk-t th,.bk-t td{text-align:left;padding:5px 10px 5px 0;border-bottom:1px solid var(--line);white-space:nowrap}
+.bk-t th{color:var(--dim);font-weight:600;font-size:12px}
+.bk-t td{color:var(--muted)}
+.bk-t tr.rec td{color:var(--txt);font-weight:600}
+.bk-t tr.rec td:first-child{color:var(--accent2)}
+.bk-note{margin:6px 0 0;font-size:12.5px;line-height:1.7;color:var(--dim)}

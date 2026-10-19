@@ -144,6 +144,27 @@
       transition-duration:.01ms !important;
     }
   }
+  /* CJK line breaking. Chinese may break between any two characters, which is
+     right for running prose and wrong for this page's term lists. Measured
+     2026-10-19 on the zh page at 20 widths (320–1440): 58 bad breaks, five of
+     them on every desktop view — the first stat label ending on a single
+     character, the Daily Tools and book tag lines cut mid-term (无人|值守日更,
+     流|式), and two card descriptions ending on one character and a full stop.
+     · Term lists (.card .tags, .stat .lbl) break only at their spaces, so no term
+       is cut in half. Safe only because every term is short and space-delimited:
+       never extend keep-all to prose, which has no spaces to break at.
+     · Prose gets text-wrap:pretty, which re-flows the last lines instead of
+       stranding one character on the final one.
+     After: 0 at every width except the one below, no horizontal overflow, and
+     every element keeps its height at every width but one (zh at 375px the
+     notes card's tag line takes a third line instead of cutting a term, +21px).
+     keep-all has no effect on English; browsers without text-wrap:pretty keep
+     the old wrapping. Left open: at 320px the notes badge still stacks one
+     character per line — white-space:nowrap fixes zh but squeezes the English
+     title to five lines, so it wants a fix that lets the badge drop below the
+     title instead. Re-measure with tools/cjkwrap.mjs. */
+  .card .tags,.stat .lbl{word-break:keep-all}
+  .tagline,.intro,.card .desc{text-wrap:pretty}
   /* top nav — the tab labels are 2–3 CJK characters, and a flex item shrinks before
      its line wraps, so under width pressure the tabs are the first thing to give:
      each label breaks *between characters* and renders as a vertical stack, with the

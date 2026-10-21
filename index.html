@@ -548,13 +548,13 @@
              what is actually hard (a per-tool Playwright test gating deploy, zero
              backend, genuine domain breadth) instead of the pipeline in the abstract.
              The three exemplars and the "almost no two share a domain" claim are read
-             off the live manifest (89 tools / 81 distinct categories, re-counted
-             2026-09-21 with this swap — was "70 / 62, 2026-09-01"; the breadth claim
-             only gets stronger, 81 domains across 89 tools = 91%) and each tool's own
-             subtitle — nothing here is invented.
+             off the live manifest (119 tools / 109 distinct categories, re-counted
+             2026-10-21 with this swap — was "89 / 81, 2026-09-21" and "70 / 62,
+             2026-09-01"; the breadth claim only gets stronger, 109 domains across 119
+             tools = 92%) and each tool's own page — nothing here is invented.
              ⚠️ A re-count date is NOT automatically the exemplar-swap window anchor.
              The window is anchored to the last actual swap; today those coincide
-             because today IS a swap, so the next swap is earliest 2026-10-21.
+             because today IS a swap, so the next swap is earliest 2026-11-20.
              Re-measuring a figure must not silently reset a cadence rule that was
              measuring something else.
              Deliberately no counts in the copy: exact figures start the daily-drift
@@ -600,12 +600,58 @@
              period offers (distributed systems / network protocols / quantum), and the
              sentence they sit in is a *breadth* claim — the outgoing set was three
              flavours of CS-internals, which is the narrowest way to illustrate it.
+             Swap of 2026-10-21 — window opened exactly today (anchor 2026-09-21 +
+             30d); 29 tools shipped 09-22..10-20. Outgoing: crdt-lab / packet-lab /
+             quantum-lab, all still 200 today, so again the "30+ days AND plainly
+             stronger" branch. What got plainly stronger is not one bigger artifact
+             but the evidence: engines in this period are diffed against the
+             reference implementation of their own field, and each tool's test.mjs
+             takes its expected values from that reference instead of hand-typed
+             numbers — which upgrades the card's strongest sentence from "a test
+             exists" to "the test's truth comes from an independent implementation".
+             None of the outgoing three could say that. Incoming, each read off the
+             tool's own page + test.mjs, each 200 and fully inline (no external
+             script or stylesheet at all, zero fetch calls):
+               · 2026-09-27 combustion-lab — NASA-7 thermo + all 325 elementary
+                 reactions of GRI-Mech 3.0 (53 species) actually integrated, not
+                 table lookup; "引擎逐项对拍 Cantera 3.2" (rate constants, equilibrium
+                 composition, ignition delay, isentropic expansion); test.mjs truth
+                 is oracle/truth.json from Cantera 3.2.0 + CoolProp 8.0.
+               · 2026-10-11 jq-lab — "一个纯前端实现的 jq 1.7.1 解释器", diffed offline
+                 against real jq on 36k random programs, 0 mismatches; every
+                 expected output in test.mjs was computed by real jq 1.7.1.
+                 Spot-checked independently 2026-10-21 (not their corpus): 238
+                 hand-written programs vs local jq 1.7.1, 232 identical; the other
+                 6 are input-literal preservation the page itself documents (3.0,
+                 1E+17…), gamma (macOS libm's gamma() is tgamma; glibc's, and the
+                 tool's, is lgamma), and input_filename (a tab has no file name).
+               · 2026-10-19 sky-lab — full-sky chart (8,872 stars, VSOP87B / ELP
+                 truncations), published worst case vs JPL DE440 via Skyfield 1.55:
+                 3.0" for Sun/Moon/planets, 0.18" for stars; test.mjs truth is
+                 Skyfield 1.55 + DE440s, and its accuracy table is re-derived live.
+             Why not the others: hydro-lab (vs EPANET 2.3) and seismic-lab (vs
+             OpenSees) are just as rigorous but load a Google Fonts stylesheet, so
+             they fail this card's own "self-contained" word; session-lens is the
+             most on-brand, but it reconciles against Claude Code's self-reported
+             cost, not an independent implementation; cube-lab / diagram-studio are
+             strong, but chemistry / a language implementation / astronomy is the
+             widest spread the period offers for a sentence that is a breadth claim.
+             The three proper nouns are typed unbreakable — &#8209; (U+2011) in
+             GRI-Mech, &nbsp; inside "GRI-Mech 3.0" / "jq 1.7.1" / "JPL DE440", and
+             \u2011 / \u00a0 in the EN string: plain spaces split them at up to 149
+             of 225 widths (zh "JPL | DE440" and en "GRI- | Mech" at every desktop
+             width); unbreakable, 0 of 225 in both languages, desktop height
+             unchanged. Judges that read textContent fold NBSP via \s, but a grep
+             of this file for an ASCII "GRI-Mech 3.0" will not find the card.
              Kept honest by tools/verify-exemplars-live.mjs: it re-reads each named
              tool's own page for the words this card uses about it, so a renamed,
              retired or drifted exemplar goes red instead of sitting here as prose
              no check could reach (before it existed, grep -l found *no* script in
              tools/ that mentioned any of the three names — they are proper nouns
-             in prose, not links, so linkcheck could never reach them).
+             in prose, not links, so linkcheck could never reach them). Since the
+             10-21 swap it also re-checks, on each exemplar's own page, the
+             reference it is said to be diffed against and the "fully inline"
+             criterion (an external script/stylesheet or a fetch call goes red).
              The third action is the evidence for this card's strongest sentence —
              "each carries its own integration test that must pass in real Chromium
              before it deploys" — which until now the page asserted with nothing to
@@ -619,7 +665,8 @@
              single tool's assertions are what show the tests are real rather than
              smoke checks. Both targets are honest for their audience and neither
              needs hand-bumping — same rule as every other live figure here.
-             Test coverage re-verified 2026-09-21 off the repo tree: 89 of 89 tool
+             Test coverage re-verified 2026-10-21 off the repo tree: 119 of 119 (the
+             daily sweep's layer E, below). Earlier hand count, 2026-09-21: 89 of 89 tool
              directories ship a test.mjs, 89 dirs on disk, 0 dirs absent from the
              manifest, 0 dirs missing from it — 1:1 both ways. (Was "69 of 69,
              2026-08-31"; twenty tools have shipped since, and the sentence in the
@@ -632,7 +679,7 @@
 
         <article class="card">
           <div class="name">Daily Tools <span class="badge">LIVE</span></div>
-          <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从四套页内手写的协同编辑引擎、浏览器里的 pcap 抓包解剖台到量子线路态向量模拟器，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
+          <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从 GRI&#8209;Mech&nbsp;3.0 燃烧化学、jq&nbsp;1.7.1 解释器到全天星图，分别对拍 Cantera、真 jq 与 JPL&nbsp;DE440，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
           <div class="tags" data-i18n="daily.tags">自主选题 · 零后端自包含 · Playwright 集成测试 · 无人值守日更</div>
           <div class="actions">
             <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener"><span data-i18n="proj.visit">在线访问</span> <span aria-hidden="true">↗</span></a>
@@ -833,7 +880,7 @@
         'nav.travel': 'Travel',
         'hero.tagline': 'Engineer building the LLM-agent & Claude Code ecosystem',
         'hero.intro': 'Focused on AI agents / LLM applications and backend systems. I like turning working ideas into things that are genuinely usable, maintainable, and production-ready — from an auto-built tools site to deep dives into Claude Code’s source.',
-        'daily.desc': 'Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — four hand-written collaborative-editing engines converging side by side, a pcap dissector that runs entirely in the tab, a quantum state-vector simulator; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.',
+        'daily.desc': 'Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — GRI\u2011Mech\u00a03.0 combustion chemistry checked against Cantera, a jq\u00a01.7.1 interpreter against real jq, a full-sky chart against JPL\u00a0DE440; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.',
         'daily.tags': 'Self-directed · Zero-backend · Playwright-tested · Unattended daily ships',
         'daily.test': 'See the integration test',
         'book.name': 'Decoding Claude Code',

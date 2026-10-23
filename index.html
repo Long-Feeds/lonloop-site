@@ -271,7 +271,8 @@
      70+ on 2026-09-01 at exactly 70 shipped, 70+ → 80+ on 2026-09-19 at 87
      shipped, 80+ → 90+ on 2026-09-22 at exactly 90 shipped, 90+ → 100+ on
      2026-10-03 at 101 shipped, 100+ → 110+ on 2026-10-12 at exactly 110
-     shipped; next bump at 120, not before.
+     shipped, 110+ → 120+ on 2026-10-23 at exactly 120 shipped; next bump at
+     130, not before.
      This one is late, and the reason is worth keeping: the 80th tool shipped
      without anything noticing. Every prior bump was made the day the milestone
      was hit, by hand; the only assertion that ever looked at this number with
@@ -289,20 +290,24 @@
      entry is short — there is no story to tell about it.
      A floor is only worth having if it is re-sourced, not assumed. Checked the
      day of this bump, against the repo tree rather than the manifest alone
-     (git/trees/main?recursive=1, untruncated): 110 manifest entries, all 110
+     (git/trees/main?recursive=1, untruncated): 120 manifest entries, all 120
      passing the same validation the live count uses (title/date/relative
      tools/ path — see the fetch block below; the count reads `valid`, not the
      raw array, so the floor has to be re-sourced against that same gate — raw
-     array 110, valid 110, 0 rejected), 110 tool directories, 110 test.mjs — a
+     array 120, valid 120, 0 rejected), 120 tool directories, 120 test.mjs — a
      clean 1:1 with nothing on either side unaccounted for. So the label this
-     number carries ("each browser-tested") holds at 110 too. Distinct
-     categories at this bump: 100 (was 93 at the 100+ bump).
+     number carries ("each browser-tested") holds at 120 too. Distinct
+     categories at this bump: 110 (was 100 at the 110+ bump).
      The floor tracks what is published, not what is built: the 100+ bump
      landed one tool late because the 100th sat unpushed in the daily-tools
-     checkout until 2026-10-02. This one lands exactly on the milestone (110th
-     tool, 2026-10-11, live in both the repo and the Pages manifest), so today
-     the JS-off reader is told 110+ where the JS reader is told 110 — the
-     tightest it ever is, and why the floor is written "110+" and never "110".
+     checkout until 2026-10-02; the 110+ bump landed on the milestone itself.
+     This one is a day late but not a tool late: the 120th tool (2026-10-21
+     Shift Lab) was pushed at 08:27 UTC that day, hours after that day's sweep
+     had run, and the 2026-10-22 run never launched — so today's sweep was the
+     first to see 120, and verify-floor-live went red on it. Nothing shipped in
+     between, so the JS-off reader is again told 120+ where the JS reader is
+     told 120 — the tightest it ever is, and why the floor is written "120+"
+     and never "120".
      Verifying a bump: read #stat-tools out of the rendered DOM with JS off,
      never grep. This comment necessarily quotes every prior floor, so a grep
      for the old value matches the bump commit itself and "passes" on a page
@@ -519,7 +524,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">110+</span>
+          <span class="num" id="stat-tools">120+</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">

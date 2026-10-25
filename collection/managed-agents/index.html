@@ -54,7 +54,19 @@
      `name`/`url` deliberately stay next to the @id instead of collapsing into a
      bare {"@id": …} reference: that shorthand is only safe on the homepage, where
      the full node sits in the same @graph. Here it does not, and Article requires
-     author.name — a bare reference would drop it. -->
+     author.name — a bare reference would drop it.
+     The original's URL moved in October 2026: Anthropic re-homed its engineering
+     posts from /engineering/<slug> to /research/<slug>, and the old path now
+     answers a permanent 308 (Wayback still has the old URL answering 200 on 10-16
+     and first has the new one on 10-22; the article's dateModified, 10-18, sits
+     inside that window). `url`/`citation` here and all three links to the
+     original in the body follow it. The /engineering index itself stayed (still
+     "Engineering", still lists this post, now linking the /research/ URL), so the
+     来源 label below still names the right blog. Checked 2026-10-25: the article
+     body is identical to the Wayback copy of the old URL from 2026-10-16. Only
+     <title>/og:title changed, to "Scaling Managed Agents with stable interfaces";
+     the h1 and Anthropic's own JSON-LD headline are still the brain/hands title,
+     so `headline` and the 原文 link text keep it. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -76,12 +88,12 @@
   "isBasedOn": {
     "@type": "Article",
     "headline": "Scaling Managed Agents: Decoupling the brain from the hands",
-    "url": "https://www.anthropic.com/engineering/managed-agents",
+    "url": "https://www.anthropic.com/research/managed-agents",
     "datePublished": "2026-04-08",
     "inLanguage": "en",
     "publisher": {"@type": "Organization", "name": "Anthropic", "url": "https://www.anthropic.com/"}
   },
-  "citation": "https://www.anthropic.com/engineering/managed-agents"
+  "citation": "https://www.anthropic.com/research/managed-agents"
 }
 </script>
 <link rel="stylesheet" href="../reader.css" />
@@ -108,7 +120,7 @@
 
     <div class="attrib">
       <div class="row">
-        <span><span class="k">原文</span><span class="v"><a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener">Scaling Managed Agents: Decoupling the brain from the hands</a></span></span>
+        <span><span class="k">原文</span><span class="v"><a href="https://www.anthropic.com/research/managed-agents" target="_blank" rel="noopener">Scaling Managed Agents: Decoupling the brain from the hands</a></span></span>
       </div>
       <div class="row">
         <span><span class="k">作者</span><span class="v">Lance Martin、Gabe Cemaj、Michael Cohen（Anthropic）</span></span>
@@ -118,7 +130,7 @@
         <span><span class="k">发布</span><span class="v">2026-04-08</span></span>
         <span><span class="k">译介于</span><span class="v">2026-08-21</span></span>
       </div>
-      <div class="note">本文是对上述英文原文的<b>中文译介与要点梳理</b>，按原文章节顺序逐节展开，并保留原文全部架构图；力求忠实，但表述经过重写，不是逐句全文转载。<b>原文与配图版权归 Anthropic 所有</b>，细节与准确措辞请以<a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener">英文原文</a>为准。如版权方认为不妥，请联系删除。</div>
+      <div class="note">本文是对上述英文原文的<b>中文译介与要点梳理</b>，按原文章节顺序逐节展开，并保留原文全部架构图；力求忠实，但表述经过重写，不是逐句全文转载。<b>原文与配图版权归 Anthropic 所有</b>，细节与准确措辞请以<a href="https://www.anthropic.com/research/managed-agents" target="_blank" rel="noopener">英文原文</a>为准。如版权方认为不妥，请联系删除。</div>
     </div>
 
     <article class="prose">
@@ -311,7 +323,7 @@
       </ul>
 
       <p class="signoff">原文致谢：Written by Lance Martin, Gabe Cemaj, and Michael Cohen；感谢 Nodir Turakulov 与 Jeremy Fox 的讨论，以及 Agents API 团队和 Jake Eaton 的贡献。<br />
-      中文译介：lonX · 完整原文请读 <a href="https://www.anthropic.com/engineering/managed-agents" target="_blank" rel="noopener">anthropic.com/engineering/managed-agents</a></p>
+      中文译介：lonX · 完整原文请读 <a href="https://www.anthropic.com/research/managed-agents" target="_blank" rel="noopener">anthropic.com/research/managed-agents</a></p>
     </article>
   </main>
 

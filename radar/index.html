@@ -230,6 +230,33 @@
         <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
       </a>
 
+      <!-- LiteLLM —— 2026-10-26:Rust 那句的证据从「文档里没有 rust」换成「发布版自己的路由表」。
+           上一版写「仓库简介那句「Rust core with Python SDK」说的是方向、不是现状：README 与写给贡献者的
+           ARCHITECTURE.md 通篇不含 rust，后者画出的请求链整条是 Python。…以上按 2026-09-13 的上游核过，
+           当日语言构成 Python 84% / Rust 1.2%。」结论今天仍对,证据却旧了两处:① README 已经提到 Rust
+           (新的 litellm-core 发行包的构建说明「The builder requires Git, `uv` and the Rust build toolchain」,
+           10-20 起);② 语言占比 1.17% → 2.93%,而且占比本来就只是旁证——它量不出哪条请求走了哪边。
+           今天直接读了装得到的东西:PyPI 上 litellm 1.106.4(2026-10-25 发)的 7 个 wheel 全是
+           cp310-abi3 平台包,里面带 litellm/rust_bridge/_native.abi3.so(macOS arm64 那份 31,296,496 B,
+           strings 里是 rustc / cargo 的 tokio、hyper、h2、aws-smithy 路径和 PyO3;manylinux x86_64
+           同名 .so、win_amd64 为 _native.pyd)。走哪边由同包的 litellm/rust_bridge/catalog.py 决定,
+           上游自己的 rust_bridge/AGENTS.md 写明「The first matching rule wins. A context no rule matches
+           stays on Python」。v1.106.4 的 RULES(GitHub tag 上的文件与 wheel 里逐字节相同):
+             CHAT_COMPLETIONS / EMBEDDINGS / RESPONSES / TOKEN_COUNTER / TOKENIZER → PYTHON_ONLY
+             OCR → RUST_REQUIRED(09-25 #43081 删掉了 Python 的 OCR 执行路径)
+             TRANSCRIPTION 且 provider=bedrock → RUST_REQUIRED
+             MESSAGES 且 provider=anthropic → RUST_OPT_IN,其余 MESSAGES → PYTHON_ONLY
+           RUST_OPT_IN 默认是 Python,要 LITELLM_RUST 环境变量或 litellm.rust(True) 才切(configuration.py
+           decide():环境变量优先于进程开关)。默认路径上另外两处 Rust 也都要显式开:日志脱敏
+           (diagnostics.run 先问 rust_enabled())与缓存(_v2/cache 的 NativeBackend 只在显式构造 Rust
+           缓存对象时用)。main 分支(10-20 #46714/#46750 起)在前面多了一批「带这些特性就留在 Python」的
+           features/targets 规则,非 Python 的三条一字未变。⇒ 卡上写的就是这张表,「选型时按 Python 网关评估」照旧。
+           附带一处时间线(没上卡):wheel 从 1.96.2(2026-08-11)起就是 abi3 平台包,09-13 那次核对时包里
+           已经带着原生扩展——那次只读了文档、没看包,漏了这一面;OCR 改成 Rust-only 是 09-25 的事。
+           「对主路径说的还是方向」是今天才加的限定:OCR 与 Bedrock 转写已经是 Rust-only,整句「不是现状」
+           不再全对。没写「一个原生模块」:cnnum 会把「一个」当中文计数取样。
+           判据:rustroute.mjs 每天读最新发布版 tag 的 catalog.py / configuration.py 和 PyPI 的 wheel
+           清单,非 Python 的规则多一条、少一条、换了 provider、开关改名或默认值翻转都红;main 先变只提示。 -->
       <a class="rd-card" data-type="工具" href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">工具</span>
@@ -237,7 +264,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」说的是方向、不是现状：README 与写给贡献者的 ARCHITECTURE.md 通篇不含 rust，后者画出的请求链整条是 Python。选型时按 Python 网关评估。以上按 2026-09-13 的上游核过，当日语言构成 Python 84% / Rust 1.2%。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
+        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」对主路径说的还是方向、不是现状：发布版确实带着 Rust 原生模块，但它的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的 messages 接口要设 <code>LITELLM_RUST</code> 才切过去。选型时按 Python 网关评估。以上按 2026-10-26 的上游与发布版 v1.106.4 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
         <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
       </a>
 

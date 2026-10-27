@@ -159,10 +159,10 @@
      every element keeps its height at every width but one (zh at 375px the
      notes card's tag line takes a third line instead of cutting a term, +21px).
      keep-all has no effect on English; browsers without text-wrap:pretty keep
-     the old wrapping. Left open: at 320px the notes badge still stacks one
-     character per line — white-space:nowrap fixes zh but squeezes the English
-     title to five lines, so it wants a fix that lets the badge drop below the
-     title instead. Re-measure with tools/cjkwrap.mjs. */
+     the old wrapping. The one left open here, the notes badge stacking one
+     character per line, was wider than 320px and has its own rule since
+     2026-10-27 (see .card-writing .badge below). Re-measure with
+     tools/cjkwrap.mjs. */
   .card .tags,.stat .lbl{word-break:keep-all}
   .tagline,.intro,.card .desc{text-wrap:pretty}
   /* top nav — the tab labels are 2–3 CJK characters, and a flex item shrinks before
@@ -250,6 +250,32 @@
      cards themselves; 16px is .grid's gap, so the rhythm matches the one
      Selected Projects sets directly above. */
   .card-writing + .card-writing{margin-top:16px}
+  /* The notes card's badge is the only one whose text can break: 「非译文」 is
+     three Han characters and "Not a translation" three words, where LIVE is one.
+     In the flex title row the badge is a shrinkable item, so when the title runs
+     long the badge is what gives. Measured 2026-10-27 over 17 widths: 「非译 / 文」
+     at every width from 430 down (three lines at 340 and 320), "Not a /
+     translation" at every width from 560 down — every common phone, on the card
+     where that badge is the most load-bearing word.
+     white-space:nowrap alone keeps the pill whole but squeezes the title beside
+     it (English to five lines at 320); flex-wrap keeps both whole but can only
+     drop the pill below the title's whole box, a line taller at 360–430. So on
+     phones this row stops being a flex row: title and pill flow as text, the pill
+     riding the title's last line when it fits and taking the next line whole when
+     it doesn't. word-spacing widens just the one space between the two spans
+     (both reset it) to the desktop's 9px gap, and a space at a line break is
+     dropped, so a pill that wraps starts flush left. ≤640, the grid's own phone
+     breakpoint: above it the row has room (English needs ~475px, the card gives
+     547+) and renders exactly as before.
+     After: the pill is one line at every width in both languages, the title
+     row keeps its height or loses a line (en 360: 3 → 2), no overflow; the one
+     cost is ~1.3px — a pill on a single-line row sits on the x-height middle
+     instead of the box centre. Re-measure with tools/badgefit.mjs. */
+  @media(max-width:640px){
+    .card-writing .name{display:block;word-spacing:5px}
+    .card-writing .name>*{word-spacing:normal}
+    .card-writing .badge{display:inline-block;white-space:nowrap;vertical-align:middle}
+  }
   /* the chapter chips are deep links straight into each chapter, so the TOC is a
      navigable index rather than decoration. Built on the base .chip token so both
      stay one visual family; the monospace number prefix distinguishes them from the

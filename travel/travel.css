@@ -130,7 +130,9 @@ a{color:inherit}
 .spot{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px 18px;margin:0 0 20px}
 .spot-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:8px}
 .prose .spot h3{margin:0;font-size:19px}
-.spot .time-badge{color:var(--accent2);font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 10px;white-space:nowrap}
+/* 时间徽章：放得下就一行胶囊；比卡片还宽时（英文版「09:30–16:30 (including the three stops below)」在手机上）在卡内折行，
+   不再顶出卡片、把整页撑出横向滚动。圆角 15px：一行高 29.75px 时和 999px 一样被夹成半高（单行徽章不变），折成两行时是圆角矩形而不是长胶囊。 */
+.spot .time-badge{color:var(--accent2);font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--chip);border:1px solid var(--line);border-radius:15px;padding:2px 10px;text-wrap:pretty}
 .prose .spot .spot-intro{margin:0 0 12px;font-size:16px;line-height:1.8}
 .spot-cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;margin-bottom:14px}
 .spot-cols h4{font-size:13px;color:var(--dim);font-weight:700;letter-spacing:.06em;margin:0 0 4px}

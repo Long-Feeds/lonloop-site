@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{ page.title }} · 日语 · lonX</title>
+<meta name="description" content="{{ page.desc }}" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="canonical" href="https://lonloop.com{{ page.url }}" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="{{ page.title }} · 日语 · lonX" />
+<meta property="og:description" content="{{ page.desc }}" />
+<meta property="og:url" content="https://lonloop.com{{ page.url }}" />
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="jp-audio-version" content="{{ audio_version }}" />
+<link rel="stylesheet" href="/japanese/assets/japanese.css?v={{ css_version }}" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+      <a href="/travel/" class="tab">旅行</a>
+      <a href="/japanese/" class="tab" aria-current="{{ 'page' if page.url == '/japanese/' else 'true' }}">日语</a>
+    </div>
+  </nav>
+
+  <main class="jp{{ ' narrow' if page.narrow }}">
+    {% if page.url != '/japanese/' %}
+    <div class="crumb"><a href="/japanese/">日语</a><span>›</span>{% if page.lesson is not none %}<span>入门 · 第 {{ page.lesson }} 课</span>{% else %}<span>{{ page.title }}</span>{% endif %}</div>
+    {% endif %}
+    <header class="page-head">
+      <div class="eyebrow">{{ page.eyebrow }}</div>
+      <h1>{{ page.h1 or page.title }}</h1>
+      {% if page.lead %}<p class="lead">{{ page.lead|safe }}</p>{% endif %}
+      {% if page.meta %}<div class="meta">{% for m in page.meta %}<span>{{ m }}</span>{% endfor %}</div>{% endif %}
+    </header>
+
+    {% if page.tools %}
+    <div class="tools" role="toolbar" aria-label="发音设置">
+      <div class="grp"><span class="lbl">声音</span><span class="seg"><button type="button" data-set="voice" data-val="n">女声</button><button type="button" data-set="voice" data-val="k">男声</button><button type="button" data-set="voice" data-val="alt">交替</button></span></div>
+      <div class="grp"><span class="lbl">语速</span><span class="seg"><button type="button" data-set="rate" data-val="1">1×</button><button type="button" data-set="rate" data-val="0.75">0.75×</button></span></div>
+      {% if page.kana %}<div class="grp"><span class="lbl">罗马字</span><span class="seg"><button type="button" data-set="romaji" data-val="true">显示</button><button type="button" data-set="romaji" data-val="false">隐藏</button></span></div>
+      <div class="grp"><span class="lbl">点格子</span><span class="seg"><button type="button" data-set="detail" data-val="true">发音+详情</button><button type="button" data-set="detail" data-val="false">只发音</button></span></div>{% endif %}
+    </div>
+    {% endif %}
+
+    <div class="prose">
+{% block content %}{% endblock %}
+    </div>
+
+    {% if page.lesson is not none %}
+    <div class="lesson-end">
+      <button class="done-toggle" type="button" data-lesson="{{ page.slug }}" aria-pressed="false"><span>标记为已学完</span></button>
+      <div class="lnav">
+        {% if page.prev %}<a class="pv" href="{{ page.prev.url }}"><span>← 上一课</span>{{ page.prev.title }}</a>{% endif %}
+        {% if page.next %}<a class="nx" href="{{ page.next.url }}"><span>下一课 →</span>{{ page.next.title }}</a>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </main>
+
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span><a href="/japanese/verification/">校验报告</a> · <a href="/japanese/sources/">参考资料与版权</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
+    <span class="lic">语音由 Microsoft 神经网络语音（Nanami / Keita）合成，每条经语音识别与音高分析校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
+  </footer>
+  <dialog class="kd" id="kd" aria-label="假名详情"></dialog>
+  <script type="application/json" id="jp-audio">{{ page_audio|tojson }}</script>
+  {% if page_kana %}<script type="application/json" id="jp-kana">{{ page_kana|tojson }}</script>{% endif %}
+  {% for did, sets in page_drills.items() %}<script type="application/json" id="{{ did }}">{{ sets|tojson }}</script>
+  {% endfor %}
+  {% block data %}{% endblock %}
+  <script src="/japanese/assets/japanese.js?v={{ js_version }}" defer></script>
+  {% block scripts %}{% endblock %}
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

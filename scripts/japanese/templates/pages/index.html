@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="Japanese · 从零开始", h1="日语：从零开始的系统学习", narrow=False,
+   desc="为中文母语者整理的日语学习路线：先把入门做扎实——假名、发音、声调、寒暄、数字、第一句话；每条音频与声调标注都经过机器多重校验，后续按 JLPT N5→N1 逐步补全。",
+   lead="为中文母语者整理的一条日语学习路线。先把<b>入门</b>做扎实：假名、发音、声调、寒暄、数字、第一句话；之后按 JLPT N5 → N1 的顺序逐步补全。读音尽量提供男女两种声音（只有一种声音通过校验的，就只放那一种），每条音频都经过读音校验、每个声调标注都经过词典交叉核对——宁可少放一条，也不放一条没核实过的。",
+   meta=["入门 11 课已上线", stats.published_items ~ " 个发音条目可播放（均通过校验）", "间隔重复练习"])) %}
+{% block content %}
+<h2 id="how">怎么用这套内容</h2>
+<ol>
+  <li><b>按顺序学课程。</b>第 0 课先花十分钟了解日语长什么样，然后从平假名开始。每课都能点着听，每课末尾有听辨练习。</li>
+  <li><b>每天到「<a href="/japanese/practice/">练习</a>」做 10–15 分钟间隔重复。</b>算法（FSRS，Anki 也内置的同一套）会把你快忘的假名排到前面。间隔复习加主动回忆，是有研究支持的记忆方法。</li>
+  <li><b>听的时候张嘴跟读。</b>先听一遍，再跟着读，尽量模仿高低和长短，而不只是「把音发出来」。为什么这样学，见「<a href="/japanese/method/">学习方法</a>」。</li>
+</ol>
+<div class="progress" aria-hidden="true"><i></i></div>
+<div style="font-size:13px;color:var(--dim)">入门进度：<span id="prog-lab">0 / {{ lessons|length }} 课</span>（只保存在你自己的浏览器里）</div>
+
+<h2 id="roadmap">学习路线</h2>
+<section class="stage">
+  <div class="stage-h"><h2>阶段 0 · 入门</h2><span class="badge live">已上线</span></div>
+  <p>目标：能准确读出并写出全部假名；发音、长短、声调不带中文口音的「坏习惯」；会基本寒暄、数字和自我介绍。学完这一阶段，就可以开始系统学语法和词汇了。</p>
+  <ul class="lessons">
+  {% for l in lessons %}
+    <li data-lesson="{{ l.slug }}"><a href="{{ l.url }}"><span class="no">{{ l.lesson }}</span><span class="tt"><b>{{ l.title }}</b><span>{{ {
+      "intro":"三种文字、拍、高低声调、语序——十分钟建立全局印象",
+      "hiragana":"46 个清音：字源、笔顺动画、男女声发音、例词",
+      "dakuon":"゛和゜：清浊对立，じ＝ぢ、ず＝づ",
+      "youon":"きゃ・しゅ・ちょ……一拍还是两拍",
+      "special-morae":"っ・ん・长音各占一拍；长短一错，意思就变",
+      "katakana":"同一套音，另一套字形；外来语特殊组合",
+      "pronunciation":"清浊与送气、う的口形、ら行、无声化……中文母语者最常见的问题",
+      "accent":"高低声调：四种类型、下降处、实测音高曲线",
+      "greetings":"29 句最常用的寒暄与课堂用语，以及什么时候用",
+      "numbers":"0 到一万，音变一个不漏",
+      "first-sentences":"AはBです、疑问、否定，说出完整的自我介绍"}[l.slug] }}</span></span><span class="st">未开始</span></a></li>
+  {% endfor %}
+  </ul>
+</section>
+
+<section class="stage soon">
+  <div class="stage-h"><h2>阶段 1 · 初级上（约 JLPT N5）</h2><span class="badge plan">规划中</span></div>
+  <p>动词三类与ます形、て形；形容词两类；常用助词（は・が・を・に・で・へ・と・も・から・まで）；存在句（あります・います）；时间与数量词（助数词）；常用汉字的音读与训读。</p>
+</section>
+<section class="stage soon">
+  <div class="stage-h"><h2>阶段 2 · 初级下（约 JLPT N4）</h2><span class="badge plan">规划中</span></div>
+  <p>普通形与敬体的切换、可能形/意志形/条件形、授受表达（あげる・くれる・もらう）、简单的敬语；能读懂短小的生活文章，能就熟悉话题对话。</p>
+</section>
+<section class="stage soon">
+  <div class="stage-h"><h2>阶段 3–5 · 中级到高级（约 JLPT N3 → N1）</h2><span class="badge plan">规划中</span></div>
+  <p>复合句与文章语法、敬语体系、书面语，以及读报、听新闻、写邮件等综合能力。</p>
+</section>
+<section class="stage soon">
+  <div class="stage-h"><h2>贯穿全程的专项</h2><span class="badge plan">规划中</span></div>
+  <ul class="plan-list">
+    <li><b>汉字（中文母语者专版）：</b>日本字形与简体字的差异、音读/训读、「同形异义词」（如「手紙」是信、「勉強」是学习）。</li>
+    <li><b>听力与跟读：</b>影子跟读（シャドーイング）材料与方法。</li>
+    <li><b>分级阅读（多読）：</b>从免费的分级读物读起。</li>
+    <li><b>声调进阶：</b>复合词、动词活用中的声调变化。</li>
+  </ul>
+</section>
+<p style="font-size:14px;color:var(--dim)">「约 JLPT N5」等是大致对应：日本语能力测验自 2010 年改制后不再公布官方词汇表和汉字表，网上流传的「N5 词表」都是各家整理的，本站后续阶段会注明具体参照的教材和资料。</p>
+
+<h2 id="rigor">这套内容怎么防止学错</h2>
+<p>学语言最怕一开始学错——错误的发音和声调一旦练熟，改起来比从头学还难。所以这里的每一项内容在发布前都过了几道独立的检查：</p>
+<ul>
+  <li><b>来源交叉核对：</b>假名字源对照三个来源（英/日文维基词典与维基百科字源图，片假名另对照三省堂《大辞林》），有分歧的如实标「诸说」；笔顺用 KanjiVG，并与另一套独立数据 animCJK 逐字核对笔画数（151 个假名全部一致）。</li>
+  <li><b>声调双词典：</b>每个标了声调的词，都核对 UniDic 与 Kanjium 两部词典；某部缺项或首选读法不一致时，用英文维基词典做第三票，仍无多数的不标。</li>
+  <li><b>音频「反向听写」：</b>每条音频都让语音识别模型（Whisper）听一遍，转写结果必须和我们教的读音一致；单个假名再用一个音素识别模型确认辅音和元音。</li>
+  <li><b>声调示范音频人工核验：</b>第 7 课（声调课）的示范音频，逐组叠加比较音高曲线后人工确认与词典一致；其他各课的音频只校验读音，声调以页面标注为准。（自动音高判定也做了，但与词典的吻合率只有约 66%，不足以作为发布依据——这一点在校验报告里如实写明。）</li>
+  <li><b>人和另一个模型复核：</b>解释性文字由另一个独立的 AI 模型逐条挑错，再人工核对来源。</li>
+</ul>
+<p>这些检查真的拦下了错误：例如女声把「雨（头高型）」和「飴（平板型）」合成成了一模一样的音频，单独念「端」时读成了「たん」，还有几个单假名直接合成出了静音。这些音频都没有上线。全部结果见「<a href="/japanese/verification/">校验报告</a>」。</p>
+<div class="callout"><span class="ct">诚实的局限</span>音频是神经网络合成的标准东京音，不是真人录音；机器校验能抓住读错、声调错、无声这类硬错误，但替代不了老师。条件允许时，用 <a href="https://www.nhk.or.jp/lesson/zh/" target="_blank" rel="noopener">NHK「简明日语」</a>、日本国际交流基金会的《いろどり》等真人录音教材互相印证。</div>
+
+<h2 id="more">其他页面</h2>
+<ul>
+  <li><a href="/japanese/practice/">练习</a>：假名间隔重复（认读 / 听辨）</li>
+  <li><a href="/japanese/method/">学习方法</a>：为什么这样学，每天怎么安排</li>
+  <li><a href="/japanese/verification/">校验报告</a>：每条音频、每个声调的检查结果</li>
+  <li><a href="/japanese/sources/">参考资料与版权</a>：用到的资料、数据与许可</li>
+</ul>
+{% endblock %}

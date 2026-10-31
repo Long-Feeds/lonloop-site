@@ -1,0 +1,93 @@
+{# Shared components for /japanese/ pages. Every helper renders from verified data
+   passed in by build.py — a page never hand-writes a reading, accent or audio id. #}
+
+{% macro say(id, label="", text="") -%}
+{%- if has_audio(id) -%}
+<button class="say" type="button" data-say="{{ id }}" aria-label="播放{{ '：' ~ text if text }}"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>{% if label %}<span class="vt">{{ label }}</span>{% endif %}</button>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro jp(text) -%}<span lang="ja" class="jpw">{{ text }}</span>{%- endmacro %}
+
+{% macro word(w, r, show_accent=True, note="") -%}
+{%- set x = W(w, r) -%}
+<div class="word">
+  <div class="top">
+    <div>
+      <div class="jw" lang="ja">{{ x.w }}</div>
+      {% if x.w != x.r %}<div class="kn" lang="ja">{{ x.r }}</div>{% endif %}
+    </div>
+    <div class="plays">{{ say(x.id, "", x.r) }}</div>
+  </div>
+  <div class="zh">{{ x.zh }}{% if note %} · {{ note }}{% endif %}</div>
+  {% if show_accent and x.acc is not none %}
+  <div class="acc">{{ x.pp|safe }}<span class="accn" title="声调类型编号：在第几拍之后下降，0 = 不下降">{{ x.acc_label }}</span><span class="acct">{{ x.acc_name }}</span></div>
+  {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro words(list, show_accent=True) -%}
+<div class="words">
+{% for w, r in list %}{{ word(w, r, show_accent) }}{% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro kana_grid(rows, script="h", cls="", cols=("a","i","u","e","o")) -%}
+<table class="kgrid {{ cls }}" lang="ja">
+  <thead><tr><th class="rowh"></th>{% for c in cols %}<th scope="col" lang="zh-CN">{{ c }}</th>{% endfor %}</tr></thead>
+  <tbody>
+  {% for rowname, row in rows %}
+    <tr><th class="rowh" scope="row" lang="ja">{{ kconv(rowname, script) }}</th>
+    {% for k in row %}<td>{% if k %}{% set kk = kconv(k, script) %}<button class="kcell" type="button" data-k="{{ kk }}" data-id="{{ K[kk].id }}" aria-label="{{ kk }}，{{ K[kk].rom }}"><span class="k">{{ kk }}</span><span class="r rom-opt">{{ K[kk].rom }}</span></button>{% endif %}</td>{% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{%- endmacro %}
+
+{% macro pair(p, show_accent=False) -%}
+<div class="pair">
+  <div class="pr">
+  {% for x in p["items"] %}{% set y = W(x.w, x.r) %}
+    {% if not loop.first %}<span class="vs">vs</span>{% endif %}
+    <div class="pi">{{ say(y.id, "", y.r) }}<div><div class="jw" lang="ja">{{ y.w }}{% if y.w != y.r %} <span class="kn" style="font-size:14px;color:var(--muted)">{{ y.r }}</span>{% endif %}</div><div class="zh">{{ y.zh }}{% if show_accent and y.acc is not none %} · <span class="accn">{{ y.acc_label }}</span>{% endif %}</div></div></div>
+  {% endfor %}
+  </div>
+  {% if p.note %}<div class="note">{{ p.note }}</div>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro drill(src, title, desc) -%}
+<div class="drill" data-src="{{ src }}">
+  <h3>{{ title }}</h3>
+  <div class="dd">{{ desc }}</div>
+  <button class="btn pri start" type="button">开始练习</button>
+  <div class="run" hidden>
+    <div class="q"><button class="say big-say" type="button" aria-label="再听一次"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg> 再听一次</button><span style="color:var(--dim);font-size:13.5px">听到的是哪一个？</span></div>
+    <div class="opts"></div>
+    <div class="fb" aria-live="polite"></div>
+    <button class="btn next" type="button">下一题 →</button>
+    <div class="score"></div>
+  </div>
+</div>
+{%- endmacro %}
+
+{% macro f0(w, r, voice="n") -%}
+{%- set g = F0(w, r, voice) -%}
+{%- if g -%}
+<figure class="f0">
+  {{ g.svg|safe }}
+  <figcaption class="cap">实测音高曲线（{{ "女声" if voice == "n" else "男声" }}·「{{ g.text }}」）：横轴为时间，竖线为按语音识别对齐出的拍的边界。曲线由本页音频直接计算，不是示意图。</figcaption>
+</figure>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro src(items) -%}
+<aside class="srcbox"><b>本课来源与校验</b>
+<ul>{% for i in items %}<li>{{ i|safe }}</li>{% endfor %}</ul>
+</aside>
+{%- endmacro %}
+
+{% macro callout(title, kind="") -%}
+<div class="callout {{ kind }}">{% if title %}<span class="ct">{{ title }}</span>{% endif %}{{ caller() }}</div>
+{%- endmacro %}

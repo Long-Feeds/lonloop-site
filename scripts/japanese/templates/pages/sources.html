@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="Sources · 参考资料与版权", h1="参考资料与版权", narrow=True,
+   desc="日语入门板块使用的资料、数据与许可：官方规范、语音学文献、教学研究、词典数据（UniDic、Kanjium）、笔顺数据（KanjiVG）、间隔重复算法（ts-fsrs）与语音合成。",
+   lead="本板块用到的全部外部资料、数据和软件，以及各自的许可。各课页末也列有该课的具体出处。",
+   meta=["官方规范", "研究文献", "数据与许可"])) %}
+{% block content %}
+<h2 id="official">官方规范（日本政府·文化庁）</h2>
+<ul>
+  <li>《現代仮名遣い》（1986 年内阁告示第 1 号，2010 年一部改正）——长音写法、ぢ/づ、助词は・へ・を：<a href="https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kijun/naikaku/gendaikana/index.html" target="_blank" rel="noopener">文化庁</a></li>
+  <li>《外来語の表記》（1991 年内阁告示第 2 号）——外来语专用组合第 1 表、第 2 表，长音符：<a href="https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kijun/naikaku/gairai/index.html" target="_blank" rel="noopener">文化庁</a></li>
+  <li>《ローマ字のつづり方》（2025 年 12 月 22 日内阁告示第 4 号）及文化庁 Q&A（2026 年 2 月）：<a href="https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kijun/naikaku/roma/index2.html" target="_blank" rel="noopener">文化庁</a></li>
+  <li>日本语能力测验（JLPT）认定目安与常见问题（官方不公布词汇/汉字表）：<a href="https://www.jlpt.jp/cn/about/levelsummary.html" target="_blank" rel="noopener">jlpt.jp</a></li>
+</ul>
+
+<h2 id="phonetics">语音学与日语教育研究</h2>
+<ul>
+  <li>Okada, H. (1991). Japanese. <i>Journal of the International Phonetic Association</i>, 21(2), 94–96. <a href="https://doi.org/10.1017/S002510030000445X" target="_blank" rel="noopener">doi</a>——IPA 与音系描写的主要依据</li>
+  <li>峯松信明・中村則子「OJADとそれを用いた音声指導」讲义；OJAD 讲习会幻灯片（东京大学，2017）</li>
+  <li>太田眞希恵・東美奈子（2016）「18年ぶりの改訂で誕生『NHK日本語発音アクセント新辞典』」『放送研究と調査』2016 年 7 月号（NHK 放送文化研究所）</li>
+  <li>尾崎喜光（2015）「全国多人数調査から見るガ行鼻音の現状と動態」ノートルダム清心女子大学紀要 39(1)</li>
+  <li>邊姫京（2007）「狭母音の無声化の全国的地域差と世代差」『日本語の研究』3(1)</li>
+  <li>戸田貴子「日本語特殊拍の習得に関する研究」国际交流基金《日本語教育通信》；戸田貴子（2007）「日本語教育における促音の問題」『音声研究』11(1)</li>
+  <li>赤木浩文・古市由美子・内田紀子《毎日練習！リズムで身につく日本語の発音》（スリーエーネットワーク）教师用指南</li>
+  <li>中文母语者的难点：福岡昌子（1995）、鮎澤孝子（1999）、江佩璇（2010）、栗原通世（2006，2019）、内田照久（1993，1995）、郭昱昕（2014）、杜赫・鮮于媚（2023）、劉佳琦（2005，2010）、平野宏子ほか（2009）、劉羅麟（2022）、大久保雅子（2010，2022）、孫静（2024）、蘇迪亜（2014）——详见<a href="/japanese/pronunciation/">第 6 课</a>页末</li>
+  <li>学习方法：Dunlosky et al. (2013)；Roediger & Karpicke (2006)；Karpicke & Roediger (2008)；Cepeda et al. (2006)；Logan, Lively & Pisoni (1991)；Hirata (2004)；Tajima et al. (2008)；Sadakata & McQueen (2013)；Shport (2016)；Uchihara, Karas & Thomson (2025)；Hamada (2016)；Nakanishi (2015)；Lichtman & VanPatten (2021)；Matsunaga (2003)——详见<a href="/japanese/method/">学习方法</a>页末</li>
+</ul>
+
+<h2 id="data">数据与软件（含许可）</h2>
+<div class="tablewrap"><table>
+<tr><th>名称</th><th>用途</th><th>许可</th></tr>
+<tr><td><a href="https://kanjivg.tagaini.net/" target="_blank" rel="noopener">KanjiVG</a>（Ulrich Apel 等）</td><td>假名笔顺动画（本站的笔顺 SVG 由其数据转换而来）</td><td>CC BY-SA 3.0。本站据此派生的笔顺数据 <code>/japanese/assets/strokes.json</code> 同样以 CC BY-SA 3.0 提供</td></tr>
+<tr><td><a href="https://github.com/parsimonhi/animCJK" target="_blank" rel="noopener">animCJK</a></td><td>只用于笔画数交叉核对，未在站内分发</td><td>Arphic Public License / LGPL</td></tr>
+<tr><td><a href="https://clrd.ninjal.ac.jp/unidic/" target="_blank" rel="noopener">UniDic</a>（国立国语研究所；经 unidic-lite 2.1.2）</td><td>声调核对、语音识别结果转假名</td><td>BSD / LGPL / GPL 三选一</td></tr>
+<tr><td><a href="https://github.com/mifunetoshiro/kanjium" target="_blank" rel="noopener">Kanjium</a></td><td>声调核对</td><td>CC BY-SA 4.0。按作者要求注明：“The pitch accent notation, verb particle data, phonetics, homonyms and other additions or modifications to EDICT, KANJIDIC or KRADFILE were provided by Uros O. through his free database.”</td></tr>
+<tr><td>English Wiktionary / 日本語版ウィクショナリー / Wikipedia（含 Wikimedia Commons 字源图）</td><td>字源三方核对；声调第三票</td><td>CC BY-SA 4.0（本站只引用事实性信息）</td></tr>
+<tr><td>三省堂《大辞林》特别页「片仮名」</td><td>片假名字源核对（ア–ト）</td><td>仅作核对，未转载</td></tr>
+<tr><td><a href="https://github.com/open-spaced-repetition/ts-fsrs" target="_blank" rel="noopener">ts-fsrs 6.0.0</a></td><td>练习页的间隔重复调度（打包为 <code>/japanese/vendor/fsrs-6.0.0.min.mjs</code>）</td><td>MIT</td></tr>
+<tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>全部发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
+<tr><td>OpenAI Whisper（large-v3 / large-v3-turbo，MLX 版）</td><td>音频反向听写校验</td><td>MIT</td></tr>
+<tr><td>facebook/wav2vec2-xlsr-53-espeak-cv-ft</td><td>音素识别、强制对齐</td><td>Apache-2.0</td></tr>
+<tr><td>Praat（经 parselmouth）</td><td>基频（音高）提取</td><td>GPL</td></tr>
+</table></div>
+
+<h2 id="learn-more">推荐的外部学习资源</h2>
+<ul>
+  <li><a href="https://www.nhk.or.jp/lesson/zh/" target="_blank" rel="noopener">NHK WORLD-JAPAN「简明日语」</a>（中文界面，免费，限个人使用）</li>
+  <li><a href="https://www.irodori.jpf.go.jp/" target="_blank" rel="noopener">《いろどり 生活の日本語》</a>（日本国际交流基金会，免费，A1–B1）</li>
+  <li><a href="https://minato-jf.jp/" target="_blank" rel="noopener">JF にほんご eラーニング みなと</a>（中文界面，部分免费）</li>
+  <li><a href="https://www.erin.jpf.go.jp/" target="_blank" rel="noopener">エリンが挑戦！にほんごできます。</a>（视频，免费，字幕含中文）</li>
+  <li><a href="https://tadoku.org/japanese/free-books/" target="_blank" rel="noopener">NPO 多言語多読 免费分级读物</a></li>
+  <li><a href="https://www.gavo.t.u-tokyo.ac.jp/ojad/" target="_blank" rel="noopener">OJAD 在线日语声调词典</a>（东京大学，仅限教育与学术用途）</li>
+  <li>《NHK日本語発音アクセント新辞典》（NHK出版，2016，付费）</li>
+</ul>
+<p style="font-size:14px;color:var(--dim)">本板块的课程文字与组织方式为原创；引用的规则与数据以各来源为准。</p>
+{% endblock %}

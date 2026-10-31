@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 4 课", h1="促音·拨音·长音", narrow=False, tools=True,
+   desc="日语特殊拍：促音っ、拨音ん、长音各占一拍。拍的概念、ん的发音变体、长音的写法规则（現代仮名遣い），以及おばさん/おばあさん、過去/括弧等长短对比听辨。",
+   lead="日语的节奏单位是「<b>拍</b>」（モーラ）。促音（小写的っ）、拨音（ん）、长音这三种「特殊拍」各自占一整拍——少发一拍，词就变了：<span lang=\"ja\" class=\"jpw\">おばさん</span>（阿姨）多拖一拍就成了<span lang=\"ja\" class=\"jpw\">おばあさん</span>（奶奶）。",
+   meta=["三种特殊拍", "预计 1–2 天", "中文里没有对应，要专门练"])) %}
+{% block content %}
+<h2 id="mora">先弄清「拍」</h2>
+<p>一拍大约是一个假名的长度（拗音如「きょ」算一拍）。日本人感觉每拍长度差不多——实际测量并不严格相等，但学的时候按「大致等长」来把握。关键是：<b>特殊拍也算一拍</b>，不能吞掉、不能缩短。</p>
+<div class="tablewrap"><table>
+<tr><th>词</th><th>按拍切分</th><th>拍数</th></tr>
+<tr><td lang="ja">とうきょう（東京）</td><td lang="ja">と｜う｜きょ｜う</td><td>4</td></tr>
+<tr><td lang="ja">にっぽん（日本）</td><td lang="ja">に｜っ｜ぽ｜ん</td><td>4</td></tr>
+<tr><td lang="ja">がっこう（学校）</td><td lang="ja">が｜っ｜こ｜う</td><td>4</td></tr>
+<tr><td lang="ja">しんぶん（新聞）</td><td lang="ja">し｜ん｜ぶ｜ん</td><td>4</td></tr>
+</table></div>
+{% call m.callout("练节奏的小技巧") %}<p>只按「一拍一下」去拍手，容易把每个音都念得一样长、像机器人。日语教育研究者戸田貴子（早稻田大学）建议把特殊拍和前一拍合成「两拍一组」来练，更接近自然说话：<span lang="ja" class="jpw">と<b>う</b>｜きょ<b>う</b></span>、<span lang="ja" class="jpw">し<b>ん</b>｜ぶ<b>ん</b></span>——每组占两拍；<span lang="ja" class="jpw">き<b>っ</b>｜て</span> 则是两拍一组加上一拍，共三拍，末尾的「て」不要拖长。</p>{% endcall %}
+
+<h2 id="sokuon">促音「っ」：停顿一拍</h2>
+<p>写作小一号的「っ」（片假名「ッ」）。发音时口型做好下一个辅音的准备，<b>停住一拍</b>，再发出来。它本身没有声音（擦音前则是把 s、sh 拉长），但占一拍时间。罗马字一般<b>把后面的辅音字母写两遍</b>：きって kitte；但各方案在「っち」上不同——修正黑本式写 tch（matcha），2025 年新《ローマ字のつづり方》写 cch（maccha）。输入法里重复辅音即可打出「っ」，也可以用 xtu 或 ltu 单独打。</p>
+<div class="pairs">
+{% for p in C.pairs.sokuon %}{% if ok_word(p["items"][0].w, p["items"][0].r) and ok_word(p["items"][1].w, p["items"][1].r) %}{{ m.pair(p) }}{% endif %}{% endfor %}
+</div>
+
+<h2 id="hatsuon">拨音「ん」：一拍鼻音，读法随后面的音变</h2>
+<p>「ん」永远自成一拍。它的实际发音会自动向后一个音靠拢——这是自然发生的，不用刻意去学，但知道了能听得更准：</p>
+<div class="tablewrap"><table>
+<tr><th>后面的音</th><th>ん读成</th><th>例词</th></tr>
+<tr><td>p・b・m 前</td><td class="ipa">[m]（双唇闭合）</td><td>{% for w,r in [("散歩","さんぽ"),("乾杯","かんぱい"),("鉛筆","えんぴつ")] %}{% if ok_word(w,r) %}<span lang="ja">{{ w }}（{{ r }}）</span>{{ m.say(slug(w,r), "", r) }} {% endif %}{% endfor %}</td></tr>
+<tr><td>t・d・n・r 前</td><td class="ipa">[n]</td><td>{% for w,r in [("運転","うんてん"),("女","おんな")] %}{% if ok_word(w,r) %}<span lang="ja">{{ w }}（{{ r }}）</span>{{ m.say(slug(w,r), "", r) }} {% endif %}{% endfor %}</td></tr>
+<tr><td>k・g 前</td><td class="ipa">[ŋ]</td><td>{% for w,r in [("漫画","まんが"),("天気","てんき"),("金魚","きんぎょ")] %}{% if ok_word(w,r) %}<span lang="ja">{{ w }}（{{ r }}）</span>{{ m.say(slug(w,r), "", r) }} {% endif %}{% endfor %}</td></tr>
+<tr><td>元音、y、w、s、h 前</td><td class="ipa">鼻化元音</td><td>{% for w,r in [("禁煙","きんえん"),("電話","でんわ"),("単位","たんい")] %}{% if ok_word(w,r) %}<span lang="ja">{{ w }}（{{ r }}）</span>{{ m.say(slug(w,r), "", r) }} {% endif %}{% endfor %}</td></tr>
+<tr><td>词尾（停顿前）</td><td class="ipa">[ɴ] 等，变化较大</td><td>{% for w,r in [("本","ほん"),("蜜柑","みかん")] %}{% if ok_word(w,r) %}<span lang="ja">{{ w }}（{{ r }}）</span>{{ m.say(slug(w,r), "", r) }} {% endif %}{% endfor %}</td></tr>
+</table></div>
+{% call m.callout("「ん」后接元音：最容易错的地方", "zh") %}<p>「{{ m.jp('きんえん') }}」（禁烟）是 き・ん・え・ん 四拍，ん 后面的 え 不能和 n 连成「ね」——否则就成了「{{ m.jp('きねん') }}」（纪念，三拍）。打字时也要把 ん 和后面的元音分开：kinnenn 或 kin'en。</p>{% endcall %}
+<div class="pairs">
+{% for p in C.pairs.hatsuon %}{% if ok_word(p["items"][0].w, p["items"][0].r) and ok_word(p["items"][1].w, p["items"][1].r) %}{{ m.pair(p) }}{% endif %}{% endfor %}
+</div>
+
+<h2 id="chouon">长音：把元音拖长一拍</h2>
+<p>长音就是同一个元音持续两拍。平假名的写法由文化庁《現代仮名遣い》规定：</p>
+<div class="tablewrap"><table>
+<tr><th>段</th><th>写法</th><th>例</th></tr>
+<tr><td>あ段</td><td>加「あ」</td><td lang="ja">おかあさん、おばあさん</td></tr>
+<tr><td>い段</td><td>加「い」</td><td lang="ja">おじいさん、にいさん</td></tr>
+<tr><td>う段</td><td>加「う」</td><td lang="ja">くうき（空気）、きゅうり</td></tr>
+<tr><td>え段</td><td>加「え」</td><td lang="ja">ねえさん、ええ（是的）</td></tr>
+<tr><td>お段</td><td>加「う」</td><td lang="ja">おとうさん、ありがとう、がっこう</td></tr>
+</table></div>
+<p>两个例外要记住：</p>
+<ul>
+  <li><b>え段 +「い」</b>：大量汉语词写成「えい」，例如 {{ m.jp("せんせい") }}（老师）、{{ m.jp("えいが") }}（电影）、{{ m.jp("とけい") }}（钟表）。官方说明读成长音 <span class="ipa">[eː]</span> 或读成 e-i 都可以；日常说话里多读成长音。</li>
+  <li><b>お段 +「お」</b>：少数词按历史写法写「お」，例如 {{ m.jp("おおきい") }}（大）、{{ m.jp("とおい") }}（远）、{{ m.jp("こおり") }}（冰）、{{ m.jp("おおい") }}（多）、{{ m.jp("とおる") }}（通过）、{{ m.jp("とお") }}（十）。这些只能逐个记。</li>
+</ul>
+<p>片假名的长音一般用长音符「ー」：{{ m.jp("コーヒー") }}、{{ m.jp("ビール") }}（第 5 课）。</p>
+<div class="pairs">
+{% for p in C.pairs.chouon %}{% if ok_word(p["items"][0].w, p["items"][0].r) and ok_word(p["items"][1].w, p["items"][1].r) %}{{ m.pair(p) }}{% endif %}{% endfor %}
+</div>
+{% call m.callout("长短不分，意思就错", "zh") %}<p>普通话里元音长短不区分意思，所以中文母语者很容易把长音读短（{{ m.jp("おばあさん") }} → {{ m.jp("おばさん") }}）或把短音拖长。练习时可以用手指数拍：おばあさん 是 お・ば・あ・さ・ん 五拍。</p>{% endcall %}
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for grp in ["chouon", "sokuon", "hatsuon"] %}{% for p in C.pairs[grp] %}{% set opts = [] %}{% for x in p["items"] %}{% set _ = opts.append({"w": x.w, "r": x.r, "label": x.r, "sub": x.w ~ " · " ~ x.zh}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}{% endfor %}
+{% if drill_sets("drill-tokushu", sets) %}{{ m.drill("drill-tokushu", "长音・促音・拨音听辨", "每题播放一对词中的一个。先数拍，再选。") }}{% endif %}
+
+{{ m.src([
+  "拍的定义与等长性：赤木浩文等《毎日練習！リズムで身につく日本語の発音》教师用指南；Okada (1991)；「两拍一组」练习法：戸田貴子「日本語特殊拍の習得に関する研究」，国际交流基金《日本語教育通信》。",
+  "ん的变体：Okada (1991)，JIPA 21(2)，p.95；ん在カ・ガ行前读 [ŋ]：尾崎喜光（2015）。",
+  "长音写法：文化庁《現代仮名遣い》本文第 1-5、第 2-6 及付記；片假名长音符：《外来語の表記》（1991 年内阁告示第 2 号）。",
+]) }}
+{% endblock %}

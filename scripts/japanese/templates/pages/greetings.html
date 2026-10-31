@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 8 课", h1="寒暄语与课堂用语", narrow=False, tools=True,
+   desc="日语最常用的寒暄语与课堂/求助用语：早上好、谢谢、对不起、开动了、我出门了、辛苦了……每句配男女声音频，并说明什么场合用、对谁用。",
+   lead="寒暄语是「整句记」的：不必分析语法，先把整句的读音、长短和高低模仿准，再记住<b>什么场合、对谁说</b>。",
+   meta=["29 句", "预计 2 天", "建议：每句跟读 5 遍以上"])) %}
+{% set G = {} %}{% for g in C.greetings %}{% set _ = G.update({g.id: g}) %}{% endfor %}
+{% macro row(id, note) -%}
+{%- set g = G[id] -%}{%- set iid = "g-" ~ id -%}
+<tr><td><span lang="ja" class="jpw" style="font-size:18px">{{ g.w }}</span>{% if g.w != g.r %}<br><span lang="ja" style="color:var(--muted);font-size:13.5px">{{ g.r }}</span>{% endif %}</td><td style="white-space:nowrap">{{ m.say(iid, "", g.r) }}</td><td>{{ g.zh }}</td><td style="color:var(--muted);font-size:14px">{{ note|safe }}</td></tr>
+{%- endmacro %}
+{% block content %}
+<h2 id="daily">一天之中</h2>
+<div class="tablewrap"><table>
+<tr><th>日语</th><th></th><th>意思</th><th>什么时候说</th></tr>
+{{ row("ohayou", "早上见面时。对家人、朋友可以只说「おはよう」。") }}
+{{ row("konnichiwa", "白天见面时。最后的「は」读 <b>wa</b>（助词读法的特例，见第 1 课「を」的说明）。") }}
+{{ row("konbanwa", "晚上见面时。「は」同样读 wa。") }}
+{{ row("oyasumi", "睡前，或晚上道别时。对熟人可说「おやすみ」。") }}
+{{ row("sayounara", "道别。语气比较正式，或用于较长时间不见；熟人之间日常更常说「じゃあ、また」。") }}
+{{ row("jaamata", "熟人之间的「回头见」。") }}
+</table></div>
+
+<h2 id="thanks">道谢・道歉</h2>
+<div class="tablewrap"><table>
+<tr><th>日语</th><th></th><th>意思</th><th>什么时候说</th></tr>
+{{ row("arigatou", "礼貌的「谢谢」。对朋友可以只说「ありがとう」。") }}
+{{ row("douitashimashite", "回应道谢。日常对话里也常用「いいえ」「いえいえ」轻轻带过。") }}
+{{ row("sumimasen", "用途很广：道歉（对不起）、搭话（劳驾、请问）、表示过意不去的感谢。") }}
+{{ row("gomennasai", "道歉，偏向私人场合；工作和正式场合多用「すみません」或更郑重的说法。") }}
+</table></div>
+
+<h2 id="meet">初次见面</h2>
+<div class="tablewrap"><table>
+<tr><th>日语</th><th></th><th>意思</th><th>什么时候说</th></tr>
+{{ row("hajimemashite", "第一次见面时的开场白。") }}
+{{ row("yoroshiku", "自我介绍结束时说；请别人帮忙时也说。没有完全对应的中文，大意是「今后请多关照／拜托了」。") }}
+{{ row("ogenkidesuka", "问候<b>好久不见</b>的人。不是每天见面都说的「你好吗」。") }}
+</table></div>
+
+<h2 id="home">吃饭・出门・回家</h2>
+<div class="tablewrap"><table>
+<tr><th>日语</th><th></th><th>意思</th><th>什么时候说</th></tr>
+{{ row("itadakimasu", "开始吃饭前，一般双手合十说。") }}
+{{ row("gochisousama", "吃完饭后；在餐馆结账离开时也可以对店员说。") }}
+{{ row("ittekimasu", "离开家（或办公室）的人说。") }}
+{{ row("itterasshai", "留下的人回应「行ってきます」。") }}
+{{ row("tadaima", "回到家的人说。") }}
+{{ row("okaerinasai", "在家的人回应「ただいま」。") }}
+</table></div>
+
+<h2 id="work">学校与职场</h2>
+<div class="tablewrap"><table>
+<tr><th>日语</th><th></th><th>意思</th><th>什么时候说</th></tr>
+{{ row("shitsureishimasu", "进出老师办公室、会议室，或打断别人时；离开时也说。") }}
+{{ row("otsukaresama", "同事之间的寒暄和道辛苦，见面、下班时都常用；对上司也可以说。") }}
+</table></div>
+
+<h2 id="class">课堂用语与求助</h2>
+<p>这几句是学习者的「救命句」，在日本问路、上课、开会都用得上。</p>
+<div class="tablewrap"><table>
+<tr><th>日语</th><th></th><th>意思</th><th>什么时候说</th></tr>
+{{ row("hai", "表示「是」，也常用来表示「我在听」。") }}
+{{ row("iie", "表示否定。直接说「いいえ」有时显得生硬，实际会话里常用更委婉的说法。") }}
+{{ row("onegaishimasu", "请求别人做某事时，放在要求后面或单独使用。") }}
+{{ row("wakarimashita", "表示「明白了／知道了」。") }}
+{{ row("wakarimasen", "听不懂或不知道时。") }}
+{{ row("mouichido", "没听清时请对方再说一遍。") }}
+{{ row("yukkuri", "请对方说慢一点。") }}
+{{ row("chottomatte", "请对方稍等。") }}
+</table></div>
+{% call m.callout("别用中文谐音记", "warn") %}<p>「阿里嘎多」「空尼奇瓦」这类谐音会把错误的音（如普通话的四声、圆唇的 u、翘舌音）带进去，以后很难改。读音只跟着音频学，用假名记。</p>{% endcall %}
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for grp in [["ohayou","konnichiwa","konbanwa","oyasumi"],["arigatou","sumimasen","gomennasai","douitashimashite"],["itadakimasu","gochisousama","ittekimasu","tadaima"],["itterasshai","okaerinasai","ittekimasu","tadaima"],["wakarimashita","wakarimasen","mouichido","yukkuri"],["hajimemashite","yoroshiku","ogenkidesuka","shitsureishimasu"]] %}{% set opts = [] %}{% for id in grp %}{% set _ = opts.append({"id": "g-" ~ id, "w": G[id].w, "label": G[id].zh, "sub": ""}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-greet", sets) %}{{ m.drill("drill-greet", "听寒暄语选意思", "听到一句寒暄，选出它的意思。") }}{% endif %}
+
+{{ m.src([
+  "「こんにちは」「こんばんは」的「は」写作は读作わ：文化庁《現代仮名遣い》本文第 2-2（助词「は」的例中明列「こんにちは　こんばんは」）。",
+  "音频：每句男女声各一条，经语音识别反向转写，与假名读音逐字比对一致后发布。",
+  "用法说明参照《新版中日交流标准日本语》、日本国际交流基金会《いろどり 生活の日本語》等主流教材的通行解释，并经独立模型逐条审校。",
+]) }}
+{% endblock %}

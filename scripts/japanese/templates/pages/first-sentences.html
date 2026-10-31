@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 10 课", h1="第一句日语：自我介绍", narrow=True, tools=True,
+   desc="日语第一个句型「AはBです」：主题助词は（读 wa）、疑问助词か、所属助词の、否定「じゃありません」，以及完整的自我介绍，配男女声音频。",
+   lead="用学过的假名说出完整的句子。这一课只学一个句型「<span lang=\"ja\" class=\"jpw\">AはBです</span>」（A 是 B），它足够完成一段自我介绍。",
+   meta=["1 个句型 4 个助词", "预计 1–2 天", "入门的最后一课"])) %}
+{% set S = {} %}{% for x in C.sentences %}{% set _ = S.update({x.id: x}) %}{% endfor %}
+{% macro sent(id) -%}{%- set x = S[id] -%}
+<div class="pair"><div class="pr"><div class="pi">{{ m.say(id, "", x.r) }}<div><div class="jw" lang="ja">{{ x.w }}</div><div class="zh">{{ x.zh }}{% if x.gloss %}<br><span style="color:var(--dim)">{{ x.gloss }}</span>{% endif %}</div></div></div></div></div>
+{%- endmacro %}
+{% block content %}
+<h2 id="pattern">句型：AはBです</h2>
+<div class="pairs">{{ sent("s-tanaka") }}{{ sent("s-kore-hon") }}</div>
+<ul>
+  <li><b>は</b>：提示「主题」——「说到 A 嘛」。作助词时<b>写は、读 wa</b>。</li>
+  <li><b>です</b>：礼貌地表示「是」。句末的「す」常常轻得几乎听不见（元音清化），听音频注意这一点，但不要刻意吞掉整个音节。</li>
+  <li>日语句子的谓语在最后，这和中文语序不同（第 0 课讲过 SOV）。</li>
+</ul>
+
+<h2 id="question">疑问：句末加「か」</h2>
+<div class="pairs">{{ sent("s-kore-nan") }}{{ sent("s-gakusei-ka") }}</div>
+<p>把「か」加在句末就成了疑问句，语序不变。礼貌的疑问句在书面上用「。」结尾而不是「？」也很常见。「〜さん」接在别人的姓或名后面表示尊称（相当于「先生／女士」），<b>不能用在自己身上</b>。</p>
+
+<h2 id="no">「の」：……的</h2>
+<div class="pairs">{{ sent("s-watashi-kasa") }}</div>
+<p>「{{ m.jp("私の傘") }}」= 我的伞。「これ・それ」分别是「这个」（离说话人近）和「那个」（离听话人近）。</p>
+
+<h2 id="answer">回答：はい／いいえ</h2>
+<div class="pairs">{{ sent("s-hai-gakusei") }}{{ sent("s-iie") }}</div>
+<p>否定「不是」用「<span lang="ja" class="jpw">じゃありません</span>」，更正式、书面的说法是「<span lang="ja" class="jpw">ではありません</span>」（意思相同）。</p>
+
+<h2 id="intro">完整的自我介绍</h2>
+<div class="pairs">
+{{ sent("s-hajime") }}{{ sent("s-tanaka") }}{{ sent("s-chugoku") }}{{ sent("s-kaishain") }}{{ sent("s-yoroshiku") }}
+</div>
+<p>把「田中」换成你的名字就能用。中文名字在日语里常见两种念法：按日语汉字音读（例如「王」读おう），或按中文发音用片假名写（例如ワン）。<b>你可以自己选</b>，选定之后统一用一种。</p>
+{% call m.callout("入门完成之后") %}<p>学到这里，你已经会读写全部假名、知道日语的发音和声调规律，也能说出第一段完整的话。下一阶段（初级上，约 N5）会系统学习动词、形容词和更多助词。每天的间隔重复练习请继续——假名要熟到不用想就能读出来。</p>{% endcall %}
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [[{"id":"s-kore-hon","w":S["s-kore-hon"].w,"label":S["s-kore-hon"].zh},{"id":"s-kore-nan","w":S["s-kore-nan"].w,"label":S["s-kore-nan"].zh},{"id":"s-watashi-kasa","w":S["s-watashi-kasa"].w,"label":S["s-watashi-kasa"].zh}],
+  [{"id":"s-hai-gakusei","w":S["s-hai-gakusei"].w,"label":S["s-hai-gakusei"].zh},{"id":"s-iie","w":S["s-iie"].w,"label":S["s-iie"].zh},{"id":"s-gakusei-ka","w":S["s-gakusei-ka"].w,"label":S["s-gakusei-ka"].zh}],
+  [{"id":"s-hajime","w":S["s-hajime"].w,"label":S["s-hajime"].zh},{"id":"s-chugoku","w":S["s-chugoku"].w,"label":S["s-chugoku"].zh},{"id":"s-yoroshiku","w":S["s-yoroshiku"].w,"label":S["s-yoroshiku"].zh}]] %}
+{% if drill_sets("drill-sent", sets) %}{{ m.drill("drill-sent", "听句子选意思", "听整句，选出意思。") }}{% endif %}
+
+{{ m.src([
+  "助词「は」写は读わ：文化庁《現代仮名遣い》本文第 2-2。",
+  "句末「す」的清化：Okada (1991)：句末不带重音的 /su/ 常弱化为 [s]；但全国录音调查显示词末清化率整体偏低（邊姫京 2007，『日本語の研究』3(1)），所以这里只说「常常」。",
+  "音频：每句男女声各一条，经语音识别反向转写比对后发布。",
+]) }}
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 5 课", h1="片假名与外来语", narrow=False, tools=True, kana=True,
+   desc="片假名：与平假名同一套读音、另一套字形。易混字（シ/ツ、ソ/ン）的笔顺区别、长音符ー、外来语特殊组合（ファ、ティ等，依《外来語の表記》），配音频与听辨练习。",
+   lead="片假名和平假名是<b>同一套读音</b>的两套字形。主要用来写外来语、外国人名地名、拟声词，以及想强调的词。读音你已经全会了，这一课只学字形和外来语的拼写习惯。",
+   meta=["46＋25＋33 个", "预计 2–3 天", "重点：シツソン"])) %}
+{% block content %}
+<h2 id="table">片假名表</h2>
+<h3>清音</h3>
+{{ m.kana_grid(KM.SEION_ROWS, "k") }}
+<h3>浊音・半浊音</h3>
+{{ m.kana_grid(KM.DAKUON_ROWS, "k") }}
+<h3>拗音</h3>
+{{ m.kana_grid(KM.YOUON_ROWS, "k", "youon", ("ya","yu","yo")) }}
+<p>片假名多是取汉字的<b>一部分</b>（偏旁或几笔）而成，例如「ア」取「阿」的左边、「イ」取「伊」的左边。点格子可以看到每个字的字源和笔顺。</p>
+
+<h2 id="confusable">最容易混的四个：シ ツ ソ ン</h2>
+<p>四个字都是「短笔＋长笔」，区别全在<b>笔画的方向</b>——这正是必须看笔顺的原因。点下面的字看动画：</p>
+<table class="kgrid" lang="ja" style="max-width:420px"><tbody><tr>
+{% for k in ["シ","ツ","ソ","ン"] %}{% set kk = kconv(k, "k") %}<td><button class="kcell" type="button" data-k="{{ kk }}" data-id="{{ K[kk].id }}" aria-label="{{ kk }}，{{ K[kk].rom }}"><span class="k">{{ kk }}</span><span class="r rom-opt">{{ K[kk].rom }}</span></button></td>{% endfor %}
+</tr></tbody></table>
+<ul>
+  <li><b>シ</b>（shi）和<b>ン</b>（n）：长笔都是<b>从左下往右上挑</b>。シ 左边两个短笔上下排列，ン 只有一个短笔。</li>
+  <li><b>ツ</b>（tsu）和<b>ソ</b>（so）：长笔都是<b>从右上往左下撇</b>。ツ 上面两个短笔左右并排，ソ 只有一个短笔。</li>
+</ul>
+<div class="callout warn"><span class="ct">其他形近字</span><span lang="ja" class="jpw">ク／ケ／タ</span>、<span lang="ja" class="jpw">ス／ヌ</span>、<span lang="ja" class="jpw">コ／ユ</span>、<span lang="ja" class="jpw">ワ／ウ／フ</span>、<span lang="ja" class="jpw">チ／テ／ナ</span>、<span lang="ja" class="jpw">マ／ム</span>、<span lang="ja" class="jpw">ノ／メ</span>。另外，<span lang="ja" class="jpw">へ／ヘ</span>平假名和片假名几乎一模一样。</div>
+{% call m.callout("中文母语者：和汉字长得一样的片假名", "zh") %}<p><span lang="ja" class="jpw">カ</span>（ka）≈ 力、<span lang="ja" class="jpw">エ</span>（e）≈ 工、<span lang="ja" class="jpw">ニ</span>（ni）≈ 二、<span lang="ja" class="jpw">ハ</span>（ha）≈ 八、<span lang="ja" class="jpw">ロ</span>（ro）≈ 口、<span lang="ja" class="jpw">タ</span>（ta）≈ 夕、<span lang="ja" class="jpw">ト</span>（to）≈ 卜。读日文时靠上下文分辨：夹在片假名词里的就是片假名。</p>{% endcall %}
+
+<h2 id="loan">外来语的写法</h2>
+<ul>
+  <li><b>长音用「ー」</b>：横写是横线，竖写是竖线。{{ m.jp("コーヒー") }}（咖啡）有两个长音。</li>
+  <li><b>促音用小「ッ」</b>：{{ m.jp("ベッド") }}（床）、{{ m.jp("チケット") }}（票）。</li>
+  <li><b>原词不一定是英语</b>：{{ m.jp("パン") }}（面包）来自葡萄牙语，{{ m.jp("ビール") }}（啤酒）来自荷兰语。</li>
+  <li><b>很多词会被缩短</b>：{{ m.jp("コンビニ") }}（便利店）、{{ m.jp("スマホ") }}（智能手机）。</li>
+</ul>
+{{ m.words(WL(C.katakana_words), False) }}
+{% for p in [{"items": [{"w": "ビル", "r": "びる", "zh": "大楼"}, {"w": "ビール", "r": "びーる", "zh": "啤酒"}], "note": "长音在片假名里同样区分意思"}] %}{% if ok_word(p["items"][0].w, p["items"][0].r) and ok_word(p["items"][1].w, p["items"][1].r) %}<div class="pairs">{{ m.pair(p) }}</div>{% endif %}{% endfor %}
+
+<h2 id="extended">外来语专用的组合</h2>
+<p>为了更接近外语原音，片假名有一些平假名里没有的组合：大写假名后跟小写的ァィゥェォ。日本政府 1991 年的《外来語の表記》（内阁告示第 2 号）把它们分成两张表：<b>第 1 表</b>是一般通用的写法，<b>第 2 表</b>是想更贴近原音时才用的写法（通常也可以写成普通假名，例如 ウィ 可写 ウイ、ヴァ 可写 バ）。</p>
+<div class="tablewrap"><table>
+<tr><th>组合</th><th>读音</th><th>输入法</th><th>例词</th><th>表</th></tr>
+{% for kk, rom, typ, ipa, tbl, ex, exzh in KM.EXTENDED %}{% set _ = kconv(kk, "k") %}
+<tr><td lang="ja" style="font-size:20px">{{ kk }} {{ m.say(K[kk].id, "", kk) }}</td><td class="ipa">[{{ ipa }}]</td><td class="rom">{{ typ }}</td><td><span lang="ja">{{ ex }}</span> {{ m.say(slug(ex, KM.to_hiragana(ex)), "", ex) }} <span style="color:var(--dim);font-size:13px">{{ exzh }}</span></td><td>第 {{ tbl }} 表</td></tr>
+{% endfor %}
+</table></div>
+<p style="font-size:14px;color:var(--dim)">「ヴ」虽然写法特别，但日本人一般读得和バ行一样（<span class="ipa">[b]</span>）；ファ・フィ・フェ・フォ 的 f 是双唇的 <span class="ipa">[ɸ]</span>，和ふ相同，不是英语的唇齿 f。</p>
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for row in [["シ","ツ"],["ソ","ン"],["シ","ン"],["ツ","ソ"],["ク","ケ","タ"],["ス","ヌ"],["コ","ユ"],["ワ","ウ","フ"],["チ","テ","ナ"],["マ","ム"],["ノ","メ"],["ア","マ"],["ル","レ"],["ロ","コ"]] %}{% set opts = [] %}{% for k in row %}{% set _ = opts.append({"id": K[k].id, "w": k, "label": k}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-kata", sets) %}{{ m.drill("drill-kata", "听音选片假名", "选项都是形近字：先在心里想这个音的片假名长什么样，再选。") }}{% endif %}
+
+{{ m.src([
+  "片假名字源：英文维基词典、日文维基词典、维基百科字源图三方对照，ア–ト 另对照三省堂《大辞林》「片仮名漢字対応」表；不一致的（ツ、ニ、ノ、ン 等）标「诸说」。",
+  "外来语组合与长音符：文化庁《外来語の表記》（1991 年内阁告示第 2 号）第 1 表、第 2 表及注；ヴ的实际读音、ファ行为 [ɸ]：Okada (1991) 与 Wikipedia「Japanese phonology」转引 Vance (2008)。",
+  "输入法拼法：Apple《日本語入力プログラム ユーザガイド》英字とかなの対応表。",
+]) }}
+{% endblock %}

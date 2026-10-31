@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 9 课", h1="数字", narrow=False, tools=True,
+   desc="日语数字 0 到一万：4/7/9/0 的两种读法、百与千的音变（さんびゃく・ろっぴゃく・はっぴゃく・さんぜん・はっせん）、一万要说いちまん；男女声音频与听数字练习。",
+   lead="日语数字的结构和中文几乎一样（十一、二十、三百……也按「万」进位），难点只有两个：<b>几个数有两种读法</b>，以及<b>百、千前面的音变</b>。",
+   meta=["0 ～ 10000", "预计 1 天", "重点：音变"])) %}
+{% set N = {} %}{% for x in C.numbers %}{% set _ = N.update({x.id: x}) %}{% endfor %}
+{% macro num(id) -%}{%- set x = N[id] -%}{%- set iid = "num-" ~ id[1:] -%}
+<tr><td style="font-size:18px">{{ x.num }}</td><td><span lang="ja" class="jpw">{{ x.r }}</span> {{ m.say(iid, "", x.r) }}{% if x.alt %} <span style="color:var(--dim)">／</span> <span lang="ja" class="jpw">{{ x.alt }}</span> {{ m.say(iid ~ "-alt", "", x.alt) }}{% endif %}</td><td lang="ja" style="color:var(--muted)">{{ x.w }}</td></tr>
+{%- endmacro %}
+{% block content %}
+<h2 id="basic">0 到 10</h2>
+<div class="tablewrap"><table>
+<tr><th>数字</th><th>读法</th><th>汉字</th></tr>
+{% for id in ["n0","n1","n2","n3","n4","n5","n6","n7","n8","n9","n10"] %}{{ num(id) }}{% endfor %}
+</table></div>
+<ul>
+  <li><b>4、7、9 有两种读法。</b>单独报一个数字、需要对方听清时，常用「よん」「なな」「きゅう」；从一开始顺着数时，也常说「いち、に、さん、<b>し</b>、ご、ろく、<b>しち</b>、はち、<b>く</b>、じゅう」。具体用哪个还会随月份、时间和量词而定，例如 {{ m.jp("四月") }}（しがつ）、{{ m.jp("七月") }}（しちがつ）、{{ m.jp("九月") }}（くがつ）。遇到一个记一个即可。</li>
+  <li>「し」「く」与「死」「苦」同音，这是生活中避开它们的常见原因之一。</li>
+  <li><b>0</b>：日常多说「ゼロ」（来自外语），也说「れい」（汉字「零」）。</li>
+</ul>
+
+<h2 id="tens">11 到 99：和中文一样组合</h2>
+<div class="tablewrap"><table>
+<tr><th>数字</th><th>读法</th><th>汉字</th></tr>
+{% for id in ["n11","n14","n17","n20","n40","n70","n90"] %}{{ num(id) }}{% endfor %}
+</table></div>
+<p>十位、个位直接拼起来：14 = 十＋四 = じゅうよん。40、70、90 通常读よんじゅう、ななじゅう、きゅうじゅう。</p>
+
+<h2 id="big">百、千、万：音变要逐个记</h2>
+<div class="tablewrap"><table>
+<tr><th>数字</th><th>读法</th><th>汉字</th></tr>
+{% for id in ["n100","n300","n600","n800","n1000","n3000","n8000","n10000"] %}{{ num(id) }}{% endfor %}
+</table></div>
+{% call m.callout("容易错的四点") %}
+<p>① <b>300 さんびゃく、3000 さんぜん</b>：ん 后面浊化（ひゃく→びゃく，せん→ぜん）。</p>
+<p>② <b>600 ろっぴゃく、800 はっぴゃく</b>：变成促音＋半浊音。<b>8000 はっせん</b>同样有促音。</p>
+<p>③ <b>100 读「ひゃく」，前面不加「いち」；1000 一般读「せん」</b>（也有人说「いっせん」，初学先记せん）；但 <b>10000 必须说「いちまん」</b>，「まん」不能单独表示一万。</p>
+<p>④ 日语和中文一样以「万」为单位进位：十万 じゅうまん、一百万 ひゃくまん。这一点中文母语者比英语母语者占便宜。</p>
+{% endcall %}
+
+<h2 id="drill">听数字练习</h2>
+{% set sets = [] %}
+{% for grp in [["n300","n600","n800"],["n3000","n8000","n1000"],["n14","n40","n4"],["n17","n70","n7"],["n90","n9","n10"],["n100","n10000","n1000"],["n11","n20","n2"]] %}{% set opts = [] %}{% for id in grp %}{% set _ = opts.append({"id": "num-" ~ id[1:], "w": N[id].num, "label": N[id].num, "sub": ""}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-num", sets) %}{{ m.drill("drill-num", "听音选数字", "听到读音，选出对应的数字。专门挑了音变和容易混的组合。") }}{% endif %}
+
+{{ m.src([
+  "数字读法与音变：音频经语音识别转写后，与按音变规则生成的读法逐一比对（校验器内置 0–99999 的读法生成，含 さんびゃく・ろっぴゃく・はっぴゃく・さんぜん・はっせん）。",
+  "月份读法（しがつ・しちがつ・くがつ）为通行读法，见各主流教材。",
+]) }}
+{% endblock %}

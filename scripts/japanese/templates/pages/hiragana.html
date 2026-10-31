@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 1 课", h1="平假名·清音", narrow=False, tools=True, kana=True,
+   desc="46 个平假名清音：男女声发音、笔顺动画、字源（由哪个汉字草书而来）、IPA、输入法拼法与例词，每条音频都经过语音识别校验。",
+   lead="平假名是日语最基本的文字：语法成分、和语词都靠它书写。这一课把 46 个清音一次学完——点任意格子听发音、看笔顺和字源。",
+   meta=["46 个假名", "预计 2–4 天", "配套：练习页「平假名·清音」"])) %}
+{% block content %}
+<h2 id="how">这一课怎么学</h2>
+<ol>
+  <li><b>听：</b>一行一行点格子，跟着读出声。用工具栏切换女声/男声，两种声音都听——同一个音听不同的人说，更容易抓住它真正的特征。</li>
+  <li><b>看：</b>格子会弹出详情：笔顺动画、字源、IPA、输入法拼法和一个例词。</li>
+  <li><b>写：</b>照着笔顺在纸上写几遍。手写能帮你分清形近的假名（ぬ/め、る/ろ、わ/れ/ね）。</li>
+  <li><b>练：</b>每天去「<a href="/japanese/practice/">练习</a>」选「平假名·清音」。不必一次全部背熟，交给间隔重复。</li>
+</ol>
+
+<h2 id="table">清音表（五十音图）</h2>
+<p>竖着看是「段」（同一个元音 a i u e o），横着看是「行」（同一个辅音）。「五十音」是历史名称，现代实际使用的是下面 46 个。</p>
+{{ m.kana_grid(KM.SEION_ROWS, "h") }}
+<p style="font-size:13.5px;color:var(--dim)">表中罗马字为修正黑本式（ヘボン式）。日本政府 2025 年 12 月公布的新《ローマ字のつづり方》（令和 7 年内阁告示第 4 号）也以黑本式为基础。罗马字只是起步时的拐杖，越早脱离越好。</p>
+
+<h2 id="rows">逐行发音要点</h2>
+<p>下面只写对中文母语者真正有用的提醒。每条后面的 IPA 是国际音标，可以对照拼音理解，但<b>拼音只是近似</b>，最终以音频为准。</p>
+<h3>あ行：五个元音 <span class="ipa">[a i ɯ e o]</span></h3>
+<ul>
+  <li><b>う</b>：嘴唇<b>不要</b>像普通话 u（「乌」）那样撅圆向前，放松、微微收拢即可。这是中文母语者最容易带出来的口音之一。</li>
+  <li><b>え</b>：接近汉语「欸（ê）」里的元音；不要读成拼音 e（「饿」）。</li>
+  <li><b>お</b>：一个单纯的 o，从头到尾嘴型不变，不要滑成「欧（ou）」。</li>
+</ul>
+<h3>か行 <span class="ipa">[ka kʲi kɯ ke ko]</span></h3>
+<p>日语的 k 送气很弱，词中的か几乎不送气。中文母语者常把词中的「か」听成「が」——原因和对策见<a href="/japanese/pronunciation/">第 6 课</a>。</p>
+<h3>さ行 <span class="ipa">[sa ɕi sɯ se so]</span></h3>
+<p><b>し</b>的辅音是 <span class="ipa">[ɕ]</span>，和拼音 <b>xi</b> 的 x 相同，<b>不是</b>拼音 shi（翘舌）。罗马字写成 shi，别被拼写骗了。</p>
+<h3>た行 <span class="ipa">[ta tɕi tsɯ te to]</span></h3>
+<p><b>ち</b>的辅音 <span class="ipa">[tɕ]</span> 和拼音 j / q 同部位（日语送气弱）；<b>つ</b>的辅音 <span class="ipa">[ts]</span> 和拼音 z / c 的声母相同，后面接的是日语的う。</p>
+<h3>な行 <span class="ipa">[na ɲi nɯ ne no]</span></h3>
+<p>普通话区分 n 和 l，但如果你的母方言是粤语、闽语或西南官话（如四川、重庆、云南、湖北等地），可能会混淆な行和ら行，<a href="/japanese/pronunciation/#nl">第 6 课</a>有专门的听辨练习。</p>
+<h3>は行 <span class="ipa">[ha çi ɸɯ he ho]</span></h3>
+<ul>
+  <li><b>ひ</b>：辅音是硬腭擦音 <span class="ipa">[ç]</span>，舌面贴近硬腭吹气。</li>
+  <li><b>ふ</b>：辅音是双唇擦音 <span class="ipa">[ɸ]</span>——两片嘴唇靠近轻轻吹气，<b>上齿不碰下唇</b>，所以它不是拼音 f。也不用刻意用力吹。</li>
+</ul>
+<h3>ま行・や行</h3>
+<p>ま行没有特别的难点。や行只有や・ゆ・よ三个（现代日语没有「yi」「ye」这两个假名）。</p>
+<h3>ら行 <span class="ipa">[ɾa ɾʲi ɾɯ ɾe ɾo]</span></h3>
+<p>舌尖在上齿龈处<b>轻轻弹一下</b>（闪音），介于拼音 l 和 d 之间；不是拼音 r（「日」的声母）。日本人发得像 l 也很常见，都在正常范围内。</p>
+<h3>わ・を・ん</h3>
+<ul>
+  <li><b>わ</b>：嘴唇几乎不圆，不要像普通话「哇」那样撅嘴。</li>
+  <li><b>を</b>：在现代标准日语里和<b>お读音相同</b> <span class="ipa">[o]</span>，只用来写助词（如「{{ m.jp("本を読む") }}」读书）。打字时要打 <code>wo</code>。</li>
+  <li><b>ん</b>：独占一拍，实际发音随后面的音变化（<a href="/japanese/special-morae/">第 4 课</a>详讲）。打字时一般打 <code>nn</code>。</li>
+</ul>
+
+<h2 id="words">例词</h2>
+<p>每个假名配一个只用清音写成的常用词，学完这一课就能读。橙色的点线是声调：点在上方 = 高，在下方 = 低，空心点表示后面接助词「が」时的高低；圆圈数字是声调类型（第 7 课详讲，现在先听个大概）。声调标注来自两部词典；例词音频校验的是<b>读音</b>，声调以标注为准（声调专门在第 7 课用经过核验的音频练）。</p>
+<div class="words">
+{% for _, row in KM.SEION_ROWS %}{% for k in row %}{% if k and k in ex_slots %}{% set x = ex_slots[k] %}{{ m.word(x.w, x.r, True, "「" ~ k ~ "」") }}{% endif %}{% endfor %}{% endfor %}
+</div>
+
+<h2 id="handwriting">印刷体和手写体不一样</h2>
+<p>很多字体会把笔画连在一起：例如「き」「さ」在屏幕上常是连笔。初学手写建议采用教科书常用的分笔写法（き 4 画、さ 3 画），也就是本页笔顺动画的写法（来自 KanjiVG 笔顺数据）；连写的字形同样存在，认的时候要习惯各种字体。</p>
+<div class="callout warn"><span class="ct">形近字，写的时候注意</span>
+<span lang="ja" class="jpw">ぬ／め</span>（ぬ 末尾打圈）、<span lang="ja" class="jpw">る／ろ</span>（る 末尾打圈）、<span lang="ja" class="jpw">わ／れ／ね</span>（看最后一笔的走向）、<span lang="ja" class="jpw">は／ほ</span>（ほ 右边上方多一横）、<span lang="ja" class="jpw">い／り</span>、<span lang="ja" class="jpw">さ／き</span>、<span lang="ja" class="jpw">こ／に</span>。</div>
+
+<h2 id="origin">用字源帮自己记</h2>
+<p>平假名都是从汉字的<b>草书</b>演变来的（例如「あ」来自「安」，「か」来自「加」）。对中文母语者，这是现成的记忆钩子：点格子在详情里能看到每个假名的字源。少数字源有不同说法（如「つ」有「川」「州」两说），本站如实标为「诸说」，不替你选一个。</p>
+
+<h2 id="typing">现在就装上日语输入法</h2>
+<p>手机和电脑的系统设置里都能直接添加「日语（罗马字）」输入法：用罗马字打出假名，再按空格转换成汉字。详情里「输入法」一栏就是该打的键。几个和罗马字拼写不一样的地方：</p>
+<div class="tablewrap"><table>
+<tr><th>要打的假名</th><th>罗马字拼写</th><th>键盘输入</th></tr>
+<tr><td lang="ja">し・ち・つ・ふ</td><td class="rom">shi chi tsu fu</td><td class="rom">si/shi · ti/chi · tu/tsu · hu/fu（两种都行）</td></tr>
+<tr><td lang="ja">を</td><td class="rom">o</td><td class="rom">wo</td></tr>
+<tr><td lang="ja">ん</td><td class="rom">n</td><td class="rom">nn（许多输入法也支持 n' 或 xn）；后面接元音、y 或 n 时，要用 nn 或 n' 把「ん」和后面的假名明确分开</td></tr>
+</table></div>
+
+<h2 id="drill">听辨练习</h2>
+{% set rowsets = [] %}
+{% for name, row in KM.SEION_ROWS %}{% set opts = [] %}{% for k in row %}{% if k %}{% set _ = opts.append({"id": K[k].id, "w": k, "label": k}) %}{% endif %}{% endfor %}{% if opts|length > 1 %}{% set _ = rowsets.append(opts) %}{% endif %}{% endfor %}
+{% set confuse = [["し","す"],["つ","す"],["ち","し"],["ひ","し"],["ふ","ほ"],["な","ら"],["ぬ","る"],["の","ろ"],["え","い"],["う","お"]] %}
+{% for c in confuse %}{% set opts = [] %}{% for k in c %}{% set _ = opts.append({"id": K[k].id, "w": k, "label": k}) %}{% endfor %}{% set _ = rowsets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-hira", rowsets) %}{{ m.drill("drill-hira", "听音选假名", "每题随机用女声或男声播放一个假名，从同一行或容易混淆的几个里选出来。答完可以点各个选项对比着听。") }}{% endif %}
+
+{{ m.src([
+  "笔顺：<a href=\"https://kanjivg.tagaini.net/\" target=\"_blank\" rel=\"noopener\">KanjiVG</a>（CC BY-SA 3.0），笔画数与独立数据集 animCJK 逐字核对，全部一致。",
+  "字源：英文维基词典、日文维基词典、维基百科字源图三方对照；不一致的标「诸说」。",
+  "IPA：Okada, H. (1991) <i>Japanese</i>. Journal of the International Phonetic Association 21(2)；を的读音：文化庁《現代仮名遣い》（1986 年内阁告示第 1 号）第 2。",
+  "罗马字：令和 7 年（2025 年）内阁告示第 4 号《ローマ字のつづり方》；输入法拼法：Apple《日本語入力プログラム ユーザガイド》英字とかなの対応表。",
+  "音频：每个假名男女声各一条，经语音识别 + 音素识别双重校验；未通过的声音不上线（例如男声的「ん」合成出静音，该格只提供女声）。详见<a href=\"/japanese/verification/\">校验报告</a>。",
+]) }}
+{% endblock %}

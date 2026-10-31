@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 2 课", h1="浊音·半浊音", narrow=False, tools=True, kana=True,
+   desc="平假名浊音与半浊音（が・ざ・だ・ば・ぱ行）：声带振动的清浊对立、じ＝ぢ・ず＝づ 及其写法规则，配男女声音频与清浊听辨练习。",
+   lead="在假名右上角加两点「゛」（浊点）变成浊音，加一个圈「゜」（半浊点）变成半浊音。这一课的关键不是记形状——形状几乎不用记——而是<b>真正发出浊音</b>。",
+   meta=["25 个假名", "预计 1 天", "重点：声带振动"])) %}
+{% block content %}
+<h2 id="table">浊音・半浊音表</h2>
+{{ m.kana_grid(KM.DAKUON_ROWS, "h") }}
+<p>规律很简单：か→が、さ→ざ、た→だ、は→ば（浊点），は→ぱ（半浊点）。注意<b>は行变浊音是 b、变半浊音是 p</b>，不是 h 的浊化。</p>
+
+<h2 id="voicing">浊音 = 声带振动</h2>
+<p>日语区分「清」和「浊」，区别在<b>辅音</b>：浊辅音（が・ざ・だ・ば 的辅音）通常伴随声带振动，清辅音（か・さ・た・ぱ 的辅音）不振动；后面的元音两者都振动。练习时可以把手指放在喉咙上，延长发辅音的部分（如 b 的闭口阶段）来体会振动——这只是辅助手段：实际上日本人词首的浊塞音有时振动也不明显，听辨还靠送气、时长等其他线索，所以最终以耳朵和音频为准。</p>
+{% call m.callout("中文母语者注意", "zh") %}<p>普通话拼音的 b、d、g 其实是<b>不送气的清音</b>（声带不振动），不是日语意义上的浊音。如果照拼音 b/d/g 去发ば/だ/が，日本人常会听成ぱ/た/か。普通话区分的是「送气 vs 不送气」（p vs b），日语区分的是「清 vs 浊」——两套系统不是一回事，第 6 课会专门练。</p>{% endcall %}
+
+<h2 id="ji-zu">じ＝ぢ，ず＝づ</h2>
+<p>在现代标准日语里，<b>ぢ和じ读音相同，づ和ず读音相同</b>（都读 <span class="ipa">[(d)ʑi]</span> 和 <span class="ipa">[(d)zɯ]</span>）。所以只要会写就行，不必学新的音。</p>
+<p>那什么时候写ぢ/づ？按文化庁《現代仮名遣い》第 2-5 条，只有两种情况：</p>
+<ol>
+  <li><b>同音连呼</b>：前一个音是ち/つ，后面浊化成ぢ/づ，例如 {{ m.jp("ちぢむ") }}（缩）、{{ m.jp("つづく") }}（继续）。</li>
+  <li><b>两个词复合时第二个词首浊化</b>，例如 {{ m.jp("はなぢ") }}（鼻＋血 → 鼻血）、{{ m.jp("みかづき") }}（三日＋月 → 月牙）、{{ m.jp("こづつみ") }}（小＋包 → 包裹）。</li>
+</ol>
+<p>其余一律写じ/ず，包括「世界中」{{ m.jp("せかいじゅう") }}这类现代人已不把它当两个词的情况（该条也允许写せかいぢゅう，但以じ为准）。打字时：ぢ 打 <code>di</code>，づ 打 <code>du</code>。</p>
+
+<h2 id="za-row">ざ行的两种读法都对</h2>
+<p>ざ・じ・ず・ぜ・ぞ 在词首或「ん」后面多读成塞擦音 <span class="ipa">[dz]/[dʑ]</span>，在两个元音之间常常读成擦音 <span class="ipa">[z]/[ʑ]</span>。这只是倾向，不是硬规则，日本人自己也不区分。你听到两种读法都正常，发哪一种都可以。</p>
+
+<h2 id="nasal">が行的「鼻浊音」：知道即可</h2>
+<p>传统的东京音里，词中的が行会读成带鼻音的 <span class="ipa">[ŋ]</span>（鼻浊音）。但这个读法已经大幅衰退：一项 2009 年的全国调查显示，用鼻浊音的人只有约两成，20 多岁人群仅约 6%（首都圈 20 多岁为 0%）。所以初学者<b>一律读 [g] 就好</b>。如果以后听到播音员用鼻浊音，知道是怎么回事即可。</p>
+
+<h2 id="words">例词</h2>
+<div class="words">
+{% for _, row in KM.DAKUON_ROWS %}{% for k in row %}{% if k in ex_slots %}{% set x = ex_slots[k] %}{{ m.word(x.w, x.r, True, "「" ~ k ~ "」") }}{% endif %}{% endfor %}{% endfor %}
+</div>
+
+<h2 id="pairs">清浊对比</h2>
+<p>下面每一对只差在清浊（两个词声调也相同，所以只能靠清浊来分辨）。先点着对比听，再做练习。</p>
+<div class="pairs">
+{% for p in C.pairs.seidaku %}{% if ok_word(p["items"][0].w, p["items"][0].r) and ok_word(p["items"][1].w, p["items"][1].r) and heard_accent(slug(p["items"][0].w, p["items"][0].r)) == heard_accent(slug(p["items"][1].w, p["items"][1].r)) %}{{ m.pair(p) }}{% endif %}{% endfor %}
+</div>
+{% set sets = [] %}
+{% for p in C.pairs.seidaku %}{% if heard_accent(slug(p["items"][0].w, p["items"][0].r)) == heard_accent(slug(p["items"][1].w, p["items"][1].r)) %}{% set opts = [] %}{% for x in p["items"] %}{% set _ = opts.append({"w": x.w, "r": x.r, "label": x.w, "sub": x.r ~ " · " ~ x.zh}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endif %}{% endfor %}
+{% for row in [["か","が"],["さ","ざ"],["た","だ"],["は","ば","ぱ"],["き","ぎ"],["し","じ"],["こ","ご"],["と","ど"],["ほ","ぼ","ぽ"]] %}{% set opts = [] %}{% for k in row %}{% set _ = opts.append({"id": K[k].id, "w": k, "label": k}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-dakuon", sets) %}{{ m.drill("drill-dakuon", "清浊听辨", "混合了单个假名和整词。听到的是清音还是浊音？答完点两个选项来回对比，比单纯「做对」更有用。") }}{% endif %}
+
+{{ m.src([
+  "ぢ・づ 的写法：文化庁《現代仮名遣い》（1986 年内阁告示第 1 号，2010 年一部改正）本文第 2-5。",
+  "ぢ＝じ、づ＝ず 同音：令和 7 年内阁告示第 4 号《ローマ字のつづり方》本表注，及文化庁同告示 Q&A 問 17。",
+  "ざ行塞擦/擦音交替：Okada (1991)，JIPA 21(2)。",
+  "鼻浊音现状：尾崎喜光（2015）「全国多人数調査から見るガ行鼻音の現状と動態」，ノートルダム清心女子大学紀要 39(1)；NHK 放送文化研究所『放送研究と調査』2017 年 4 月号。",
+  "清浊对比词：两词的声调须经两部词典核对相同、且音频实测一致，才放进这一组。",
+]) }}
+{% endblock %}

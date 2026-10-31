@@ -1,0 +1,241 @@
+# /japanese/ content source. Every audible item on the site is listed here once.
+#
+# Words carry `w` (written form the TTS is fed, usually with kanji so the engine
+# picks the right homophone) and `r` (the hiragana reading we teach). The accent
+# is NOT written by hand: build.py looks the (w, r) pair up in two independent
+# dictionaries (UniDic and Kanjium) and only keeps a word when they agree, then
+# verify.py checks that the synthesized audio actually carries that accent.
+#
+# Where a slot lists several candidates, the first one that passes every check
+# is published; the rest are fallbacks so a single TTS misreading does not leave
+# a hole in a lesson. Rejected candidates are listed in reports/ with the reason.
+
+kana_examples:
+  # target kana -> candidate words (only 清音 kana inside, so a learner on
+  # lesson 1 can read the whole word)
+  あ: [{w: 足, r: あし, zh: 脚}, {w: 朝, r: あさ, zh: 早晨}, {w: 雨, r: あめ, zh: 雨}]
+  い: [{w: 犬, r: いぬ, zh: 狗}, {w: 家, r: いえ, zh: 家；房子}, {w: 椅子, r: いす, zh: 椅子}]
+  う: [{w: 海, r: うみ, zh: 海}, {w: 歌, r: うた, zh: 歌}, {w: 牛, r: うし, zh: 牛}]
+  え: [{w: 駅, r: えき, zh: 车站}, {w: 絵, r: え, zh: 画}]
+  お: [{w: 音, r: おと, zh: 声音（物体发出的）}, {w: 鬼, r: おに, zh: 鬼}]
+  か: [{w: 傘, r: かさ, zh: 伞}, {w: 顔, r: かお, zh: 脸}, {w: 蟹, r: かに, zh: 螃蟹}]
+  き: [{w: 北, r: きた, zh: 北}, {w: 狐, r: きつね, zh: 狐狸}, {w: 木, r: き, zh: 树}]
+  く: [{w: 靴, r: くつ, zh: 鞋}, {w: 口, r: くち, zh: 嘴}, {w: 雲, r: くも, zh: 云}]
+  け: [{w: 煙, r: けむり, zh: 烟}, {w: 景色, r: けしき, zh: 景色}, {w: 今朝, r: けさ, zh: 今天早上}]
+  こ: [{w: 声, r: こえ, zh: 声音（人、动物的）}, {w: 米, r: こめ, zh: 米}, {w: 心, r: こころ, zh: 心}]
+  さ: [{w: 魚, r: さかな, zh: 鱼}, {w: 桜, r: さくら, zh: 樱花}, {w: 猿, r: さる, zh: 猴子}]
+  し: [{w: 塩, r: しお, zh: 盐}, {w: 島, r: しま, zh: 岛}, {w: 鹿, r: しか, zh: 鹿}]
+  す: [{w: 寿司, r: すし, zh: 寿司}, {w: 砂, r: すな, zh: 沙子}, {w: 西瓜, r: すいか, zh: 西瓜}]
+  せ: [{w: 世界, r: せかい, zh: 世界}, {w: 背中, r: せなか, zh: 后背}, {w: 蝉, r: せみ, zh: 蝉}]
+  そ: [{w: 空, r: そら, zh: 天空}, {w: 外, r: そと, zh: 外面}]
+  た: [{w: 竹, r: たけ, zh: 竹子}, {w: 蛸, r: たこ, zh: 章鱼}, {w: 太鼓, r: たいこ, zh: 鼓}]
+  ち: [{w: 力, r: ちから, zh: 力气}, {w: 地下鉄, r: ちかてつ, zh: 地铁}, {w: 父, r: ちち, zh: 父亲（对外称自己的）}]
+  つ: [{w: 月, r: つき, zh: 月亮；月份}, {w: 机, r: つくえ, zh: 桌子}, {w: 爪, r: つめ, zh: 指甲}]
+  て: [{w: 手, r: て, zh: 手}, {w: 天気, r: てんき, zh: 天气}]
+  と: [{w: 鳥, r: とり, zh: 鸟}, {w: 虎, r: とら, zh: 老虎}, {w: 年, r: とし, zh: 年；年龄}]
+  な: [{w: 夏, r: なつ, zh: 夏天}, {w: 名前, r: なまえ, zh: 名字}, {w: 波, r: なみ, zh: 波浪}]
+  に: [{w: 肉, r: にく, zh: 肉}, {w: 西, r: にし, zh: 西}, {w: 庭, r: にわ, zh: 院子}]
+  ぬ: [{w: 布, r: ぬの, zh: 布}, {w: 沼, r: ぬま, zh: 沼泽}]
+  ね: [{w: 猫, r: ねこ, zh: 猫}, {w: 熱, r: ねつ, zh: 发烧；热}]
+  の: [{w: 海苔, r: のり, zh: 海苔}, {w: 飲み物, r: のみもの, zh: 饮料}]
+  は: [{w: 箱, r: はこ, zh: 箱子}, {w: 春, r: はる, zh: 春天}, {w: 花, r: はな, zh: 花}]
+  ひ: [{w: 人, r: ひと, zh: 人}, {w: 光, r: ひかり, zh: 光}, {w: 昼, r: ひる, zh: 白天；中午}]
+  ふ: [{w: 船, r: ふね, zh: 船}, {w: 冬, r: ふゆ, zh: 冬天}, {w: 服, r: ふく, zh: 衣服}]
+  へ: [{w: 部屋, r: へや, zh: 房间}, {w: 臍, r: へそ, zh: 肚脐}]
+  ほ: [{w: 星, r: ほし, zh: 星星}, {w: 本, r: ほん, zh: 书}, {w: 骨, r: ほね, zh: 骨头}]
+  ま: [{w: 町, r: まち, zh: 城镇；街区}, {w: 豆, r: まめ, zh: 豆子}, {w: 枕, r: まくら, zh: 枕头}]
+  み: [{w: 耳, r: みみ, zh: 耳朵}, {w: 店, r: みせ, zh: 商店}, {w: 道, r: みち, zh: 道路}]
+  む: [{w: 虫, r: むし, zh: 虫子}, {w: 胸, r: むね, zh: 胸}, {w: 村, r: むら, zh: 村子}]
+  め: [{w: 目, r: め, zh: 眼睛}]
+  も: [{w: 桃, r: もも, zh: 桃子}, {w: 森, r: もり, zh: 森林}, {w: 餅, r: もち, zh: 年糕；糯米糕}]
+  や: [{w: 山, r: やま, zh: 山}, {w: 野菜, r: やさい, zh: 蔬菜}, {w: 屋根, r: やね, zh: 屋顶}]
+  ゆ: [{w: 雪, r: ゆき, zh: 雪}, {w: 夢, r: ゆめ, zh: 梦}]
+  よ: [{w: 夜, r: よる, zh: 夜晚}, {w: 横, r: よこ, zh: 旁边；横}]
+  ら: [{w: 来年, r: らいねん, zh: 明年}, {w: 楽, r: らく, zh: 轻松}]
+  り: [{w: 栗鼠, r: りす, zh: 松鼠}, {w: 理科, r: りか, zh: 理科}]
+  る: [{w: 留守, r: るす, zh: 不在家}]
+  れ: [{w: 歴史, r: れきし, zh: 历史}]
+  ろ: [{w: 六, r: ろく, zh: 六}]
+  わ: [{w: 私, r: わたし, zh: 我}, {w: 鰐, r: わに, zh: 鳄鱼}]
+  ん: [{w: 本, r: ほん, zh: 书}, {w: 蜜柑, r: みかん, zh: 橘子}]
+
+dakuon_examples:
+  が: [{w: 眼鏡, r: めがね, zh: 眼镜}, {w: 外国, r: がいこく, zh: 外国}]
+  ぎ: [{w: 鍵, r: かぎ, zh: 钥匙}, {w: 銀, r: ぎん, zh: 银}]
+  ぐ: [{w: 家具, r: かぐ, zh: 家具}]
+  げ: [{w: 髭, r: ひげ, zh: 胡子}, {w: 下駄, r: げた, zh: 木屐}]
+  ご: [{w: ご飯, r: ごはん, zh: 米饭；饭}, {w: 午後, r: ごご, zh: 下午}]
+  ざ: [{w: 膝, r: ひざ, zh: 膝盖}]
+  じ: [{w: 時間, r: じかん, zh: 时间}, {w: 火事, r: かじ, zh: 火灾}]
+  ず: [{w: 水, r: みず, zh: 水}, {w: 地図, r: ちず, zh: 地图}]
+  ぜ: [{w: 風, r: かぜ, zh: 风}]
+  ぞ: [{w: 家族, r: かぞく, zh: 家人}, {w: 謎, r: なぞ, zh: 谜}]
+  だ: [{w: 体, r: からだ, zh: 身体}]
+  ぢ: [{w: 鼻血, r: はなぢ, zh: 鼻血}]
+  づ: [{w: 三日月, r: みかづき, zh: 新月；月牙}, {w: 小包, r: こづつみ, zh: 包裹}]
+  で: [{w: 電話, r: でんわ, zh: 电话}]
+  ど: [{w: 窓, r: まど, zh: 窗户}, {w: 喉, r: のど, zh: 喉咙}]
+  ば: [{w: 鞄, r: かばん, zh: 包}]
+  び: [{w: 蛇, r: へび, zh: 蛇}]
+  ぶ: [{w: 豚, r: ぶた, zh: 猪}]
+  べ: [{w: 壁, r: かべ, zh: 墙}]
+  ぼ: [{w: 僕, r: ぼく, zh: 我（男性用）}]
+  ぱ: [{w: 乾杯, r: かんぱい, zh: 干杯}]
+  ぴ: [{w: 鉛筆, r: えんぴつ, zh: 铅笔}]
+  ぷ: [{w: 天ぷら, r: てんぷら, zh: 天妇罗}]
+  ぺ: [{w: ぺこぺこ, r: ぺこぺこ, zh: 饿瘪了（拟态词）}]
+  ぽ: [{w: 散歩, r: さんぽ, zh: 散步}]
+
+youon_examples:
+  - {w: 客, r: きゃく, zh: 客人}
+  - {w: 去年, r: きょねん, zh: 去年}
+  - {w: 写真, r: しゃしん, zh: 照片}
+  - {w: 宿題, r: しゅくだい, zh: 作业}
+  - {w: 食事, r: しょくじ, zh: 用餐}
+  - {w: お茶, r: おちゃ, zh: 茶}
+  - {w: 貯金, r: ちょきん, zh: 存款}
+  - {w: 百, r: ひゃく, zh: 百}
+  - {w: 脈, r: みゃく, zh: 脉搏}
+  - {w: 略, r: りゃく, zh: 省略}
+  - {w: 旅行, r: りょこう, zh: 旅行}
+  - {w: 金魚, r: きんぎょ, zh: 金鱼}
+  - {w: 邪魔, r: じゃま, zh: 打扰；碍事}
+  - {w: 女性, r: じょせい, zh: 女性}
+  - {w: 三百, r: さんびゃく, zh: 三百}
+  - {w: 八百, r: はっぴゃく, zh: 八百}
+
+# Minimal pairs: two (or three) words that differ in exactly one feature.
+pairs:
+  youon:
+    - {id: byouin, note: "拗音「びょ」是一拍，「びよ」是两拍", items: [{w: 病院, r: びょういん, zh: 医院}, {w: 美容院, r: びよういん, zh: 美发店；发廊}]}
+    - {id: kyou, note: "「きょ」一拍 vs「きよ」两拍", items: [{w: 今日, r: きょう, zh: 今天}, {w: 器用, r: きよう, zh: 手巧}]}
+  chouon:
+    - {id: obasan, items: [{w: 伯母さん, r: おばさん, zh: 阿姨；伯母}, {w: お祖母さん, r: おばあさん, zh: 奶奶；外婆}]}
+    - {id: ojisan, items: [{w: 伯父さん, r: おじさん, zh: 叔叔；伯父}, {w: お祖父さん, r: おじいさん, zh: 爷爷；外公}]}
+    - {id: yuki, items: [{w: 雪, r: ゆき, zh: 雪}, {w: 勇気, r: ゆうき, zh: 勇气}]}
+    - {id: tori, items: [{w: 鳥, r: とり, zh: 鸟}, {w: 通り, r: とおり, zh: 大街}]}
+    - {id: koko, items: [{w: ここ, r: ここ, zh: 这里}, {w: 高校, r: こうこう, zh: 高中}]}
+  sokuon:
+    - {id: kitte, items: [{w: 来て, r: きて, zh: 来（て形）}, {w: 切手, r: きって, zh: 邮票}]}
+    - {id: oto, items: [{w: 音, r: おと, zh: 声音}, {w: 夫, r: おっと, zh: 丈夫}]}
+    - {id: saka, items: [{w: 坂, r: さか, zh: 坡}, {w: 作家, r: さっか, zh: 作家}]}
+    - {id: kako, items: [{w: 過去, r: かこ, zh: 过去}, {w: 括弧, r: かっこ, zh: 括号}]}
+  hatsuon:
+    - {id: kinen, note: "「ん」+元音 vs な行音", items: [{w: 記念, r: きねん, zh: 纪念}, {w: 禁煙, r: きんえん, zh: 禁烟}]}
+    - {id: tani, items: [{w: 谷, r: たに, zh: 山谷}, {w: 単位, r: たんい, zh: 单位；学分}]}
+  seidaku:
+    # a pair is only used as a voicing drill if both words also share an accent
+    # (build.py checks this) — otherwise the learner could tell them apart by pitch
+    - {id: kin, note: "清音 vs 浊音：只差声带是否振动", items: [{w: 金, r: きん, zh: 金}, {w: 銀, r: ぎん, zh: 银}]}
+    - {id: tenki, items: [{w: 天気, r: てんき, zh: 天气}, {w: 電気, r: でんき, zh: 电；电灯}]}
+    - {id: kakaku, items: [{w: 価格, r: かかく, zh: 价格}, {w: 科学, r: かがく, zh: 科学}]}
+    - {id: kaigan, items: [{w: 会館, r: かいかん, zh: 会馆}, {w: 海岸, r: かいがん, zh: 海岸}]}
+  accent:
+    - {id: ame, items: [{w: 雨, r: あめ, zh: 雨}, {w: 飴, r: あめ, zh: 糖果}]}
+    - {id: hashi, items: [{w: 箸, r: はし, zh: 筷子}, {w: 橋, r: はし, zh: 桥}, {w: 端, r: はし, zh: 边缘；一端}]}
+    - {id: kaki, items: [{w: 柿, r: かき, zh: 柿子}, {w: 牡蠣, r: かき, zh: 牡蛎}]}
+    - {id: sake, items: [{w: 酒, r: さけ, zh: 酒}, {w: 鮭, r: さけ, zh: 鲑鱼}]}
+    - {id: kami, items: [{w: 神, r: かみ, zh: 神}, {w: 紙, r: かみ, zh: 纸}]}
+    - {id: hana, items: [{w: 花, r: はな, zh: 花}, {w: 鼻, r: はな, zh: 鼻子}]}
+    - {id: ima, items: [{w: 今, r: いま, zh: 现在}, {w: 居間, r: いま, zh: 起居室}]}
+
+accent_types:
+  # four accent types, two examples each (3+ morae for 中高 by definition)
+  heiban: [{w: 桜, r: さくら, zh: 樱花}, {w: 友達, r: ともだち, zh: 朋友}, {w: 日本語, r: にほんご, zh: 日语}, {w: 学生, r: がくせい, zh: 学生}]
+  atamadaka: [{w: 猫, r: ねこ, zh: 猫}, {w: 天気, r: てんき, zh: 天气}, {w: 秋, r: あき, zh: 秋天}, {w: 緑, r: みどり, zh: 绿色}]
+  nakadaka: [{w: お菓子, r: おかし, zh: 点心}, {w: 卵, r: たまご, zh: 鸡蛋}, {w: 先生, r: せんせい, zh: 老师}, {w: 湖, r: みずうみ, zh: 湖}, {w: 飛行機, r: ひこうき, zh: 飞机}]
+  odaka: [{w: 山, r: やま, zh: 山}, {w: 男, r: おとこ, zh: 男人}, {w: 頭, r: あたま, zh: 头}, {w: 妹, r: いもうと, zh: 妹妹}, {w: 弟, r: おとうと, zh: 弟弟}]
+
+katakana_words:
+  # loanwords that exercise ー / small kana / ッ; no accent drills here
+  - {w: コーヒー, r: こーひー, zh: 咖啡（coffee）}
+  - {w: テレビ, r: てれび, zh: 电视（television）}
+  - {w: パン, r: ぱん, zh: 面包（葡萄牙语 pão）}
+  - {w: カメラ, r: かめら, zh: 相机（camera）}
+  - {w: ビール, r: びーる, zh: 啤酒（荷兰语 bier）}
+  - {w: ビル, r: びる, zh: 大楼（building 的省略）}
+  - {w: ノート, r: のーと, zh: 笔记本（note）}
+  - {w: タクシー, r: たくしー, zh: 出租车（taxi）}
+  - {w: コンビニ, r: こんびに, zh: 便利店（convenience store 的省略）}
+  - {w: スマホ, r: すまほ, zh: 智能手机（smartphone 的省略）}
+  - {w: ベッド, r: べっど, zh: 床（bed）}
+  - {w: チケット, r: ちけっと, zh: 票（ticket）}
+
+greetings:
+  - {id: ohayou, w: おはようございます, r: おはようございます, zh: 早上好（礼貌说法）}
+  - {id: konnichiwa, w: こんにちは, r: こんにちは, zh: 你好（白天）}
+  - {id: konbanwa, w: こんばんは, r: こんばんは, zh: 晚上好}
+  - {id: oyasumi, w: おやすみなさい, r: おやすみなさい, zh: 晚安（睡前）}
+  - {id: sayounara, w: さようなら, r: さようなら, zh: 再见}
+  - {id: jaamata, w: じゃあ、また, r: じゃあまた, zh: 回头见（熟人之间）}
+  - {id: arigatou, w: ありがとうございます, r: ありがとうございます, zh: 谢谢（礼貌说法）}
+  - {id: douitashimashite, w: どういたしまして, r: どういたしまして, zh: 不客气}
+  - {id: sumimasen, w: すみません, r: すみません, zh: 对不起；劳驾；不好意思}
+  - {id: gomennasai, w: ごめんなさい, r: ごめんなさい, zh: 对不起（道歉）}
+  - {id: hajimemashite, w: はじめまして, r: はじめまして, zh: 初次见面}
+  - {id: yoroshiku, w: よろしくお願いします, r: よろしくおねがいします, zh: 请多关照}
+  - {id: itadakimasu, w: いただきます, r: いただきます, zh: 我开动了（饭前）}
+  - {id: gochisousama, w: ごちそうさまでした, r: ごちそうさまでした, zh: 我吃好了，谢谢款待（饭后）}
+  - {id: ittekimasu, w: 行ってきます, r: いってきます, zh: 我出门了}
+  - {id: itterasshai, w: 行ってらっしゃい, r: いってらっしゃい, zh: 路上小心（送人出门）}
+  - {id: tadaima, w: ただいま, r: ただいま, zh: 我回来了}
+  - {id: okaerinasai, w: お帰りなさい, r: おかえりなさい, zh: 你回来啦}
+  - {id: ogenkidesuka, w: お元気ですか, r: おげんきですか, zh: 你好吗？（较久没见时）}
+  - {id: shitsureishimasu, w: 失礼します, r: しつれいします, zh: 打扰了；失陪了}
+  - {id: otsukaresama, w: お疲れ様です, r: おつかれさまです, zh: 辛苦了（工作场合的寒暄）}
+  - {id: hai, w: はい, r: はい, zh: 是；好的}
+  - {id: iie, w: いいえ, r: いいえ, zh: 不是；不}
+  - {id: onegaishimasu, w: お願いします, r: おねがいします, zh: 拜托了；麻烦您}
+  - {id: wakarimashita, w: 分かりました, r: わかりました, zh: 明白了}
+  - {id: wakarimasen, w: 分かりません, r: わかりません, zh: 不明白；不知道}
+  - {id: mouichido, w: もう一度お願いします, r: もういちどおねがいします, zh: 请再说一遍}
+  - {id: yukkuri, w: ゆっくりお願いします, r: ゆっくりおねがいします, zh: 请说慢一点}
+  - {id: chottomatte, w: ちょっと待ってください, r: ちょっとまってください, zh: 请稍等}
+
+numbers:
+  - {id: n0, num: "0", w: ゼロ, r: ぜろ, alt: "れい"}
+  - {id: n1, num: "1", w: 一, r: いち}
+  - {id: n2, num: "2", w: 二, r: に}
+  - {id: n3, num: "3", w: 三, r: さん}
+  - {id: n4, num: "4", w: 四, r: よん, alt: "し"}
+  - {id: n5, num: "5", w: 五, r: ご}
+  - {id: n6, num: "6", w: 六, r: ろく}
+  - {id: n7, num: "7", w: 七, r: なな, alt: "しち"}
+  - {id: n8, num: "8", w: 八, r: はち}
+  - {id: n9, num: "9", w: 九, r: きゅう, alt: "く"}
+  - {id: n10, num: "10", w: 十, r: じゅう}
+  - {id: n11, num: "11", w: 十一, r: じゅういち}
+  - {id: n14, num: "14", w: 十四, r: じゅうよん}
+  - {id: n17, num: "17", w: 十七, r: じゅうなな}
+  - {id: n20, num: "20", w: 二十, r: にじゅう}
+  - {id: n40, num: "40", w: 四十, r: よんじゅう}
+  - {id: n70, num: "70", w: 七十, r: ななじゅう}
+  - {id: n90, num: "90", w: 九十, r: きゅうじゅう}
+  - {id: n100, num: "100", w: 百, r: ひゃく}
+  - {id: n300, num: "300", w: 三百, r: さんびゃく, sound_change: true}
+  - {id: n600, num: "600", w: 六百, r: ろっぴゃく, sound_change: true}
+  - {id: n800, num: "800", w: 八百, r: はっぴゃく, sound_change: true}
+  - {id: n1000, num: "1000", w: 千, r: せん}
+  - {id: n3000, num: "3000", w: 三千, r: さんぜん, sound_change: true}
+  - {id: n8000, num: "8000", w: 八千, r: はっせん, sound_change: true}
+  - {id: n10000, num: "10000", w: 一万, r: いちまん}
+
+sentences:
+  - {id: s-hajime, w: はじめまして。, r: はじめまして, zh: 初次见面。}
+  - {id: s-tanaka, w: 私は田中です。, r: わたしはたなかです, zh: 我是田中。, gloss: "わたし（我）+ は（主题助词，读 wa）+ たなか（田中）+ です（是，礼貌）"}
+  - {id: s-chugoku, w: 中国から来ました。, r: ちゅうごくからきました, zh: 我来自中国。, gloss: "ちゅうごく（中国）+ から（从）+ きました（来了）"}
+  - {id: s-yoroshiku, w: どうぞよろしくお願いします。, r: どうぞよろしくおねがいします, zh: 请多关照。}
+  - {id: s-kore-hon, w: これは本です。, r: これはほんです, zh: 这是书。}
+  - {id: s-kore-nan, w: これは何ですか。, r: これはなんですか, zh: 这是什么？, gloss: "なん（什么）+ です + か（疑问助词）"}
+  - {id: s-watashi-kasa, w: それは私の傘です。, r: それはわたしのかさです, zh: 那是我的伞。, gloss: "わたし + の（的）+ かさ（伞）"}
+  - {id: s-gakusei-ka, w: 田中さんは学生ですか。, r: たなかさんはがくせいですか, zh: 田中（先生/女士）是学生吗？}
+  - {id: s-hai-gakusei, w: はい、学生です。, r: はいがくせいです, zh: 是的，是学生。}
+  - {id: s-iie, w: いいえ、学生じゃありません。, r: いいえがくせいじゃありません, zh: 不，不是学生。}
+  - {id: s-kaishain, w: 会社員です。, r: かいしゃいんです, zh: 是公司职员。}
+
+# ん before t/d/n ([n]) and k/g ([ŋ]) — lesson 4's allophone table needs one
+# clear word for each environment; the rest come from words already above
+hatsuon_examples:
+  - {w: 運転, r: うんてん, zh: 驾驶}
+  - {w: 女, r: おんな, zh: 女人}
+  - {w: 漫画, r: まんが, zh: 漫画}

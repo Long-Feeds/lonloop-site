@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 7 课", h1="声调（アクセント）入门", narrow=False, tools=True,
+   desc="东京音高低声调入门：高低两级、重音核（下降处）、平板/头高/中高/尾高四种类型与编号，助词如何区分尾高与平板；每个例词都经两部词典核对，并附由音频实测的音高曲线。",
+   lead="日语也有「声调」，但和普通话四声完全不是一回事：日语是<b>以词为单位的高低搭配</b>，每拍只有「高」「低」两种，最重要的信息是<b>在哪一拍之后降下来</b>。",
+   meta=["四种类型", "预计 2–3 天，之后在每个新词上持续练", "每个例词：两部词典＋音频实测"])) %}
+{% block content %}
+<h2 id="vs-chinese">它和普通话声调有什么不同</h2>
+<div class="tablewrap"><table>
+<tr><th></th><th>普通话</th><th>日语（东京音）</th></tr>
+<tr><td>单位</td><td>每个音节有自己的调形（阴平、阳平、上声、去声）</td><td>整个词一个高低模式</td></tr>
+<tr><td>音高</td><td>音节内部有升有降（如上声 214）</td><td>每拍只分「高」「低」两级</td></tr>
+<tr><td>区别意义的</td><td>每个字的调</td><td>下降的位置（或者不降）</td></tr>
+</table></div>
+{% call m.callout("最常见的中文口音", "zh") %}<p>东京大学 OJAD 团队的讲义指出：日语里<b>「降」的位置区别意义，「升」不区别意义</b>——该降的地方一定要降，升不必刻意升；而中文母语者往往把「升」念得特别突出。NHK 2016 年版发音词典干脆只标下降处、不再标上升处。所以练习时，把注意力放在「在哪里降」上。</p>{% endcall %}
+
+<h2 id="rules">三条基本规则</h2>
+<ol>
+  <li><b>每拍只有高（H）、低（L）两级。</b></li>
+  <li><b>一个词里最多降一次，降了不再升。</b>降之前的最后一个高拍叫「重音核」（アクセント核）。</li>
+  <li><b>基本示意里，第 1 拍和第 2 拍高低不同</b>：头高型第 1 拍高、第 2 拍低；其他类型第 1 拍低、第 2 拍高。但实际发音并不总有明显的开头上升——第 1 个音节是长音、ん 或双元音时，即使单念也常常听不出第 1 拍的「低」，句子里更是如此。这也是「升」不重要的原因。</li>
+</ol>
+
+<h2 id="types">四种类型和编号</h2>
+<p>声调用数字编号：<b>数字 = 在第几拍之后下降</b>，0 表示不降。词典和中文教材（如《标准日本语》）常用圈数字表示，本站也一样：⓪①②③……</p>
+<div class="tablewrap"><table>
+<tr><th>类型</th><th>编号</th><th>高低（○为后接助词）</th><th>说明</th></tr>
+<tr><td>平板型</td><td>⓪</td><td class="rom">L H H … ○高</td><td>从第 2 拍升高后一直不降，后面的助词也高</td></tr>
+<tr><td>头高型</td><td>①</td><td class="rom">H L L … ○低</td><td>第 1 拍高，之后全低</td></tr>
+<tr><td>中高型</td><td>②～(n−1)</td><td class="rom">L H … H L … ○低</td><td>在词的中间降（至少 3 拍的词才有）</td></tr>
+<tr><td>尾高型</td><td>n（=拍数）</td><td class="rom">L H … H ○低</td><td>第 1 拍低，第 2 拍到词末高，降在后面的助词上</td></tr>
+</table></div>
+<p>本站的图示：橙色实心点在上 = 高，在下 = 低；最后一个<b>空心点</b>是后面接「が」时助词的高低。</p>
+{% for key, label in [("heiban","平板型 ⓪"),("atamadaka","头高型 ①"),("nakadaka","中高型"),("odaka","尾高型")] %}
+<h3>{{ label }}</h3>
+{{ m.words(WL(C.accent_types[key])) }}
+{% endfor %}
+
+<h2 id="particle">尾高和平板：要靠后面的助词才听得出</h2>
+<p>「{{ m.jp("橋") }}」（尾高②）和「{{ m.jp("端") }}」（平板⓪）单念时都是「低高」，一模一样。区别在后面接助词时：尾高型降在助词上（はしが：低高<b>低</b>），平板型的助词仍然高（はしが：低高<b>高</b>）。所以学单词时，<b>最好连着助词一起记</b>。</p>
+<p>下面的录音都放在「〜があります」（有〜）这个句子里，这样助词「が」后面还有话，能清楚听出它是高是低。</p>
+
+<h2 id="pairs">同音词对比：只靠声调区分</h2>
+<p>每组都放在同一个句子「〜があります」里、由同一个声音说，方便你只比较声调。每个词附「实测音高曲线」——由本页的音频直接计算出来，竖线是语音识别对齐出的拍的边界（边界是估算的，会有几十毫秒的误差）。注意看<b>下降从哪里开始</b>：合成语音和真人一样，音高的峰值常常会延后到下一拍的开头才降下来，这是正常现象（语音学上称为「峰值延迟」）。这一组音频在发布前经过人工逐组比对，确认组内各词的高低差别和词典一致。</p>
+{% for p in C.pairs.accent %}
+{% set allok = namespace(v=True) %}{% for x in p["items"] %}{% if not manifest.get(slug(x.w, x.r) ~ "-ga") %}{% set allok.v = False %}{% endif %}{% endfor %}
+{% if allok.v %}
+<h3 lang="ja">{{ p["items"][0].r }}</h3>
+<div class="words">
+{% for x in p["items"] %}{% set y = W(x.w, x.r) %}
+<div class="word">
+  <div class="top"><div><div class="jw" lang="ja">{{ x.w }}</div><div class="kn" lang="ja">{{ x.r }}があります</div></div><div class="plays">{{ m.say(y.id ~ "-ga", "", x.w ~ "があります") }}</div></div>
+  <div class="zh">{{ y.zh }}</div>
+  {% if y.acc is not none %}<div class="acc">{{ y.pp|safe }}<span class="accn">{{ y.acc_label }}</span><span class="acct">{{ y.acc_name }}</span></div>{% endif %}
+  {% set cv = manifest.get(y.id ~ "-ga", "") %}{{ m.f0(x.w, x.r, "n" if "n" in cv else "k") }}
+</div>
+{% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+{% set excluded = [] %}{% for p in C.pairs.accent %}{% for x in p["items"] %}{% if not manifest.get(slug(x.w, x.r) ~ "-ga") %}{% set _ = excluded.append(x.w) %}{% endif %}{% endfor %}{% endfor %}
+{% if excluded %}<p style="font-size:13.5px;color:var(--dim)">没有出现在上面的同音词（{{ excluded|join("、") }}）：音频没有通过校验，所以不放——宁可少一组，也不让你听到错的声调。细节见<a href="/japanese/verification/">校验报告</a>。</p>{% endif %}
+
+<h2 id="beyond">声调会变：先知道这三点</h2>
+<ul>
+  <li><b>复合词会变调。</b>东京大学 OJAD 的例子：「{{ m.jp("大学") }}」单念是平板型，接在「カナダ」后面组成「カナダ大学」时整体变成一个新的声调。复合词、动词活用的规律在后续阶段学。</li>
+  <li><b>方言不同。</b>本站教的是东京音（共通语）。关西等地的声调体系不同，听到不一样不必困惑。</li>
+  <li><b>同一个词可以有两种公认读法。</b>比如「北」在词典里有⓪和②两种。本站的例词尽量选只有一种读法的；练习中也避开了这类词。</li>
+</ul>
+
+<h2 id="lookup">怎么查一个词的声调</h2>
+<ul>
+  <li><a href="https://www.gavo.t.u-tokyo.ac.jp/ojad/" target="_blank" rel="noopener">OJAD（在线日语声调词典，东京大学）</a>：能查动词、形容词的各种活用形的声调并听示范音；名词只有声调没有示范音。其中「スズキクン」能自动标出整句的音高，但官方说明它是自动预测、并非 100% 准确，要和词典对照着用。</li>
+  <li>《NHK日本語発音アクセント新辞典》（NHK出版，2016）：最权威的声调词典（付费）。</li>
+  <li>不少词典 App 也标注声调数字；遇到不一致时，以 NHK 辞典和 OJAD 为准。</li>
+</ul>
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for p in C.pairs.accent %}{% set opts = [] %}{% for x in p["items"] %}{% set _ = opts.append({"w": x.w, "r": x.r, "id": slug(x.w, x.r) ~ "-ga", "label": x.w, "sub": x.zh}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-accent", sets) %}{{ m.drill("drill-accent", "同音词：听声调选意思", "播放的是「〜があります」整句。注意听在哪里降、助词「が」是高是低。") }}{% endif %}
+
+{{ m.src([
+  "规则与类型：Okada (1991)，JIPA 21(2) pp.95–96；峯松信明・中村則子「OJADとそれを用いた音声指導」讲义（东京大学）；太田眞希恵・東美奈子（2016）「18年ぶりの改訂で誕生『NHK日本語発音アクセント新辞典』」，『放送研究と調査』2016 年 7 月号。",
+  "「降区别意义、升不区别意义」及中文母语者升调过强：OJAD 讲习会幻灯片（峯松信明，2017）。",
+  "每个例词的声调：UniDic（国立国语研究所）与 Kanjium 两部词典交叉核对，一致才标；两者不一致时以英文维基词典为第三票。",
+  "本课音频的声调核验：同音词组在同一声音、同一句子里叠加比较音高曲线（Praat/parselmouth 提取基频，wav2vec2 强制对齐估算拍的边界），类型例词逐个检查单词的音高曲线，均为人工判定，记录在生成脚本的 reports/manual_pitch.json；不符或无法判断的不上线（例如女声的「秋」听起来先低后高，不像头高型，已剔除）。",
+]) }}
+{% endblock %}

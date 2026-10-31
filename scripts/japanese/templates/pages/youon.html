@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 3 课", h1="拗音", narrow=False, tools=True, kana=True,
+   desc="日语拗音（きゃ・しゅ・ちょ 等 33 个）：小写的ゃゅょ与前一个假名合成一拍；病院/美容院、今日/器用等一拍两拍对比听辨。",
+   lead="「い段」假名（き・し・ち・に・ひ・み・り 及其浊音、半浊音）后面跟一个<b>小写</b>的ゃ・ゅ・ょ，两个字合起来只读<b>一拍</b>。",
+   meta=["33 个拗音", "预计半天", "重点：小写 = 一拍"])) %}
+{% block content %}
+<h2 id="table">拗音表</h2>
+{{ m.kana_grid(KM.YOUON_ROWS, "h", "youon", ("ya","yu","yo")) }}
+<p>ちゃ行与じゃ行的罗马字分别写 cha/chu/cho、ja/ju/jo；打字时 <code>tya</code>/<code>cha</code>、<code>zya</code>/<code>ja</code> 都可以。</p>
+{% call m.callout("大小写决定意思") %}<p>小写的ゃゅょ（明显写小：横写时放在格子左下方，竖写时放在右上方）和前面的字合成一拍；如果写成正常大小，就是两个拍。<span lang="ja" class="jpw">きゃ</span>（kya，一拍）≠ <span lang="ja" class="jpw">きや</span>（ki-ya，两拍）。手写时小字要明显写小。</p>{% endcall %}
+
+<h2 id="pairs">一拍还是两拍：对比听</h2>
+<div class="pairs">
+{% for p in C.pairs.youon %}{% if ok_word(p["items"][0].w, p["items"][0].r) and ok_word(p["items"][1].w, p["items"][1].r) %}{{ m.pair(p) }}{% endif %}{% endfor %}
+</div>
+<p>「{{ m.jp("びょういん") }}」（病院，医院）是 4 拍：びょ・う・い・ん；「{{ m.jp("びよういん") }}」（美容院，即美发店）是 5 拍：び・よ・う・い・ん。去看病和去剪头，就差一个小写的ょ。</p>
+
+<h2 id="words">例词</h2>
+<p>拗音的词经常同时带长音（如きょう），长音的规则在下一课讲，这里先听。</p>
+{{ m.words(WL(C.youon_examples)) }}
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for p in C.pairs.youon %}{% set opts = [] %}{% for x in p["items"] %}{% set _ = opts.append({"w": x.w, "r": x.r, "label": x.r, "sub": x.w ~ " · " ~ x.zh}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% for row in [["きゃ","きゅ","きょ"],["しゃ","しゅ","しょ"],["ちゃ","ちゅ","ちょ"],["りゃ","りゅ","りょ"],["じゃ","じゅ","じょ"],["きょ","ちょ"],["しゅ","ちゅ"],["ひゃ","しゃ"],["にゃ","みゃ"],["びょ","ぴょ"],["じゅ","ちゅ"]] %}{% set opts = [] %}{% for k in row %}{% set _ = opts.append({"id": K[k].id, "w": k, "label": k}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-youon", sets) %}{{ m.drill("drill-youon", "拗音听辨", "单个拗音和成对的词混在一起。注意分辨一拍（小写）和两拍（大写）。") }}{% endif %}
+
+{{ m.src([
+  "拗音为一拍：赤木浩文等《毎日練習！リズムで身につく日本語の発音》（スリーエーネットワーク）教师用指南；Okada (1991)：/j/ 被前一辅音「吸收」。",
+  "例词读音与音频：语音识别反向转写校验，读音不符的候选词未采用。",
+]) }}
+{% endblock %}

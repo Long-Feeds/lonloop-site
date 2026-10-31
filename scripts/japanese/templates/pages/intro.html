@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="入门 · 第 0 课", h1="日语全景：开始之前要知道的事", narrow=True, tools=True,
+   desc="学日语之前先建立全局印象：平假名、片假名、汉字三种文字各管什么；以「拍」为单位的节奏；高低型声调；主宾谓语序与助词；敬体；以及中文母语者的汉字优势与陷阱。",
+   lead="花十分钟建立全局印象，之后每学一个细节都知道它在整体里的位置。这一课没有要背的东西。",
+   meta=["无需背诵", "约 10 分钟"])) %}
+{% block content %}
+<h2 id="scripts">三种文字，各管一摊</h2>
+<p>一句普通的日语常常同时用到三种文字：</p>
+<div class="pairs"><div class="pair"><div class="pr"><div class="pi"><div><div class="jw" lang="ja" style="font-size:24px"><span style="color:var(--accent)">私</span>は<span style="color:var(--accent2)">コーヒー</span>が<span style="color:var(--accent)">好</span>きです。</div><div class="zh">我喜欢咖啡。（<span style="color:var(--accent)">蓝色</span>＝汉字，<span style="color:var(--accent2)">青色</span>＝片假名，其余为平假名）</div></div></div></div></div></div>
+<div class="tablewrap"><table>
+<tr><th>文字</th><th>主要用途</th><th>本站在哪学</th></tr>
+<tr><td><b>平假名</b> <span lang="ja">あいう</span></td><td>助词、词尾变化等语法成分；没有汉字或不常用汉字写的词</td><td><a href="/japanese/hiragana/">第 1–4 课</a></td></tr>
+<tr><td><b>片假名</b> <span lang="ja">アイウ</span></td><td>外来语、外国人名地名、拟声词、需要强调的词</td><td><a href="/japanese/katakana/">第 5 课</a></td></tr>
+<tr><td><b>汉字</b> <span lang="ja">日本語</span></td><td>名词、动词词干等实词；一个字常有「音读」（源自汉语的读音）和「训读」（日语固有读音）两类读法</td><td>后续阶段</td></tr>
+<tr><td><b>罗马字</b> <span>nihongo</span></td><td>辅助：标注读音、电脑输入。日本人日常不用它写日语</td><td>只作拐杖</td></tr>
+</table></div>
+<p>假名是<b>表音</b>文字：一个假名基本对应一个固定的音，所以学会假名，任何词都能读出来（不认识汉字时可以看假名注音）。</p>
+
+<h2 id="mora">节奏的单位是「拍」，不是音节</h2>
+<p>日语按「拍」（モーラ）计长短，一拍大约是一个假名的长度。促音（小写的「っ」）、拨音（「ん」）和长音也各占一拍，所以「{{ m.jp("にっぽん") }}」是四拍，「{{ m.jp("とうきょう") }}」也是四拍（と・う・きょ・う）。中文没有这种区分，<b>长短不分是中文母语者最常见的问题之一</b>，第 4 课专门练。</p>
+
+<h2 id="pitch">声调是「高低」，不是四声</h2>
+<p>日语词有固定的高低模式，有时只靠高低区分意思：</p>
+{% set a1 = slug("雨","あめ") ~ "-ga" %}{% set a2 = slug("飴","あめ") ~ "-ga" %}
+{% if manifest.get(a1) and manifest.get(a2) %}<div class="pairs"><div class="pair"><div class="pr">
+<div class="pi">{{ m.say(a1, "", "雨があります") }}<div><div class="jw" lang="ja">雨があります</div><div class="zh">有雨（「雨」<span class="accn">①</span> 先高后低）</div></div></div>
+<span class="vs">vs</span>
+<div class="pi">{{ m.say(a2, "", "飴があります") }}<div><div class="jw" lang="ja">飴があります</div><div class="zh">有糖（「飴」<span class="accn">⓪</span> 先低后高，一直不降）</div></div></div>
+</div><div class="note">两句的假名完全一样（あめがあります），只靠高低区分。</div></div></div>{% endif %}
+<p>和普通话不同的是：日语每拍只分高、低两级，<b>关键在于在哪一拍之后降下来</b>，而不是每个音节自己的调形。第 7 课细讲；在那之前，听音频时就留意高低。</p>
+
+<h2 id="order">语序：谓语放最后，靠助词标出角色</h2>
+<p>中文说「我 吃 苹果」，日语说「<span lang="ja" class="jpw">私は りんごを 食べます</span>」——「我 苹果 吃」。名词后面的小词叫<b>助词</b>，标明这个词在句子里的角色：「は」提示主题，「を」标出动作的对象。因为有助词，名词的顺序可以比中文灵活，但<b>动词（谓语）一般放在句末</b>。</p>
+
+<h2 id="polite">先学礼貌体</h2>
+<p>日语有「敬体」（です・ます结尾，对不熟的人、正式场合用）和「常体」（朋友、家人之间用）。入门阶段先学敬体，它适合初次见面和大多数一般交往场景；不过得体与否还取决于称呼、措辞和双方关系，并不是只要用了敬体就一定不会失礼。</p>
+
+<h2 id="kanji">中文母语者的优势和陷阱</h2>
+<p><b>优势</b>：大量汉字词你一看就懂意思，进位方式（万、亿）也和中文相同。</p>
+<p><b>陷阱</b>：</p>
+<ul>
+  <li><b>同形异义</b>：「{{ m.jp("手紙") }}」是信，「{{ m.jp("勉強") }}」是学习，「{{ m.jp("大丈夫") }}」是没问题、不要紧。看着眼熟的词，意思不一定一样。</li>
+  <li><b>字形不同</b>：日本的规范字形和简体字常常不同，例如 {{ m.jp("発") }}（发）、{{ m.jp("図") }}（图）、{{ m.jp("広") }}（广）、{{ m.jp("気") }}（气）、{{ m.jp("読") }}（读）。写日语时要用日本的字形。本站所有日文都标注了日语字体，你看到的就是日本字形。</li>
+  <li><b>读音完全不同</b>：汉字在日语里按日语的音读或训读念，不能按普通话念。</li>
+</ul>
+
+<h2 id="next">接下来</h2>
+<p>从<a href="/japanese/hiragana/">第 1 课 平假名</a>开始。建议先读一遍<a href="/japanese/method/">学习方法</a>，用 5 分钟了解为什么要每天做间隔重复和跟读。</p>
+{% if has_audio("g-konnichiwa") %}<p>先听一句最常用的：<span lang="ja" class="jpw">こんにちは</span> {{ m.say("g-konnichiwa", "", "こんにちは") }}（你好）。</p>{% endif %}
+
+{{ m.src([
+  "拍与特殊拍：Okada (1991)，JIPA 21(2)；赤木浩文等《毎日練習！リズムで身につく日本語の発音》教师用指南。",
+  "高低两级与下降位置：Okada (1991)；东京大学 OJAD 讲义。",
+  "雨（①）／飴（⓪）：UniDic 与 Kanjium 两部词典一致；示范音频经人工比对音高曲线确认（见第 7 课与校验报告）。",
+]) }}
+{% endblock %}

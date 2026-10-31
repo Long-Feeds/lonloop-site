@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="Practice · 间隔重复", h1="练习：假名间隔重复", narrow=True, tools=True,
+   desc="日语假名间隔重复练习：认读（看假名打罗马字）与听辨（听音选假名）两种模式，由 FSRS 算法安排复习时间，数据只保存在本机浏览器。",
+   lead="每天 10–15 分钟。算法会记住你每个假名掌握得怎样，把快要忘的排在前面——比一遍遍从头背整张表省时间得多。",
+   meta=["FSRS 算法（Anki 同款）", "数据只存在你的浏览器", "每天新卡上限 15 张"])) %}
+{% set decks = [] %}
+{% set seion, dakuon, youon = KM.all_basic_kana() %}
+{% for did, name, desc, script, src in [
+  ("h-seion","平假名·清音","第 1 课，46 个","h",seion),
+  ("h-dakuon","平假名·浊音半浊音","第 2 课，25 个","h",dakuon),
+  ("h-youon","平假名·拗音","第 3 课，33 个","h",youon),
+  ("k-seion","片假名·清音","第 5 课，46 个","k",seion),
+  ("k-dakuon","片假名·浊音半浊音","第 5 课，25 个","k",dakuon),
+  ("k-youon","片假名·拗音","第 5 课，33 个","k",youon)] %}
+{% set items = [] %}
+{% for h in src %}{% set kk = kconv(h, script) %}{% if has_audio(K[kk].id) %}{% set rom = K[kk].rom %}{% set ans = [rom] + (K[kk].typ.split(" / ")) %}{% set _ = items.append({"k": kk, "rom": rom, "ans": ans|unique|list, "id": K[kk].id, "row": h[0]}) %}{% endif %}{% endfor %}
+{% set _ = decks.append({"id": did, "name": name, "desc": desc, "items": items}) %}
+{% endfor %}
+{% block content %}
+<h2 id="start">开始</h2>
+<div class="deck-pick" id="deck-pick">
+{% for d in decks %}<label><input type="checkbox" value="{{ d.id }}"><span>{{ d.name }}<small>{{ d.desc }}</small></span></label>{% endfor %}
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:12px">
+  <label><input type="radio" name="mode" value="read" checked> 认读：看假名，打罗马字</label>
+  <label><input type="radio" name="mode" value="listen"> 听辨：听声音，选假名</label>
+</div>
+<button class="btn pri" id="start" type="button">开始这一轮</button>
+<div class="stats" id="overview" style="justify-content:flex-start;margin-top:12px"></div>
+
+<div class="fc" id="fc" hidden>
+  <div class="face" lang="ja"></div>
+  <div class="ans"></div>
+  <div class="reveal" aria-live="polite"></div>
+  <div class="stats" id="fc-stats"></div>
+</div>
+<div class="callout" id="summary" hidden></div>
+
+<h2 id="how">它是怎么安排复习的</h2>
+<ul>
+  <li><b>两种模式分开记录。</b>「认读」练看到字形就想起读音，「听辨」练听到声音就想起字形——这是两种不同的记忆，各自安排复习。</li>
+  <li><b>自动评分。</b>答错 = 「重来」，几分钟后在本轮再出现；答对但用时超过 6 秒 = 「困难」；答对 = 「良好」。算法据此计算下次复习时间：越熟间隔越长。</li>
+  <li><b>算法是 FSRS。</b>由开源组织 Open Spaced Repetition 开发、Anki 也采用的间隔重复算法；本站使用其官方 TypeScript 实现 ts-fsrs 6.0.0，目标记忆保持率设为 90%。</li>
+  <li><b>认读模式的答案</b>：黑本式（shi / chi / tsu / fu / ji）和训令式（si / ti / tu / hu / zi）都算对；「を」答 o 或 wo、「ん」答 n 或 nn 都算对。</li>
+  <li><b>隐私</b>：学习记录只保存在你这台设备的浏览器（localStorage）里，不上传任何地方；清除浏览器数据会一并清除。</li>
+</ul>
+<p>想练长短音、清浊、声调这些<b>听力</b>上的区分，去各课末尾的「听辨练习」。</p>
+{% endblock %}
+{% block data %}<script type="application/json" id="jp-decks">{{ decks|tojson }}</script>{% endblock %}
+{% block scripts %}<script type="module" src="/japanese/assets/practice.js?v={{ practice_version }}"></script>{% endblock %}

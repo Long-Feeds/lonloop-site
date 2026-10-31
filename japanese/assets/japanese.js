@@ -9,9 +9,11 @@
   function data(id) { var el = document.getElementById(id); return el ? JSON.parse(el.textContent) : null; }
 
   /* ---------- settings ---------- */
-  var S = load('jp.settings', { voice: 'n', rate: 1, romaji: true, detail: true });
+  var S = load('jp.settings', { voice: 'n', rate: 1, romaji: true, detail: true, human: true });
+  if (S.human === undefined) S.human = true;
   function applySettings() {
     document.documentElement.classList.toggle('no-romaji', !S.romaji);
+    document.documentElement.classList.toggle('no-human', S.human === false);
     document.querySelectorAll('[data-set]').forEach(function (b) {
       var k = b.getAttribute('data-set'), v = b.getAttribute('data-val');
       var cur = String(S[k]);
@@ -28,16 +30,21 @@
   });
 
   /* ---------- audio ---------- */
-  // manifest: id -> "nk" | "n" | "k" (voices whose clip passed verification)
+  // manifest: id -> voices whose clip passed verification: "h" = real human
+  // recording (Wikimedia Commons), "n"/"k" = female/male synthetic voice
   var AUD = data('jp-audio') || {};
   var VER = (document.querySelector('meta[name="jp-audio-version"]') || {}).content || '';
   var cur = null, curBtn = null, flip = false;
   function pickVoice(id, want) {
     var have = AUD[id] || '';
     if (!have) return null;
-    var v = want || S.voice;
+    if (want) return have.indexOf(want) >= 0 ? want : have.charAt(0);
+    if (S.human !== false && have.indexOf('h') >= 0) return 'h';
+    var syn = have.replace('h', '');
+    if (!syn) return 'h';  // only a human recording exists: better than silence
+    var v = S.voice;
     if (v === 'alt') { flip = !flip; v = flip ? 'n' : 'k'; }
-    if (have.indexOf(v) < 0) v = have.charAt(0);
+    if (syn.indexOf(v) < 0) v = syn.charAt(0);
     return v;
   }
   function play(id, btn, want) {
@@ -119,7 +126,8 @@
       (k.pair ? '<dt>' + (k.isKata ? '平假名' : '片假名') + '</dt><dd lang="ja">' + esc(k.pair) + '</dd>' : '') +
       '</dl>' + (k.org ? '<div class="kd-origin">字源：<span lang="ja">' + esc(k.org) + '</span>' + (k.orgNote ? '<br>' + esc(k.orgNote) : '') + '</div>' : '') +
       '</div></div><div class="kd-row">' +
-      (AUD[k.id] ? (AUD[k.id].indexOf('n') >= 0 ? '<button class="kd-btn" data-kplay="n">▶ 女声</button>' : '') +
+      (AUD[k.id] ? (AUD[k.id].indexOf('h') >= 0 ? '<button class="kd-btn" data-kplay="h">▶ 真人</button>' : '') +
+        (AUD[k.id].indexOf('n') >= 0 ? '<button class="kd-btn" data-kplay="n">▶ 女声</button>' : '') +
         (AUD[k.id].indexOf('k') >= 0 ? '<button class="kd-btn" data-kplay="k">▶ 男声</button>' : '')
         : '<span class="kd-origin">这个音的合成音频没有通过校验，暂不提供（见校验报告）。</span>') +
       '<button class="kd-btn" data-kreplay>↻ 重看笔顺</button></div>' +
@@ -169,7 +177,7 @@
       var set = sets[si];
       answer = set[Math.floor(Math.random() * set.length)];
       var av = AUD[answer.id] || 'n';
-      voice = av.length > 1 ? (Math.random() < .5 ? 'n' : 'k') : av;
+      voice = av.charAt(Math.floor(Math.random() * av.length));  // every verified voice, human included
       answered = false; fb.textContent = ''; fb.className = 'fb';
       opts.innerHTML = '';
       shuffle(set.slice()).forEach(function (o) {

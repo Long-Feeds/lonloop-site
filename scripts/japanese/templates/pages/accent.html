@@ -36,6 +36,24 @@
 {{ m.words(WL(C.accent_types[key])) }}
 {% endfor %}
 
+<h2 id="human">真人示范：东京口音配音演员</h2>
+<p>下面是维基共享资源上 Tofugu/WaniKani 公开的真人录音（东京口音的男性配音演员，专业录音，CC BY-SA 4.0）。每条都经过读音校验，并人工检查了音高曲线与词典声调一致；按声调类型分组。注意单念时平板型和尾高型听起来一样（都是「低高」），区别要接助词才听得出，见下一节。</p>
+{% set groups = {"平板型": [], "头高型": [], "中高型": [], "尾高型": []} %}
+{% for iid, c in HUMAN.items() %}{% if c.kind == "word" and KM.morae(c.r)|length >= 2 %}{% set y = W(c.w, c.r) %}{% if y.acc is not none and "／" not in y.acc_label %}{% set _ = groups[KM.accent_type_name(KM.morae(c.r)|length, y.acc)].append(y) %}{% endif %}{% endif %}{% endfor %}
+{% for gname in ["平板型", "头高型", "中高型", "尾高型"] %}{% if groups[gname] %}
+<h3>{{ gname }}</h3>
+<div class="words">
+{% for y in groups[gname] %}
+<div class="word">
+  <div class="top"><div><div class="jw" lang="ja">{{ y.w }}</div><div class="kn" lang="ja">{{ y.r }}</div></div><div class="plays"><button class="say has-h" type="button" data-say="{{ y.id }}" data-voice="h" aria-label="播放真人录音：{{ y.r }}"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg></button></div></div>
+  <div class="zh">{{ y.zh }}</div>
+  <div class="acc">{{ y.pp|safe }}<span class="accn">{{ y.acc_label }}</span><span class="acct">{{ y.acc_name }}</span></div>
+</div>
+{% endfor %}
+</div>
+{% endif %}{% endfor %}
+<p style="font-size:13.5px;color:var(--dim)">录音来源与许可见<a href="/japanese/sources/#human">参考资料</a>；没有采用的真人录音及原因（例如「全然」的录音听起来是头高型，与词典不符）见<a href="/japanese/verification/#human">校验报告</a>。</p>
+
 <h2 id="particle">尾高和平板：要靠后面的助词才听得出</h2>
 <p>「{{ m.jp("橋") }}」（尾高②）和「{{ m.jp("端") }}」（平板⓪）单念时都是「低高」，一模一样。区别在后面接助词时：尾高型降在助词上（はしが：低高<b>低</b>），平板型的助词仍然高（はしが：低高<b>高</b>）。所以学单词时，<b>最好连着助词一起记</b>。</p>
 <p>下面的录音都放在「〜があります」（有〜）这个句子里，这样助词「が」后面还有话，能清楚听出它是高是低。</p>

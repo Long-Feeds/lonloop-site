@@ -63,9 +63,23 @@
   <li><b>笔顺</b>：KanjiVG 与 animCJK 两套独立数据对 151 个假名（平/片假名清音、浊音半浊音、小写字母）的笔画数逐一比对，全部一致。</li>
 </ul>
 
+<h2 id="human">真人录音的筛选</h2>
+<p>合成语音的问题（单念汉字读成音读、单假名静音、声调不可自动验证）促使我们补充了真人录音：在维基共享资源上检查了 {{ HUMAN_ALL|length }} 个候选文件，采用 {{ HUMAN|length }} 个。</p>
+<ul>
+  <li><b>先看说明，再听内容</b>：只用文件说明里写明是日语母语者的录音；单词只用「东京口音」的（Tofugu/WaniKani 的女声录音注明为关西口音，全部不用；Lingua Libre 志愿者录音无法确认母语和地区，也不用）。</li>
+  <li><b>读音校验</b>：与合成语音相同的反向听写；单假名可用带领域提示的转写。</li>
+  <li><b>声调人工核验</b>：每个单词画出音高曲线，与词典声调对照（单拍词单念时无法判断声调，只校验读音）。</li>
+</ul>
+<details class="vd"><summary>展开未采用的 {{ HUMAN_ALL|length - HUMAN|length }} 个文件及原因</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>文件</th><th>原因</th></tr>
+{% for c in HUMAN_ALL %}{% if not c.ok %}<tr><td><a href="{{ c.page }}" target="_blank" rel="noopener">{{ c.title[5:] }}</a></td><td>{{ c.why }}</td></tr>
+{% endif %}{% endfor %}
+</table></div></details>
+
 <h2 id="limits">局限</h2>
 <ul>
-  <li>音频是 Microsoft 神经网络语音合成的标准东京音，不是真人录音；只有两个声音。</li>
+  <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 {{ HUMAN|length }} 个条目。</li>
   <li>机器校验能抓住「读错、无声」这类硬错误，抓不住更细微的不自然（比如语调略生硬）。</li>
   <li><b>声调的边界</b>：页面上的声调标注全部来自词典（两源一致才标），是可靠的；但只有第 7 课的示范音频经过声调核验。其他各课的例词音频只校验了读音，声调<b>以标注为准</b>——如果你觉得某个例词的音频和标注不一致，请相信标注，并告诉我们。</li>
   <li>寒暄语、句子只检查读音，不标、不测声调（短语和句子的语调规律超出入门范围）。</li>

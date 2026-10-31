@@ -3,7 +3,7 @@
 
 {% macro say(id, label="", text="") -%}
 {%- if has_audio(id) -%}
-<button class="say" type="button" data-say="{{ id }}" aria-label="播放{{ '：' ~ text if text }}"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>{% if label %}<span class="vt">{{ label }}</span>{% endif %}</button>
+<button class="say{{ ' has-h' if 'h' in manifest.get(id, '') }}" type="button" data-say="{{ id }}" aria-label="播放{{ '：' ~ text if text }}{{ '（有真人录音）' if 'h' in manifest.get(id, '') }}"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>{% if label %}<span class="vt">{{ label }}</span>{% endif %}</button>
 {%- endif -%}
 {%- endmacro %}
 

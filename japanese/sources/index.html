@@ -17,8 +17,8 @@
 <meta property="og:image" content="https://lonloop.com/og.png" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="jp-audio-version" content="6df81d72" />
-<link rel="stylesheet" href="/japanese/assets/japanese.css?v=3be7ee36" />
+<meta name="jp-audio-version" content="efd2be55" />
+<link rel="stylesheet" href="/japanese/assets/japanese.css?v=3dc1dcf9" />
 </head>
 <body>
   <nav class="topnav">
@@ -72,11 +72,74 @@
 <tr><td>English Wiktionary / 日本語版ウィクショナリー / Wikipedia（含 Wikimedia Commons 字源图）</td><td>字源三方核对；声调第三票</td><td>CC BY-SA 4.0（本站只引用事实性信息）</td></tr>
 <tr><td>三省堂《大辞林》特别页「片仮名」</td><td>片假名字源核对（ア–ト）</td><td>仅作核对，未转载</td></tr>
 <tr><td><a href="https://github.com/open-spaced-repetition/ts-fsrs" target="_blank" rel="noopener">ts-fsrs 6.0.0</a></td><td>练习页的间隔重复调度（打包为 <code>/japanese/vendor/fsrs-6.0.0.min.mjs</code>）</td><td>MIT</td></tr>
-<tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>全部发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
+<tr><td>维基共享资源真人录音（Tofugu/WaniKani 等，见上表）</td><td>标「真人」的发音</td><td>CC BY-SA 4.0 / 公有领域</td></tr>
+<tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>其余发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
 <tr><td>OpenAI Whisper（large-v3 / large-v3-turbo，MLX 版）</td><td>音频反向听写校验</td><td>MIT</td></tr>
 <tr><td>facebook/wav2vec2-xlsr-53-espeak-cv-ft</td><td>音素识别、强制对齐</td><td>Apache-2.0</td></tr>
 <tr><td>Praat（经 parselmouth）</td><td>基频（音高）提取</td><td>GPL</td></tr>
 </table></div>
+
+<h2 id="human">真人录音（维基共享资源）</h2>
+<p>标「真人」的发音来自维基共享资源（Wikimedia Commons）。采用条件：文件说明写明录音者是日语母语者；单词录音还必须是东京口音（Tofugu/WaniKani 公开的另一半女声录音注明是关西口音，关西话的声调体系不同，所以一条都没用）；并且都通过了和合成语音相同的读音校验，单词另经人工检查音高曲线。</p>
+<p><b>改动说明</b>：本站对这些录音做了去掉首尾静音、音量归一化，并转为 MP3。按 CC BY-SA 4.0 的要求，改动后的音频（<code>/japanese/audio/h/</code>）同样以 CC BY-SA 4.0 提供；公有领域的录音不受此限。</p>
+<details class="vd"><summary>展开全部 54 条录音的出处</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>内容</th><th>原文件</th><th>作者</th><th>许可</th></tr>
+<tr><td lang="ja">学校</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-gakkō.oga" target="_blank" rel="noopener">Ja-gakkō.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">星</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-hoshi.ogg" target="_blank" rel="noopener">Ja-hoshi.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">女</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-on&#39;na.oga" target="_blank" rel="noopener">Ja-on&#39;na.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">仕事</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-shigoto.ogg" target="_blank" rel="noopener">Ja-shigoto.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">茶色</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-chairo.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-chairo.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">絵</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-e.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-e.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">駅</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-eki.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-eki.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">船</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-fune.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-fune.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">歯</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ha.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ha.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">火</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-hi.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-hi.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">本</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-hon.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-hon.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">家</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ie.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ie.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">犬</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-inu.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-inu.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">字</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ji.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ji.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">自信</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-jishin.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-jishin.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">顔</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-kao.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-kao.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">毛</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ke.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ke.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">目</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-me.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-me.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">飯</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-meshi.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-meshi.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">物</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-mono.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-mono.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">虫</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-mushi.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-mushi.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">根</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ne.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ne.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">二</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ni.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ni.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">濡らす</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-nurasu.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-nurasu.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">お茶</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ocha.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ocha.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">音</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-oto.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-oto.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">来月</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-raigetsu.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-raigetsu.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">来年</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-rainen.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-rainen.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">楽</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-raku.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-raku.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">魚</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-sakana.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-sakana.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">皿</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-sara.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-sara.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">死ぬ</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-shinu.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-shinu.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">空</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-sora.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-sora.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">田</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ta.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ta.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">天気</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-tenki.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-tenki.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">寺</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-tera.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-tera.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">鳥</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-tori.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-tori.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">上</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ue.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ue.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">馬</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-uma.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-uma.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">海</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-umi.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-umi.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">輪</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-wa.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-wa.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">矢</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ya.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ya.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">世</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-yo.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-yo.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">夜</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-yoru.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-yoru.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">雪</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-yuki.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-yuki.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">残念</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-zanen.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-zanen.oga</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">図</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-zu.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-zu.ogg</a></td><td>Tofugu and WaniKani</td><td>CC BY-SA 4.0</td></tr>
+<tr><td lang="ja">ふ</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Fu.oga" target="_blank" rel="noopener">Ja-Fu.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+<tr><td lang="ja">ひ</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Hi.oga" target="_blank" rel="noopener">Ja-Hi.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+<tr><td lang="ja">り</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ri.oga" target="_blank" rel="noopener">Ja-Ri.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+<tr><td lang="ja">る</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ru.oga" target="_blank" rel="noopener">Ja-Ru.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+<tr><td lang="ja">し</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Shi.oga" target="_blank" rel="noopener">Ja-Shi.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+<tr><td lang="ja">つ</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Tsu.oga" target="_blank" rel="noopener">Ja-Tsu.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+<tr><td lang="ja">う</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-U.oga" target="_blank" rel="noopener">Ja-U.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
+</table></div></details>
 
 <h2 id="learn-more">推荐的外部学习资源</h2>
 <ul>
@@ -96,11 +159,11 @@
   <footer class="site-foot">
     <span>© <span id="y"></span> lonX · Built with Claude Code</span>
     <span><a href="/japanese/verification/">校验报告</a> · <a href="/japanese/sources/">参考资料与版权</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
-    <span class="lic">语音由 Microsoft 神经网络语音（Nanami / Keita）合成，每条经语音识别与音高分析校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
+    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
   </footer>
   <dialog class="kd" id="kd" aria-label="假名详情"></dialog>
   <script type="application/json" id="jp-audio">{}</script>
-  <script src="/japanese/assets/japanese.js?v=57174cbb" defer></script>
+  <script src="/japanese/assets/japanese.js?v=defce24b" defer></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

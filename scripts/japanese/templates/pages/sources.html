@@ -36,11 +36,22 @@
 <tr><td>English Wiktionary / 日本語版ウィクショナリー / Wikipedia（含 Wikimedia Commons 字源图）</td><td>字源三方核对；声调第三票</td><td>CC BY-SA 4.0（本站只引用事实性信息）</td></tr>
 <tr><td>三省堂《大辞林》特别页「片仮名」</td><td>片假名字源核对（ア–ト）</td><td>仅作核对，未转载</td></tr>
 <tr><td><a href="https://github.com/open-spaced-repetition/ts-fsrs" target="_blank" rel="noopener">ts-fsrs 6.0.0</a></td><td>练习页的间隔重复调度（打包为 <code>/japanese/vendor/fsrs-6.0.0.min.mjs</code>）</td><td>MIT</td></tr>
-<tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>全部发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
+<tr><td>维基共享资源真人录音（Tofugu/WaniKani 等，见上表）</td><td>标「真人」的发音</td><td>CC BY-SA 4.0 / 公有领域</td></tr>
+<tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>其余发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
 <tr><td>OpenAI Whisper（large-v3 / large-v3-turbo，MLX 版）</td><td>音频反向听写校验</td><td>MIT</td></tr>
 <tr><td>facebook/wav2vec2-xlsr-53-espeak-cv-ft</td><td>音素识别、强制对齐</td><td>Apache-2.0</td></tr>
 <tr><td>Praat（经 parselmouth）</td><td>基频（音高）提取</td><td>GPL</td></tr>
 </table></div>
+
+<h2 id="human">真人录音（维基共享资源）</h2>
+<p>标「真人」的发音来自维基共享资源（Wikimedia Commons）。采用条件：文件说明写明录音者是日语母语者；单词录音还必须是东京口音（Tofugu/WaniKani 公开的另一半女声录音注明是关西口音，关西话的声调体系不同，所以一条都没用）；并且都通过了和合成语音相同的读音校验，单词另经人工检查音高曲线。</p>
+<p><b>改动说明</b>：本站对这些录音做了去掉首尾静音、音量归一化，并转为 MP3。按 CC BY-SA 4.0 的要求，改动后的音频（<code>/japanese/audio/h/</code>）同样以 CC BY-SA 4.0 提供；公有领域的录音不受此限。</p>
+<details class="vd"><summary>展开全部 {{ HUMAN|length }} 条录音的出处</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>内容</th><th>原文件</th><th>作者</th><th>许可</th></tr>
+{% for iid, c in HUMAN.items() %}<tr><td lang="ja">{{ c.w or c.kana }}</td><td><a href="{{ c.page }}" target="_blank" rel="noopener">{{ c.title[5:] }}</a></td><td>{{ c.author }}</td><td>{{ c.license }}</td></tr>
+{% endfor %}
+</table></div></details>
 
 <h2 id="learn-more">推荐的外部学习资源</h2>
 <ul>

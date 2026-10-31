@@ -17,8 +17,8 @@
 <meta property="og:image" content="https://lonloop.com/og.png" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="jp-audio-version" content="6df81d72" />
-<link rel="stylesheet" href="/japanese/assets/japanese.css?v=3be7ee36" />
+<meta name="jp-audio-version" content="efd2be55" />
+<link rel="stylesheet" href="/japanese/assets/japanese.css?v=3dc1dcf9" />
 </head>
 <body>
   <nav class="topnav">
@@ -41,6 +41,7 @@
 
     <div class="tools" role="toolbar" aria-label="发音设置">
       <div class="grp"><span class="lbl">声音</span><span class="seg"><button type="button" data-set="voice" data-val="n">女声</button><button type="button" data-set="voice" data-val="k">男声</button><button type="button" data-set="voice" data-val="alt">交替</button></span></div>
+      <div class="grp"><span class="lbl">真人录音</span><span class="seg"><button type="button" data-set="human" data-val="true">优先</button><button type="button" data-set="human" data-val="false">不用</button></span></div>
       <div class="grp"><span class="lbl">语速</span><span class="seg"><button type="button" data-set="rate" data-val="1">1×</button><button type="button" data-set="rate" data-val="0.75">0.75×</button></span></div>
     </div>
 
@@ -133,12 +134,12 @@
   <footer class="site-foot">
     <span>© <span id="y"></span> lonX · Built with Claude Code</span>
     <span><a href="/japanese/verification/">校验报告</a> · <a href="/japanese/sources/">参考资料与版权</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
-    <span class="lic">语音由 Microsoft 神经网络语音（Nanami / Keita）合成，每条经语音识别与音高分析校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
+    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
   </footer>
   <dialog class="kd" id="kd" aria-label="假名详情"></dialog>
   <script type="application/json" id="jp-audio">{"g-arigatou": "nk", "g-chottomatte": "nk", "g-douitashimashite": "nk", "g-gochisousama": "nk", "g-gomennasai": "nk", "g-hai": "nk", "g-hajimemashite": "nk", "g-iie": "nk", "g-itadakimasu": "nk", "g-ittekimasu": "nk", "g-itterasshai": "nk", "g-jaamata": "nk", "g-konbanwa": "nk", "g-konnichiwa": "nk", "g-mouichido": "nk", "g-ogenkidesuka": "nk", "g-ohayou": "nk", "g-okaerinasai": "nk", "g-onegaishimasu": "nk", "g-otsukaresama": "nk", "g-oyasumi": "nk", "g-sayounara": "nk", "g-shitsureishimasu": "nk", "g-sumimasen": "nk", "g-tadaima": "nk", "g-wakarimasen": "nk", "g-wakarimashita": "nk", "g-yoroshiku": "nk", "g-yukkuri": "nk"}</script>
 <script type="application/json" id="drill-greet">[[{"id": "g-ohayou", "label": "\u65e9\u4e0a\u597d\uff08\u793c\u8c8c\u8bf4\u6cd5\uff09", "sub": "", "w": "\u304a\u306f\u3088\u3046\u3054\u3056\u3044\u307e\u3059"}, {"id": "g-konnichiwa", "label": "\u4f60\u597d\uff08\u767d\u5929\uff09", "sub": "", "w": "\u3053\u3093\u306b\u3061\u306f"}, {"id": "g-konbanwa", "label": "\u665a\u4e0a\u597d", "sub": "", "w": "\u3053\u3093\u3070\u3093\u306f"}, {"id": "g-oyasumi", "label": "\u665a\u5b89\uff08\u7761\u524d\uff09", "sub": "", "w": "\u304a\u3084\u3059\u307f\u306a\u3055\u3044"}], [{"id": "g-arigatou", "label": "\u8c22\u8c22\uff08\u793c\u8c8c\u8bf4\u6cd5\uff09", "sub": "", "w": "\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3059"}, {"id": "g-sumimasen", "label": "\u5bf9\u4e0d\u8d77\uff1b\u52b3\u9a7e\uff1b\u4e0d\u597d\u610f\u601d", "sub": "", "w": "\u3059\u307f\u307e\u305b\u3093"}, {"id": "g-gomennasai", "label": "\u5bf9\u4e0d\u8d77\uff08\u9053\u6b49\uff09", "sub": "", "w": "\u3054\u3081\u3093\u306a\u3055\u3044"}, {"id": "g-douitashimashite", "label": "\u4e0d\u5ba2\u6c14", "sub": "", "w": "\u3069\u3046\u3044\u305f\u3057\u307e\u3057\u3066"}], [{"id": "g-itadakimasu", "label": "\u6211\u5f00\u52a8\u4e86\uff08\u996d\u524d\uff09", "sub": "", "w": "\u3044\u305f\u3060\u304d\u307e\u3059"}, {"id": "g-gochisousama", "label": "\u6211\u5403\u597d\u4e86\uff0c\u8c22\u8c22\u6b3e\u5f85\uff08\u996d\u540e\uff09", "sub": "", "w": "\u3054\u3061\u305d\u3046\u3055\u307e\u3067\u3057\u305f"}, {"id": "g-ittekimasu", "label": "\u6211\u51fa\u95e8\u4e86", "sub": "", "w": "\u884c\u3063\u3066\u304d\u307e\u3059"}, {"id": "g-tadaima", "label": "\u6211\u56de\u6765\u4e86", "sub": "", "w": "\u305f\u3060\u3044\u307e"}], [{"id": "g-itterasshai", "label": "\u8def\u4e0a\u5c0f\u5fc3\uff08\u9001\u4eba\u51fa\u95e8\uff09", "sub": "", "w": "\u884c\u3063\u3066\u3089\u3063\u3057\u3083\u3044"}, {"id": "g-okaerinasai", "label": "\u4f60\u56de\u6765\u5566", "sub": "", "w": "\u304a\u5e30\u308a\u306a\u3055\u3044"}, {"id": "g-ittekimasu", "label": "\u6211\u51fa\u95e8\u4e86", "sub": "", "w": "\u884c\u3063\u3066\u304d\u307e\u3059"}, {"id": "g-tadaima", "label": "\u6211\u56de\u6765\u4e86", "sub": "", "w": "\u305f\u3060\u3044\u307e"}], [{"id": "g-wakarimashita", "label": "\u660e\u767d\u4e86", "sub": "", "w": "\u5206\u304b\u308a\u307e\u3057\u305f"}, {"id": "g-wakarimasen", "label": "\u4e0d\u660e\u767d\uff1b\u4e0d\u77e5\u9053", "sub": "", "w": "\u5206\u304b\u308a\u307e\u305b\u3093"}, {"id": "g-mouichido", "label": "\u8bf7\u518d\u8bf4\u4e00\u904d", "sub": "", "w": "\u3082\u3046\u4e00\u5ea6\u304a\u9858\u3044\u3057\u307e\u3059"}, {"id": "g-yukkuri", "label": "\u8bf7\u8bf4\u6162\u4e00\u70b9", "sub": "", "w": "\u3086\u3063\u304f\u308a\u304a\u9858\u3044\u3057\u307e\u3059"}], [{"id": "g-hajimemashite", "label": "\u521d\u6b21\u89c1\u9762", "sub": "", "w": "\u306f\u3058\u3081\u307e\u3057\u3066"}, {"id": "g-yoroshiku", "label": "\u8bf7\u591a\u5173\u7167", "sub": "", "w": "\u3088\u308d\u3057\u304f\u304a\u9858\u3044\u3057\u307e\u3059"}, {"id": "g-ogenkidesuka", "label": "\u4f60\u597d\u5417\uff1f\uff08\u8f83\u4e45\u6ca1\u89c1\u65f6\uff09", "sub": "", "w": "\u304a\u5143\u6c17\u3067\u3059\u304b"}, {"id": "g-shitsureishimasu", "label": "\u6253\u6270\u4e86\uff1b\u5931\u966a\u4e86", "sub": "", "w": "\u5931\u793c\u3057\u307e\u3059"}]]</script>
-  <script src="/japanese/assets/japanese.js?v=57174cbb" defer></script>
+  <script src="/japanese/assets/japanese.js?v=defce24b" defer></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

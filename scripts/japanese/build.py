@@ -35,6 +35,10 @@ def clip_ok(v, iid):
 ITEMS = {i["id"]: i for i in all_items()}
 C = load_content()
 MANUAL = json.load(open(os.path.join(HERE, "reports", "manual_pitch.json")))
+HUMAN_DIR = os.environ.get("HUMAN_DIR", os.path.expanduser("~/.agents/workspace/japanese/human"))
+_HJ = os.path.join(HERE, "reports", "human.json")
+HUMAN_ALL = json.load(open(_HJ))["clips"] if os.path.exists(_HJ) else []
+HUMAN = {c["id"]: c for c in HUMAN_ALL if c.get("ok")}
 
 # Words of the homophone sets in lesson 7: a kana-typed fallback would lose the
 # very distinction the set is about, so these never use the "-kv" variant.
@@ -70,6 +74,9 @@ DUPES = _duplicates()
 
 def source(iid, v):
     """The cache file to publish for (iid, voice), or None if nothing passed."""
+    if v == "h":
+        c = HUMAN.get(iid)
+        return os.path.join(HUMAN_DIR, "mp3", c["mp3"]) if c else None
     it = ITEMS.get(iid)
     if not it or (v, iid) in DUPES:
         return None
@@ -91,7 +98,8 @@ def source(iid, v):
 
 
 def voices_ok(iid):
-    return "".join(v for v in "nk" if source(iid, v))
+    # "h" first: a verified human recording is played before the synthetic voices
+    return "".join(v for v in "hnk" if source(iid, v))
 _acc = {}
 
 
@@ -354,6 +362,9 @@ def main():
         vs = voices_ok(iid)
         if vs:
             manifest[iid] = vs
+    for iid in HUMAN:  # recordings of words that only the accent lesson's 真人示范 uses
+        if iid not in manifest:
+            manifest[iid] = voices_ok(iid)
     audio_version = hashlib.sha1(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:8]
 
     pages = [dict(slug="index", url="/japanese/", tpl="index.html", title="日语", lesson=None)]
@@ -389,7 +400,7 @@ def main():
         def W(w, r):
             iid = slug(w, r)
             has_audio(iid)
-            it = ITEMS.get(iid, {})
+            it = ITEMS.get(iid) or {"zh": (HUMAN.get(iid) or {}).get("zh")}
             acc = dict_acc(w, r)
             alts = [x for x in accepted_accents(w, r) if x != acc]
             n = len(KM.morae(r))
@@ -429,7 +440,7 @@ def main():
         def say_id(iid):
             return has_audio(iid)
 
-        ctx = dict(page=p, K=K, C=C, KM=KM, W=W, WL=WL, VT=VT, REPORT_TIME=REPORT_TIME, dict_acc=dict_acc, MANUAL=MANUAL, DUPES=DUPES, kconv=kconv, has_audio=has_audio, ok_word=ok_word,
+        ctx = dict(page=p, K=K, C=C, KM=KM, W=W, WL=WL, VT=VT, REPORT_TIME=REPORT_TIME, dict_acc=dict_acc, MANUAL=MANUAL, DUPES=DUPES, HUMAN=HUMAN, HUMAN_ALL=HUMAN_ALL, kconv=kconv, has_audio=has_audio, ok_word=ok_word,
                    drill_sets=drill_sets, F0=F0, say_id=say_id, slug=slug, kana_id=kana_id,
                    ex_slots=ex_slots, lessons=lesson_pages, stats=stats, manifest=manifest,
                    REPORT=REPORT, SELECTION=SELECTION, accent=accent, heard_accent=heard_accent,
@@ -445,7 +456,7 @@ def main():
         print("wrote", dest.replace(SITE, ""), len(page_audio), "clips")
 
     # audio: copy exactly the clips some page uses, drop stale ones
-    for v in "nk":
+    for v in "hnk":
         d = os.path.join(OUT, "audio", v)
         os.makedirs(d, exist_ok=True)
         want = {iid for iid, vs in used_audio.items() if v in vs}
@@ -457,7 +468,7 @@ def main():
             dst = os.path.join(d, iid + ".mp3")
             if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
                 shutil.copyfile(src, dst)
-    json.dump(strokes, open(os.path.join(OUT, "assets", "strokes.json"), "w"), ensure_ascii=False, separators=(",", ":"))
+    json.dump(dict(sorted(strokes.items())), open(os.path.join(OUT, "assets", "strokes.json"), "w"), ensure_ascii=False, separators=(",", ":"))
     json.dump(SELECTION, open(os.path.join(HERE, "reports", "selection.json"), "w"), ensure_ascii=False, indent=1)
     print("audio clips published:", sum(len(v) for v in used_audio.values()))
 

@@ -102,6 +102,9 @@ a{color:inherit}
 .say.playing{background:#22305a;border-color:var(--accent)}
 .say .vt{color:var(--dim);font-size:11.5px}
 .say[disabled]{opacity:.4;cursor:not-allowed}
+.say.has-h::after{content:"真人";font-size:11px;color:var(--accent2);margin-left:1px}
+.no-human .say.has-h::after{content:none}
+.hbadge{font-size:11px;color:var(--accent2);border:1px solid rgba(91,224,200,.35);border-radius:6px;padding:0 5px;line-height:17px}
 
 /* ---------- lesson index / roadmap ---------- */
 .stage{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin:0 0 18px}

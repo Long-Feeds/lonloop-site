@@ -17,8 +17,8 @@
 <meta property="og:image" content="https://lonloop.com/og.png" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="jp-audio-version" content="6df81d72" />
-<link rel="stylesheet" href="/japanese/assets/japanese.css?v=3be7ee36" />
+<meta name="jp-audio-version" content="efd2be55" />
+<link rel="stylesheet" href="/japanese/assets/japanese.css?v=3dc1dcf9" />
 </head>
 <body>
   <nav class="topnav">
@@ -45,7 +45,7 @@
   <div><b>1966</b><span>条音频（男女声各一）参与校验</span></div>
   <div><b class="vt-ok">1751</b><span>条全部检查通过</span></div>
   <div><b class="vt-no">215</b><span>条未通过：没有上线</span></div>
-  <div><b>440</b><span>个发音条目至少有一种声音可用</span></div>
+  <div><b>465</b><span>个发音条目至少有一种声音可用</span></div>
 </div>
 
 <h2 id="layers">六道检查</h2>
@@ -519,9 +519,54 @@
   <li><b>笔顺</b>：KanjiVG 与 animCJK 两套独立数据对 151 个假名（平/片假名清音、浊音半浊音、小写字母）的笔画数逐一比对，全部一致。</li>
 </ul>
 
+<h2 id="human">真人录音的筛选</h2>
+<p>合成语音的问题（单念汉字读成音读、单假名静音、声调不可自动验证）促使我们补充了真人录音：在维基共享资源上检查了 87 个候选文件，采用 54 个。</p>
+<ul>
+  <li><b>先看说明，再听内容</b>：只用文件说明里写明是日语母语者的录音；单词只用「东京口音」的（Tofugu/WaniKani 的女声录音注明为关西口音，全部不用；Lingua Libre 志愿者录音无法确认母语和地区，也不用）。</li>
+  <li><b>读音校验</b>：与合成语音相同的反向听写；单假名可用带领域提示的转写。</li>
+  <li><b>声调人工核验</b>：每个单词画出音高曲线，与词典声调对照（单拍词单念时无法判断声调，只校验读音）。</li>
+</ul>
+<details class="vd"><summary>展开未采用的 33 个文件及原因</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>文件</th><th>原因</th></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-hito.ogg" target="_blank" rel="noopener">Ja-hito.ogg</a></td><td>识别为「と」（ひ清化后识别不出），音素识别也无法确认</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-ko.ogg" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-ko.ogg</a></td><td>识别为「語」，与音素识别结果矛盾</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-nureru.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-nureru.oga</a></td><td>末拍下降过大，无法判断是句末回落还是中高型，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-te.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-te.oga</a></td><td>识别为「で」，与音素识别结果矛盾</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-WaniKaniTofuguMale-teki.oga" target="_blank" rel="noopener">Ja-WaniKaniTofuguMale-teki.oga</a></td><td>接尾词（-てき），不适合作为单词示范</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-zenzen.ogg" target="_blank" rel="noopener">Ja-zenzen.ogg</a></td><td>实测从第 1 拍就高、之后一路下降，像头高型；词典为⓪（平板），不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-0-rei.ogg" target="_blank" rel="noopener">Ja-0-rei.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-0-zero.ogg" target="_blank" rel="noopener">Ja-0-zero.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-1-ichi.ogg" target="_blank" rel="noopener">Ja-1-ichi.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-10-jyuu.ogg" target="_blank" rel="noopener">Ja-10-jyuu.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-2-ni.ogg" target="_blank" rel="noopener">Ja-2-ni.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-3-san.ogg" target="_blank" rel="noopener">Ja-3-san.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-4-shi.ogg" target="_blank" rel="noopener">Ja-4-shi.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-4-shi_counting.ogg" target="_blank" rel="noopener">Ja-4-shi counting.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-4-yon.ogg" target="_blank" rel="noopener">Ja-4-yon.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-5-go.ogg" target="_blank" rel="noopener">Ja-5-go.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-5-go_counting.ogg" target="_blank" rel="noopener">Ja-5-go counting.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Chi_2.oga" target="_blank" rel="noopener">Ja-Chi 2.oga</a></td><td>识别结果与标注的假名不符</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ie.oga" target="_blank" rel="noopener">Ja-Ie.oga</a></td><td>不是单个假名（是词、重复朗读或示范段落）</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ka.oga" target="_blank" rel="noopener">Ja-Ka.oga</a></td><td>不是单个假名（是词、重复朗读或示范段落）</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-O.oga" target="_blank" rel="noopener">Ja-O.oga</a></td><td>识别结果与标注的假名不符</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ra.oga" target="_blank" rel="noopener">Ja-Ra.oga</a></td><td>识别结果与标注的假名不符</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Re.oga" target="_blank" rel="noopener">Ja-Re.oga</a></td><td>识别结果与标注的假名不符</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ro.oga" target="_blank" rel="noopener">Ja-Ro.oga</a></td><td>识别结果与标注的假名不符</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Ryu.oga" target="_blank" rel="noopener">Ja-Ryu.oga</a></td><td>可能读成了长音「りゅう」，无法确认是短音「りゅ」</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-So.oga" target="_blank" rel="noopener">Ja-So.oga</a></td><td>不是单个假名（是词、重复朗读或示范段落）</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-We.oga" target="_blank" rel="noopener">Ja-We.oga</a></td><td>识别结果无法确认是「ウィ」「ウェ」</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-Wi.oga" target="_blank" rel="noopener">Ja-Wi.oga</a></td><td>识别结果无法确认是「ウィ」「ウェ」</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-pronunciation-moraic_n.ogg" target="_blank" rel="noopener">Ja-pronunciation-moraic n.ogg</a></td><td>不是单个假名（是词、重复朗读或示范段落）</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-7-nana.ogg" target="_blank" rel="noopener">Ja-7-nana.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-7-shichi.ogg" target="_blank" rel="noopener">Ja-7-shichi.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-8-hachi.ogg" target="_blank" rel="noopener">Ja-8-hachi.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+<tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-9-kyuu.ogg" target="_blank" rel="noopener">Ja-9-kyuu.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
+</table></div></details>
+
 <h2 id="limits">局限</h2>
 <ul>
-  <li>音频是 Microsoft 神经网络语音合成的标准东京音，不是真人录音；只有两个声音。</li>
+  <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 54 个条目。</li>
   <li>机器校验能抓住「读错、无声」这类硬错误，抓不住更细微的不自然（比如语调略生硬）。</li>
   <li><b>声调的边界</b>：页面上的声调标注全部来自词典（两源一致才标），是可靠的；但只有第 7 课的示范音频经过声调核验。其他各课的例词音频只校验了读音，声调<b>以标注为准</b>——如果你觉得某个例词的音频和标注不一致，请相信标注，并告诉我们。</li>
   <li>寒暄语、句子只检查读音，不标、不测声调（短语和句子的语调规律超出入门范围）。</li>
@@ -534,11 +579,11 @@
   <footer class="site-foot">
     <span>© <span id="y"></span> lonX · Built with Claude Code</span>
     <span><a href="/japanese/verification/">校验报告</a> · <a href="/japanese/sources/">参考资料与版权</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
-    <span class="lic">语音由 Microsoft 神经网络语音（Nanami / Keita）合成，每条经语音识别与音高分析校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
+    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）。详见参考资料页。</span>
   </footer>
   <dialog class="kd" id="kd" aria-label="假名详情"></dialog>
   <script type="application/json" id="jp-audio">{}</script>
-  <script src="/japanese/assets/japanese.js?v=57174cbb" defer></script>
+  <script src="/japanese/assets/japanese.js?v=defce24b" defer></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

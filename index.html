@@ -481,8 +481,13 @@
   .feed-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);
     flex:none;box-shadow:0 0 0 3px rgba(91,224,200,.12)}
   /* min-width:0 lets the action shrink inside the flex row and overflow-wrap
-     keeps a long commit subject breaking instead of pushing past the card */
-  .feed-action{color:var(--muted);min-width:0;overflow-wrap:anywhere}
+     keeps a long commit subject breaking instead of pushing past the card.
+     text-wrap:pretty for the same reason the prose above has it: once PR rows
+     carried their titles (2026-11-01) the zh feed stranded one character on a
+     row's last line at 6 of 20 widths, every desktop view among them
+     (…公开校验报|告). With it: 0, and single-word last lines in English 21 → 3,
+     without adding a line to any row. Re-measure with tools/feedwrap.mjs. */
+  .feed-action{color:var(--muted);min-width:0;overflow-wrap:anywhere;text-wrap:pretty}
   .feed-action a{color:var(--txt);text-decoration:none;font-weight:600}
   .feed-action a:hover{color:var(--accent)}
   .feed-time{margin-left:auto;color:var(--dim);font-size:12.5px;white-space:nowrap;
@@ -1219,6 +1224,22 @@
          Empty until (and unless) those requests land, which is why every caller
          treats a miss as "just say a push happened". */
       var subjects = {};
+      /* 'owner/repo#N' -> that pull request's title, recovered by enrich() from the
+         commit its merge left on the default branch. Same contract as subjects: a
+         miss means the row names the PR without a title. */
+      var prTitles = {};
+
+      // The PR number from either payload shape — null unless it's a plain positive
+      // integer, because it goes into a URL.
+      function prNum(p){
+        var n = p.number || (p.pull_request && p.pull_request.number);
+        return (typeof n === 'number' && n >= 1 && n % 1 === 0) ? n : null;
+      }
+      // The trimmed payload says 'merged'; the full one said 'closed' + merged:true.
+      function prMerged(p){
+        return p.action === 'merged' ||
+               (p.action === 'closed' && !!p.pull_request && p.pull_request.merged === true);
+      }
 
       // Builds the row's <span class="feed-action">. Returns null for event types
       // this feed doesn't report, which drops the row.
@@ -1276,8 +1297,45 @@
                            en ? '' : (' 推送 '+n+' 次提交'));
           return compose(en ? 'Pushed to ' : '向 ', en ? '' : ' 推送提交');
         }
-        if (ev.type === 'PullRequestEvent' && (p.action === 'opened' || p.action === 'reopened'))
-          return compose(en ? 'Opened a pull request in ' : '在 ', en ? '' : ' 发起 Pull Request');
+        if (ev.type === 'PullRequestEvent'){
+          /* Pull requests got the same trim: the payload is down to action / number /
+             pull_request{url, id, number, head, base} — no title — and a merge now
+             arrives as its own action, 'merged', which the old opened-only check never
+             matched. So the 日语 section, shipped 2026-10-31 as #5 and #6 (each opened
+             and merged seconds apart), showed up here as two identical "opened a pull
+             request in lonloop-site" rows and neither merge showed up at all: the
+             biggest change of the week read as the emptiest two rows. Now each PR gets
+             one row (shown() keeps its merge over its opening), the number links to
+             the PR, and the title comes from the payload if GitHub ever sends it again,
+             else from the commit the merge left on main (enrich()). No title found —
+             a PR still open, a rebase merge — and the row still says which PR. */
+          var merged = prMerged(p), n = prNum(p);
+          if (!merged && p.action !== 'opened' && p.action !== 'reopened') return null;
+          if (!n)   // a payload shape we don't recognise: say only what happened
+            return compose(en ? (merged ? 'Merged a pull request into ' : 'Opened a pull request in ') : '在 ',
+                           en ? '' : (merged ? ' 合并 Pull Request' : ' 发起 Pull Request'));
+          var pr = document.createElement('a');
+          pr.href = 'https://github.com/' + full + '/pull/' + n;
+          pr.target = '_blank'; pr.rel = 'noopener';
+          pr.textContent = 'PR #' + n;
+          if (en){
+            s.appendChild(document.createTextNode(merged ? 'Merged ' : 'Opened '));
+            s.appendChild(pr);
+            compose(merged ? ' into ' : ' in ', '');
+          } else {
+            compose('在 ', merged ? ' 合并 ' : ' 发起 ');
+            s.appendChild(pr);
+          }
+          var title = (p.pull_request && typeof p.pull_request.title === 'string' && p.pull_request.title.trim())
+                      || prTitles[full + '#' + n];
+          if (title){
+            s.appendChild(document.createTextNode(' · '));
+            var t = document.createElement('span');
+            t.textContent = title;              // textContent — a PR title is untrusted text
+            s.appendChild(t);
+          }
+          return s;
+        }
         if (ev.type === 'CreateEvent' && p.ref_type === 'repository')
           return compose(en ? 'Created ' : '创建仓库 ', '');
         if (ev.type === 'ReleaseEvent' && p.action === 'published')
@@ -1288,11 +1346,24 @@
       // The six events this feed would show, in order. Also the set enrich() sizes
       // its requests against, so nothing is fetched for a row nobody sees.
       function shown(en){
-        var out = [];
+        var out = [], seenPr = {}, mergedPr = {};
+        // A merged PR is shown by its merge, never its opening — whichever order the
+        // API lists the two in — and once, however many events it has.
+        for (var j=0;j<events.length;j++){
+          var e = events[j], ep = (e && e.payload) || {};
+          if (e && e.repo && e.type === 'PullRequestEvent' && prMerged(ep) && prNum(ep))
+            mergedPr[e.repo.name + '#' + prNum(ep)] = 1;
+        }
         for (var i=0;i<events.length && out.length<6;i++){
           var ev = events[i];
           if (!ev || !ev.repo || !ALLOW[ev.repo.name]) continue;
           if (!actionEl(ev, en)) continue;     // unreported event type
+          var pp = ev.payload || {};
+          if (ev.type === 'PullRequestEvent' && prNum(pp)){
+            var key = ev.repo.name + '#' + prNum(pp);
+            if (seenPr[key] || (mergedPr[key] && !prMerged(pp))) continue;
+            seenPr[key] = 1;
+          }
           out.push(ev);
         }
         return out;
@@ -1325,12 +1396,16 @@
          request fan-out. Each answer is a sha -> subject map; render() then reruns
          and the rows that matched gain their message. Anything that fails (offline,
          403 rate-limited, a push to a branch outside the latest commits) simply
-         never populates and those rows keep the wording they already have. */
+         never populates and those rows keep the wording they already have.
+         PR rows ride the same request: a merge leaves one of GitHub's two default
+         subjects on main — "<title> (#N)" from a squash merge (#2 #4 #5 #6 here),
+         or "Merge pull request #N from <branch>" with the title as the next
+         paragraph (#3) — so their titles come back with the push subjects. */
       function enrich(){
         var seen = {}, repos = [], rows = shown(document.documentElement.lang === 'en');
         for (var i=0;i<rows.length && repos.length<3;i++){
           var full = rows[i].repo.name;
-          if (rows[i].type !== 'PushEvent' || seen[full]) continue;
+          if ((rows[i].type !== 'PushEvent' && rows[i].type !== 'PullRequestEvent') || seen[full]) continue;
           seen[full] = 1; repos.push(full);
         }
         repos.forEach(function(full){
@@ -1344,7 +1419,15 @@
                 var c = d[i];
                 if (!c || typeof c.sha !== 'string' || !c.commit) continue;
                 if (typeof c.commit.message !== 'string') continue;
-                var line = c.commit.message.split('\n')[0].trim();
+                var lines = c.commit.message.split('\n');
+                var line = lines[0].trim(), m, num = null, title = '';
+                if ((m = /^(.*\S)\s+\(#(\d+)\)$/.exec(line))){ num = m[2]; title = m[1]; }
+                else if ((m = /^Merge pull request #(\d+) from \S+$/.exec(line))){
+                  num = m[1];
+                  for (var k=1;k<lines.length && !title;k++) title = lines[k].trim();
+                }
+                if (title.length > 96) title = title.slice(0, 95) + '…';
+                if (num && title && !prTitles[full+'#'+num]){ prTitles[full+'#'+num] = title; got = true; }
                 // length guard only — real subjects run well under this, it just
                 // stops a pathological one from dominating the row
                 if (line.length > 96) line = line.slice(0, 95) + '…';

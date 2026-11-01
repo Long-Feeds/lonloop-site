@@ -89,8 +89,22 @@ async def synth(item, voice, sem):
     return "new" if text == item["tts"] else ("alt" if text != "SILENT" else "silent")
 
 
+def _needed(items):
+    """Stage-1 kana-typed variants are synthesized only where the base clip
+    failed verification (run gen_audio → verify → merge → gen_audio → verify)."""
+    rep_fn = os.path.join(os.path.dirname(os.path.abspath(__file__)), "reports", "verify.json")
+    clips = json.load(open(rep_fn))["clips"] if os.path.exists(rep_fn) else {}
+    out = []
+    for i in items:
+        if i["kind"] in ("n5wordvar", "n5formvar"):
+            if not any((c := clips.get(f"{v}/{i['base']}")) is not None and not c.get("ok") for v in VOICES):
+                continue
+        out.append(i)
+    return out
+
+
 async def main(only=None):
-    items = all_items()
+    items = _needed(all_items())
     if only:
         items = [i for i in items if i["kind"] in only]
     sem = asyncio.Semaphore(6)

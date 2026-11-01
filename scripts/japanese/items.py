@@ -4,7 +4,7 @@ An item is one thing a learner can press play on. Its id is stable (derived from
 what is said, not from list position), so re-running the pipeline never shuffles
 audio files under a page.
 """
-import hashlib, os, yaml
+import hashlib, json, os, yaml
 
 from kana import SOUNDS, EXTENDED, all_basic_kana, to_hiragana, to_katakana
 
@@ -98,7 +98,68 @@ def all_items():
             add("num-" + x["id"][1:] + "-alt", kind="number", w=x["alt"], r=x["alt"], num=x["num"], tts=x["alt"], rate="-5%")
     for x in c["sentences"]:
         add(x["id"], kind="sentence", w=x["w"], r=x["r"], zh=x["zh"], tts=x["w"], rate="-5%")
+    for it in n5_items():
+        add(it.pop("id"), **it)
     return list(items.values())
+
+
+N5_REPORT = os.path.join(HERE, "reports", "n5_checks.json")
+
+
+def form_id(w, r):
+    return "f-" + hashlib.md5(f"{w}|{r}".encode()).hexdigest()[:6]
+
+
+def n5_items():
+    """Stage 1 audio items, taken from reports/n5_checks.json (written by
+    `python n5data.py check`): only entries that passed every content check.
+
+    kinds: n5word (dictionary forms, kanji example words), n5form (conjugated
+    forms), n5sent / n5phrase (checked against UniDic's pronunciation, so a
+    particle は must be heard as わ). A word already in stage 0 keeps its stage-0
+    item (same id), and its existing verification."""
+    if not os.path.exists(N5_REPORT):
+        return []
+    rep = json.load(open(N5_REPORT, encoding="utf-8"))
+    out = []
+
+    def word(w, r, zh):
+        iid = slug(w, r)
+        out.append({"id": iid, "kind": "n5word", "w": w, "r": r, "zh": zh, "tts": w, "rate": "-5%"})
+        if w != r:
+            out.append({"id": iid + "-kv", "kind": "n5wordvar", "w": w, "r": r, "zh": zh, "base": iid, "tts": r, "rate": "-5%"})
+
+    def form(f, zh):
+        iid = form_id(f["w"], f["r"])
+        # a written form UniDic reads another way first (降ります: ふります) is
+        # synthesized from kana, so the engine cannot pick the other word
+        amb = bool(f.get("ambiguous"))
+        out.append({"id": iid, "kind": "n5form", "w": f["w"], "r": f["r"], "zh": zh, "tts": f["r"] if amb else f["w"],
+                    "rate": "-5%", "nbest": amb})
+        if f["w"] != f["r"] and not amb:
+            out.append({"id": iid + "-kv", "kind": "n5formvar", "w": f["w"], "r": f["r"], "zh": zh, "base": iid,
+                        "tts": f["r"], "rate": "-5%"})
+    for v in rep["verbs"] + rep["adjectives"]:
+        if not v["ok"]:
+            continue
+        word(v["w"], v["r"], v["zh"])
+        for k, f in v["forms"].items():
+            if k != "dict" and f["ok"]:
+                form(f, v["zh"])
+    for k in rep["kanji"]:
+        for x in k["examples"]:
+            if not x["problems"]:
+                word(x["w"], x["r"], x["zh"])
+    for s in rep["sentences"]:
+        if s["ok"]:
+            out.append({"id": "n5-" + s["id"], "kind": "n5sent", "w": s["w"], "r": s["pron"], "kana": s["kana"],
+                        "zh": s["zh"], "tts": s["w"], "rate": "-5%", "pron_only": True,
+                        "particles": s.get("particles", []), "spell": s.get("spell")})
+    for p in rep["phrases"]:
+        if p["ok"]:
+            out.append({"id": "n5p-" + slug(p["w"], p["r"])[2:], "kind": "n5phrase", "w": p["w"], "r": p["pron"],
+                        "kana": p["r"], "zh": p["zh"], "tts": p["w"], "rate": "-5%", "pron_only": True, "particles": []})
+    return out
 
 
 if __name__ == "__main__":

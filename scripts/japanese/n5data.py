@@ -1055,36 +1055,39 @@ def example_check(k, x):
         after = w[b:]  # kana written after the kanji (送り仮名), e.g. 分[かる]
         best = None
         for order, o in enumerate(off):
-            cands = []  # (kana, score, how)
+            cands = []  # (kana, score, how, full 连用形 or None)
             if o["kind"] == "on":
-                cands.append((o["r"], 3, "本来"))
+                cands.append((o["r"], 3, "本来", None))
             elif o["okuri"]:
                 ok_ = o["okuri"]
                 if after.startswith(ok_):
                     # the most specific match: the written 送り仮名 is exactly this
                     # reading's (大きい = おお.きい rather than the prefix おお)
-                    cands.append((o["stem"], 3.25, "本来"))         # 分かる = 分(わ)+かる
+                    cands.append((o["stem"], 3.25, "本来", None))   # 分かる = 分(わ)+かる
                 elif ok_[-1] in I_ROW and after.startswith(ok_[:-1] + I_ROW[ok_[-1]]):
-                    cands.append((o["stem"], 2, "连用形"))          # 買い物 = 買(か)+い
+                    # 買い物 = 買(か)+い: the 连用形 is the whole かい, not the kanji's か
+                    cands.append((o["stem"], 2, "连用形", o["stem"] + ok_[:-1] + I_ROW[ok_[-1]]))
                 elif ok_.endswith("る") and len(ok_) >= 2 and after.startswith(ok_[:-1]):
-                    cands.append((o["stem"], 2, "连用形"))          # 食べ物 = 食(た)+べ
+                    cands.append((o["stem"], 2, "连用形", o["stem"] + ok_[:-1]))  # 食べ物 = たべ+もの
                 elif not after or not re.match(r"[ぁ-ゖ]", after):
                     # 送り仮名 left out inside a compound: 入口 = 入(いり)口
                     if ok_[-1] in I_ROW:
-                        cands.append((o["stem"] + ok_[:-1] + I_ROW[ok_[-1]], 1, "连用形"))
+                        f = o["stem"] + ok_[:-1] + I_ROW[ok_[-1]]
+                        cands.append((f, 1, "连用形", f))
                     if ok_.endswith("る"):
-                        cands.append((o["stem"] + ok_[:-1], 1, "连用形"))  # 出口 = 出(で)口
-                    cands.append((o["stem"], 1, "本来"))             # 三日 = 三(みっ)日
-                    cands.append((o["stem"] + ok_, 0, "本来"))
+                        f = o["stem"] + ok_[:-1]
+                        cands.append((f, 1, "连用形", f))           # 出口 = 出(で)口
+                    cands.append((o["stem"], 1, "本来", None))       # 三日 = 三(みっ)日
+                    cands.append((o["stem"] + ok_, 0, "本来", None))
             else:
-                cands.append((o["r"], 3, "本来"))                   # 話(はなし), 人(ひと)
-            for c, score, how in cands:
+                cands.append((o["r"], 3, "本来", None))             # 話(はなし), 人(ひと)
+            for c, score, how, full in cands:
                 v = sound_variants(c)
                 if kn in v:
                     sc = score - (0 if v[kn] == "本来" else 0.5)
                     hw = how if v[kn] == "本来" else v[kn]
                     if best is None or sc > best[0]:
-                        best = (sc, o, hw)
+                        best = (sc, o, hw, full if v[kn] == "本来" else None)
         if not best:
             hit = _fuhyo_hit(w, r, a, b)
             if hit:
@@ -1092,9 +1095,9 @@ def example_check(k, x):
             else:
                 res["problems"].append(f"「{k}」在此词中读「{kn}」，不对应两源都收录的常用漢字表读音")
         else:
-            _, o, how = best
+            _, o, how, full = best
             res["reading"] = {"r": o["r"], "kind": o["kind"], "stem": o["stem"], "okuri": o["okuri"], "as": kn,
-                              "how": how, "special": o["special"]}
+                              "how": how, "special": o["special"], "full": full}
     return res
 
 

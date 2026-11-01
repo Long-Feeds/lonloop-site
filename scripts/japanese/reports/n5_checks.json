@@ -11878,7 +11878,8 @@
       "okuri": "つ",
       "as": "ひと",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -11983,7 +11984,8 @@
       "okuri": "つ",
       "as": "ふた",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12096,7 +12098,8 @@
       "okuri": "つ",
       "as": "みっ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12116,7 +12119,8 @@
       "okuri": "つ",
       "as": "みっ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -12224,7 +12228,8 @@
       "okuri": "つ",
       "as": "よっ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12246,7 +12251,8 @@
       "okuri": "つ",
       "as": "よっ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -12334,7 +12340,8 @@
       "okuri": "つ",
       "as": "いつ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12354,7 +12361,8 @@
       "okuri": "",
       "as": "いつ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -12466,7 +12474,8 @@
       "okuri": "つ",
       "as": "むっ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12486,7 +12495,8 @@
       "okuri": "",
       "as": "むい",
       "how": "本来",
-      "special": true
+      "special": true,
+      "full": null
      }
     }
    ],
@@ -12587,7 +12597,8 @@
       "okuri": "つ",
       "as": "なな",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12609,7 +12620,8 @@
       "okuri": "",
       "as": "なの",
       "how": "本来",
-      "special": true
+      "special": true,
+      "full": null
      }
     }
    ],
@@ -12722,7 +12734,8 @@
       "okuri": "つ",
       "as": "やっ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12742,7 +12755,8 @@
       "okuri": "",
       "as": "よう",
       "how": "本来",
-      "special": true
+      "special": true,
+      "full": null
      }
     }
    ],
@@ -12843,7 +12857,8 @@
       "okuri": "つ",
       "as": "ここの",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -12863,7 +12878,8 @@
       "okuri": "",
       "as": "ここの",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -12964,7 +12980,8 @@
       "okuri": "",
       "as": "とお",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13050,7 +13067,8 @@
       "okuri": "",
       "as": "ひゃく",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13070,7 +13088,8 @@
       "okuri": "",
       "as": "ぴゃく",
       "how": "半浊音化",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13149,7 +13168,8 @@
       "okuri": "",
       "as": "せん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13169,7 +13189,8 @@
       "okuri": "",
       "as": "ぜん",
       "how": "连浊",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13249,7 +13270,8 @@
       "okuri": "",
       "as": "まん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13330,7 +13352,8 @@
       "okuri": "",
       "as": "えん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13412,7 +13435,8 @@
       "okuri": "",
       "as": "はん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13432,7 +13456,8 @@
       "okuri": "",
       "as": "はん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13532,7 +13557,8 @@
       "okuri": "",
       "as": "にち",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13570,7 +13596,8 @@
       "okuri": "",
       "as": "び",
       "how": "连浊",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13663,7 +13690,8 @@
       "okuri": "",
       "as": "つき",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13683,7 +13711,8 @@
       "okuri": "",
       "as": "げつ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13705,7 +13734,8 @@
       "okuri": "",
       "as": "げつ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13799,7 +13829,8 @@
       "okuri": "",
       "as": "か",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -13878,7 +13909,8 @@
       "okuri": "",
       "as": "みず",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -13900,7 +13932,8 @@
       "okuri": "",
       "as": "すい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14002,7 +14035,8 @@
       "okuri": "",
       "as": "き",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14024,7 +14058,8 @@
       "okuri": "",
       "as": "もく",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14125,7 +14160,8 @@
       "okuri": "",
       "as": "かね",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14147,7 +14183,8 @@
       "okuri": "",
       "as": "きん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14244,7 +14281,8 @@
       "okuri": "",
       "as": "ど",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14324,7 +14362,8 @@
       "okuri": "",
       "as": "ねん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14420,7 +14459,8 @@
       "okuri": "",
       "as": "じ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14563,7 +14603,8 @@
       "okuri": "",
       "as": "ぶん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14583,7 +14624,8 @@
       "okuri": "かる",
       "as": "わ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14660,7 +14702,8 @@
       "okuri": "",
       "as": "ご",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14680,7 +14723,8 @@
       "okuri": "",
       "as": "ご",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14760,7 +14804,8 @@
       "okuri": "",
       "as": "まえ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14780,7 +14825,8 @@
       "okuri": "",
       "as": "まえ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14800,7 +14846,8 @@
       "okuri": "",
       "as": "ぜん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -14921,7 +14968,8 @@
       "okuri": "ろ",
       "as": "うし",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -14941,7 +14989,8 @@
       "okuri": "",
       "as": "ご",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15033,7 +15082,8 @@
       "okuri": "",
       "as": "いま",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15053,7 +15103,8 @@
       "okuri": "",
       "as": "こん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15128,7 +15179,8 @@
       "okuri": "",
       "as": "しゅう",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15148,7 +15200,8 @@
       "okuri": "",
       "as": "しゅう",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15168,7 +15221,8 @@
       "okuri": "",
       "as": "しゅう",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15238,7 +15292,8 @@
       "okuri": "",
       "as": "まい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15258,7 +15313,8 @@
       "okuri": "",
       "as": "まい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15356,7 +15412,8 @@
       "okuri": "",
       "as": "かん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15444,7 +15501,8 @@
       "okuri": "",
       "as": "ひと",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15466,7 +15524,8 @@
       "okuri": "",
       "as": "じん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15574,7 +15633,8 @@
       "okuri": "",
       "as": "おとこ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15594,7 +15654,8 @@
       "okuri": "",
       "as": "おとこ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15701,7 +15762,8 @@
       "okuri": "",
       "as": "おんな",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15721,7 +15783,8 @@
       "okuri": "",
       "as": "おんな",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15812,7 +15875,8 @@
       "okuri": "",
       "as": "こ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -15891,7 +15955,8 @@
       "okuri": "",
       "as": "ちち",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -15988,7 +16053,8 @@
       "okuri": "",
       "as": "はは",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16085,7 +16151,8 @@
       "okuri": "",
       "as": "とも",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -16167,7 +16234,8 @@
       "okuri": "",
       "as": "せん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16187,7 +16255,8 @@
       "okuri": "",
       "as": "せん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -16358,7 +16427,8 @@
       "okuri": "",
       "as": "せい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16378,7 +16448,8 @@
       "okuri": "",
       "as": "せい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16398,7 +16469,8 @@
       "okuri": "まれる",
       "as": "う",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -16493,7 +16565,8 @@
       "okuri": "",
       "as": "な",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16513,7 +16586,8 @@
       "okuri": "",
       "as": "めい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -16605,7 +16679,8 @@
       "okuri": "",
       "as": "て",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16625,7 +16700,8 @@
       "okuri": "",
       "as": "て",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -16750,7 +16826,8 @@
       "okuri": "",
       "as": "あし",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -16850,7 +16927,8 @@
       "okuri": "",
       "as": "め",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -16929,7 +17007,8 @@
       "okuri": "",
       "as": "みみ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17017,7 +17096,8 @@
       "okuri": "",
       "as": "くち",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -17037,7 +17117,8 @@
       "okuri": "",
       "as": "ぐち",
       "how": "连浊",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -17057,7 +17138,8 @@
       "okuri": "",
       "as": "ぐち",
       "how": "连浊",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17209,7 +17291,8 @@
       "okuri": "",
       "as": "うえ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -17397,7 +17480,8 @@
       "okuri": "",
       "as": "した",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -17506,7 +17590,8 @@
       "okuri": "",
       "as": "なか",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17585,7 +17670,8 @@
       "okuri": "",
       "as": "ひだり",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17673,7 +17759,8 @@
       "okuri": "",
       "as": "みぎ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17752,7 +17839,8 @@
       "okuri": "",
       "as": "ひがし",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17841,7 +17929,8 @@
       "okuri": "",
       "as": "にし",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -17929,7 +18018,8 @@
       "okuri": "",
       "as": "みなみ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18008,7 +18098,8 @@
       "okuri": "",
       "as": "きた",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18123,7 +18214,8 @@
       "okuri": "",
       "as": "そと",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -18143,7 +18235,8 @@
       "okuri": "",
       "as": "がい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18226,7 +18319,8 @@
       "okuri": "",
       "as": "くに",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -18246,7 +18340,8 @@
       "okuri": "",
       "as": "こく",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18331,7 +18426,8 @@
       "okuri": "",
       "as": "がく",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -18351,7 +18447,8 @@
       "okuri": "",
       "as": "がっ",
       "how": "促音化",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -18371,7 +18468,8 @@
       "okuri": "",
       "as": "がく",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18444,7 +18542,8 @@
       "okuri": "",
       "as": "こう",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18526,7 +18625,8 @@
       "okuri": "",
       "as": "しゃ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18606,7 +18706,8 @@
       "okuri": "",
       "as": "みせ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -18626,7 +18727,8 @@
       "okuri": "",
       "as": "てん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18700,7 +18802,8 @@
       "okuri": "",
       "as": "えき",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18791,7 +18894,8 @@
       "okuri": "",
       "as": "みち",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18870,7 +18974,8 @@
       "okuri": "",
       "as": "やま",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -18951,7 +19056,8 @@
       "okuri": "",
       "as": "かわ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19041,7 +19147,8 @@
       "okuri": "",
       "as": "てん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19123,7 +19230,8 @@
       "okuri": "",
       "as": "き",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19143,7 +19251,8 @@
       "okuri": "",
       "as": "き",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19163,7 +19272,8 @@
       "okuri": "",
       "as": "き",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19251,7 +19361,8 @@
       "okuri": "",
       "as": "あめ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19360,7 +19471,8 @@
       "okuri": "",
       "as": "そら",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19439,7 +19551,8 @@
       "okuri": "",
       "as": "はな",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19527,7 +19640,8 @@
       "okuri": "",
       "as": "さかな",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19645,7 +19759,8 @@
       "okuri": "く",
       "as": "い",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19665,7 +19780,8 @@
       "okuri": "",
       "as": "こう",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19685,7 +19801,8 @@
       "okuri": "",
       "as": "こう",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19789,7 +19906,8 @@
       "okuri": "る",
       "as": "く",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19809,7 +19927,8 @@
       "okuri": "",
       "as": "らい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19829,7 +19948,8 @@
       "okuri": "",
       "as": "らい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -19933,7 +20053,8 @@
       "okuri": "る",
       "as": "で",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19953,7 +20074,8 @@
       "okuri": "す",
       "as": "だ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -19973,7 +20095,8 @@
       "okuri": "る",
       "as": "で",
       "how": "连用形",
-      "special": false
+      "special": false,
+      "full": "で"
      }
     }
    ],
@@ -20075,7 +20198,8 @@
       "okuri": "る",
       "as": "はい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20095,7 +20219,8 @@
       "okuri": "れる",
       "as": "い",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20115,7 +20240,8 @@
       "okuri": "る",
       "as": "いり",
       "how": "连用形",
-      "special": false
+      "special": false,
+      "full": "いり"
      }
     }
    ],
@@ -20223,7 +20349,8 @@
       "okuri": "る",
       "as": "み",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20243,7 +20370,8 @@
       "okuri": "せる",
       "as": "み",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -20345,7 +20473,8 @@
       "okuri": "う",
       "as": "い",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20365,7 +20494,8 @@
       "okuri": "",
       "as": "こと",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -20458,7 +20588,8 @@
       "okuri": "す",
       "as": "はな",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20478,7 +20609,8 @@
       "okuri": "",
       "as": "はなし",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20498,7 +20630,8 @@
       "okuri": "",
       "as": "わ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -20605,7 +20738,8 @@
       "okuri": "く",
       "as": "き",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20625,7 +20759,8 @@
       "okuri": "",
       "as": "ぶん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -20726,7 +20861,8 @@
       "okuri": "む",
       "as": "よ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -20805,7 +20941,8 @@
       "okuri": "く",
       "as": "か",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20825,7 +20962,8 @@
       "okuri": "",
       "as": "しょ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -20936,7 +21074,8 @@
       "okuri": "べる",
       "as": "た",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -20956,7 +21095,8 @@
       "okuri": "べる",
       "as": "た",
       "how": "连用形",
-      "special": false
+      "special": false,
+      "full": "たべ"
      }
     }
    ],
@@ -21037,7 +21177,8 @@
       "okuri": "む",
       "as": "の",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -21057,7 +21198,8 @@
       "okuri": "む",
       "as": "の",
       "how": "连用形",
-      "special": false
+      "special": false,
+      "full": "のみ"
      }
     }
    ],
@@ -21136,7 +21278,8 @@
       "okuri": "う",
       "as": "か",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -21156,7 +21299,8 @@
       "okuri": "う",
       "as": "か",
       "how": "连用形",
-      "special": false
+      "special": false,
+      "full": "かい"
      }
     }
    ],
@@ -21256,7 +21400,8 @@
       "okuri": "む",
       "as": "やす",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -21276,7 +21421,8 @@
       "okuri": "む",
       "as": "やす",
       "how": "连用形",
-      "special": false
+      "special": false,
+      "full": "やすみ"
      }
     }
    ],
@@ -21376,7 +21522,8 @@
       "okuri": "つ",
       "as": "た",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -21467,7 +21614,8 @@
       "okuri": "う",
       "as": "あ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -21487,7 +21635,8 @@
       "okuri": "",
       "as": "かい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -21598,7 +21747,8 @@
       "okuri": "きい",
       "as": "おお",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -21618,7 +21768,8 @@
       "okuri": "",
       "as": "だい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -21736,7 +21887,8 @@
       "okuri": "さい",
       "as": "ちい",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -21844,7 +21996,8 @@
       "okuri": "い",
       "as": "たか",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -21926,7 +22079,8 @@
       "okuri": "い",
       "as": "やす",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22023,7 +22177,8 @@
       "okuri": "しい",
       "as": "あたら",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -22043,7 +22198,8 @@
       "okuri": "",
       "as": "しん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22135,7 +22291,8 @@
       "okuri": "い",
       "as": "ふる",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22217,7 +22374,8 @@
       "okuri": "い",
       "as": "なが",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22298,7 +22456,8 @@
       "okuri": "い",
       "as": "おお",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22387,7 +22546,8 @@
       "okuri": "ない",
       "as": "すく",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -22407,7 +22567,8 @@
       "okuri": "し",
       "as": "すこ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22517,7 +22678,8 @@
       "okuri": "い",
       "as": "しろ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22599,7 +22761,8 @@
       "okuri": "",
       "as": "ほん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22687,7 +22850,8 @@
       "okuri": "",
       "as": "なに",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22757,7 +22921,8 @@
       "okuri": "",
       "as": "でん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -22777,7 +22942,8 @@
       "okuri": "",
       "as": "でん",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22856,7 +23022,8 @@
       "okuri": "",
       "as": "くるま",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -22876,7 +23043,8 @@
       "okuri": "",
       "as": "しゃ",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],
@@ -22979,7 +23147,8 @@
       "okuri": "",
       "as": "ご",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     },
     {
@@ -22999,7 +23168,8 @@
       "okuri": "",
       "as": "ご",
       "how": "本来",
-      "special": false
+      "special": false,
+      "full": null
      }
     }
    ],

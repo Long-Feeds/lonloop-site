@@ -108,7 +108,7 @@ def kanji():
             if x.get("special"):
                 e["special"] = x["special"]
             elif x.get("reading"):
-                e["uses"] = x["reading"]["as"]
+                e["uses"] = x["reading"].get("full") or x["reading"]["as"]
                 e["how"] = x["reading"]["how"]
                 e["base"] = x["reading"]["r"] if x["reading"]["kind"] == "kun" else n5data.jaconv.hira2kata(x["reading"]["r"])
             exs.append(e)

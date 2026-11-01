@@ -31,10 +31,15 @@
 
   /* ---------- audio ---------- */
   // manifest: id -> voices whose clip passed verification: "h" = real human
-  // recording (Wikimedia Commons), "n"/"k" = female/male synthetic voice
+  // recording (Wikimedia Commons), "n"/"k" = female/male Microsoft voice,
+  // "v"/"w" = female/male VOICEVOX voice (only for sounds none of the others could say)
   var AUD = data('jp-audio') || {};
+  var VVD = data('jp-vv') || {};
+  var VV = VVD.voices || {};        // VOICEVOX voices on this page: code -> {credit, gender}
+  var VV_FAILED = VVD.failed || [];  // kana VOICEVOX was also tried for, with no clip passing
   var VER = (document.querySelector('meta[name="jp-audio-version"]') || {}).content || '';
   var cur = null, curBtn = null, flip = false;
+  var SAME_GENDER = { n: 'v', k: 'w' };
   function pickVoice(id, want) {
     var have = AUD[id] || '';
     if (!have) return null;
@@ -44,7 +49,7 @@
     if (!syn) return 'h';  // only a human recording exists: better than silence
     var v = S.voice;
     if (v === 'alt') { flip = !flip; v = flip ? 'n' : 'k'; }
-    if (syn.indexOf(v) < 0) v = syn.charAt(0);
+    if (syn.indexOf(v) < 0) v = syn.indexOf(SAME_GENDER[v]) >= 0 ? SAME_GENDER[v] : syn.charAt(0);
     return v;
   }
   function play(id, btn, want) {
@@ -128,9 +133,15 @@
       '</div></div><div class="kd-row">' +
       (AUD[k.id] ? (AUD[k.id].indexOf('h') >= 0 ? '<button class="kd-btn" data-kplay="h">▶ 真人</button>' : '') +
         (AUD[k.id].indexOf('n') >= 0 ? '<button class="kd-btn" data-kplay="n">▶ 女声</button>' : '') +
-        (AUD[k.id].indexOf('k') >= 0 ? '<button class="kd-btn" data-kplay="k">▶ 男声</button>' : '')
-        : '<span class="kd-origin">这个音的合成音频没有通过校验，暂不提供（见校验报告）。</span>') +
+        (AUD[k.id].indexOf('k') >= 0 ? '<button class="kd-btn" data-kplay="k">▶ 男声</button>' : '') +
+        Object.keys(VV).filter(function (v) { return AUD[k.id].indexOf(v) >= 0; }).map(function (v) {
+          return '<button class="kd-btn vv" data-kplay="' + v + '">▶ ' + esc(VV[v].gender) + ' · ' + esc(VV[v].credit) + '</button>';
+        }).join('')
+        : '<span class="kd-origin">' + (VV_FAILED.indexOf(k.id) >= 0
+          ? 'Microsoft 的两种合成声音和 VOICEVOX 的两种合成声音读这个音都没有通过校验，暂不提供音频——宁可没有，也不放可能读错的（见<a href="/japanese/verification/#voicevox">校验报告</a>）。'
+          : '这个音的合成音频没有通过校验，暂不提供（见校验报告）。') + '</span>') +
       '<button class="kd-btn" data-kreplay>↻ 重看笔顺</button></div>' +
+      (AUD[k.id] && !/[hnk]/.test(AUD[k.id]) ? '<div class="kd-origin">Microsoft 的两种合成声音读这个音都没有通过校验，这里改用 VOICEVOX（开源的日语语音合成引擎）合成；它通过了比其他音更严格的校验：引擎分析的音拍正确，音素识别和 Whisper 语音识别两类模型也都认可（见<a href="/japanese/verification/#voicevox">校验报告</a>）。</div>' : '') +
       (k.tip ? '<div class="kd-ex">' + k.tip + '</div>' : '') +
       (ex ? '<div class="kd-ex">例词：<span class="w" lang="ja">' + esc(ex.w) + '</span> <span lang="ja">' + esc(ex.r) + '</span>' +
         (ex.acc != null ? ' <span class="accn">' + ex.acc + '</span>' : '') + ' — ' + esc(ex.zh) +

@@ -104,6 +104,12 @@ a{color:inherit}
 .say[disabled]{opacity:.4;cursor:not-allowed}
 .say.has-h::after{content:"真人";font-size:11px;color:var(--accent2);margin-left:1px}
 .no-human .say.has-h::after{content:none}
+/* VOICEVOX: the few sounds no Microsoft voice passed (labelled wherever they play) */
+.say.has-v::after{content:"VOICEVOX";font-size:10.5px;color:var(--hi);margin-left:1px}
+.kcell .vvm{position:absolute;top:5px;left:7px;font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--hi)}
+.vvnote{font-size:13.5px;color:var(--dim);margin:-6px 0 16px;line-height:1.7}
+.vvm-i{display:inline-block;font:700 10px/15px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--hi);border:1px solid rgba(255,184,107,.4);border-radius:5px;padding:0 4px;vertical-align:1px}
+.kd-btn.vv{border-color:rgba(255,184,107,.35)}
 .hbadge{font-size:11px;color:var(--accent2);border:1px solid rgba(91,224,200,.35);border-radius:6px;padding:0 5px;line-height:17px}
 
 /* ---------- lesson index / roadmap ---------- */

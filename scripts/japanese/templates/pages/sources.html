@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
 {% set _ = page.update(dict(eyebrow="Sources · 参考资料与版权", h1="参考资料与版权", narrow=True,
-   desc="日语入门板块使用的资料、数据与许可：官方规范、语音学文献、教学研究、词典数据（UniDic、Kanjium）、笔顺数据（KanjiVG）、间隔重复算法（ts-fsrs）与语音合成。",
+   desc="日语入门板块使用的资料、数据与许可：官方规范、语音学文献、教学研究、词典数据（UniDic、Kanjium）、笔顺数据（KanjiVG）、间隔重复算法（ts-fsrs）与语音合成（Microsoft、VOICEVOX）。",
    lead="本板块用到的全部外部资料、数据和软件，以及各自的许可。各课页末也列有该课的具体出处。",
    meta=["官方规范", "研究文献", "数据与许可"])) %}
 {% block content %}
@@ -38,6 +38,7 @@
 <tr><td><a href="https://github.com/open-spaced-repetition/ts-fsrs" target="_blank" rel="noopener">ts-fsrs 6.0.0</a></td><td>练习页的间隔重复调度（打包为 <code>/japanese/vendor/fsrs-6.0.0.min.mjs</code>）</td><td>MIT</td></tr>
 <tr><td>维基共享资源真人录音（Tofugu/WaniKani 等，见上表）</td><td>标「真人」的发音</td><td>CC BY-SA 4.0 / 公有领域</td></tr>
 <tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>其余发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
+{% if VV_PUBLISHED %}<tr><td><a href="https://voicevox.hiroshiba.jp/" target="_blank" rel="noopener">VOICEVOX</a>（引擎 {{ VV_REP.engine.version }}，Hiroshiba Kazuyuki）：{% for v in VV_PUBLISHED.values() %}{{ v.credit }}{{ "、" if not loop.last }}{% endfor %}</td><td>标「VOICEVOX」的{% for k in VV_KANA %}「<span lang="ja">{{ k }}</span>」{% endfor %}（Microsoft 两种声音都没通过校验的音）</td><td>按 VOICEVOX 软件利用规约及各角色的利用规约使用，须署名，见<a href="#voicevox">下文</a></td></tr>{% endif %}
 <tr><td>OpenAI Whisper（large-v3 / large-v3-turbo，MLX 版）</td><td>音频反向听写校验</td><td>MIT</td></tr>
 <tr><td>facebook/wav2vec2-xlsr-53-espeak-cv-ft</td><td>音素识别、强制对齐</td><td>Apache-2.0</td></tr>
 <tr><td>Praat（经 parselmouth）</td><td>基频（音高）提取</td><td>GPL</td></tr>
@@ -52,6 +53,18 @@
 {% for iid, c in HUMAN.items() %}<tr><td lang="ja">{{ c.w or c.kana }}</td><td><a href="{{ c.page }}" target="_blank" rel="noopener">{{ c.title[5:] }}</a></td><td>{{ c.author }}</td><td>{{ c.license }}</td></tr>
 {% endfor %}
 </table></div></details>
+
+{% if VV_PUBLISHED %}
+<h2 id="voicevox">VOICEVOX 合成音</h2>
+<p>标「VOICEVOX」的发音（{% for k in VV_KANA %}<span lang="ja">{{ k }}</span>{{ "、" if not loop.last }}{% endfor %}：Microsoft 的两种声音都没有通过校验的音）由开源语音合成引擎 VOICEVOX（{{ VV_REP.engine.version }} 版，在本地运行）合成，并通过了比其他音更严格的校验（见<a href="/japanese/verification/#voicevox">校验报告</a>）。按各自的利用规约，署名如下：</p>
+<div class="tablewrap"><table>
+<tr><th>署名</th><th>用途</th><th>利用规约</th></tr>
+{% for v, x in VV_PUBLISHED.items() %}<tr><td><b>{{ x.credit }}</b></td><td>{{ x.gender }}（「{{ x.style }}」风格）</td><td><a href="{{ x.terms }}" target="_blank" rel="noopener">{{ x.character }} 的 VOICEVOX 利用规约</a>：{{ x.terms_note }}</td></tr>
+{% endfor %}
+<tr><td><b>VOICEVOX</b></td><td>合成软件</td><td><a href="https://voicevox.hiroshiba.jp/term/" target="_blank" rel="noopener">VOICEVOX 软件利用规约</a>：商用・非商用均可；使用合成的声音时须遵守各声音库的规约，并注明使用了 VOICEVOX</td></tr>
+</table></div>
+<p><b>这些音频不适用本站的 CC BY-SA 许可</b>（<code>/japanese/audio/{% for v in VV_PUBLISHED %}{{ v }}{{ "/、/japanese/audio/" if not loop.last }}{% endfor %}/</code>）。如要转用，须自行遵守上述 VOICEVOX 及角色的利用规约（包括署名）。</p>
+{% endif %}
 
 <h2 id="learn-more">推荐的外部学习资源</h2>
 <ul>

@@ -10,6 +10,10 @@ python gen_audio.py          # 两种声音合成全部条目（缓存在 JA_CAC
 python verify.py 0/3 & python verify.py 1/3 & python verify.py 2/3; wait
 python verify.py merge 3     # 合并校验结果 → reports/verify.json
 python verify.py reevaluate  # 判定规则变了而测量没变时，只重算通过与否
+# 只为上面两种声音都没通过、也没有真人录音的单假名补缺（VOICEVOX，本地引擎）：
+#   <引擎目录>/run --host 127.0.0.1 --port 50021 &      # VOICEVOX Engine 0.26.0
+python voicevox.py synth     # 目标假名 × 两个声音 × 三种输入（缓存在 VV_DIR，仓库外）
+python voicevox.py verify    # 引擎音拍 + 信号 + 音素 + Whisper 全部通过才算 → reports/voicevox.json
 python build.py              # 选出通过校验的条目，生成页面 + 复制音频
 ```
 
@@ -21,6 +25,8 @@ python build.py              # 选出通过校验的条目，生成页面 + 复�
 | `verify.py` | 信号检查 / Whisper 反向听写 / 音素识别 / 音高测量（只记录，不作门槛） |
 | `pitch.py` `review_plots.py` | 音高提取与 CTC 强制对齐；第 7 课人工核验用的叠加曲线图 |
 | `reports/verify.json` | 每条音频的全部测量结果（校验报告页由它生成） |
+| `voicevox.py` | VOICEVOX 补缺：选声音（`speakers` / `screen`）、合成、更严格的校验；声音、署名与条款写在文件开头 |
+| `reports/voicevox.json` | VOICEVOX 每条合成的全部测量结果与选声音的筛选数据（build.py 只发布通过的） |
 | `reports/manual_pitch.json` | 第 7 课示范音频的人工声调核验记录 |
 | `build.py` `templates/` | 页面生成 |
 

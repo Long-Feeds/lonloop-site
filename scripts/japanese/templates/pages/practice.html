@@ -14,7 +14,7 @@
   ("k-dakuon","片假名·浊音半浊音","第 5 课，25 个","k",dakuon),
   ("k-youon","片假名·拗音","第 5 课，33 个","k",youon)] %}
 {% set items = [] %}
-{% for h in src %}{% set kk = kconv(h, script) %}{% if has_audio(K[kk].id) %}{% set rom = K[kk].rom %}{% set ans = [rom] + (K[kk].typ.split(" / ")) %}{% set _ = items.append({"k": kk, "rom": rom, "ans": ans|unique|list, "id": K[kk].id, "row": h[0]}) %}{% endif %}{% endfor %}
+{% for h in src %}{% set kk = kconv(h, script) %}{% if has_audio(K[kk].id) %}{% set rom = K[kk].rom %}{% set ans = [rom] + (K[kk].typ.split(" / ")) %}{% set _ = items.append({"k": kk, "rom": rom, "ans": ans|unique|list, "id": K[kk].id, "row": h[0], "vv": vv_only(K[kk].id)}) %}{% endif %}{% endfor %}
 {% set _ = decks.append({"id": did, "name": name, "desc": desc, "items": items}) %}
 {% endfor %}
 {% block content %}
@@ -42,6 +42,8 @@
   <li><b>两种模式分开记录。</b>「认读」练看到字形就想起读音，「听辨」练听到声音就想起字形——这是两种不同的记忆，各自安排复习。</li>
   <li><b>自动评分。</b>答错 = 「重来」，几分钟后在本轮再出现；答对但用时超过 6 秒 = 「困难」；答对 = 「良好」。算法据此计算下次复习时间：越熟间隔越长。</li>
   <li><b>算法是 FSRS。</b>由开源组织 Open Spaced Repetition 开发、Anki 也采用的间隔重复算法；本站使用其官方 TypeScript 实现 ts-fsrs 6.0.0，目标记忆保持率设为 90%。</li>
+  {% set ns = namespace(vv=[]) %}{% for d in decks if d.id.startswith("h") %}{% for it in d["items"] if it.vv %}{% set ns.vv = ns.vv + [it.k] %}{% endfor %}{% endfor %}
+  {% if ns.vv %}<li><b>听辨模式不出只有 VOICEVOX 合成音的假名</b>（{% for k in ns.vv %}<span lang="ja">{{ k }}</span>{{ "、" if not loop.last }}{% endfor %}及对应片假名）：它们的音色和其他假名不同，听辨时一听音色就能猜出答案，所以只放在认读模式里。</li>{% endif %}
   <li><b>认读模式的答案</b>：黑本式（shi / chi / tsu / fu / ji）和训令式（si / ti / tu / hu / zi）都算对；「を」答 o 或 wo、「ん」答 n 或 nn 都算对。</li>
   <li><b>隐私</b>：学习记录只保存在你这台设备的浏览器（localStorage）里，不上传任何地方；清除浏览器数据会一并清除。</li>
 </ul>

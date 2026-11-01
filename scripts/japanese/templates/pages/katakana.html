@@ -44,6 +44,8 @@
 <tr><td lang="ja" style="font-size:20px">{{ kk }} {{ m.say(K[kk].id, "", kk) }}</td><td class="ipa">[{{ ipa }}]</td><td class="rom">{{ typ }}</td><td><span lang="ja">{{ ex }}</span> {{ m.say(slug(ex, KM.to_hiragana(ex)), "", ex) }} <span style="color:var(--dim);font-size:13px">{{ exzh }}</span></td><td>第 {{ tbl }} 表</td></tr>
 {% endfor %}
 </table></div>
+{% set xs = [] %}{% for kk, rom, typ, ipa, tbl, ex, exzh in KM.EXTENDED %}{% if vv_only(K[kk].id) %}{% set _ = xs.append(kk) %}{% endif %}{% endfor %}{% if xs %}{{ m.vv_note(xs) }}
+{% endif %}
 <p style="font-size:14px;color:var(--dim)">「ヴ」虽然写法特别，但日本人一般读得和バ行一样（<span class="ipa">[b]</span>）；ファ・フィ・フェ・フォ 的 f 是双唇的 <span class="ipa">[ɸ]</span>，和ふ相同，不是英语的唇齿 f。</p>
 
 <h2 id="drill">听辨练习</h2>

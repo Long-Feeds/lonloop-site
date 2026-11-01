@@ -1,0 +1,2278 @@
+{
+ "generated": "2026-11-01 21:07",
+ "engine": {
+  "name": "VOICEVOX Engine",
+  "version": "0.26.0",
+  "url": "https://github.com/VOICEVOX/voicevox_engine"
+ },
+ "speed_scale": 0.9,
+ "prompt": "日本語の仮名を一つずつ発音します。",
+ "voices": {
+  "v": {
+   "character": "WhiteCUL",
+   "style": "ノーマル",
+   "gender": "女声",
+   "speaker_uuid": "67d5d8da-acd7-4207-bb10-b5542d3a663b",
+   "credit": "VOICEVOX:WhiteCUL",
+   "terms": "https://www.whitecul.com/guideline",
+   "terms_note": "株式会社ZAN-SHIN 制定。商用・非商用均可；须在第三者看得到的地方署名（例：VOICEVOX:WhiteCUL），未经许可不得省略；禁止冒充出处、未经许可不注明由 VOICEVOX 合成、用输出训练语音模型等",
+   "style_id": 23
+  },
+  "w": {
+   "character": "雀松朱司",
+   "style": "ノーマル",
+   "gender": "男声",
+   "speaker_uuid": "0acebdee-a4a5-4e12-a695-e19609728e30",
+   "credit": "VOICEVOX:雀松朱司",
+   "terms": "https://www.virvoxproject.com/voicevox%E3%81%AE%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84",
+   "terms_note": "VirVox Project 制定。商用・非商用均可；须署名（VOICEVOX:雀松朱司）并注明由 VOICEVOX 合成，未经 VirVox Project 许可不得省略；禁止冒充出处、用输出训练语音模型等",
+   "style_id": 52
+  }
+ },
+ "clips": {
+  "v/kana-gya": {
+   "id": "kana-gya",
+   "voice": "v",
+   "kana": "ぎゃ",
+   "expected": "ぎゃ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "ギャ' / ギャ / ぎゃ",
+     "speed": 0.9,
+     "md5": "08f5e6e4ba6ecb4c0c396bfdc3e61a03",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ギャ",
+         "consonant": "gy",
+         "vowel": "a"
+        }
+       ],
+       "expected": {
+        "consonant": "gy",
+        "vowel": "a"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.2,
+       "raw_peak_db": -10.2
+      },
+      "phones": {
+       "ok": false,
+       "phones": "j a",
+       "why": "no onset"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "やっ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "やっ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-gya.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "ギャ'",
+     "speed": 1.0,
+     "md5": "037fbd7b54f43700c5a4eb7593b22b52",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ギャ",
+         "consonant": "gy",
+         "vowel": "a"
+        }
+       ],
+       "expected": {
+        "consonant": "gy",
+        "vowel": "a"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.18,
+       "raw_peak_db": -11.1
+      },
+      "phones": {
+       "ok": false,
+       "phones": "j a",
+       "why": "no onset"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "やっ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "では、",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-gya.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "ギャ'",
+     "speed": 0.8,
+     "md5": "59baabc9c5a989d52b1a421141ddf5e8",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ギャ",
+         "consonant": "gy",
+         "vowel": "a"
+        }
+       ],
+       "expected": {
+        "consonant": "gy",
+        "vowel": "a"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.18,
+       "raw_peak_db": -10.1
+      },
+      "phones": {
+       "ok": false,
+       "phones": "j a",
+       "why": "no onset"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "では、",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "では、",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-gya.kana-s080.mp3"
+    }
+   ]
+  },
+  "v/kana-pyo": {
+   "id": "kana-pyo",
+   "voice": "v",
+   "kana": "ぴょ",
+   "expected": "ぴょ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "ピョ' / ピョ / ぴょ",
+     "speed": 0.9,
+     "md5": "0351a8337f40248e1a41674cc0e327b5",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ピョ",
+         "consonant": "py",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "py",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.26,
+       "raw_peak_db": -19.3
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p l",
+       "why": "no vowel"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "ピュー",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": true,
+       "asr": "ピョー",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-pyo.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "ピョ'",
+     "speed": 1.0,
+     "md5": "855254aae050e7dc672a6cc6f6605dfe",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ピョ",
+         "consonant": "py",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "py",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.23,
+       "raw_peak_db": -18.9
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p i5 l",
+       "why": "vowel i ∉ o"
+      },
+      "reading": {
+       "ok": true,
+       "asr": "ぴょう",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": true,
+       "asr": "ぴょ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-pyo.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "ピョ'",
+     "speed": 0.8,
+     "md5": "8d7882523f40ae84918113b94eb3e050",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ピョ",
+         "consonant": "py",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "py",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.29,
+       "raw_peak_db": -19.6
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p i5 l",
+       "why": "vowel i ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "ぴよ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": true,
+       "asr": "ピョー",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-pyo.kana-s080.mp3"
+    }
+   ]
+  },
+  "v/kana-x-she": {
+   "id": "kana-x-she",
+   "voice": "v",
+   "kana": "シェ",
+   "expected": "シェ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "シェ' / シェ / しぇ",
+     "speed": 0.9,
+     "md5": "f0f747055680d5fe3cc3fd795aa2115d",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "シェ",
+         "consonant": "sh",
+         "vowel": "e"
+        }
+       ],
+       "expected": {
+        "consonant": "sh",
+        "vowel": "e"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.3,
+       "raw_peak_db": -11.1
+      },
+      "phones": {
+       "ok": false,
+       "phones": "ɕ iɛ5",
+       "why": "vowel i ∉ e"
+      },
+      "reading": {
+       "ok": true,
+       "asr": "シェッ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "シェット",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-she.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "シェ'",
+     "speed": 1.0,
+     "md5": "8fbc5f5133c8d87fcb2cc3a6c4f441c8",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "シェ",
+         "consonant": "sh",
+         "vowel": "e"
+        }
+       ],
+       "expected": {
+        "consonant": "sh",
+        "vowel": "e"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.27,
+       "raw_peak_db": -12.1
+      },
+      "phones": {
+       "ok": false,
+       "phones": "ɕ iɛ5",
+       "why": "vowel i ∉ e"
+      },
+      "reading": {
+       "ok": true,
+       "asr": "シェイ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "シェット",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-she.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "シェ'",
+     "speed": 0.8,
+     "md5": "8f2da262752d74106b8a8ff42f213252",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "シェ",
+         "consonant": "sh",
+         "vowel": "e"
+        }
+       ],
+       "expected": {
+        "consonant": "sh",
+        "vowel": "e"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.33,
+       "raw_peak_db": -10.4
+      },
+      "phones": {
+       "ok": false,
+       "phones": "ɕ iɛ5",
+       "why": "vowel i ∉ e"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "シェア",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": true,
+       "asr": "シェ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-she.kana-s080.mp3"
+    }
+   ]
+  },
+  "v/kana-x-wo": {
+   "id": "kana-x-wo",
+   "voice": "v",
+   "kana": "ウォ",
+   "expected": "ウォ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "ウォ' / ウォ / うぉ",
+     "speed": 0.9,
+     "md5": "146d6893f702d610b9b214c91c45b859",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ウォ",
+         "consonant": "w",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "w",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.18,
+       "raw_peak_db": -20.5
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p u5",
+       "why": "vowel u ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "を",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "を",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-wo.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "ウォ'",
+     "speed": 1.0,
+     "md5": "0f3af0811da1ab9c2dfde2f01894cf42",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ウォ",
+         "consonant": "w",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "w",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.17,
+       "raw_peak_db": -20.1
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p",
+       "why": "no vowel"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "を",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "を",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-wo.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "ウォ'",
+     "speed": 0.8,
+     "md5": "54592b0c7bdc96b309f2c32c8cb071e0",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ウォ",
+         "consonant": "w",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "w",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.22,
+       "raw_peak_db": -21.3
+      },
+      "phones": {
+       "ok": false,
+       "phones": "a ɹ",
+       "why": "vowel a ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "ぼっ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "ぼっ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-wo.kana-s080.mp3"
+    }
+   ]
+  },
+  "w/kana-gya": {
+   "id": "kana-gya",
+   "voice": "w",
+   "kana": "ぎゃ",
+   "expected": "ぎゃ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "ギャ' / ギャ / ぎゃ",
+     "speed": 0.9,
+     "md5": "f7e6ec03ff85aec94a05f90726ce0d8b",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ギャ",
+         "consonant": "gy",
+         "vowel": "a"
+        }
+       ],
+       "expected": {
+        "consonant": "gy",
+        "vowel": "a"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.4,
+       "raw_peak_db": -7.0
+      },
+      "phones": {
+       "ok": false,
+       "phones": "j e",
+       "why": "vowel e ∉ a"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "や",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "やっ!",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-gya.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "ギャ'",
+     "speed": 1.0,
+     "md5": "a443c54894b100b43675eb7ba4cab53e",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ギャ",
+         "consonant": "gy",
+         "vowel": "a"
+        }
+       ],
+       "expected": {
+        "consonant": "gy",
+        "vowel": "a"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.36,
+       "raw_peak_db": -7.2
+      },
+      "phones": {
+       "ok": false,
+       "phones": "j e",
+       "why": "vowel e ∉ a"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "やっ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "Yeah.",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-gya.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "ギャ'",
+     "speed": 0.8,
+     "md5": "d39a3559f44c6f82bb8c16b0bbbd81e9",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ギャ",
+         "consonant": "gy",
+         "vowel": "a"
+        }
+       ],
+       "expected": {
+        "consonant": "gy",
+        "vowel": "a"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.44,
+       "raw_peak_db": -7.8
+      },
+      "phones": {
+       "ok": false,
+       "phones": "j",
+       "why": "no vowel"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "や",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "Yeah.",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-gya.kana-s080.mp3"
+    }
+   ]
+  },
+  "w/kana-pyo": {
+   "id": "kana-pyo",
+   "voice": "w",
+   "kana": "ぴょ",
+   "expected": "ぴょ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "ピョ' / ピョ / ぴょ",
+     "speed": 0.9,
+     "md5": "e1b9c0c63edde12443ec9931fd3c95bc",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ピョ",
+         "consonant": "py",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "py",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.35,
+       "raw_peak_db": -10.3
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p",
+       "why": "no vowel"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "ピュー",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "pure",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-pyo.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "ピョ'",
+     "speed": 1.0,
+     "md5": "a9edb55cf2e8290d894433bd58812898",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ピョ",
+         "consonant": "py",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "py",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.29,
+       "raw_peak_db": -10.2
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p i l",
+       "why": "vowel i ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "pure",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": true,
+       "asr": "ぴょう",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-pyo.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "ピョ'",
+     "speed": 0.8,
+     "md5": "80a467d5faceac8447ff7aaea5a4666f",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ピョ",
+         "consonant": "py",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "py",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.39,
+       "raw_peak_db": -10.8
+      },
+      "phones": {
+       "ok": false,
+       "phones": "p i5",
+       "why": "vowel i ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "ピュー",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "pure",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-pyo.kana-s080.mp3"
+    }
+   ]
+  },
+  "w/kana-x-she": {
+   "id": "kana-x-she",
+   "voice": "w",
+   "kana": "シェ",
+   "expected": "シェ",
+   "ok": true,
+   "chosen": "kana",
+   "file": "kana-x-she.kana.mp3",
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "シェ' / シェ / しぇ",
+     "speed": 0.9,
+     "md5": "9f6021510913a692b8c71ed3d07cffa4",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "シェ",
+         "consonant": "sh",
+         "vowel": "e"
+        }
+       ],
+       "expected": {
+        "consonant": "sh",
+        "vowel": "e"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.35,
+       "raw_peak_db": -8.2
+      },
+      "phones": {
+       "ok": true,
+       "phones": "ɕ e",
+       "why": "ok"
+      },
+      "reading": {
+       "ok": true,
+       "asr": "シェイ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "し",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": true,
+     "failed": null,
+     "file": "kana-x-she.kana.mp3",
+     "formants": {
+      "clip": {
+       "voiced_s": 0.185,
+       "steady": [
+        514,
+        2171
+       ],
+       "ending": [
+        781,
+        2210
+       ]
+      },
+      "ref-vowel": {
+       "input": "エ'",
+       "voiced_s": 0.205,
+       "steady": [
+        437,
+        2418
+       ],
+       "ending": [
+        727,
+        2277
+       ]
+      },
+      "ref-two": {
+       "input": "シェイ'",
+       "voiced_s": 0.31,
+       "steady": [
+        496,
+        2136
+       ],
+       "ending": [
+        372,
+        2396
+       ]
+      }
+     }
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "シェ'",
+     "speed": 1.0,
+     "md5": "b2deb922405da4a4d86961cd18ba1232",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "シェ",
+         "consonant": "sh",
+         "vowel": "e"
+        }
+       ],
+       "expected": {
+        "consonant": "sh",
+        "vowel": "e"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.31,
+       "raw_peak_db": -8.1
+      },
+      "phones": {
+       "ok": true,
+       "phones": "ɕ e",
+       "why": "ok"
+      },
+      "reading": {
+       "ok": true,
+       "asr": "シェイ。",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": true,
+       "asr": "シェイ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": true,
+     "failed": null,
+     "file": "kana-x-she.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "シェ'",
+     "speed": 0.8,
+     "md5": "4e4b5ae7ef16cf6fd6797863044726d4",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "シェ",
+         "consonant": "sh",
+         "vowel": "e"
+        }
+       ],
+       "expected": {
+        "consonant": "sh",
+        "vowel": "e"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.4,
+       "raw_peak_db": -7.9
+      },
+      "phones": {
+       "ok": false,
+       "phones": "ɕ iɛ5",
+       "why": "vowel i ∉ e"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "し、",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "し",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-she.kana-s080.mp3"
+    }
+   ]
+  },
+  "w/kana-x-wo": {
+   "id": "kana-x-wo",
+   "voice": "w",
+   "kana": "ウォ",
+   "expected": "ウォ",
+   "ok": false,
+   "chosen": null,
+   "file": null,
+   "variants": [
+    {
+     "variant": "kana",
+     "variants": [
+      "kana",
+      "kata",
+      "hira"
+     ],
+     "input": "ウォ' / ウォ / うぉ",
+     "speed": 0.9,
+     "md5": "93e4ab14f912d5aa109c055024d77384",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ウォ",
+         "consonant": "w",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "w",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.26,
+       "raw_peak_db": -5.8
+      },
+      "phones": {
+       "ok": false,
+       "phones": "u l a",
+       "why": "vowel a ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "わ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "わっ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-wo.kana.mp3"
+    },
+    {
+     "variant": "kana-s100",
+     "variants": [
+      "kana-s100"
+     ],
+     "input": "ウォ'",
+     "speed": 1.0,
+     "md5": "35d23875705183b135600b1bc4e05305",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ウォ",
+         "consonant": "w",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "w",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.25,
+       "raw_peak_db": -5.6
+      },
+      "phones": {
+       "ok": false,
+       "phones": "b u l aː h",
+       "why": "vowel aː ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "バイバイ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "うわっ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-wo.kana-s100.mp3"
+    },
+    {
+     "variant": "kana-s080",
+     "variants": [
+      "kana-s080"
+     ],
+     "input": "ウォ'",
+     "speed": 0.8,
+     "md5": "683b3bbd95fc99f0d09149617df599c4",
+     "checks": {
+      "engine": {
+       "ok": true,
+       "moras": [
+        {
+         "text": "ウォ",
+         "consonant": "w",
+         "vowel": "o"
+        }
+       ],
+       "expected": {
+        "consonant": "w",
+        "vowel": "o"
+       },
+       "accent": 1
+      },
+      "signal": {
+       "ok": true,
+       "voiced_s": 0.3,
+       "raw_peak_db": -5.4
+      },
+      "phones": {
+       "ok": false,
+       "phones": "l aː",
+       "why": "vowel aː ∉ o"
+      },
+      "reading": {
+       "ok": false,
+       "asr": "わ",
+       "model": "large-v3-turbo"
+      },
+      "reading_prompted": {
+       "ok": false,
+       "asr": "わっ",
+       "model": "large-v3 + 领域提示「日本語の仮名を一つずつ発音します。」"
+      }
+     },
+     "ok": false,
+     "failed": "phones",
+     "file": "kana-x-wo.kana-s080.mp3"
+    }
+   ]
+  }
+ },
+ "screening": {
+  "phrases": [
+   "おはようございます",
+   "はじめまして",
+   "ありがとうございます",
+   "すみません",
+   "私は学生です",
+   "これは何ですか",
+   "病院",
+   "切手"
+  ],
+  "kana": [
+   "か",
+   "し",
+   "きゃ",
+   "ふ"
+  ],
+  "speed_scale_kana": 0.9,
+  "results": [
+   {
+    "character": "WhiteCUL",
+    "style": "ノーマル",
+    "style_id": 23,
+    "speaker_uuid": "67d5d8da-acd7-4207-bb10-b5542d3a663b",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます。",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか。",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": false,
+      "phones": "a",
+      "asr": "か。",
+      "asr_prompted": "か"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "s. i.5",
+      "asr": "し",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tɕ a5",
+      "asr": "ちゃ",
+      "asr_prompted": "キャ!"
+     },
+     {
+      "kana": "ふ",
+      "ok": true,
+      "phones": "f ə5 t",
+      "asr": "ふっ",
+      "asr_prompted": "ふ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 2,
+    "f0_median_hz": 262.7,
+    "f0_range_st": 8.1
+   },
+   {
+    "character": "九州そら",
+    "style": "ノーマル",
+    "style_id": 16,
+    "speaker_uuid": "481fb609-6446-4870-9f46-90c4dd623403",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます。",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私はが不正です",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか?",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "きって",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": true,
+      "phones": "k a",
+      "asr": "か",
+      "asr_prompted": "か"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "s iː",
+      "asr": "C",
+      "asr_prompted": "死"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tʃ a",
+      "asr": "じゃ",
+      "asr_prompted": "じゃ。"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f i5",
+      "asr": "ふ",
+      "asr_prompted": "ふ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 2,
+    "f0_median_hz": 287.0,
+    "f0_range_st": 7.7
+   },
+   {
+    "character": "冥鳴ひまり",
+    "style": "ノーマル",
+    "style_id": 14,
+    "speaker_uuid": "8eaad775-3119-417e-8cf4-2a10bfd592c8",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか。",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "来て。",
+      "ok": false
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": true,
+      "phones": "k ɑ5",
+      "asr": "か。",
+      "asr_prompted": "はっ。"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "ɕ i5",
+      "asr": "4",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tɕ",
+      "asr": "じゃ",
+      "asr_prompted": "キャッ"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "s",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 6,
+    "kana_ok": 2,
+    "f0_median_hz": 252.9,
+    "f0_range_st": 3.6
+   },
+   {
+    "character": "No.7",
+    "style": "ノーマル",
+    "style_id": 29,
+    "speaker_uuid": "044830d2-f23b-44d6-ac0d-b5d733caa900",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます。",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "初めまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか?",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院?",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って。",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": true,
+      "phones": "k ɑ5",
+      "asr": "かっ",
+      "asr_prompted": "かっ"
+     },
+     {
+      "kana": "し",
+      "ok": false,
+      "phones": "s",
+      "asr": "死。",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tʃ a",
+      "asr": "じゃ。",
+      "asr_prompted": "じゃ。"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "x a5",
+      "asr": "ふっ。",
+      "asr_prompted": "ふっ。"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 1,
+    "f0_median_hz": 301.4,
+    "f0_range_st": 10.5
+   },
+   {
+    "character": "琴詠ニア",
+    "style": "ノーマル",
+    "style_id": 74,
+    "speaker_uuid": "97a4af4b-086e-4efd-b125-7ae2da85e697",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます。",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": true,
+      "phones": "k a",
+      "asr": "か",
+      "asr_prompted": "か"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "ɕ i5",
+      "asr": "4",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tɕ j a",
+      "asr": "ちゃ",
+      "asr_prompted": "キャ"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f iː ɾ",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 2,
+    "f0_median_hz": 294.4,
+    "f0_range_st": 9.4
+   },
+   {
+    "character": "四国めたん",
+    "style": "ノーマル",
+    "style_id": 2,
+    "speaker_uuid": "7ffcb7ce-00ec-4bdc-82cd-45a8889e43ff",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか?",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って。",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": true,
+      "phones": "kh ɑ5",
+      "asr": "か",
+      "asr_prompted": "か"
+     },
+     {
+      "kana": "し",
+      "ok": false,
+      "phones": "tɕ i5",
+      "asr": "4",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tɕ a",
+      "asr": "ちゃ",
+      "asr_prompted": "今日"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f a5",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 1,
+    "f0_median_hz": 337.2,
+    "f0_range_st": 8.5
+   },
+   {
+    "character": "玄野武宏",
+    "style": "ノーマル",
+    "style_id": 11,
+    "speaker_uuid": "c30dc15a-0992-4f8d-8bb8-ad3b314e6a6f",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして。",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか。",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": false,
+      "phones": "k",
+      "asr": "か",
+      "asr_prompted": "か"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "ɕ i5",
+      "asr": "し",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": true,
+      "phones": "k a",
+      "asr": "キャッ",
+      "asr_prompted": "キャー"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f ʌ",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 2,
+    "f0_median_hz": 125.7,
+    "f0_range_st": 6.2
+   },
+   {
+    "character": "青山龍星",
+    "style": "ノーマル",
+    "style_id": 13,
+    "speaker_uuid": "4f51116a-d9ee-4516-925d-21f183e2afad",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": false,
+      "phones": "th əɜ",
+      "asr": "ほっ",
+      "asr_prompted": "はっ"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "ɕ i5",
+      "asr": "死",
+      "asr_prompted": "死"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "tɕ ɑu5",
+      "asr": "キヨ",
+      "asr_prompted": "ひょ"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f i.5",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 1,
+    "f0_median_hz": 92.7,
+    "f0_range_st": 9.2
+   },
+   {
+    "character": "剣崎雌雄",
+    "style": "ノーマル",
+    "style_id": 21,
+    "speaker_uuid": "1a17ca16-7ee5-4ea5-b191-2f02ace24d21",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "初めまして",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか。",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病保員",
+      "ok": false
+     },
+     {
+      "text": "切手",
+      "asr": "切って",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": false,
+      "phones": "x ɑ5",
+      "asr": "は。",
+      "asr_prompted": "は"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "ɕ i5",
+      "asr": "し",
+      "asr_prompted": "死"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "k a",
+      "asr": "や",
+      "asr_prompted": "ひゃ"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f i.5",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 6,
+    "kana_ok": 1,
+    "f0_median_hz": 131.0,
+    "f0_range_st": 9.0
+   },
+   {
+    "character": "雀松朱司",
+    "style": "ノーマル",
+    "style_id": 52,
+    "speaker_uuid": "0acebdee-a4a5-4e12-a695-e19609728e30",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます。",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして。",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか。",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "きって",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": true,
+      "phones": "k aː",
+      "asr": "か",
+      "asr_prompted": "か"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "ɕ i",
+      "asr": "C",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": true,
+      "phones": "k j a",
+      "asr": "きゃ",
+      "asr_prompted": "きゃ"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "f l e",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ。"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 3,
+    "f0_median_hz": 122.5,
+    "f0_range_st": 9.0
+   },
+   {
+    "character": "麒ヶ島宗麟",
+    "style": "ノーマル",
+    "style_id": 53,
+    "speaker_uuid": "7d1e7ba7-f957-40e5-a3fc-da49f769ab65",
+    "phrases": [
+     {
+      "text": "おはようございます",
+      "asr": "おはようございます。",
+      "ok": true
+     },
+     {
+      "text": "はじめまして",
+      "asr": "はじめまして。",
+      "ok": true
+     },
+     {
+      "text": "ありがとうございます",
+      "asr": "ありがとうございます。",
+      "ok": true
+     },
+     {
+      "text": "すみません",
+      "asr": "すみません。",
+      "ok": true
+     },
+     {
+      "text": "私は学生です",
+      "asr": "私は学生です。",
+      "ok": false
+     },
+     {
+      "text": "これは何ですか",
+      "asr": "これは何ですか。",
+      "ok": true
+     },
+     {
+      "text": "病院",
+      "asr": "病院",
+      "ok": true
+     },
+     {
+      "text": "切手",
+      "asr": "切って",
+      "ok": true
+     }
+    ],
+    "kana": [
+     {
+      "kana": "か",
+      "ok": false,
+      "phones": "k ɔ l ə",
+      "asr": "か",
+      "asr_prompted": "か。"
+     },
+     {
+      "kana": "し",
+      "ok": true,
+      "phones": "s i",
+      "asr": "4",
+      "asr_prompted": "し"
+     },
+     {
+      "kana": "きゃ",
+      "ok": false,
+      "phones": "k aː",
+      "asr": "キャラ",
+      "asr_prompted": "今日"
+     },
+     {
+      "kana": "ふ",
+      "ok": false,
+      "phones": "x i.5",
+      "asr": "ふっ",
+      "asr_prompted": "ふっ"
+     }
+    ],
+    "phrase_ok": 7,
+    "kana_ok": 1,
+    "f0_median_hz": 154.8,
+    "f0_range_st": 15.2
+   }
+  ],
+  "terms": {
+   "No.7": "个人署名后可用于非商用（同人活动、直播收入也可以）；其他商用须事先向 No.7 製作委員会确认",
+   "青山龍星": "企业、个体经营者及与企业等签约的个人使用时，不论有无收益，都须事先向「ななはぴ」申请并取得许可"
+  }
+ }
+}

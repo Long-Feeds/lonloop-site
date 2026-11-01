@@ -181,7 +181,7 @@
 {% endfor %}</table></div></details>{% else %}<p>内容检查：本批没有未通过的条目（编写过程中未通过的已在提交前修正，修正记录见下方「独立审校」与仓库提交历史）。</p>{% endif %}
 {% if V5.codex %}
 <h3 id="n5-review">独立审校（Codex）</h3>
-<p>阶段 1 的全部课文和数据交给另一个独立模型（{{ V5.codex.reviewer }}）逐条找错，范围：{{ V5.codex.scope }}。共进行 {{ V5.codex.rounds|length }} 轮（第 2 轮先复核第 1 轮的修改，再重读全部文件）。每条意见都回到原始资料核对后再处理，共 {{ V5.codex.findings|length }} 条，全部确认成立并已修改：</p>
+<p>阶段 1 的全部课文和数据交给另一个独立模型（{{ V5.codex.reviewer }}）逐条找错，范围：{{ V5.codex.scope }}。共进行 {{ V5.codex.rounds|length }} 轮（后一轮先复核前一轮的修改，再重读全部文件；最后一轮未发现新问题）。每条意见都回到原始资料核对后再处理，共 {{ V5.codex.findings|length }} 条，全部确认成立并已修改：</p>
 <div class="tablewrap"><table class="vtable"><tr><th>轮次</th><th>意见</th><th>核对</th><th>处理</th></tr>
 {% for f in V5.codex.findings %}<tr><td>{{ f.round }}</td><td>{{ f.issue }}</td><td>{{ f.check }}</td><td>{{ f.resolution }}</td></tr>
 {% endfor %}</table></div>

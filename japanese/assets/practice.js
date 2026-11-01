@@ -52,6 +52,8 @@ function build(deckIds, mode) {
   const items = itemsOf(deckIds);
   const due = [], fresh = [];
   for (const it of items) {
+    // a VOICEVOX-only kana would give itself away by its timbre in the listening mode
+    if (mode === 'listen' && it.vv) continue;
     const id = mode + ':' + it.k;
     const c = cards[id];
     if (c) { if (c.due <= now) due.push({ it, id }); }

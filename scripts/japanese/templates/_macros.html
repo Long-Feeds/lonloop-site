@@ -3,7 +3,15 @@
 
 {% macro say(id, label="", text="") -%}
 {%- if has_audio(id) -%}
-<button class="say{{ ' has-h' if 'h' in manifest.get(id, '') }}" type="button" data-say="{{ id }}" aria-label="播放{{ '：' ~ text if text }}{{ '（有真人录音）' if 'h' in manifest.get(id, '') }}"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>{% if label %}<span class="vt">{{ label }}</span>{% endif %}</button>
+{%- set vv = vv_only(id) -%}
+<button class="say{{ ' has-h' if 'h' in manifest.get(id, '') }}{{ ' has-v' if vv }}" type="button" data-say="{{ id }}" aria-label="播放{{ '：' ~ text if text }}{{ '（有真人录音）' if 'h' in manifest.get(id, '') }}{{ '（VOICEVOX 合成音）' if vv }}"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z"/></svg>{% if label %}<span class="vt">{{ label }}</span>{% endif %}</button>
+{%- endif -%}
+{%- endmacro %}
+
+{# Under a table that has VOICEVOX-only sounds: say which, and why. #}
+{% macro vv_note(kanas) -%}
+{%- if kanas -%}
+<p class="vvnote"><span class="vvm-i" aria-hidden="true">V</span> {% for k in kanas %}<span lang="ja">{{ k }}</span>{{ "、" if not loop.last }}{% endfor %}：Microsoft 的两种合成声音都没有通过校验，这{{ "个" if kanas|length == 1 else "几个" }}音改用 VOICEVOX 合成（{% for v in VV_PUBLISHED.values() %}{{ v.credit }}{{ "／" if not loop.last }}{% endfor %}），并通过了比其他音更严格的校验。<a href="/japanese/verification/#voicevox">校验报告</a></p>
 {%- endif -%}
 {%- endmacro %}
 
@@ -33,16 +41,18 @@
 {%- endmacro %}
 
 {% macro kana_grid(rows, script="h", cls="", cols=("a","i","u","e","o")) -%}
+{%- set ns = namespace(vv=[]) -%}
 <table class="kgrid {{ cls }}" lang="ja">
   <thead><tr><th class="rowh"></th>{% for c in cols %}<th scope="col" lang="zh-CN">{{ c }}</th>{% endfor %}</tr></thead>
   <tbody>
   {% for rowname, row in rows %}
     <tr><th class="rowh" scope="row" lang="ja">{{ kconv(rowname, script) }}</th>
-    {% for k in row %}<td>{% if k %}{% set kk = kconv(k, script) %}<button class="kcell" type="button" data-k="{{ kk }}" data-id="{{ K[kk].id }}" aria-label="{{ kk }}，{{ K[kk].rom }}"><span class="k">{{ kk }}</span><span class="r rom-opt">{{ K[kk].rom }}</span></button>{% endif %}</td>{% endfor %}
+    {% for k in row %}<td>{% if k %}{% set kk = kconv(k, script) %}{% set vv = vv_only(K[kk].id) %}{% if vv %}{% set ns.vv = ns.vv + [kk] %}{% endif %}<button class="kcell{{ ' has-v' if vv }}" type="button" data-k="{{ kk }}" data-id="{{ K[kk].id }}" aria-label="{{ kk }}，{{ K[kk].rom }}{{ '，VOICEVOX 合成音' if vv }}">{% if vv %}<span class="vvm" aria-hidden="true">V</span>{% endif %}<span class="k">{{ kk }}</span><span class="r rom-opt">{{ K[kk].rom }}</span></button>{% endif %}</td>{% endfor %}
     </tr>
   {% endfor %}
   </tbody>
-</table>
+</table>{% if ns.vv %}
+{{ vv_note(ns.vv) }}{% endif %}
 {%- endmacro %}
 
 {% macro pair(p, show_accent=False) -%}

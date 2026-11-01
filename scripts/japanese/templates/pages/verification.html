@@ -6,7 +6,7 @@
    meta=["音频共校验 " ~ stats.total ~ " 条", "通过 " ~ stats.ok ~ " 条", "生成时间 " ~ REPORT_TIME])) %}
 {% block content %}
 <div class="vsum">
-  <div><b>{{ stats.total }}</b><span>条音频（男女声各一）参与校验</span></div>
+  <div><b>{{ stats.total }}</b><span>条音频参与校验（Microsoft 男女声 {{ stats.ms_total }} 条{% if stats.vv_total %}，VOICEVOX {{ stats.vv_total }} 条{% endif %}）</span></div>
   <div><b class="vt-ok">{{ stats.ok }}</b><span>条全部检查通过</span></div>
   <div><b class="vt-no">{{ stats.total - stats.ok }}</b><span>条未通过：没有上线</span></div>
   <div><b>{{ stats.published_items }}</b><span>个发音条目至少有一种声音可用</span></div>
@@ -22,7 +22,8 @@
 <tr><td><b>5. 音素识别</b></td><td>单个假名</td><td>单个假名的转写容易出错（「は」写出来无法区分读 ha 还是 wa），所以再用 wav2vec2 国际音标识别模型确认辅音类别和元音。</td><td>换写法重新合成（如「こ。」→「こ」）</td></tr>
 <tr><td><b>6. 声调：自动测量＋人工核验</b></td><td>标声调的词</td><td>先尝试了全自动：用 wav2vec2 的 CTC 强制对齐估算每一拍的时间，用 Praat 提取基频，推断「在哪一拍之后下降」。但和两部词典对比，自动判定只有约 66% 吻合——合成语音的音高峰值常延后到下一拍才下降（语音学上的「峰值延迟」），拍的边界也只能估算，这个精度<b>不足以决定发布与否</b>，所以自动结果只记录、不作门槛。第 7 课（声调课）的示范音频改为人工核验：同音词组放进同一句子、由同一个声音说，叠加比较各词的音高曲线；类型例词逐个看单词曲线。另外自动检查同音异调的词是否被合成成了完全相同的音频。</td><td>人工判为不符或无法判断的不上线；同音异调却完全相同的两条都不上线</td></tr>
 </table></div>
-<p>此外，所有解释性文字由另一个独立的 AI 模型（OpenAI 的 Codex）逐条审校，指出的问题都回到原始来源核对后修改；最后在真实浏览器里逐页检查了播放、练习和移动端排版。</p>
+{% if VV_REP.clips %}<p>Microsoft 的两种声音都没有通过校验的少数单音，另用 VOICEVOX 合成，上线规则比上表更严，见<a href="#voicevox">VOICEVOX 补缺</a>。</p>
+{% endif %}<p>此外，所有解释性文字由另一个独立的 AI 模型（OpenAI 的 Codex）逐条审校，指出的问题都回到原始来源核对后修改；最后在真实浏览器里逐页检查了播放、练习和移动端排版。</p>
 
 <h2 id="caught">真实拦下的错误</h2>
 <p>这些不是假设——下面每一条都是校验过程中实际出现、并因此没有上线（或被修正）的问题：</p>
@@ -41,7 +42,7 @@
 <details class="vd"><summary>展开 {{ VT.fails|length }} 条</summary>
 <div class="tablewrap"><table class="vtable">
 <tr><th>内容</th><th>类别</th><th>声音</th><th>原因</th><th>处理</th></tr>
-{% for f in VT.fails %}<tr><td lang="ja">{{ f.text }}</td><td>{{ {"kana":"假名","word":"单词","carrier":"检测句","phrase":"寒暄","number":"数字","sentence":"句子","loanword":"外来语"}[f.kind] }}</td><td>{{ f.voice }}</td><td>{{ f.why }}</td><td style="color:var(--dim)">{{ f.fallback }}</td></tr>
+{% for f in VT.fails %}<tr><td lang="ja">{{ f.text }}</td><td>{{ {"kana":"假名","kanavar":"假名（片假名输入）","word":"单词","wordvar":"单词（假名输入）","carrier":"检测句","phrase":"寒暄","number":"数字","sentence":"句子","loanword":"外来语"}[f.kind] }}</td><td>{{ f.voice }}</td><td>{{ f.why }}</td><td style="color:var(--dim)">{{ f.fallback }}</td></tr>
 {% endfor %}
 </table></div>
 </details>
@@ -77,9 +78,66 @@
 {% endif %}{% endfor %}
 </table></div></details>
 
+{% if VV_REP.clips %}
+{% set vv_kana = [] %}{% for c in VV_REP.clips.values() %}{% if c.kana not in vv_kana %}{% set _ = vv_kana.append(c.kana) %}{% endif %}{% endfor %}
+{% set vv_pub = [] %}{% set vv_none = [] %}{% for k in vv_kana %}{% set ok = [] %}{% for c in VV_REP.clips.values() if c.kana == k and c.ok %}{% set _ = ok.append(VV_REP.voices[c.voice].gender) %}{% endfor %}{% if ok %}{% set _ = vv_pub.append((k, ok)) %}{% else %}{% set _ = vv_none.append(k) %}{% endif %}{% endfor %}
+<h2 id="voicevox">VOICEVOX 补缺：{% for k in vv_kana %}<span lang="ja">{{ k }}</span>{{ "・" if not loop.last }}{% endfor %}</h2>
+<p>Microsoft 的两种声音读这 {{ vv_kana|length }} 个音都没有通过校验（见上表），维基共享资源上也没有找到母语者的录音。于是用 <a href="https://voicevox.hiroshiba.jp/" target="_blank" rel="noopener">VOICEVOX</a>（开源的日语语音合成引擎，{{ VV_REP.engine.version }} 版，在本地运行）补缺。VOICEVOX 可以直接按「拍」输入——例如 <code lang="ja">ギャ'</code> 表示只有 gy＋a 这一拍（「'」标出声调在哪一拍之后下降）——所以能先读回引擎打算发的音，再检查它实际发出来的音。</p>
+<h3>先选声音，再合成这几个音</h3>
+<p>候选是下表 {{ VV_REP.screening.results|length }} 个角色的「ノーマル」（标准）风格。先看使用条款：No.7 的条款覆盖个人署名后的非商用使用，其他商用须事先确认；青山龍星在使用者是企业、个体经营者等时须事先申请并取得许可——为了不附带额外的授权条件，这两个不选。再用<b>与这几个音无关</b>的材料比较可懂度：{{ VV_REP.screening.phrases|length }} 个短语（Whisper 转写须与读音一致）和 {{ VV_REP.screening.kana|length }} 个其他单假名（{% for k in VV_REP.screening.kana %}<span lang="ja">{{ k }}</span>{{ "、" if not loop.last }}{% endfor %}，按下面同样的严格规则），并测音高中位数和音域（排除声音过尖、过平的）。声音选定之后才合成要补的音：如果拿要补的音本身挑声音，这道检查就失去了意义。</p>
+<details class="vd"><summary>展开候选声音的筛选结果</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>角色（风格）</th><th>短语转写一致</th><th>单假名通过</th><th>音高中位数</th><th>音域</th><th>条款</th></tr>
+{% for r in VV_REP.screening.results %}<tr><td>{{ r.character }}（{{ r.style }}）{% for v, x in VV_REP.voices.items() if x.character == r.character %} <b>← 选用（{{ x.gender }}）</b>{% endfor %}</td><td>{{ r.phrase_ok }} / {{ r.phrases|length }}</td><td>{{ r.kana_ok }} / {{ r.kana|length }}</td><td>{{ r.f0_median_hz }} Hz</td><td>{{ r.f0_range_st }} 半音</td><td style="color:var(--dim)">{{ VV_REP.screening.terms.get(r.character, "商用・非商用均可，须署名") }}</td></tr>
+{% endfor %}
+</table></div>
+{% for ph, n in VV_SCR_NOTE.items() %}<p style="font-size:13.5px;color:var(--dim)">「<span lang="ja">{{ ph }}</span>」一句所有候选都判为不一致。其中 {{ n.right|length }} 个声音的转写文字与原句一致，但「私」有わたし／わたくし两种读法，UniDic 按わたくし转回假名，所以判为不一致——文字一致也无法确认实际读的是哪一种{% for c, a in n.wrong %}；{{ c }}的转写是「<span lang="ja">{{ a }}</span>」，文字本身也不一致{% endfor %}。这句对所有声音一视同仁，不影响比较；仅凭这些记录也判断不了是合成读错还是识别出错。</p>
+{% endfor %}
+</details>
+<h3>上线规则：四条全部满足</h3>
+<ol>
+  <li><b>引擎检查</b>：引擎对输入的分析必须正好是一拍，辅音和元音与预期一致（{% for c in VV_REP.clips.values() if c.voice == VV_VOICES[0] %}{% set e = c.variants[0].checks.engine.expected %}<span lang="ja">{{ c.kana }}</span> = {{ e.consonant or "" }}+{{ e.vowel }}{{ "，" if not loop.last }}{% endfor %}），中间没有停顿。</li>
+  <li><b>信号检查</b>：与其他音频相同（原始峰值高于 −35 dB，有效发声 ≥ 60 毫秒）。</li>
+  <li><b>音素识别</b>：wav2vec2 国际音标识别必须听出正确的辅音类别和元音。</li>
+  <li><b>反向听写</b>：Whisper large-v3-turbo，或带领域提示「{{ VV_REP.prompt }}」的 Whisper large-v3，转写出这个假名。判定比其他假名更严：转写比假名多出来的部分，只能是促音「っ」或同一个元音的拉长（「ー」、元音本身，或 e 段后的「イ」、o 段后的「ウ」）——「シェイ」「シェー」「シェッ」算シェ，「シェア」不算。（其他假名的判定允许去掉末尾任意一个元音。）</li>
+</ol>
+<p>Microsoft 声音的单假名只要音素识别和转写之一通过即可上线；这几个音恰恰是识别模型最容易听错的，所以这里要求<b>两类独立的模型（音素识别、Whisper）同时认可</b>，再加上引擎本身的检查。</p>
+<p>每个音、每个声音合成五次：语速 {{ VV_REP.speed_scale }} 倍（对应 Microsoft 单假名所用的 −10% 设置；两个引擎的默认语速本身不同）下用三种写法输入——假名记法（直接指定这一拍）、片假名文本、平假名文本。三种写法经过引擎里不同的处理路径，得出的音拍和音频却<b>完全相同</b>（这本身说明引擎对这几个音的理解没有歧义），所以只算一条。另外用假名记法再合成语速 1.0（自然语速）和 0.8（更慢，每个音段更长、更容易听清）各一条。按 {{ VV_REP.speed_scale }} → 1.0 → 0.8 的顺序，第一条四项检查全部通过的上线；全部记录如下表。</p>
+<h3>结果</h3>
+<ul>
+{% for k, vs in vv_pub %}  <li><span lang="ja">{{ k }}</span>：{{ vs|join("、") }}通过，已上线（页面上标「VOICEVOX」）。</li>
+{% endfor %}{% for k in vv_none %}{% set h = VV_HEARD[k] %}  <li><span lang="ja">{{ k }}</span>：两个声音的 {{ h.n }} 条合成<b>都没有通过，仍不提供音频</b>。Whisper 写出的是{% for t in h.asr %}「<span lang="ja">{{ t }}</span>」{% endfor %}，音素识别听到的是 {{ h.phones|join(" / ") }}——没有一条做到两类模型都认可。</li>
+{% endfor %}
+</ul>
+{% set fr = [] %}{% for c in VV_REP.clips.values() if c.ok %}{% for x in c.variants if x.formants %}{% set _ = fr.append((c, x.formants)) %}{% endfor %}{% endfor %}
+{% if fr %}<p>第 4 条接受「シェイ」这样的拉长写法，但转写里多出来的那个假名，也可能是音频里真的多了一拍（「シェイ」可以是シェ＋イ 两拍）。所以每条上线的音频另外测元音的共振峰，和同一个声音单念的元音、以及念成两拍的对照音放在一起比较（辅助观察，只记录，不作门槛）：结尾如果多了 [i]，第一共振峰（F1）会下降、第二共振峰（F2）会上升。</p>
+<div class="tablewrap"><table class="vtable">
+<tr><th>音频</th><th>有基频的时长</th><th>元音中段 F1 / F2</th><th>结尾 F1 / F2</th></tr>
+{% for c, f in fr %}<tr><td><b>上线的「<span lang="ja">{{ c.kana }}</span>」</b>（{{ VV_REP.voices[c.voice].credit }}）</td><td>{{ f.clip.voiced_s }} 秒</td><td>{{ f.clip.steady|join(" / ") }} Hz</td><td>{{ f.clip.ending|join(" / ") }} Hz</td></tr>
+{% if f["ref-vowel"] %}<tr><td style="color:var(--dim)">对照：同一声音单念「<span lang="ja">{{ f["ref-vowel"].input|replace("'", "") }}</span>」</td><td>{{ f["ref-vowel"].voiced_s }} 秒</td><td>{{ f["ref-vowel"].steady|join(" / ") }} Hz</td><td>{{ f["ref-vowel"].ending|join(" / ") }} Hz</td></tr>{% endif %}
+{% if f["ref-two"] %}<tr><td style="color:var(--dim)">对照：同一声音念两拍「<span lang="ja">{{ f["ref-two"].input|replace("'", "") }}</span>」</td><td>{{ f["ref-two"].voiced_s }} 秒</td><td>{{ f["ref-two"].steady|join(" / ") }} Hz</td><td>{{ f["ref-two"].ending|join(" / ") }} Hz</td></tr>{% endif %}
+{% endfor %}
+</table></div>
+<ul>
+{% for c, f in fr if f["ref-two"] %}{% set d1 = f.clip.steady[0] - f.clip.ending[0] %}{% set r2 = f.clip.ending[1] - f.clip.steady[1] %}{% set rd1 = f["ref-two"].steady[0] - f["ref-two"].ending[0] %}{% set rr2 = f["ref-two"].ending[1] - f["ref-two"].steady[1] %}
+  <li>上线的「<span lang="ja">{{ c.kana }}</span>」：结尾 F1 {{ "下降" if d1 > 0 else "上升" }} {{ d1|abs }} Hz、F2 {{ "上升" if r2 > 0 else "下降" }} {{ r2|abs }} Hz；两拍对照「<span lang="ja">{{ f["ref-two"].input|replace("'", "") }}</span>」是 F1 下降 {{ rd1 }} Hz、F2 上升 {{ rr2 }} Hz。{% if d1 > 100 and r2 > 100 %}<b class="vt-no">结尾有类似 [i] 的变化，需要人工复核。</b>{% else %}这次测量没有出现两拍对照那种「F1 下降、F2 上升」的组合；上线音频结尾 F1 的变化方向与单念的「<span lang="ja">{{ f["ref-vowel"].input|replace("'", "") }}</span>」一致，有基频的时长约为两拍对照的 {{ (100 * f.clip.voiced_s / f["ref-two"].voiced_s)|round|int }}%。这是辅助观察，单靠它不能完全排除多出一拍。{% endif %}</li>
+{% endfor %}
+</ul>
+<p style="font-size:13.5px;color:var(--dim)">「有基频的时长」= 第一个到最后一个检测到基频的帧之间的时长（不是整段音频）。在这段时间的 30–70%（中段）和 75–95%（结尾）各等距取 12 个时点，F1、F2 分别取中位数（Praat Burg 算法）。</p>
+{% endif %}
+<details class="vd" open><summary>展开全部 {{ VV_ROWS|length }} 条 VOICEVOX 合成结果（含未通过的）</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>假名</th><th>声音</th><th>输入</th><th>引擎音拍</th><th>音素识别</th><th>Whisper</th><th>Whisper＋领域提示</th><th>结论</th></tr>
+{% for r in VV_ROWS %}<tr><td lang="ja">{{ r.kana }}</td><td>{{ r.voice }}</td><td><code lang="ja">{{ r.input }}</code><br><span style="color:var(--dim);font-size:12px">{{ r.variant }}</span></td><td class="{{ 'vt-ok' if r.engine_ok else 'vt-no' }}">{{ r.engine }}</td><td class="{{ 'vt-ok' if r.phones_ok else 'vt-no' }}">{{ r.phones }}</td><td class="{{ 'vt-ok' if r.asr_ok else 'vt-no' }}" lang="ja">{{ r.asr }}</td><td class="{{ 'vt-ok' if r.asr_p_ok else 'vt-no' }}" lang="ja">{{ r.asr_p }}</td><td>{% if r.published %}<b class="vt-ok">通过，上线</b>{% elif r.ok %}<span class="vt-ok">通过</span><span style="color:var(--dim)">（已有更靠前的输入上线）</span>{% else %}<span class="vt-no">未通过</span><span style="color:var(--dim)">：{{ r.why }}{% if not r.signal_ok %}（峰值 {{ r.peak }} dB）{% endif %}</span>{% endif %}</td></tr>
+{% endfor %}
+</table></div>
+</details>
+<p style="font-size:13.5px;color:var(--dim)">绿色 = 该项检查通过，红色 = 不通过。原始测量值见仓库里的 <code>scripts/japanese/reports/voicevox.json</code>。</p>
+{% endif %}
+
 <h2 id="limits">局限</h2>
 <ul>
-  <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 {{ HUMAN|length }} 个条目。</li>
+  <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 {{ HUMAN|length }} 个条目{% if VV_PUBLISHED %}；另有{% for k in VV_KANA %}「{{ k }}」{% endfor %}由 VOICEVOX 合成，同样是合成语音，不是真人{% endif %}。</li>
   <li>机器校验能抓住「读错、无声」这类硬错误，抓不住更细微的不自然（比如语调略生硬）。</li>
   <li><b>声调的边界</b>：页面上的声调标注全部来自词典（两源一致才标），是可靠的；但只有第 7 课的示范音频经过声调核验。其他各课的例词音频只校验了读音，声调<b>以标注为准</b>——如果你觉得某个例词的音频和标注不一致，请相信标注，并告诉我们。</li>
   <li>寒暄语、句子只检查读音，不标、不测声调（短语和句子的语调规律超出入门范围）。</li>

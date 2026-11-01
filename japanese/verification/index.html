@@ -17,8 +17,8 @@
 <meta property="og:image" content="https://lonloop.com/og.png" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="jp-audio-version" content="b9a29a07" />
-<link rel="stylesheet" href="/japanese/assets/japanese.css?v=5e4812e5" />
+<meta name="jp-audio-version" content="6a7f7731" />
+<link rel="stylesheet" href="/japanese/assets/japanese.css?v=30801d86" />
 </head>
 <body>
   <nav class="topnav">
@@ -37,15 +37,15 @@
     <header class="page-head">
       <div class="eyebrow">Verification · 校验报告</div>
       <h1>校验报告：这些内容是怎么核对的</h1>
-<p class="lead">宁可少放，不放错的。这一页公开每一道检查的方法和结果，包括<b>所有没通过、因此没有上线的音频</b>。数据由生成脚本自动写出，每次更新内容都会重新生成。</p><div class="meta"><span>音频共校验 3770 条</span><span>通过 3536 条</span><span>生成时间 2026-11-01 21:11</span></div>    </header>
+<p class="lead">宁可少放，不放错的。这一页公开每一道检查的方法和结果，包括<b>所有没通过、因此没有上线的音频</b>。数据由生成脚本自动写出，每次更新内容都会重新生成。</p><div class="meta"><span>音频共校验 3794 条</span><span>通过 3538 条</span><span>生成时间 2026-11-01 21:18</span></div>    </header>
 
 
     <div class="prose">
 <div class="vsum">
-  <div><b>3770</b><span>条音频（男女声各一）参与校验</span></div>
-  <div><b class="vt-ok">3536</b><span>条全部检查通过</span></div>
-  <div><b class="vt-no">234</b><span>条未通过：没有上线</span></div>
-  <div><b>1358</b><span>个发音条目至少有一种声音可用</span></div>
+  <div><b>3794</b><span>条音频参与校验（Microsoft 男女声 3770 条，VOICEVOX 24 条）</span></div>
+  <div><b class="vt-ok">3538</b><span>条全部检查通过</span></div>
+  <div><b class="vt-no">256</b><span>条未通过：没有上线</span></div>
+  <div><b>1359</b><span>个发音条目至少有一种声音可用</span></div>
 </div>
 
 <h2 id="layers">六道检查</h2>
@@ -58,6 +58,7 @@
 <tr><td><b>5. 音素识别</b></td><td>单个假名</td><td>单个假名的转写容易出错（「は」写出来无法区分读 ha 还是 wa），所以再用 wav2vec2 国际音标识别模型确认辅音类别和元音。</td><td>换写法重新合成（如「こ。」→「こ」）</td></tr>
 <tr><td><b>6. 声调：自动测量＋人工核验</b></td><td>标声调的词</td><td>先尝试了全自动：用 wav2vec2 的 CTC 强制对齐估算每一拍的时间，用 Praat 提取基频，推断「在哪一拍之后下降」。但和两部词典对比，自动判定只有约 66% 吻合——合成语音的音高峰值常延后到下一拍才下降（语音学上的「峰值延迟」），拍的边界也只能估算，这个精度<b>不足以决定发布与否</b>，所以自动结果只记录、不作门槛。第 7 课（声调课）的示范音频改为人工核验：同音词组放进同一句子、由同一个声音说，叠加比较各词的音高曲线；类型例词逐个看单词曲线。另外自动检查同音异调的词是否被合成成了完全相同的音频。</td><td>人工判为不符或无法判断的不上线；同音异调却完全相同的两条都不上线</td></tr>
 </table></div>
+<p>Microsoft 的两种声音都没有通过校验的少数单音，另用 VOICEVOX 合成，上线规则比上表更严，见<a href="#voicevox">VOICEVOX 补缺</a>。</p>
 <p>此外，所有解释性文字由另一个独立的 AI 模型（OpenAI 的 Codex）逐条审校，指出的问题都回到原始来源核对后修改；最后在真实浏览器里逐页检查了播放、练习和移动端排版。</p>
 
 <h2 id="caught">真实拦下的错误</h2>
@@ -97,8 +98,8 @@
 <tr><td lang="ja">ぎゃ</td><td>假名</td><td>男声</td><td>自动转写为「や」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">ぎょ</td><td>假名</td><td>男声</td><td>自动转写为「よ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ぎゅ</td><td>假名</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">は</td><td>假名</td><td>男声</td><td>自动转写为「ば」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">へ</td><td>假名</td><td>男声</td><td>自动转写为「えっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">は</td><td>假名</td><td>男声</td><td>自动转写为「ば」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">へ</td><td>假名</td><td>男声</td><td>自动转写为「えっ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">ほ</td><td>假名</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">い</td><td>假名</td><td>男声</td><td>自动转写为「1」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">き</td><td>假名</td><td>男声</td><td>自动转写为「チッ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
@@ -114,78 +115,78 @@
 <tr><td lang="ja">れ</td><td>假名</td><td>男声</td><td>自动转写为「ね」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ろ</td><td>假名</td><td>男声</td><td>自动转写为「の」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">る</td><td>假名</td><td>男声</td><td>自动转写为「ね」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">りゃ</td><td>假名</td><td>男声</td><td>自动转写为「いや」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">りゃ</td><td>假名</td><td>男声</td><td>自动转写为「いや」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">りょ</td><td>假名</td><td>男声</td><td>自动转写为「リオ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">りゅ</td><td>假名</td><td>男声</td><td>自动转写为「に」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">う</td><td>假名</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">わ</td><td>假名</td><td>男声</td><td>自动转写为「また、」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">シェ</td><td>假名</td><td>男声</td><td>自动转写为「シッ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">シェ</td><td>假名</td><td>男声</td><td>自动转写为「シッ」，与预期读音不一致</td><td style="color:var(--dim)">改用 VOICEVOX 合成并通过更严的校验（见下文）</td></tr>
 <tr><td lang="ja">トゥ</td><td>假名</td><td>男声</td><td>自动转写为「2」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ウィ</td><td>假名</td><td>男声</td><td>自动转写为「うい。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ウォ</td><td>假名</td><td>男声</td><td>自动转写为「5」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">ゆ</td><td>假名</td><td>男声</td><td>自动转写为「ん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ざ</td><td>假名</td><td>男声</td><td>自动转写为「さっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">ど</td><td>假名</td><td>女声</td><td>自动转写为「と」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ど</td><td>假名</td><td>女声</td><td>自动转写为「と」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">ぎゃ</td><td>假名</td><td>女声</td><td>自动转写为「じゃ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">へ</td><td>假名</td><td>女声</td><td>自动转写为「え?」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">へ</td><td>假名</td><td>女声</td><td>自动转写为「え?」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">ひ</td><td>假名</td><td>女声</td><td>自动转写为「ひっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ひゅ</td><td>假名</td><td>女声</td><td>自动转写为「ひ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">じょ</td><td>假名</td><td>女声</td><td>自动转写为「女」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ぱ</td><td>假名</td><td>女声</td><td>自动转写为「また。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ぴょ</td><td>假名</td><td>女声</td><td>自动转写为「今日」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぴゅ</td><td>假名</td><td>女声</td><td>自动转写为「9.」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぴゅ</td><td>假名</td><td>女声</td><td>自动转写为「9.」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">ら</td><td>假名</td><td>女声</td><td>自动转写为「だ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">チェ</td><td>假名</td><td>女声</td><td>自动转写为「ち」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ジェ</td><td>假名</td><td>女声</td><td>自动转写为「J」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">シェ</td><td>假名</td><td>女声</td><td>自动转写为「せ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">シェ</td><td>假名</td><td>女声</td><td>自动转写为「せ」，与预期读音不一致</td><td style="color:var(--dim)">改用 VOICEVOX 合成并通过更严的校验（见下文）</td></tr>
 <tr><td lang="ja">ウォ</td><td>假名</td><td>女声</td><td>自动转写为「5」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">び</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「B」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぼ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「の」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">びゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「で、」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">え</td><td>假名（片假名输入）</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぎ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「2.」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぐ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ん」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">び</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「B」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぼ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「の」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">びゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「で、」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">え</td><td>假名（片假名输入）</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぎ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「2.」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぐ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ぎゃ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「や」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぎょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「よ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぎゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ほ</td><td>假名（片假名输入）</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">い</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「1.」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">き</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ち」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">み</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「2.」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">も</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ん」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">みょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ミュウ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ん</td><td>假名（片假名输入）</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">にょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「によ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぺ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「って」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぽ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「とっ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">ぎょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「よ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぎゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ほ</td><td>假名（片假名输入）</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">い</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「1.」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">き</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ち」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">み</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「2.」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">も</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">みょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ミュウ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ん</td><td>假名（片假名输入）</td><td>男声</td><td>无声（合成结果为静音）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">にょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「によ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぺ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「って」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぽ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「とっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ぴょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ピュー」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぴゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「Q」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">れ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ろ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「の」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">る</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ね」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">りょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「リオ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">りゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「に」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">う</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ご視聴ありがとうございました」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">わ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「パッ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ゆ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「よ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ざ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「さっ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ふ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「9.」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">ぴゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「Q」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">れ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ろ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「の」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">る</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ね」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">りょ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「リオ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">りゅ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「に」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">う</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「ご視聴ありがとうございました」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">わ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「パッ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ゆ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「よ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ざ</td><td>假名（片假名输入）</td><td>男声</td><td>自动转写为「さっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ふ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「9.」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">ぎゃ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「じゃ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ひ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「木」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ひゅ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「ひ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">じょ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「女」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ぱ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「また。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">ひ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「木」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ひゅ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「ひ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">じょ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「女」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">ぱ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「また。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">ぴょ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「今日」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">ら</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「だ。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">れ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「で、」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">しゅ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「ちっ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">ら</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「だ。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">れ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「で、」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">しゅ</td><td>假名（片假名输入）</td><td>女声</td><td>自动转写为「ちっ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">ウィキペディア</td><td>外来语</td><td>男声</td><td>自动转写为「wikimedia」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">ノート</td><td>外来语</td><td>男声</td><td>自动转写为「もうと」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">デュエット</td><td>外来语</td><td>男声</td><td>自动转写为「ビュエット」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">ウィキペディア</td><td>外来语</td><td>女声</td><td>自动转写为「wiki メディア」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">ウェブ</td><td>外来语</td><td>女声</td><td>自动转写为「web」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">デュエット</td><td>外来语</td><td>女声</td><td>自动转写为「リュエット」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">便利でした</td><td>N5 活用形</td><td>男声</td><td>自动转写为「レンギでした。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">便利でした</td><td>N5 活用形</td><td>男声</td><td>自动转写为「レンギでした。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">走った</td><td>N5 活用形</td><td>男声</td><td>自动转写为「はした」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">待った</td><td>N5 活用形</td><td>男声</td><td>自动转写为「また」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">近くありませんでした</td><td>N5 活用形</td><td>男声</td><td>自动转写为「資格ありませんでした。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
@@ -193,50 +194,50 @@
 <tr><td lang="ja">待った</td><td>N5 活用形（假名输入）</td><td>男声</td><td>自动转写为「また」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">友達の家は駅の近くです。</td><td>N5 例句</td><td>男声</td><td>自动转写为「友達の家は木の近くです。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">八時に家を出ます。</td><td>N5 例句</td><td>男声</td><td>自动转写为「8時に家を出ます。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">飲む</td><td>N5 单词</td><td>男声</td><td>自动转写为「ノーム」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">下</td><td>N5 单词</td><td>男声</td><td>自动转写为「げ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">飲む</td><td>N5 单词</td><td>男声</td><td>自动转写为「ノーム」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">下</td><td>N5 单词</td><td>男声</td><td>自动转写为「げ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">半</td><td>N5 单词</td><td>男声</td><td>自动转写为「はっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">車</td><td>N5 单词</td><td>男声</td><td>自动转写为「しゃ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">南</td><td>N5 单词</td><td>男声</td><td>自动转写为「な」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">下</td><td>N5 单词</td><td>女声</td><td>自动转写为「げっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">車</td><td>N5 单词</td><td>男声</td><td>自动转写为「しゃ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">南</td><td>N5 单词</td><td>男声</td><td>自动转写为「な」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">下</td><td>N5 单词</td><td>女声</td><td>自动转写为「げっ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">会う</td><td>N5 单词</td><td>女声</td><td>自动转写为「パーグ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">車</td><td>N5 单词</td><td>女声</td><td>自动转写为「しゃ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">南</td><td>N5 单词</td><td>女声</td><td>自动转写为「なん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">車</td><td>N5 单词</td><td>女声</td><td>自动转写为「しゃ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">南</td><td>N5 单词</td><td>女声</td><td>自动转写为「なん」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">半</td><td>N5 单词（假名输入）</td><td>男声</td><td>自动转写为「は?」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">会う</td><td>N5 单词（假名输入）</td><td>女声</td><td>自动转写为「パーグ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">布</td><td>单词</td><td>男声</td><td>自动转写为「フッ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">単位</td><td>单词</td><td>男声</td><td>自动转写为「タイ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">単位</td><td>单词</td><td>男声</td><td>自动转写为「タイ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">月</td><td>单词</td><td>男声</td><td>自动转写为「ガツ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">船</td><td>单词</td><td>男声</td><td>自动转写为「セン」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">耳</td><td>单词</td><td>男声</td><td>自动转写为「ミニ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">船</td><td>单词</td><td>男声</td><td>自动转写为「セン」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">耳</td><td>单词</td><td>男声</td><td>自动转写为「ミニ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">私</td><td>单词</td><td>男声</td><td>自动转写为「私」，与预期读音不一致（音素：r a t a i）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">骨</td><td>单词</td><td>男声</td><td>自动转写为「コツ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">体</td><td>单词</td><td>男声</td><td>自动转写为「たい」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">米</td><td>单词</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">町</td><td>单词</td><td>男声</td><td>自动转写为「超」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">骨</td><td>单词</td><td>男声</td><td>自动转写为「コツ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">体</td><td>单词</td><td>男声</td><td>自动转写为「たい」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">米</td><td>单词</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">町</td><td>单词</td><td>男声</td><td>自动转写为「超」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">声</td><td>单词</td><td>男声</td><td>自动转写为「来い。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">留守</td><td>单词</td><td>男声</td><td>自动转写为「です」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">日本語</td><td>单词</td><td>男声</td><td>自动转写为「日本語」，与预期读音不一致（音素：n i k onɡ5 g k o）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">音</td><td>单词</td><td>男声</td><td>自动转写为「本」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">豚</td><td>单词</td><td>男声</td><td>自动转写为「ブダ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">店</td><td>单词</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">音</td><td>单词</td><td>男声</td><td>自动转写为「本」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">豚</td><td>单词</td><td>男声</td><td>自动转写为「ブダ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">店</td><td>单词</td><td>男声</td><td>自动转写为「で」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">頭</td><td>单词</td><td>男声</td><td>自动转写为「と」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">魚</td><td>单词</td><td>男声</td><td>自动转写为「うお」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">空</td><td>单词</td><td>男声</td><td>自动转写为「く」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">魚</td><td>单词</td><td>男声</td><td>自动转写为「うお」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">空</td><td>单词</td><td>男声</td><td>自动转写为「く」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">冬</td><td>单词</td><td>男声</td><td>自动转写为「フィー」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">湖</td><td>单词</td><td>男声</td><td>自动转写为「ご視聴ありがとうございました。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">鹿</td><td>单词</td><td>男声</td><td>自动转写为「か」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">鹿</td><td>单词</td><td>男声</td><td>自动转写为「か」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">雨</td><td>单词</td><td>男声</td><td>自动转写为「アーメン」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">喉</td><td>单词</td><td>男声</td><td>自动转写为「こう」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">雲</td><td>单词</td><td>男声</td><td>自动转写为「うん。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">煙</td><td>单词</td><td>男声</td><td>自动转写为「ええ?」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">お祖父さん</td><td>单词</td><td>男声</td><td>自动转写为「お祖父さん」，与预期读音不一致（音素：o s o h s a）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">年</td><td>单词</td><td>男声</td><td>自动转写为「ねん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">心</td><td>单词</td><td>男声</td><td>自动转写为「シン」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">喉</td><td>单词</td><td>男声</td><td>自动转写为「こう」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">雲</td><td>单词</td><td>男声</td><td>自动转写为「うん。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">煙</td><td>单词</td><td>男声</td><td>自动转写为「ええ?」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">お祖父さん</td><td>单词</td><td>男声</td><td>自动转写为「お祖父さん」，与预期读音不一致（音素：o s o h s a）</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">年</td><td>单词</td><td>男声</td><td>自动转写为「ねん」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">心</td><td>单词</td><td>男声</td><td>自动转写为「シン」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">客</td><td>单词</td><td>男声</td><td>自动转写为「100」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">お祖母さん</td><td>单词</td><td>男声</td><td>自动转写为「お祖母さん」，与预期读音不一致（音素：o s o b o s a）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">力</td><td>单词</td><td>男声</td><td>自动转写为「よく」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">歌</td><td>单词</td><td>男声</td><td>自动转写为「うだ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">お祖母さん</td><td>单词</td><td>男声</td><td>自动转写为「お祖母さん」，与预期读音不一致（音素：o s o b o s a）</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">力</td><td>单词</td><td>男声</td><td>自动转写为「よく」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">歌</td><td>单词</td><td>男声</td><td>自动转写为「うだ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">本</td><td>单词</td><td>男声</td><td>自动转写为「ほっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">端</td><td>单词</td><td>男声</td><td>自动转写为「た」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">目</td><td>单词</td><td>男声</td><td>自动转写为「ね。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
@@ -245,70 +246,70 @@
 <tr><td lang="ja">紙</td><td>单词</td><td>男声</td><td>自动转写为「死」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">下駄</td><td>单词</td><td>男声</td><td>自动转写为「下手」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">庭</td><td>单词</td><td>男声</td><td>自动转写为「2話」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">道</td><td>单词</td><td>男声</td><td>自动转写为「ど」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">道</td><td>单词</td><td>男声</td><td>自动转写为「ど」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">西</td><td>单词</td><td>男声</td><td>自动转写为「2C。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">布</td><td>单词</td><td>女声</td><td>自动转写为「ふる」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">船</td><td>单词</td><td>女声</td><td>自动转写为「1000」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">骨</td><td>单词</td><td>女声</td><td>自动转写为「コツ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">体</td><td>单词</td><td>女声</td><td>自动转写为「第」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">米</td><td>单词</td><td>女声</td><td>自动转写为「b」，与预期读音不一致（音素：b e）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">布</td><td>单词</td><td>女声</td><td>自动转写为「ふる」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">船</td><td>单词</td><td>女声</td><td>自动转写为「1000」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">骨</td><td>单词</td><td>女声</td><td>自动转写为「コツ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">体</td><td>单词</td><td>女声</td><td>自动转写为「第」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">米</td><td>单词</td><td>女声</td><td>自动转写为「b」，与预期读音不一致（音素：b e）</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">町</td><td>单词</td><td>女声</td><td>自动转写为「超」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">日本語</td><td>单词</td><td>女声</td><td>自动转写为「日本語」，与预期读音不一致（音素：n i k o g k o）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">音</td><td>单词</td><td>女声</td><td>自动转写为「おん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">店</td><td>单词</td><td>女声</td><td>自动转写为「せっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">日本語</td><td>单词</td><td>女声</td><td>自动转写为「日本語」，与预期读音不一致（音素：n i k o g k o）</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">音</td><td>单词</td><td>女声</td><td>自动转写为「おん」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">店</td><td>单词</td><td>女声</td><td>自动转写为「せっ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">頭</td><td>单词</td><td>女声</td><td>自动转写为「と」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">魚</td><td>单词</td><td>女声</td><td>自动转写为「かな。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">空</td><td>单词</td><td>女声</td><td>自动转写为「9」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">魚</td><td>单词</td><td>女声</td><td>自动转写为「かな。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">空</td><td>单词</td><td>女声</td><td>自动转写为「9」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">楽</td><td>单词</td><td>女声</td><td>自动转写为「マク」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">湖</td><td>单词</td><td>女声</td><td>自动转写为「5.」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">略</td><td>单词</td><td>女声</td><td>自动转写为「逆」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">口</td><td>单词</td><td>女声</td><td>自动转写为「愚痴」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">鹿</td><td>单词</td><td>女声</td><td>自动转写为「か」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">喉</td><td>单词</td><td>女声</td><td>自动转写为「こう。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">雲</td><td>单词</td><td>女声</td><td>自动转写为「うん。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">煙</td><td>单词</td><td>女声</td><td>自动转写为「ん?」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">お祖父さん</td><td>单词</td><td>女声</td><td>自动转写为「お祖父さん」，与预期读音不一致（音素：o s k s a g）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">年</td><td>单词</td><td>女声</td><td>自动转写为「ねん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">心</td><td>单词</td><td>女声</td><td>自动转写为「深」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">お祖母さん</td><td>单词</td><td>女声</td><td>自动转写为「おそぼさん」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">力</td><td>单词</td><td>女声</td><td>自动转写为「がか」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">略</td><td>单词</td><td>女声</td><td>自动转写为「逆」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">口</td><td>单词</td><td>女声</td><td>自动转写为「愚痴」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">鹿</td><td>单词</td><td>女声</td><td>自动转写为「か」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">喉</td><td>单词</td><td>女声</td><td>自动转写为「こう。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">雲</td><td>单词</td><td>女声</td><td>自动转写为「うん。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">煙</td><td>单词</td><td>女声</td><td>自动转写为「ん?」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">お祖父さん</td><td>单词</td><td>女声</td><td>自动转写为「お祖父さん」，与预期读音不一致（音素：o s k s a g）</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">年</td><td>单词</td><td>女声</td><td>自动转写为「ねん」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">心</td><td>单词</td><td>女声</td><td>自动转写为「深」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">お祖母さん</td><td>单词</td><td>女声</td><td>自动转写为「おそぼさん」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">力</td><td>单词</td><td>女声</td><td>自动转写为「がか」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">端</td><td>单词</td><td>女声</td><td>自动转写为「短」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">卵</td><td>单词</td><td>女声</td><td>自动转写为「あまご」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">紙</td><td>单词</td><td>女声</td><td>自动转写为「2」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">庭</td><td>单词</td><td>女声</td><td>自动转写为「2話」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">道</td><td>单词</td><td>女声</td><td>自动转写为「どうぞ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
-<tr><td lang="ja">布</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ぬぬ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">月</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「好き」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">蜜柑</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「3巻」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">私</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「またし」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">牛</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「無視。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">声</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「来い。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">橋</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「わし」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">留守</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「です」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">日本語</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「日本語」，与预期读音不一致（音素：n i k o g k o）</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">冬</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「フィー」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">旅行</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「予行」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">科学</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「家宅」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">箸</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「わし」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">村</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「無駄」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">部屋</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ええや」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">桃</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「もの」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">美容院</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「利用員」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">客</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「100」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">本</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ほっ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">道</td><td>单词</td><td>女声</td><td>自动转写为「どうぞ」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">布</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ぬぬ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">月</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「好き」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">蜜柑</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「3巻」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">私</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「またし」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">牛</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「無視。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">声</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「来い。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">橋</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「わし」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">留守</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「です」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">日本語</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「日本語」，与预期读音不一致（音素：n i k o g k o）</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">冬</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「フィー」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">旅行</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「予行」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">科学</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「家宅」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">箸</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「わし」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">村</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「無駄」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">部屋</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ええや」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">桃</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「もの」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">美容院</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「利用員」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">客</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「100」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">本</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ほっ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">端</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「わし」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">目</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ね。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">銀</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ズン」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">爪</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「すね。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">下駄</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「下手」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">目</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ね。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">銀</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「ズン」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">爪</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「すね。」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">下駄</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「下手」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
 <tr><td lang="ja">庭</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「2話」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">西</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「2C。」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">町</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「マッチ」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">橋</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「和紙」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">楽</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「マク」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">箸</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「和紙」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">桃</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「もの」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
-<tr><td lang="ja">鼻血</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「鼻地」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
+<tr><td lang="ja">西</td><td>单词（假名输入）</td><td>男声</td><td>自动转写为「2C。」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">町</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「マッチ」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">橋</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「和紙」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">楽</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「マク」，与预期读音不一致</td><td style="color:var(--dim)">另一声音已通过，页面只用它</td></tr>
+<tr><td lang="ja">箸</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「和紙」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">桃</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「もの」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
+<tr><td lang="ja">鼻血</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「鼻地」，与预期读音不一致</td><td style="color:var(--dim)">同一声音换一种输入写法后通过，页面用那一条</td></tr>
 <tr><td lang="ja">端</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「和紙」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 <tr><td lang="ja">庭</td><td>单词（假名输入）</td><td>女声</td><td>自动转写为「2話」，与预期读音不一致</td><td style="color:var(--dim)">两种声音都未通过：不上线</td></tr>
 </table></div>
@@ -583,6 +584,83 @@
 <tr><td><a href="https://commons.wikimedia.org/wiki/File:Ja-9-kyuu.ogg" target="_blank" rel="noopener">Ja-9-kyuu.ogg</a></td><td>录音说明没有写明录音者是否为日语母语者，不采用</td></tr>
 </table></div></details>
 
+<h2 id="voicevox">VOICEVOX 补缺：<span lang="ja">ぎゃ</span>・<span lang="ja">ぴょ</span>・<span lang="ja">シェ</span>・<span lang="ja">ウォ</span></h2>
+<p>Microsoft 的两种声音读这 4 个音都没有通过校验（见上表），维基共享资源上也没有找到母语者的录音。于是用 <a href="https://voicevox.hiroshiba.jp/" target="_blank" rel="noopener">VOICEVOX</a>（开源的日语语音合成引擎，0.26.0 版，在本地运行）补缺。VOICEVOX 可以直接按「拍」输入——例如 <code lang="ja">ギャ'</code> 表示只有 gy＋a 这一拍（「'」标出声调在哪一拍之后下降）——所以能先读回引擎打算发的音，再检查它实际发出来的音。</p>
+<h3>先选声音，再合成这几个音</h3>
+<p>候选是下表 11 个角色的「ノーマル」（标准）风格。先看使用条款：No.7 的条款覆盖个人署名后的非商用使用，其他商用须事先确认；青山龍星在使用者是企业、个体经营者等时须事先申请并取得许可——为了不附带额外的授权条件，这两个不选。再用<b>与这几个音无关</b>的材料比较可懂度：8 个短语（Whisper 转写须与读音一致）和 4 个其他单假名（<span lang="ja">か</span>、<span lang="ja">し</span>、<span lang="ja">きゃ</span>、<span lang="ja">ふ</span>，按下面同样的严格规则），并测音高中位数和音域（排除声音过尖、过平的）。声音选定之后才合成要补的音：如果拿要补的音本身挑声音，这道检查就失去了意义。</p>
+<details class="vd"><summary>展开候选声音的筛选结果</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>角色（风格）</th><th>短语转写一致</th><th>单假名通过</th><th>音高中位数</th><th>音域</th><th>条款</th></tr>
+<tr><td>WhiteCUL（ノーマル） <b>← 选用（女声）</b></td><td>7 / 8</td><td>2 / 4</td><td>262.7 Hz</td><td>8.1 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>九州そら（ノーマル）</td><td>7 / 8</td><td>2 / 4</td><td>287.0 Hz</td><td>7.7 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>冥鳴ひまり（ノーマル）</td><td>6 / 8</td><td>2 / 4</td><td>252.9 Hz</td><td>3.6 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>No.7（ノーマル）</td><td>7 / 8</td><td>1 / 4</td><td>301.4 Hz</td><td>10.5 半音</td><td style="color:var(--dim)">个人署名后可用于非商用（同人活动、直播收入也可以）；其他商用须事先向 No.7 製作委員会确认</td></tr>
+<tr><td>琴詠ニア（ノーマル）</td><td>7 / 8</td><td>2 / 4</td><td>294.4 Hz</td><td>9.4 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>四国めたん（ノーマル）</td><td>7 / 8</td><td>1 / 4</td><td>337.2 Hz</td><td>8.5 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>玄野武宏（ノーマル）</td><td>7 / 8</td><td>2 / 4</td><td>125.7 Hz</td><td>6.2 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>青山龍星（ノーマル）</td><td>7 / 8</td><td>1 / 4</td><td>92.7 Hz</td><td>9.2 半音</td><td style="color:var(--dim)">企业、个体经营者及与企业等签约的个人使用时，不论有无收益，都须事先向「ななはぴ」申请并取得许可</td></tr>
+<tr><td>剣崎雌雄（ノーマル）</td><td>6 / 8</td><td>1 / 4</td><td>131.0 Hz</td><td>9.0 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>雀松朱司（ノーマル） <b>← 选用（男声）</b></td><td>7 / 8</td><td>3 / 4</td><td>122.5 Hz</td><td>9.0 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+<tr><td>麒ヶ島宗麟（ノーマル）</td><td>7 / 8</td><td>1 / 4</td><td>154.8 Hz</td><td>15.2 半音</td><td style="color:var(--dim)">商用・非商用均可，须署名</td></tr>
+</table></div>
+<p style="font-size:13.5px;color:var(--dim)">「<span lang="ja">私は学生です</span>」一句所有候选都判为不一致。其中 10 个声音的转写文字与原句一致，但「私」有わたし／わたくし两种读法，UniDic 按わたくし转回假名，所以判为不一致——文字一致也无法确认实际读的是哪一种；九州そら的转写是「<span lang="ja">私はが不正です</span>」，文字本身也不一致。这句对所有声音一视同仁，不影响比较；仅凭这些记录也判断不了是合成读错还是识别出错。</p>
+</details>
+<h3>上线规则：四条全部满足</h3>
+<ol>
+  <li><b>引擎检查</b>：引擎对输入的分析必须正好是一拍，辅音和元音与预期一致（<span lang="ja">ぎゃ</span> = gy+a，<span lang="ja">ぴょ</span> = py+o，<span lang="ja">シェ</span> = sh+e，<span lang="ja">ウォ</span> = w+o），中间没有停顿。</li>
+  <li><b>信号检查</b>：与其他音频相同（原始峰值高于 −35 dB，有效发声 ≥ 60 毫秒）。</li>
+  <li><b>音素识别</b>：wav2vec2 国际音标识别必须听出正确的辅音类别和元音。</li>
+  <li><b>反向听写</b>：Whisper large-v3-turbo，或带领域提示「日本語の仮名を一つずつ発音します。」的 Whisper large-v3，转写出这个假名。判定比其他假名更严：转写比假名多出来的部分，只能是促音「っ」或同一个元音的拉长（「ー」、元音本身，或 e 段后的「イ」、o 段后的「ウ」）——「シェイ」「シェー」「シェッ」算シェ，「シェア」不算。（其他假名的判定允许去掉末尾任意一个元音。）</li>
+</ol>
+<p>Microsoft 声音的单假名只要音素识别和转写之一通过即可上线；这几个音恰恰是识别模型最容易听错的，所以这里要求<b>两类独立的模型（音素识别、Whisper）同时认可</b>，再加上引擎本身的检查。</p>
+<p>每个音、每个声音合成五次：语速 0.9 倍（对应 Microsoft 单假名所用的 −10% 设置；两个引擎的默认语速本身不同）下用三种写法输入——假名记法（直接指定这一拍）、片假名文本、平假名文本。三种写法经过引擎里不同的处理路径，得出的音拍和音频却<b>完全相同</b>（这本身说明引擎对这几个音的理解没有歧义），所以只算一条。另外用假名记法再合成语速 1.0（自然语速）和 0.8（更慢，每个音段更长、更容易听清）各一条。按 0.9 → 1.0 → 0.8 的顺序，第一条四项检查全部通过的上线；全部记录如下表。</p>
+<h3>结果</h3>
+<ul>
+  <li><span lang="ja">シェ</span>：男声通过，已上线（页面上标「VOICEVOX」）。</li>
+  <li><span lang="ja">ぎゃ</span>：两个声音的 6 条合成<b>都没有通过，仍不提供音频</b>。Whisper 写出的是「<span lang="ja">やっ</span>」「<span lang="ja">では、</span>」「<span lang="ja">や</span>」「<span lang="ja">やっ!</span>」「<span lang="ja">Yeah.</span>」，音素识别听到的是 j a / j e / j——没有一条做到两类模型都认可。</li>
+  <li><span lang="ja">ぴょ</span>：两个声音的 6 条合成<b>都没有通过，仍不提供音频</b>。Whisper 写出的是「<span lang="ja">ピュー</span>」「<span lang="ja">ピョー</span>」「<span lang="ja">ぴょう</span>」「<span lang="ja">ぴょ</span>」「<span lang="ja">ぴよ</span>」「<span lang="ja">pure</span>」，音素识别听到的是 p l / p i5 l / p / p i l / p i5——没有一条做到两类模型都认可。</li>
+  <li><span lang="ja">ウォ</span>：两个声音的 6 条合成<b>都没有通过，仍不提供音频</b>。Whisper 写出的是「<span lang="ja">を</span>」「<span lang="ja">ぼっ</span>」「<span lang="ja">わ</span>」「<span lang="ja">わっ</span>」「<span lang="ja">バイバイ</span>」「<span lang="ja">うわっ</span>」，音素识别听到的是 p u5 / p / a ɹ / u l a / b u l aː h / l aː——没有一条做到两类模型都认可。</li>
+</ul>
+<p>第 4 条接受「シェイ」这样的拉长写法，但转写里多出来的那个假名，也可能是音频里真的多了一拍（「シェイ」可以是シェ＋イ 两拍）。所以每条上线的音频另外测元音的共振峰，和同一个声音单念的元音、以及念成两拍的对照音放在一起比较（辅助观察，只记录，不作门槛）：结尾如果多了 [i]，第一共振峰（F1）会下降、第二共振峰（F2）会上升。</p>
+<div class="tablewrap"><table class="vtable">
+<tr><th>音频</th><th>有基频的时长</th><th>元音中段 F1 / F2</th><th>结尾 F1 / F2</th></tr>
+<tr><td><b>上线的「<span lang="ja">シェ</span>」</b>（VOICEVOX:雀松朱司）</td><td>0.185 秒</td><td>514 / 2171 Hz</td><td>781 / 2210 Hz</td></tr>
+<tr><td style="color:var(--dim)">对照：同一声音单念「<span lang="ja">エ</span>」</td><td>0.205 秒</td><td>437 / 2418 Hz</td><td>727 / 2277 Hz</td></tr><tr><td style="color:var(--dim)">对照：同一声音念两拍「<span lang="ja">シェイ</span>」</td><td>0.31 秒</td><td>496 / 2136 Hz</td><td>372 / 2396 Hz</td></tr></table></div>
+<ul>
+  <li>上线的「<span lang="ja">シェ</span>」：结尾 F1 上升 267 Hz、F2 上升 39 Hz；两拍对照「<span lang="ja">シェイ</span>」是 F1 下降 124 Hz、F2 上升 260 Hz。这次测量没有出现两拍对照那种「F1 下降、F2 上升」的组合；上线音频结尾 F1 的变化方向与单念的「<span lang="ja">エ</span>」一致，有基频的时长约为两拍对照的 60%。这是辅助观察，单靠它不能完全排除多出一拍。</li>
+</ul>
+<p style="font-size:13.5px;color:var(--dim)">「有基频的时长」= 第一个到最后一个检测到基频的帧之间的时长（不是整段音频）。在这段时间的 30–70%（中段）和 75–95%（结尾）各等距取 12 个时点，F1、F2 分别取中位数（Praat Burg 算法）。</p>
+<details class="vd" open><summary>展开全部 24 条 VOICEVOX 合成结果（含未通过的）</summary>
+<div class="tablewrap"><table class="vtable">
+<tr><th>假名</th><th>声音</th><th>输入</th><th>引擎音拍</th><th>音素识别</th><th>Whisper</th><th>Whisper＋领域提示</th><th>结论</th></tr>
+<tr><td lang="ja">ぎゃ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ギャ&#39; / ギャ / ぎゃ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">gya</td><td class="vt-no">j a</td><td class="vt-no" lang="ja">やっ</td><td class="vt-no" lang="ja">やっ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぎゃ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ギャ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">gya</td><td class="vt-no">j a</td><td class="vt-no" lang="ja">やっ</td><td class="vt-no" lang="ja">では、</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぎゃ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ギャ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">gya</td><td class="vt-no">j a</td><td class="vt-no" lang="ja">では、</td><td class="vt-no" lang="ja">では、</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぴょ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ピョ&#39; / ピョ / ぴょ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">pyo</td><td class="vt-no">p l</td><td class="vt-no" lang="ja">ピュー</td><td class="vt-ok" lang="ja">ピョー</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">ぴょ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ピョ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">pyo</td><td class="vt-no">p i5 l</td><td class="vt-ok" lang="ja">ぴょう</td><td class="vt-ok" lang="ja">ぴょ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">ぴょ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ピョ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">pyo</td><td class="vt-no">p i5 l</td><td class="vt-no" lang="ja">ぴよ</td><td class="vt-ok" lang="ja">ピョー</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">シェ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">シェ&#39; / シェ / しぇ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">she</td><td class="vt-no">ɕ iɛ5</td><td class="vt-ok" lang="ja">シェッ</td><td class="vt-no" lang="ja">シェット</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">シェ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">シェ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">she</td><td class="vt-no">ɕ iɛ5</td><td class="vt-ok" lang="ja">シェイ</td><td class="vt-no" lang="ja">シェット</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">シェ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">シェ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">she</td><td class="vt-no">ɕ iɛ5</td><td class="vt-no" lang="ja">シェア</td><td class="vt-ok" lang="ja">シェ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">ウォ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ウォ&#39; / ウォ / うぉ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">wo</td><td class="vt-no">p u5</td><td class="vt-no" lang="ja">を</td><td class="vt-no" lang="ja">を</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ウォ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ウォ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">wo</td><td class="vt-no">p</td><td class="vt-no" lang="ja">を</td><td class="vt-no" lang="ja">を</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ウォ</td><td>女声（VOICEVOX:WhiteCUL）</td><td><code lang="ja">ウォ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">wo</td><td class="vt-no">a ɹ</td><td class="vt-no" lang="ja">ぼっ</td><td class="vt-no" lang="ja">ぼっ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぎゃ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ギャ&#39; / ギャ / ぎゃ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">gya</td><td class="vt-no">j e</td><td class="vt-no" lang="ja">や</td><td class="vt-no" lang="ja">やっ!</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぎゃ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ギャ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">gya</td><td class="vt-no">j e</td><td class="vt-no" lang="ja">やっ</td><td class="vt-no" lang="ja">Yeah.</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぎゃ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ギャ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">gya</td><td class="vt-no">j</td><td class="vt-no" lang="ja">や</td><td class="vt-no" lang="ja">Yeah.</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぴょ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ピョ&#39; / ピョ / ぴょ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">pyo</td><td class="vt-no">p</td><td class="vt-no" lang="ja">ピュー</td><td class="vt-no" lang="ja">pure</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ぴょ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ピョ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">pyo</td><td class="vt-no">p i l</td><td class="vt-no" lang="ja">pure</td><td class="vt-ok" lang="ja">ぴょう</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符</span></td></tr>
+<tr><td lang="ja">ぴょ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ピョ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">pyo</td><td class="vt-no">p i5</td><td class="vt-no" lang="ja">ピュー</td><td class="vt-no" lang="ja">pure</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">シェ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">シェ&#39; / シェ / しぇ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">she</td><td class="vt-ok">ɕ e</td><td class="vt-ok" lang="ja">シェイ</td><td class="vt-no" lang="ja">し</td><td><b class="vt-ok">通过，上线</b></td></tr>
+<tr><td lang="ja">シェ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">シェ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">she</td><td class="vt-ok">ɕ e</td><td class="vt-ok" lang="ja">シェイ。</td><td class="vt-ok" lang="ja">シェイ</td><td><span class="vt-ok">通过</span><span style="color:var(--dim)">（已有更靠前的输入上线）</span></td></tr>
+<tr><td lang="ja">シェ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">シェ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">she</td><td class="vt-no">ɕ iɛ5</td><td class="vt-no" lang="ja">し、</td><td class="vt-no" lang="ja">し</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ウォ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ウォ&#39; / ウォ / うぉ</code><br><span style="color:var(--dim);font-size:12px">假名记法（指定音拍）、片假名文本、平假名文本，语速 0.9：三种写法合成结果完全相同，算一条</span></td><td class="vt-ok">wo</td><td class="vt-no">u l a</td><td class="vt-no" lang="ja">わ</td><td class="vt-no" lang="ja">わっ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ウォ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ウォ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 1.0</span></td><td class="vt-ok">wo</td><td class="vt-no">b u l aː h</td><td class="vt-no" lang="ja">バイバイ</td><td class="vt-no" lang="ja">うわっ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+<tr><td lang="ja">ウォ</td><td>男声（VOICEVOX:雀松朱司）</td><td><code lang="ja">ウォ&#39;</code><br><span style="color:var(--dim);font-size:12px">假名记法，语速 0.8</span></td><td class="vt-ok">wo</td><td class="vt-no">l aː</td><td class="vt-no" lang="ja">わ</td><td class="vt-no" lang="ja">わっ</td><td><span class="vt-no">未通过</span><span style="color:var(--dim)">：音素识别不符；两次 Whisper 转写都不符</span></td></tr>
+</table></div>
+</details>
+<p style="font-size:13.5px;color:var(--dim)">绿色 = 该项检查通过，红色 = 不通过。原始测量值见仓库里的 <code>scripts/japanese/reports/voicevox.json</code>。</p>
+
 <h2 id="n5">阶段 1（初级上 · N5）的校验</h2>
 <p>初级上阶段除了沿用上面的音频检查，还加了针对语法和汉字的检查。数据来自 <code>scripts/japanese/reports/n5_checks.json</code>（内容检查）与 <code>verify.json</code>（音频检查），每次更新都重新生成。</p>
 <div class="vsum">
@@ -664,7 +742,7 @@
 </table></div>
 <h2 id="limits">局限</h2>
 <ul>
-  <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 54 个条目。</li>
+  <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 54 个条目；另有「シェ」由 VOICEVOX 合成，同样是合成语音，不是真人。</li>
   <li>机器校验能抓住「读错、无声」这类硬错误，抓不住更细微的不自然（比如语调略生硬）。</li>
   <li><b>声调的边界</b>：页面上的声调标注全部来自词典（两源一致才标），是可靠的；但只有第 7 课的示范音频经过声调核验。其他各课的例词音频只校验了读音，声调<b>以标注为准</b>——如果你觉得某个例词的音频和标注不一致，请相信标注，并告诉我们。</li>
   <li>寒暄语、句子只检查读音，不标、不测声调（短语和句子的语调规律超出入门范围）。</li>
@@ -679,11 +757,11 @@
   <footer class="site-foot">
     <span>© <span id="y"></span> lonX · Built with Claude Code</span>
     <span><a href="/japanese/verification/">校验报告</a> · <a href="/japanese/sources/">参考资料与版权</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
-    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）；汉字读音核对 KANJIDIC2（EDRDG，CC BY-SA 4.0）与文化厅《常用漢字表》。详见参考资料页。</span>
+    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域）；标「VOICEVOX」的「シェ」由 VOICEVOX 合成（VOICEVOX:雀松朱司），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）；汉字读音核对 KANJIDIC2（EDRDG，CC BY-SA 4.0）与文化厅《常用漢字表》。详见参考资料页。</span>
   </footer>
   <dialog class="kd" id="kd" aria-label="假名详情"></dialog>
   <script type="application/json" id="jp-audio">{}</script>
-  <script src="/japanese/assets/japanese.js?v=2220d820" defer></script>
+  <script src="/japanese/assets/japanese.js?v=23f23054" defer></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

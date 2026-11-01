@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>参考资料与版权 · 日语 · lonX</title>
-<meta name="description" content="日语板块使用的资料、数据与许可：官方规范（現代仮名遣い、常用漢字表）、语音学文献、教学研究、词典数据（UniDic、Kanjium、KANJIDIC2、JMdict）、N5 清单（Waller）、笔顺数据（KanjiVG）、字形对照（OpenCC、Unihan）、间隔重复算法（ts-fsrs）与语音合成。" />
+<meta name="description" content="日语板块使用的资料、数据与许可：官方规范（現代仮名遣い、常用漢字表）、语音学文献、教学研究、词典数据（UniDic、Kanjium、KANJIDIC2、JMdict）、N5 清单（Waller）、笔顺数据（KanjiVG）、字形对照（OpenCC、Unihan）、间隔重复算法（ts-fsrs）与语音合成（Microsoft、VOICEVOX）。" />
 <meta name="color-scheme" content="dark" />
 <meta name="theme-color" content="#0b0d12" />
 <link rel="canonical" href="https://lonloop.com/japanese/sources/" />
@@ -12,13 +12,13 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="lonX" />
 <meta property="og:title" content="参考资料与版权 · 日语 · lonX" />
-<meta property="og:description" content="日语板块使用的资料、数据与许可：官方规范（現代仮名遣い、常用漢字表）、语音学文献、教学研究、词典数据（UniDic、Kanjium、KANJIDIC2、JMdict）、N5 清单（Waller）、笔顺数据（KanjiVG）、字形对照（OpenCC、Unihan）、间隔重复算法（ts-fsrs）与语音合成。" />
+<meta property="og:description" content="日语板块使用的资料、数据与许可：官方规范（現代仮名遣い、常用漢字表）、语音学文献、教学研究、词典数据（UniDic、Kanjium、KANJIDIC2、JMdict）、N5 清单（Waller）、笔顺数据（KanjiVG）、字形对照（OpenCC、Unihan）、间隔重复算法（ts-fsrs）与语音合成（Microsoft、VOICEVOX）。" />
 <meta property="og:url" content="https://lonloop.com/japanese/sources/" />
 <meta property="og:image" content="https://lonloop.com/og.png" />
 <meta property="og:locale" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="jp-audio-version" content="b9a29a07" />
-<link rel="stylesheet" href="/japanese/assets/japanese.css?v=5e4812e5" />
+<meta name="jp-audio-version" content="6a7f7731" />
+<link rel="stylesheet" href="/japanese/assets/japanese.css?v=30801d86" />
 </head>
 <body>
   <nav class="topnav">
@@ -82,7 +82,7 @@
 <tr><td><a href="https://github.com/open-spaced-repetition/ts-fsrs" target="_blank" rel="noopener">ts-fsrs 6.0.0</a></td><td>练习页的间隔重复调度（打包为 <code>/japanese/vendor/fsrs-6.0.0.min.mjs</code>）</td><td>MIT</td></tr>
 <tr><td>维基共享资源真人录音（Tofugu/WaniKani 等，见上表）</td><td>标「真人」的发音</td><td>CC BY-SA 4.0 / 公有领域</td></tr>
 <tr><td>Microsoft 神经网络语音（ja-JP Nanami / Keita，经 edge-tts 合成）</td><td>其余发音音频</td><td>合成语音；每条经本站校验流程后发布</td></tr>
-<tr><td>OpenAI Whisper（large-v3 / large-v3-turbo，MLX 版）</td><td>音频反向听写校验</td><td>MIT</td></tr>
+<tr><td><a href="https://voicevox.hiroshiba.jp/" target="_blank" rel="noopener">VOICEVOX</a>（引擎 0.26.0，Hiroshiba Kazuyuki）：VOICEVOX:雀松朱司</td><td>标「VOICEVOX」的「<span lang="ja">シェ</span>」（Microsoft 两种声音都没通过校验的音）</td><td>按 VOICEVOX 软件利用规约及各角色的利用规约使用，须署名，见<a href="#voicevox">下文</a></td></tr><tr><td>OpenAI Whisper（large-v3 / large-v3-turbo，MLX 版）</td><td>音频反向听写校验</td><td>MIT</td></tr>
 <tr><td>facebook/wav2vec2-xlsr-53-espeak-cv-ft</td><td>音素识别、强制对齐</td><td>Apache-2.0</td></tr>
 <tr><td>Praat（经 parselmouth）</td><td>基频（音高）提取</td><td>GPL</td></tr>
 </table></div>
@@ -149,6 +149,15 @@
 <tr><td lang="ja">う</td><td><a href="https://commons.wikimedia.org/wiki/File:Ja-U.oga" target="_blank" rel="noopener">Ja-U.oga</a></td><td>Spacecat2（上传者）</td><td>Public domain</td></tr>
 </table></div></details>
 
+<h2 id="voicevox">VOICEVOX 合成音</h2>
+<p>标「VOICEVOX」的发音（<span lang="ja">シェ</span>：Microsoft 的两种声音都没有通过校验的音）由开源语音合成引擎 VOICEVOX（0.26.0 版，在本地运行）合成，并通过了比其他音更严格的校验（见<a href="/japanese/verification/#voicevox">校验报告</a>）。按各自的利用规约，署名如下：</p>
+<div class="tablewrap"><table>
+<tr><th>署名</th><th>用途</th><th>利用规约</th></tr>
+<tr><td><b>VOICEVOX:雀松朱司</b></td><td>男声（「ノーマル」风格）</td><td><a href="https://www.virvoxproject.com/voicevox%E3%81%AE%E5%88%A9%E7%94%A8%E8%A6%8F%E7%B4%84" target="_blank" rel="noopener">雀松朱司 的 VOICEVOX 利用规约</a>：VirVox Project 制定。商用・非商用均可；须署名（VOICEVOX:雀松朱司）并注明由 VOICEVOX 合成，未经 VirVox Project 许可不得省略；禁止冒充出处、用输出训练语音模型等</td></tr>
+<tr><td><b>VOICEVOX</b></td><td>合成软件</td><td><a href="https://voicevox.hiroshiba.jp/term/" target="_blank" rel="noopener">VOICEVOX 软件利用规约</a>：商用・非商用均可；使用合成的声音时须遵守各声音库的规约，并注明使用了 VOICEVOX</td></tr>
+</table></div>
+<p><b>这些音频不适用本站的 CC BY-SA 许可</b>（<code>/japanese/audio/w/</code>）。如要转用，须自行遵守上述 VOICEVOX 及角色的利用规约（包括署名）。</p>
+
 <h2 id="learn-more">推荐的外部学习资源</h2>
 <ul>
   <li><a href="https://www.nhk.or.jp/lesson/zh/" target="_blank" rel="noopener">NHK WORLD-JAPAN「简明日语」</a>（中文界面，免费，限个人使用）</li>
@@ -167,11 +176,11 @@
   <footer class="site-foot">
     <span>© <span id="y"></span> lonX · Built with Claude Code</span>
     <span><a href="/japanese/verification/">校验报告</a> · <a href="/japanese/sources/">参考资料与版权</a> · <a href="https://github.com/Long-Feeds" target="_blank" rel="noopener">GitHub</a></span>
-    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）；汉字读音核对 KANJIDIC2（EDRDG，CC BY-SA 4.0）与文化厅《常用漢字表》。详见参考资料页。</span>
+    <span class="lic">标「真人」的发音来自维基共享资源上的真人录音（Tofugu/WaniKani 的东京口音配音演员录音，CC BY-SA 4.0；母语者单音录音，公有领域）；标「VOICEVOX」的「シェ」由 VOICEVOX 合成（VOICEVOX:雀松朱司），其余由 Microsoft 神经网络语音（Nanami / Keita）合成；所有音频都经过读音校验后发布；笔顺数据来自 KanjiVG（CC BY-SA 3.0）；声调交叉核对 UniDic 与 Kanjium（CC BY-SA 4.0）；汉字读音核对 KANJIDIC2（EDRDG，CC BY-SA 4.0）与文化厅《常用漢字表》。详见参考资料页。</span>
   </footer>
   <dialog class="kd" id="kd" aria-label="假名详情"></dialog>
   <script type="application/json" id="jp-audio">{}</script>
-  <script src="/japanese/assets/japanese.js?v=2220d820" defer></script>
+  <script src="/japanese/assets/japanese.js?v=23f23054" defer></script>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

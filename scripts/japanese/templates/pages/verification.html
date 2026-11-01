@@ -42,7 +42,7 @@
 <details class="vd"><summary>展开 {{ VT.fails|length }} 条</summary>
 <div class="tablewrap"><table class="vtable">
 <tr><th>内容</th><th>类别</th><th>声音</th><th>原因</th><th>处理</th></tr>
-{% for f in VT.fails %}<tr><td lang="ja">{{ f.text }}</td><td>{{ {"kana":"假名","kanavar":"假名（片假名输入）","word":"单词","wordvar":"单词（假名输入）","carrier":"检测句","phrase":"寒暄","number":"数字","sentence":"句子","loanword":"外来语"}[f.kind] }}</td><td>{{ f.voice }}</td><td>{{ f.why }}</td><td style="color:var(--dim)">{{ f.fallback }}</td></tr>
+{% for f in VT.fails %}<tr><td lang="ja">{{ f.text }}</td><td>{{ {"kana":"假名","word":"单词","carrier":"检测句","phrase":"寒暄","number":"数字","sentence":"句子","loanword":"外来语","n5word":"N5 单词","n5form":"N5 活用形","n5sent":"N5 例句","n5phrase":"N5 短语","n5wordvar":"N5 单词（假名输入）","n5formvar":"N5 活用形（假名输入）","wordvar":"单词（假名输入）","kanavar":"假名（片假名输入）"}.get(f.kind, f.kind) }}</td><td>{{ f.voice }}</td><td>{{ f.why }}</td><td style="color:var(--dim)">{{ f.fallback }}</td></tr>
 {% endfor %}
 </table></div>
 </details>
@@ -135,12 +135,70 @@
 <p style="font-size:13.5px;color:var(--dim)">绿色 = 该项检查通过，红色 = 不通过。原始测量值见仓库里的 <code>scripts/japanese/reports/voicevox.json</code>。</p>
 {% endif %}
 
+<h2 id="n5">阶段 1（初级上 · N5）的校验</h2>
+<p>初级上阶段除了沿用上面的音频检查，还加了针对语法和汉字的检查。数据来自 <code>scripts/japanese/reports/n5_checks.json</code>（内容检查）与 <code>verify.json</code>（音频检查），每次更新都重新生成。</p>
+<div class="vsum">
+  <div><b>{{ V5.verb_forms_ok }}/{{ V5.verb_forms }}</b><span>个动词形式经形态分析反向核对通过（{{ V5.verbs_ok }}/{{ V5.verbs }} 个动词）</span></div>
+  <div><b>{{ V5.adj_forms_ok }}/{{ V5.adj_forms }}</b><span>个形容词形式通过（{{ V5.adjs_ok }}/{{ V5.adjs }} 个形容词）</span></div>
+  <div><b>{{ V5.sentences_ok }}/{{ V5.sentences }}</b><span>个例句读音与词典一致</span></div>
+  <div><b>{{ V5.kanji_ok }}/{{ V5.kanji }}</b><span>个汉字通过读音、笔画、笔顺、字形核对</span></div>
+</div>
+<div class="tablewrap"><table>
+<tr><th>检查</th><th>怎么做</th><th>结果</th></tr>
+<tr><td><b>活用形反向核对</b></td><td>动词、形容词的每个形式由程序按规则生成，再用 MeCab + UniDic 分析：必须是同一词元、预期的活用形（含音便类型，如「書い」＝连用形·イ音便）、预期的后接成分和读音。动词类别（五段／一段／不规则）、形容词类别（い／な）也必须与 UniDic 一致。书写有歧义的形式，在 UniDic 前 10 个候选分析中找到预期分析即通过，并单独列出（见下），音频改用假名合成。</td><td>动词 {{ V5.verb_forms_ok }}/{{ V5.verb_forms }}，形容词 {{ V5.adj_forms_ok }}/{{ V5.adj_forms }}</td></tr>
+<tr><td><b>例句读音</b></td><td>手写的假名读音必须与 UniDic 对整句的分析一致（同样可用前 10 个候选）。允许的两读词只有：{% for v in V5.variants %}{{ v }}{{ "、" if not loop.last }}{% endfor %}。</td><td>{{ V5.sentences_ok }}/{{ V5.sentences }}</td></tr>
+<tr><td><b>词汇范围</b></td><td>例句的每个实词都要在 Waller 的 N5 词表里，或是入门阶段学过的词；人名、国名、数量词除外。UniDic 把一个词切成两段时（図書館＝図書＋館），先合并再查。</td><td>{% if V5.vocab_exceptions %}{{ V5.vocab_exceptions|length }} 句含词表外的词（下表）{% else %}全部在范围内{% endif %}</td></tr>
+<tr><td><b>汉字读音两源</b></td><td>只列 KANJIDIC2 与《常用漢字表》（文化厅 PDF 解析）<b>都</b>收录的读音。PDF 解析结果先与日文维基百科「常用漢字一覧」逐字比对：{{ V5.joyo.pdf_kanji }} 字对 {{ V5.joyo.wiki_kanji }} 字，读音与「低一格」（特殊读音）标记{% if not V5.joyo.diffs %}全部一致{% else %}有 {{ V5.joyo.diffs|length }} 字不一致{% endif %}。</td><td>{% if V5.kanji_flags %}{{ V5.kanji_flags|length }} 处两源不一致：不列出（下表）{% else %}两源一致{% endif %}</td></tr>
+<tr><td><b>例词</b></td><td>读音经 UniDic 分析（首选不一致时，必须同时在前 10 个候选中且 JMdict 有此词条）；用 JmdictFurigana 把读音分到每个字上，每个字的读法要对应到一个两源共同收录的读音（允许连浊、促音化、送假名省略），整词特殊读法必须在《常用漢字表》付表中。</td><td>{{ V5.examples_ok }}/{{ V5.examples }}</td></tr>
+<tr><td><b>笔画与笔顺</b></td><td>笔画数：KanjiVG × animCJK × KANJIDIC2。笔顺：KanjiVG 与 animCJK 每一笔的起点、终点放到同一坐标系，用匈牙利算法求最佳一一配对，必须正好是第 i 笔对第 i 笔。</td><td>笔画数三方一致 {{ V5.strokes_agree }}/{{ V5.kanji }}，笔顺一致 {{ V5.order_agree }}/{{ V5.kanji }}</td></tr>
+<tr><td><b>简体字对照</b></td><td>OpenCC（日本字形→繁体→简体）与 Unihan（kJapaneseOldVariant→kSimplifiedVariant）两条路径的结果必须一致；兼容汉字（如 社 U+FA4C）先做 Unicode 规范化。</td><td>{{ V5.simp_differs }} 个字与简体不同{% if V5.simp_via %}；{{ V5.simp_via|length }} 个字靠 Unihan 的异体字关联确认{% endif %}</td></tr>
+<tr><td><b>音频</b></td><td>与入门阶段相同的信号检查和反向听写。例句按 UniDic 的<b>发音</b>比对（助词は按わ）。转写允许多种读法时（如「降りません」= おりません／ふりません，「3日」= みっか／さんにち），由音频本身来选：用 wav2vec2 音素模型做 CTC 强制对齐，分别计算音频对预期读法和每个<b>有词典依据</b>的候选读法的对数似然，预期读法必须领先至少 1（约 2.7 倍可能性）。含助词は／へ的句子，同样比较「wa／e」与「ha／he」两种读法，必须领先至少 1。</td><td>{{ V5.clips_ok }}/{{ V5.clips }} 条通过；读法选择 {{ V5.forced_choice_ok }}/{{ V5.forced_choice }}（通过者最小领先 {{ V5.forced_choice_min_ok }}）；助词读音 {{ V5.particle_checks.get("ok", 0) }}/{{ V5.particle_checks.values()|sum }}（最小领先 {{ V5.particle_min }}）</td></tr>
+</table></div>
+{% if V5.ambiguous %}<details class="vd"><summary>书写有歧义、音频用假名合成的形式（{{ V5.ambiguous|length }} 个）</summary>
+<div class="tablewrap"><table class="vtable"><tr><th>词</th><th>形式</th><th>本站的读音</th><th>UniDic 第几候选</th></tr>
+{% for w, f, r, rk in V5.ambiguous %}<tr><td lang="ja">{{ w }}</td><td lang="ja">{{ f }}</td><td lang="ja">{{ r }}</td><td>{{ rk }}</td></tr>
+{% endfor %}</table></div></details>{% endif %}
+{% if V5.example_rank %}<details class="vd"><summary>读音只在 UniDic 后几位候选中出现、由 JMdict 确认的例词（{{ V5.example_rank|length }} 个）</summary>
+<div class="tablewrap"><table class="vtable"><tr><th>词</th><th>读音</th><th>UniDic 第几候选</th></tr>
+{% for w, r, rk in V5.example_rank %}<tr><td lang="ja">{{ w }}</td><td lang="ja">{{ r }}</td><td>{{ rk }}</td></tr>
+{% endfor %}</table></div></details>{% endif %}
+{% if V5.example_special %}<details class="vd"><summary>整词特殊读法（均在《常用漢字表》付表中，{{ V5.example_special|length }} 个）</summary>
+<div class="tablewrap"><table class="vtable"><tr><th>词</th><th>读音</th><th>付表条目</th></tr>
+{% for w, r, f in V5.example_special %}<tr><td lang="ja">{{ w }}</td><td lang="ja">{{ r }}</td><td lang="ja">{{ f }}</td></tr>
+{% endfor %}</table></div></details>{% endif %}
+<details class="vd"><summary>两源不一致、因此不列出的读音，以及词表外的词</summary>
+<div class="tablewrap"><table class="vtable"><tr><th>对象</th><th>说明</th></tr>
+{% for k, f in V5.kanji_flags %}<tr><td lang="ja">{{ k }}</td><td>{{ f }}</td></tr>
+{% endfor %}
+{% for w in V5.example_off_list %}<tr><td lang="ja">{{ w }}</td><td>例词不在 Waller 的 N5 词表中，也不是入门阶段的词；保留原因：{{ {"母": "Waller 词表只列了「お母さん」，没有单列「母」；「母／お母さん」的区别是 N5 必学内容", "千円": "数字＋货币单位，词表不单列；「円」唯一的 N5 例词「円い」不是常用读法"}.get(w, "—") }}</td></tr>
+{% endfor %}
+{% for w, v in V5.vocab_exceptions %}<tr><td lang="ja">{{ w }}</td><td>{{ v|join("；") }}</td></tr>
+{% endfor %}
+</table></div></details>
+{% if V5.rejected %}<details class="vd"><summary>内容检查未通过、没有上线的条目（{{ V5.rejected|length }} 个）</summary>
+<div class="tablewrap"><table class="vtable"><tr><th>条目</th><th>原因</th></tr>
+{% for w, why in V5.rejected %}<tr><td lang="ja">{{ w }}</td><td>{{ why }}</td></tr>
+{% endfor %}</table></div></details>{% else %}<p>内容检查：本批没有未通过的条目（编写过程中未通过的已在提交前修正，修正记录见下方「独立审校」与仓库提交历史）。</p>{% endif %}
+{% if V5.codex %}
+<h3 id="n5-review">独立审校（Codex）</h3>
+<p>阶段 1 的全部课文和数据交给另一个独立模型（{{ V5.codex.reviewer }}）逐条找错，范围：{{ V5.codex.scope }}。每条意见都回到原始资料核对后再处理，共 {{ V5.codex.findings|length }} 条，全部确认成立并已修改：</p>
+<div class="tablewrap"><table class="vtable"><tr><th>轮次</th><th>意见</th><th>核对</th><th>处理</th></tr>
+{% for f in V5.codex.findings %}<tr><td>{{ f.round }}</td><td>{{ f.issue }}</td><td>{{ f.check }}</td><td>{{ f.resolution }}</td></tr>
+{% endfor %}</table></div>
+{% if V5.codex.self_review %}<p>同一时期的自查（不是 Codex 提出的）：</p>
+<div class="tablewrap"><table class="vtable"><tr><th>问题</th><th>核对</th><th>处理</th></tr>
+{% for f in V5.codex.self_review %}<tr><td>{{ f.issue }}</td><td>{{ f.check }}</td><td>{{ f.resolution }}</td></tr>
+{% endfor %}</table></div>{% endif %}
+{% endif %}
+
 <h2 id="limits">局限</h2>
 <ul>
   <li>大部分音频是 Microsoft 神经网络语音合成的标准东京音（一男一女两个声音）；真人录音目前只覆盖 {{ HUMAN|length }} 个条目{% if VV_PUBLISHED %}；另有{% for k in VV_KANA %}「{{ k }}」{% endfor %}由 VOICEVOX 合成，同样是合成语音，不是真人{% endif %}。</li>
   <li>机器校验能抓住「读错、无声」这类硬错误，抓不住更细微的不自然（比如语调略生硬）。</li>
   <li><b>声调的边界</b>：页面上的声调标注全部来自词典（两源一致才标），是可靠的；但只有第 7 课的示范音频经过声调核验。其他各课的例词音频只校验了读音，声调<b>以标注为准</b>——如果你觉得某个例词的音频和标注不一致，请相信标注，并告诉我们。</li>
   <li>寒暄语、句子只检查读音，不标、不测声调（短语和句子的语调规律超出入门范围）。</li>
+  <li><b>阶段 1 的活用形</b>只校验读音，不标声调；辞书形和例词的声调来自词典。活用形的音频声调没有人工核验，仅供参考。</li>
+  <li><b>N5 范围</b>：JLPT 不公布官方词表，本站以旧 4 级汉字表和 Waller 的 N5 词表为准；其他教材的 N5 范围可能略有不同。</li>
   <li>文字说明经过了来源核对和独立模型审校，但仍可能有疏漏。发现错误请通过页脚的 GitHub 联系。</li>
 </ul>
 {% endblock %}

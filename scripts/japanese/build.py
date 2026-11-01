@@ -15,6 +15,7 @@ import dictcheck
 import kana as KM
 import voicevox as VV
 from items import all_items, load_content, slug, kana_id
+import build_n5 as B5
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -63,7 +64,7 @@ def _duplicates():
     so at least one of them carries the wrong accent — neither is published."""
     seen, bad = {}, set()
     for iid, it in ITEMS.items():
-        if it["kind"] != "word":
+        if it["kind"] not in ("word", "n5word"):
             continue
         for v in "nk":
             h = _md5(os.path.join(CACHE, v, iid + ".mp3"))
@@ -71,6 +72,16 @@ def _duplicates():
                 continue
             key = (v, h)
             if key in seen and ITEMS[seen[key]]["w"] != it["w"]:
+                other = ITEMS[seen[key]]
+                if "n5word" in (it["kind"], other["kind"]):
+                    # stage 1: two different words may legitimately sound the same
+                    # (居る/要る both いる⓪); only a pair whose dictionary accents
+                    # differ or are unknown cannot share one recording
+                    a1 = dictcheck.lookup(it["w"], it["r"]).get("accent")
+                    a2 = dictcheck.lookup(other["w"], other["r"]).get("accent")
+                    if a1 is not None and a1 == a2 and it["r"] == other["r"]:
+                        seen.setdefault(key, iid)
+                        continue
                 bad.add((v, iid)); bad.add((v, seen[key]))
             seen.setdefault(key, iid)
     return bad
@@ -88,6 +99,13 @@ def source(iid, v):
         return VV_PUB.get((v, iid))
     it = ITEMS.get(iid)
     if not it or (v, iid) in DUPES:
+        return None
+    if it["kind"] in ("n5word", "n5form", "n5sent", "n5phrase"):
+        if clip_ok(v, iid):
+            return os.path.join(CACHE, v, iid + ".mp3")
+        var = iid + "-kv"
+        if var in ITEMS and clip_ok(v, var):
+            return os.path.join(CACHE, v, var + ".mp3")
         return None
     if it["kind"] == "carrier":
         base = it["base"]
@@ -374,7 +392,7 @@ def main():
     pr_v = file_hash(os.path.join(OUT, "assets", "practice.js"))
     manifest = {}
     for iid, it in ITEMS.items():
-        if it["kind"] in ("wordvar", "kanavar"):
+        if it["kind"] in ("wordvar", "kanavar", "n5wordvar", "n5formvar"):
             continue
         vs = voices_ok(iid)
         if vs:
@@ -384,15 +402,23 @@ def main():
             manifest[iid] = voices_ok(iid)
     audio_version = hashlib.sha1(json.dumps(manifest, sort_keys=True).encode()).hexdigest()[:8]
 
-    pages = [dict(slug="index", url="/japanese/", tpl="index.html", title="日语", lesson=None)]
+    pages = [dict(slug="index", url="/japanese/", tpl="index.html", title="日语", lesson=None, stage=None)]
     for i, (s, t) in enumerate(LESSONS):
-        pages.append(dict(slug=s, url=f"/japanese/{s}/", tpl=f"{s}.html", title=t, lesson=i))
+        pages.append(dict(slug=s, url=f"/japanese/{s}/", tpl=f"{s}.html", title=t, lesson=i, stage=0))
+    n5_home = dict(slug="n5", url="/japanese/n5/", tpl="n5.html", title="初级上（约 JLPT N5）", lesson=None, stage=1)
+    pages.append(n5_home)
+    for i, (s, t) in enumerate(B5.LESSONS):
+        pages.append(dict(slug=s, url=f"/japanese/{s}/", tpl=f"{s}.html", title=t, lesson=i + 1, stage=1))
     for s, t in [("method", "学习方法"), ("practice", "练习"), ("verification", "校验报告"), ("sources", "参考资料与版权")]:
-        pages.append(dict(slug=s, url=f"/japanese/{s}/", tpl=f"{s}.html", title=t, lesson=None))
-    lesson_pages = [p for p in pages if p["lesson"] is not None]
+        pages.append(dict(slug=s, url=f"/japanese/{s}/", tpl=f"{s}.html", title=t, lesson=None, stage=None))
+    lesson_pages = [p for p in pages if p["lesson"] is not None and p["stage"] == 0]
     for i, p in enumerate(lesson_pages):
         p["prev"] = lesson_pages[i - 1] if i > 0 else None
-        p["next"] = lesson_pages[i + 1] if i + 1 < len(lesson_pages) else None
+        p["next"] = lesson_pages[i + 1] if i + 1 < len(lesson_pages) else n5_home
+    n5_pages = [p for p in pages if p["lesson"] is not None and p["stage"] == 1]
+    for i, p in enumerate(n5_pages):
+        p["prev"] = n5_pages[i - 1] if i > 0 else n5_home
+        p["next"] = n5_pages[i + 1] if i + 1 < len(n5_pages) else None
 
     stats = verification_stats(manifest)
     VT = verification_tables(manifest)
@@ -429,6 +455,8 @@ def main():
                     h["asr"].append(t.strip())
             if x["checks"]["phones"]["phones"] not in h["phones"]:
                 h["phones"].append(x["checks"]["phones"]["phones"] or "（无）")
+    N5_DECKS = B5.decks(manifest)
+    V5 = B5.verification(REPORT, manifest)
     for p in pages:
         page_audio, page_kana, page_drills = {}, {}, {}
 
@@ -494,7 +522,11 @@ def main():
         def say_id(iid):
             return has_audio(iid)
 
-        ctx = dict(page=p, K=K, C=C, KM=KM, W=W, WL=WL, VT=VT, REPORT_TIME=REPORT_TIME, dict_acc=dict_acc, MANUAL=MANUAL, DUPES=DUPES, HUMAN=HUMAN, HUMAN_ALL=HUMAN_ALL, kconv=kconv, has_audio=has_audio, ok_word=ok_word,
+        def n5_say(iid):
+            return has_audio(iid)
+
+        ctx = dict(page=p, K=K, C=C, KM=KM, W=W, WL=WL, VT=VT, B5=B5, C5=B5.C, n5_lessons=n5_pages, n5_home=n5_home,
+                   N5_DECKS=N5_DECKS, V5=V5, n5_say=n5_say, REPORT_TIME=REPORT_TIME, dict_acc=dict_acc, MANUAL=MANUAL, DUPES=DUPES, HUMAN=HUMAN, HUMAN_ALL=HUMAN_ALL, kconv=kconv, has_audio=has_audio, ok_word=ok_word,
                    drill_sets=drill_sets, F0=F0, say_id=say_id, slug=slug, kana_id=kana_id,
                    ex_slots=ex_slots, lessons=lesson_pages, stats=stats, manifest=manifest,
                    REPORT=REPORT, SELECTION=SELECTION, accent=accent, heard_accent=heard_accent,
@@ -528,6 +560,8 @@ def main():
             if not os.path.exists(dst) or open(src, "rb").read() != open(dst, "rb").read():
                 shutil.copyfile(src, dst)
     json.dump(dict(sorted(strokes.items())), open(os.path.join(OUT, "assets", "strokes.json"), "w"), ensure_ascii=False, separators=(",", ":"))
+    json.dump(dict(sorted(B5.kanji_strokes(strokes_of).items())), open(os.path.join(OUT, "assets", "kanji-strokes.json"), "w"),
+              ensure_ascii=False, separators=(",", ":"))
     json.dump(SELECTION, open(os.path.join(HERE, "reports", "selection.json"), "w"), ensure_ascii=False, indent=1)
     print("audio clips published:", sum(len(v) for v in used_audio.values()))
 

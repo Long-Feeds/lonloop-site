@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set KG = B5.kanji() %}
+{% set nk = namespace(n=0, core=0, ex=0) %}{% for g in KG %}{% for it in g["items"] %}{% set nk.n = nk.n + 1 %}{% set nk.ex = nk.ex + it.examples|length %}{% if it.core %}{% set nk.core = nk.core + 1 %}{% endif %}{% endfor %}{% endfor %}
+{% set _ = page.update(dict(eyebrow="初级上 · 第 4 课", h1="常用汉字：N5 阶段的 " ~ nk.n ~ " 个字", narrow=False, tools=True, kanji_data=B5.kanji_dialog_data(),
+   desc="日语 N5 阶段 " ~ nk.n ~ " 个常用汉字：音读与训读（只列 KANJIDIC2 与文化厅《常用漢字表》都收录的读音，标出本阶段要会的）、中文意思、笔顺动画、N5 例词与男女声音频，以及日本字形与简体字的差异（気/气、書/书、読/读……）。",
+   lead="作为中文母语者，你已经认识这些字的大部分意思——难点在<b>读音</b>和<b>字形差异</b>。每个字只需先会<b>粗体</b>标出的读音（就是例词里用到的那些），其余读音以后遇到再学。点大字看笔顺动画。",
+   meta=[nk.n ~ " 个字", nk.ex ~ " 个例词", "建议每天 5–10 个"])) %}
+{% macro rub(e) -%}{% for t, rt, tg in e.ruby %}{% if rt %}<ruby{% if tg %} class="tg"{% endif %}>{{ t }}<rt>{{ rt }}</rt></ruby>{% else %}{{ t }}{% endif %}{% endfor %}{%- endmacro %}
+{% block content %}
+<h2 id="how">这一课怎么用</h2>
+<ul>
+  <li><b>读音只学粗体的。</b>一个汉字常有好几个读音：<b>音读</b>（片假名写，源自古代汉语的发音，多用在汉字词里，如「学生 がくせい」）和<b>训读</b>（平假名写，日语固有词的读法，如「学ぶ まなぶ」）。卡片列出《常用漢字表》里的读音，但只有<b>粗体</b>的是本页例词用到、这个阶段要会的；灰色的以后再学。</li>
+  <li><b>训读里的「.」</b>：点后面是「送假名」（汉字后面跟着写的假名），如「か.く」就是写作「書く」。</li>
+  <li><b>例词上方的小字</b>是每个汉字各自的读法；<b>蓝色</b>是这张卡片的字。标「特殊读法」的词（如「今日 きょう」）不能拆开按单字读，是整个词一起记的读法，《常用漢字表》的「付表」专门列出这类词。</li>
+  <li><b>点大字</b>看笔顺动画。写日语时请照本页的字形和笔顺（日本的规范字形），不要直接写简体字。</li>
+  <li>标「核心」的 {{ nk.core }} 个字是两份 N5 汉字清单都收录的；其余 {{ nk.n - nk.core }} 个是旧 4 级字表有、Waller 的 N5 清单没有收的字（其中多数在他的 N4 清单里；为什么这样选，见<a href="/japanese/n5/#lists">阶段概览</a>）。</li>
+  <li>国名「日本」读「にほん」（也读「にっぽん」）是固有名词的约定读法：《常用漢字表》原则上不收固有名词，这类读法另据 UniDic 与 JMdict 核对，卡片上单独注明。</li>
+</ul>
+
+{% set diffs = [] %}{% for g in KG %}{% for it in g["items"] %}{% if it.simp %}{% set _ = diffs.append(it) %}{% endif %}{% endfor %}{% endfor %}
+<h2 id="forms">和简体字不一样的字（{{ diffs|length }} 个）</h2>
+<p>下面这些字的日本规范字形和简体字不同（简体字对照由 OpenCC 与 Unicode Unihan 两套数据交叉核对）。写日语时要写左边的字形：</p>
+<div class="kdiff">
+{% for it in diffs %}<a class="kd5" href="#kj-{{ it.k }}"><span class="j" lang="ja">{{ it.k }}</span><span class="c" lang="zh-CN">{{ it.simp }}</span></a>
+{% endfor %}
+</div>
+<p style="font-size:13.5px;color:var(--dim)">左：日本字形　右：简体字。有些字两边的编码相同、只是笔画细节略有差别（如字体不同造成的），这类差别不在此列——以本页的日文字体和笔顺动画为准。</p>
+
+<h2 id="week">日语的星期</h2>
+<p>星期用「日月火水木金土」加「曜日」（ようび）：<span lang="ja" class="jpw">月曜日</span>是星期一，<span lang="ja" class="jpw">火曜日</span>星期二，<span lang="ja" class="jpw">水曜日</span>星期三，<span lang="ja" class="jpw">木曜日</span>星期四，<span lang="ja" class="jpw">金曜日</span>星期五，<span lang="ja" class="jpw">土曜日</span>星期六，<span lang="ja" class="jpw">日曜日</span>星期日。这些词都在下面的卡片里，可以点着听。</p>
+
+<nav class="ktoc" aria-label="汉字分组">{% for g in KG %}<a href="#g-{{ g.id }}">{{ g.title }}（{{ g["items"]|length }}）</a>{% endfor %}</nav>
+
+{% for g in KG %}
+<h2 id="g-{{ g.id }}">{{ g.title }}</h2>
+{% if g.id == "num" %}<p>数字本身的读法和音变（さんびゃく、はっせん……）在入门第 9 课「<a href="/japanese/numbers/">数字</a>」已经学过。这里重点是「〜つ」（一个、两个……）和日期「〜日」——日期的读法有很多特殊形式，要一个一个记。</p>{% endif %}
+<div class="kjs">
+{% for it in g["items"] %}
+<article class="kj" id="kj-{{ it.k }}">
+  <div class="kj-h">
+    <button class="kj-big" type="button" data-kj="{{ it.k }}" aria-label="{{ it.k }}：看笔顺" lang="ja">{{ it.k }}</button>
+    <div class="kj-m">
+      <div class="kj-zh">{{ it.zh }}</div>
+      <div class="kj-s">{{ it.strokes }} 画{% if it.core %} · <span class="kj-core" title="两份 N5 汉字清单都收录">核心</span>{% endif %}</div>
+      {% if it.simp %}<div class="kj-cn">简体 <span lang="zh-CN">{{ it.simp }}</span>{% if it.trad and it.trad != it.simp and it.trad != it.k %} · 繁体 <span lang="zh-TW">{{ it.trad }}</span>{% endif %}</div>{% endif %}
+    </div>
+  </div>
+  <div class="kj-r">
+    {% set on = it.readings|selectattr("kind", "equalto", "on")|list %}{% set kun = it.readings|selectattr("kind", "equalto", "kun")|list %}
+    {% if on %}<div><span class="rl5">音</span>{% for r in on %}<span class="rd5{{ ' now' if r.now }}{{ ' sp' if r.special }}" lang="ja"{% if r.special %} title="《常用漢字表》中低一格排印：特殊或用法有限的读音"{% endif %}>{{ r.t }}</span>{% endfor %}</div>{% endif %}
+    {% if kun %}<div><span class="rl5">训</span>{% for r in kun %}<span class="rd5{{ ' now' if r.now }}{{ ' sp' if r.special }}" lang="ja"{% if r.special %} title="《常用漢字表》中低一格排印：特殊或用法有限的读音"{% endif %}>{{ r.t }}</span>{% endfor %}</div>{% endif %}
+  </div>
+  <ul class="kj-ex">
+  {% for e in it.examples %}{% set x = W(e.w, e.r) %}
+    <li>{{ m.say(e.id, "", e.r) }}<span class="w" lang="ja">{{ rub(e) }}</span><span class="z">{{ e.zh }}</span>{% if x.acc is not none %}<span class="accn" title="声调类型（两部词典一致）">{{ x.acc_label }}</span>{% endif %}{% if e.special %}<span class="spb" title="《常用漢字表》付表：{{ e.special.fuhyo }}">特殊读法</span>{% elif e.how and e.how != "本来" %}<span class="hw" lang="ja">{{ e.base }}→{{ e.uses }}（{{ e.how }}）</span>{% endif %}{% for p in e.proper or [] %}<span class="hw">「{{ p.part }}」是国名的约定读法</span>{% endfor %}</li>
+  {% endfor %}
+  </ul>
+  {% if it.note %}<div class="kj-note">{{ it.note }}</div>{% endif %}
+</article>
+{% endfor %}
+</div>
+{% endfor %}
+
+<h2 id="drill">听辨练习</h2>
+{% set EX = {} %}{% for g in KG %}{% for it in g["items"] %}{% for e in it.examples %}{% set _ = EX.update({e.w: e}) %}{% endfor %}{% endfor %}{% endfor %}
+{% set sets = [] %}
+{% for grp in [["上","下","中"],["右","左"],["東","西","南","北"],["一つ","二つ","三つ","四つ"],["五つ","六つ","七つ","八つ"],["三日","四日","八日"],["五日","六日","九日","十日"],["月曜日","火曜日","水曜日","木曜日"],["金曜日","土曜日","日曜日"],["来週","先週","毎週"],["午前","午後"],["入口","出口"],["男","女","人"]] %}{% set opts = [] %}{% for w in grp if w in EX %}{% set _ = opts.append({"id": EX[w].id, "w": w, "label": w, "sub": EX[w].zh}) %}{% endfor %}{% if opts|length >= 2 %}{% set _ = sets.append(opts) %}{% endif %}{% endfor %}
+{% if drill_sets("drill-kanji", sets) %}{{ m.drill("drill-kanji", "听读音选汉字词", "听一个词，选出它的汉字写法。专门挑了容易混的：上下、东西南北、一个两个、日期、星期。") }}{% endif %}
+
+{{ m.src([
+  "字表：2010 年以前的旧日本语能力测验 4 级汉字（据 KANJIDIC2 的旧级别字段，" ~ V5.kanji_sets.old4 ~ " 字）；其中 " ~ V5.kanji_sets.waller_n5 ~ " 字也在 Jonathan Waller 的 N5 汉字表（tanos.co.uk，CC BY）中，标为「核心」。",
+  "读音：只列 KANJIDIC2（EDRDG，CC BY-SA 4.0）与文化厅《常用漢字表》（2010 年内阁告示第 2 号，从官方 PDF 解析，并与日文维基百科「常用漢字一覧」逐字比对，2136 字全部一致）都收录的读音；只有一方收录的不列出（见校验报告）。",
+  "例词：读音经 UniDic 分析，并由 JMdict（经 JmdictFurigana，CC BY-SA）确认；每个字在词中的读法都对应到一个两源共同收录的读音（允许连浊、促音化、送假名省略，优先选送假名与词形一致的读音），整词特殊读法必须在《常用漢字表》付表中（国名「日本」等固有名词除外，另据词典核对）。",
+  "笔顺：<a href=\"https://kanjivg.tagaini.net/\" target=\"_blank\" rel=\"noopener\">KanjiVG</a>（CC BY-SA 3.0）；笔画数与 animCJK、KANJIDIC2 三方一致，笔顺与 animCJK 逐笔比对（每一笔的起点和终点）一致。",
+  "简体字对照：OpenCC（日本字形→繁体→简体）与 Unicode Unihan（kJapaneseOldVariant → kSimplifiedVariant）交叉核对。中文意思为本站编写，并经独立模型审校。",
+]) }}
+{% endblock %}

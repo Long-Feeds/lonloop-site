@@ -77,16 +77,16 @@
 
   /* ---------- kana grid + detail dialog ---------- */
   var KANA = data('jp-kana') || {};
-  var strokes = null, strokesP = null;
-  function getStrokes() {
-    if (strokes) return Promise.resolve(strokes);
-    if (!strokesP) strokesP = fetch('/japanese/assets/strokes.json' + (VER ? '?v=' + VER : '')).then(function (r) { return r.json(); }).then(function (j) { strokes = j; return j; });
-    return strokesP;
+  var strokesP = {};
+  function getStrokes(src) {
+    src = src || '/japanese/assets/strokes.json';
+    if (!strokesP[src]) strokesP[src] = fetch(src + (VER ? '?v=' + VER : '')).then(function (r) { return r.json(); });
+    return strokesP[src];
   }
   var dlg = document.getElementById('kd');
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function drawStrokes(box, ch, animate) {
-    getStrokes().then(function (all) {
+  function drawStrokes(box, ch, animate, src) {
+    getStrokes(src).then(function (all) {
       // 拗音 / 外来语组合 are two glyphs (き + ゃ): draw them side by side,
       // numbering the strokes continuously in writing order
       var chars = Array.from(ch).filter(function (c) { return all[c]; });
@@ -149,11 +149,36 @@
       '</div>';
     dlg.innerHTML = html;
     dlg.dataset.ch = ch;
+    dlg.dataset.kanji = '';
     if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
     var box = document.getElementById('kd-st');
     if (Array.from(ch).length > 1) box.classList.add('wide');
     drawStrokes(box, k.stroke || ch, true);
   }
+  var KANJI = data('jp-kanji') || {};
+  var KSRC = '/japanese/assets/kanji-strokes.json';
+  function openKanji(ch) {
+    var k = KANJI[ch];
+    if (!k || !dlg) return;
+    function list(a) { return a.map(function (r) { return '<span class="rd5' + (k.now.indexOf(r) >= 0 ? ' now' : '') + '" lang="ja">' + esc(r) + '</span>'; }).join(''); }
+    dlg.innerHTML = '<button class="kd-close" aria-label="关闭" data-close>×</button><div class="kd-in"><div class="kd-top">' +
+      '<div class="kd-stroke" id="kd-st"></div><div class="kd-info"><div class="big" lang="ja">' + esc(ch) + '</div><dl>' +
+      '<dt>意思</dt><dd>' + esc(k.zh) + '</dd>' +
+      '<dt>笔画</dt><dd>' + k.n + ' 画</dd>' +
+      (k.simp ? '<dt>简体</dt><dd lang="zh-CN">' + esc(k.simp) + '</dd>' : '') +
+      (k.on.length ? '<dt>音读</dt><dd>' + list(k.on) + '</dd>' : '') +
+      (k.kun.length ? '<dt>训读</dt><dd>' + list(k.kun) + '</dd>' : '') +
+      '</dl></div></div><div class="kd-row"><button class="kd-btn" data-kreplay>↻ 重看笔顺</button></div>' +
+      '<div class="kd-ex">粗体读音是本阶段要会的；笔顺数据来自 KanjiVG（与 animCJK 逐笔核对一致）。</div></div>';
+    dlg.dataset.ch = ch;
+    dlg.dataset.kanji = '1';
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    drawStrokes(document.getElementById('kd-st'), ch, true, KSRC);
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-kj]');
+    if (b) openKanji(b.getAttribute('data-kj'));
+  });
   if (dlg) {
     dlg.addEventListener('click', function (e) {
       if (e.target === dlg || e.target.closest('[data-close]')) { dlg.close ? dlg.close() : dlg.removeAttribute('open'); return; }
@@ -229,14 +254,22 @@
     b.addEventListener('click', function () { done[id] = !done[id]; save('jp.done', done); paint(); });
     paint();
   });
-  var lis = document.querySelectorAll('.lessons li[data-lesson]');
-  if (lis.length) {
-    var n = 0;
-    lis.forEach(function (li) { if (done[li.getAttribute('data-lesson')]) { li.classList.add('done'); li.querySelector('.st').textContent = '已学完'; n++; } });
-    var bar = document.querySelector('.progress i'), lab = document.getElementById('prog-lab');
-    if (bar) bar.style.width = (n / lis.length * 100) + '%';
-    if (lab) lab.textContent = n + ' / ' + lis.length + ' 课';
-  }
+  document.querySelectorAll('.lessons li[data-lesson]').forEach(function (li) {
+    if (done[li.getAttribute('data-lesson')]) { li.classList.add('done'); li.querySelector('.st').textContent = '已学完'; }
+  });
+  // each progress bar counts the lessons of one list (data-for = the list's id;
+  // without it, the first list on the page — the stage-0 list on /japanese/)
+  document.querySelectorAll('.progress').forEach(function (bar) {
+    var id = bar.getAttribute('data-for');
+    var list = id ? document.getElementById(id) : document.querySelector('.lessons');
+    if (!list) return;
+    var items = list.querySelectorAll('li[data-lesson]');
+    var n = list.querySelectorAll('li.done[data-lesson]').length;
+    var fill = bar.querySelector('i');
+    if (fill && items.length) fill.style.width = (n / items.length * 100) + '%';
+    var lab = id ? document.querySelector('[data-prog-lab="' + id + '"]') : document.getElementById('prog-lab');
+    if (lab) lab.textContent = n + ' / ' + items.length + ' 课';
+  });
 
   applySettings();
 })();

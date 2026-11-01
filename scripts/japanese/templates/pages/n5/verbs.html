@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set VS = B5.verbs() %}
+{% set _ = page.update(dict(eyebrow="初级上 · 第 1 课", h1="动词：三类动词与基本活用", narrow=False, tools=True,
+   desc="日语 N5 动词：怎么判断五段/一段/不规则三类（含 帰る 入る 走る 知る 切る 要る 等例外），ます形四种形式、辞书形、ない形、て形与た形的音便规则；" ~ VS|length ~ " 个常用动词的活用表，每个形式都有男女声音频，并经形态分析器反向核对。",
+   lead="日语动词的变化很有规律：<b>先判断它属于三类中的哪一类，所有形式就都能按规则推出来。</b>这一课学会判断，再学五种最基本的形式。表里每个形式都能点着听。",
+   meta=[VS|length ~ " 个动词", "8 个形式", "预计 4–6 天"])) %}
+{% macro fcell(f) -%}
+<td class="fc5"><span lang="ja" class="fw">{{ f.w }}</span>{% if f.w != f.r %}<span lang="ja" class="fr">{{ f.r }}</span>{% endif %}{{ m.say(f.id, "", f.r) }}</td>
+{%- endmacro %}
+{% macro vhead(v) -%}
+{%- set F = B5.form_ids(v) -%}{%- set x = W(v.w, v.r) -%}
+<th scope="row" class="vh"><span lang="ja" class="fw">{{ v.w }}</span>{% if v.w != v.r %}<span lang="ja" class="fr">{{ v.r }}</span>{% endif %}{{ m.say(F.dict.id, "", v.r) }}{% if x.acc is not none %}<span class="accn" title="辞书形的声调类型（两部词典一致）">{{ x.acc_label }}</span>{% endif %}<span class="fz">{{ v.zh }}</span></th>
+{%- endmacro %}
+{% macro vtable(forms, heads, rule=False) -%}
+<div class="tablewrap"><table class="vt5">
+<tr><th>动词</th>{% if rule %}<th>规则</th>{% endif %}{% for h in heads %}<th>{{ h }}</th>{% endfor %}</tr>
+{% for g in ["godan", "ichidan", "irregular"] %}
+<tr class="grp"><th colspan="{{ heads|length + 1 + (1 if rule else 0) }}">{{ B5.GROUP_ZH[g] }}</th></tr>
+{% for v in VS if v.g == g %}{% set F = B5.form_ids(v) %}
+<tr>{{ vhead(v) }}{% if rule %}<td class="rl">{{ te_rule(v) }}</td>{% endif %}{% for f in forms %}{{ fcell(F[f]) }}{% endfor %}</tr>
+{% endfor %}
+{% endfor %}
+</table></div>
+{%- endmacro %}
+{% macro te_rule(v) -%}
+{%- if v.g == "ichidan" -%}去る＋て
+{%- elif v.g == "irregular" -%}{{ "不规则" }}
+{%- elif v.w == "行く" -%}<b>例外</b> く→って
+{%- else -%}{{ {"う":"う→って","つ":"つ→って","る":"る→って","む":"む→んで","ぶ":"ぶ→んで","ぬ":"ぬ→んで","く":"く→いて","ぐ":"ぐ→いで","す":"す→して"}[v.r[-1]] }}
+{%- endif -%}
+{%- endmacro %}
+{% macro s5(sid) -%}{%- set x = B5.sentence(sid) -%}{%- if x -%}
+<div class="ex5"><div class="exl">{{ m.say(x.id, "", x.w) }}<div><div class="jw" lang="ja">{% for t, mk in x.wdisp %}{% if mk == 2 %}<b class="pt5">{{ t }}</b>{% else %}{{ t }}{% endif %}{% endfor %}</div><div class="rd" lang="ja">{% for t, sp in x.display %}{% if sp %}<ruby class="sp5">{{ t }}<rt>{{ sp }}</rt></ruby>{% else %}{{ t }}{% endif %}{% endfor %}</div><div class="zh">{{ x.zh }}</div></div></div></div>
+{%- endif -%}{%- endmacro %}
+{% block content %}
+<h2 id="shape">动词长什么样</h2>
+<p>词典里查到的动词形式叫<b>辞书形</b>，它一定以「う段」的假名结尾：<span lang="ja" class="jpw">う く ぐ す つ ぬ ぶ む る</span>。例如 {{ m.jp("書く") }}（かく，写）、{{ m.jp("話す") }}（はなす，说话）、{{ m.jp("食べる") }}（たべる，吃）。</p>
+<p>动词按<b>变化方式</b>分成三类。叫法不统一：面向外国人的初级教材常叫「第Ⅰ类、第Ⅱ类、第Ⅲ类」（或一类、二类、三类），日本的国语语法叫「五段、一段、カ变·サ变」，本页两种都标出来。</p>
+
+<h2 id="groups">三类动词怎么判断</h2>
+<div class="tablewrap"><table>
+<tr><th>类别</th><th>特征</th><th>例子</th></tr>
+<tr><td><b>第Ⅰ类</b><br>五段动词</td><td>不以「る」结尾的动词，全部属于这一类；以「る」结尾、而「る」前面是 あ段・う段・お段 的，也属于这一类</td><td lang="ja">書く 話す 待つ 読む 遊ぶ 買う<br>分かる（か=a）乗る（の=o）</td></tr>
+<tr><td><b>第Ⅱ类</b><br>一段动词</td><td>以「る」结尾，「る」前面是 い段 或 え段</td><td lang="ja">見る（み=i）起きる（き=i）<br>食べる（べ=e）寝る（ね=e）</td></tr>
+<tr><td><b>第Ⅲ类</b><br>不规则动词</td><td>只有两个：<span lang="ja">する</span>、<span lang="ja">来る</span>（くる）；「名词＋する」（如 <span lang="ja">勉強する</span>）也按 する 变化</td><td lang="ja">する 来る 勉強する</td></tr>
+</table></div>
+<p><b>判断步骤</b>：</p>
+<ol>
+  <li>是 <span lang="ja" class="jpw">する</span> 或 <span lang="ja" class="jpw">来る</span>（或「名词＋する」）吗？→ 第Ⅲ类。</li>
+  <li>不以「る」结尾？→ 第Ⅰ类。</li>
+  <li>以「る」结尾：看「る」<b>前一个假名的元音</b>。是 a / u / o → 第Ⅰ类；是 i / e → 大多数是第Ⅱ类，<b>但有一批例外属于第Ⅰ类，只能记住</b>（下表）。</li>
+</ol>
+{% call m.callout("要看读音，不要看汉字", "warn") %}<p>「る」前面的假名常常藏在汉字里：<span lang="ja" class="jpw">見る</span> 是 み・る，<span lang="ja" class="jpw">寝る</span> 是 ね・る，<span lang="ja" class="jpw">着る</span> 是 き・る，<span lang="ja" class="jpw">出る</span> 是 で・る——都是 i 段、e 段，所以是第Ⅱ类。判断时请先把读音写出来。</p>{% endcall %}
+
+<h3 id="lookalikes">看起来像第Ⅱ类、其实是第Ⅰ类的动词</h3>
+<p>下面这些动词以 -iru / -eru 结尾，却是第Ⅰ类（五段）。区别在活用：第Ⅰ类的ます形是「る→り＋ます」，第Ⅱ类是「去掉る＋ます」。</p>
+<div class="tablewrap"><table class="vt5">
+<tr><th>动词</th><th>ます形</th><th>て形</th><th>ない形</th></tr>
+{% for v in VS if v.tag == "lookalike" %}{% set F = B5.form_ids(v) %}<tr>{{ vhead(v) }}{{ fcell(F.masu) }}{{ fcell(F.te) }}{{ fcell(F.nai) }}</tr>
+{% endfor %}
+</table></div>
+<p>同音的两组最好成对记——<b>类别不同，变出来的形式就不同</b>：</p>
+{% set VW = {} %}{% for v in VS %}{% set _ = VW.update({v.w: v}) %}{% endfor %}
+<div class="tablewrap"><table class="vt5">
+<tr><th>动词</th><th>类别</th><th>ます形</th><th>て形</th><th>ない形</th></tr>
+{% for w in ["着る", "切る", "いる", "要る"] if w in VW %}{% set v = VW[w] %}{% set F = B5.form_ids(v) %}<tr>{{ vhead(v) }}<td>{{ "第Ⅰ类" if v.g == "godan" else "第Ⅱ类" }}</td>{{ fcell(F.masu) }}{{ fcell(F.te) }}{{ fcell(F.nai) }}</tr>
+{% endfor %}
+</table></div>
+
+<h2 id="masu">ます形：礼貌的说法</h2>
+<p>对不熟的人、在正式场合说话用ます形（敬体）。它有四种形式：</p>
+<div class="tablewrap"><table>
+<tr><th>形式</th><th>意思</th><th>例</th></tr>
+<tr><td lang="ja">〜ます</td><td>现在·将来肯定（也表示习惯）</td><td lang="ja">毎日 書きます／明日 書きます</td></tr>
+<tr><td lang="ja">〜ません</td><td>现在·将来否定</td><td lang="ja">書きません</td></tr>
+<tr><td lang="ja">〜ました</td><td>过去肯定</td><td lang="ja">書きました</td></tr>
+<tr><td lang="ja">〜ませんでした</td><td>过去否定</td><td lang="ja">書きませんでした</td></tr>
+</table></div>
+<p><b>变法</b>（先做出「ます」前面的部分，叫「ます形词干」）：</p>
+<ul>
+  <li><b>第Ⅰ类</b>：词尾的 う段 假名换成同一行的 い段，再加ます：<span lang="ja" class="jpw">書く→書きます、話す→話します、待つ→待ちます、読む→読みます、帰る→帰ります</span>。</li>
+  <li><b>第Ⅱ类</b>：去掉る，加ます：<span lang="ja" class="jpw">食べる→食べます、見る→見ます</span>。</li>
+  <li><b>第Ⅲ类</b>：<span lang="ja" class="jpw">する→します、来る→来ます</span>（きます）。</li>
+</ul>
+<p>日语的「〜ます」既表示现在的习惯，也表示将来：<span lang="ja" class="jpw">明日 行きます</span>（明天去）。没有单独的「将来时」。</p>
+{{ vtable(["masu", "masen", "mashita", "masendeshita"], ["〜ます", "〜ません", "〜ました", "〜ませんでした"]) }}
+
+<h2 id="nai">辞书形与ない形：普通体的肯定和否定</h2>
+<p>朋友、家人之间说话用<b>普通体</b>（常体）。普通体的现在肯定就是辞书形，现在否定是<b>ない形</b>：</p>
+<ul>
+  <li><b>第Ⅰ类</b>：词尾的 う段 换成 あ段，加ない：<span lang="ja" class="jpw">書く→書かない、読む→読まない</span>。词尾是「う」的变成「<b>わ</b>」：<span lang="ja" class="jpw">買う→買わない、会う→会わない</span>（不是「買あない」）。</li>
+  <li><b>第Ⅱ类</b>：去掉る，加ない：<span lang="ja" class="jpw">食べる→食べない</span>。</li>
+  <li><b>第Ⅲ类</b>：<span lang="ja" class="jpw">する→しない、来る→来ない</span>（<b>こ</b>ない，注意读音变了）。</li>
+  <li><b>例外</b>：<span lang="ja" class="jpw">ある</span> 的否定就是 <span lang="ja" class="jpw">ない</span>（没有「あらない」）。</li>
+</ul>
+{{ vtable(["nai"], ["ない形"]) }}
+
+<h2 id="te">て形与た形：音便</h2>
+<p><b>て形</b>本身没有时态，它是许多句型的「零件」：连接两个动作、请求（<span lang="ja" class="jpw">〜てください</span>）、正在进行（<span lang="ja" class="jpw">〜ています</span>）等，后续批次逐个学。<b>た形</b>是普通体的过去肯定。两者变法完全相同：把て形的「て／で」换成「た／だ」就是た形。</p>
+<p>第Ⅰ类变て形时，词尾会发生「音便」——这是最需要背的部分：</p>
+<div class="tablewrap"><table>
+<tr><th>词尾</th><th>て形／た形</th><th>例</th></tr>
+<tr><td lang="ja">う・つ・る</td><td lang="ja">→ って／った（促音便）</td><td lang="ja">買う→買って　待つ→待って　帰る→帰って</td></tr>
+<tr><td lang="ja">む・ぶ・ぬ</td><td lang="ja">→ んで／んだ（拨音便）</td><td lang="ja">読む→読んで　遊ぶ→遊んで　死ぬ→死んで</td></tr>
+<tr><td lang="ja">く</td><td lang="ja">→ いて／いた（イ音便）</td><td lang="ja">書く→書いて　聞く→聞いて</td></tr>
+<tr><td lang="ja">ぐ</td><td lang="ja">→ いで／いだ（イ音便）</td><td lang="ja">泳ぐ→泳いで</td></tr>
+<tr><td lang="ja">す</td><td lang="ja">→ して／した（没有音便）</td><td lang="ja">話す→話して　貸す→貸して</td></tr>
+<tr><td><b>例外</b></td><td lang="ja">行く → 行って／行った</td><td>く结尾，却变成促音（不是「行いて」）</td></tr>
+<tr><td>第Ⅱ类</td><td lang="ja">去る＋て／た</td><td lang="ja">食べる→食べて　見る→見て</td></tr>
+<tr><td>第Ⅲ类</td><td lang="ja">して／した、来て／来た</td><td lang="ja">来て 读 きて</td></tr>
+</table></div>
+<p>表中「促音便」「イ音便」等名称，形态分析器 UniDic 也是这样记录的：本页每个て形、た形都经它反向分析，确认音便类型与规则一致（例如「行って」被分析为「行っ」<i>连用形·促音便</i>＋「て」）。</p>
+{{ vtable(["te", "ta"], ["て形", "た形"], rule=True) }}
+
+<h2 id="examples">例句</h2>
+<div class="pairs">{{ s5("v-s-1") }}{{ s5("v-s-2") }}{{ s5("v-s-3") }}{{ s5("v-s-4") }}{{ s5("v-s-5") }}</div>
+<ul>
+  <li><b>名詞＋を＋動詞</b>：「を」标出动作的对象（读 o），详见<a href="/japanese/n5/particles/#o">第 3 课</a>。</li>
+  <li><b>〜てください</b>：用て形请别人做某事，「書いてください」= 请写。</li>
+  <li><b>知る</b>：「知っています」才表示「知道、认识」；否定一般说「知りません」（「知っていません」不自然）。</li>
+</ul>
+
+<h2 id="tips">几个小提醒</h2>
+<ul>
+  <li><b>言う</b>按《現代仮名遣い》写作「いう」，但实际发音是「ゆう」（UniDic 记录的发音也是ユー）。听音频时注意这一点，书写仍然写「いう」。</li>
+  <li><b>ある／いる</b>都表示「在、有」：东西、植物用 ある，人和动物用 いる（存在句在后续批次系统讲）。</li>
+  <li><b>前面用什么助词，由动词决定</b>：<span lang="ja" class="jpw">分かる・ある・いる</span> 的对象或主语用「が」；<span lang="ja" class="jpw">乗る・会う・入る</span> 用「に」（中文母语者常误用「を」）。见第 3 课。</li>
+  <li>活用后的声调会移动（例如辞书形和ます形的高低位置不同），本课只给辞书形标声调，活用形的声调<b>以音频为参考</b>；声调规律留到「声调进阶」专项。</li>
+</ul>
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for w in ["書く", "飲む", "行く", "食べる", "来る", "する", "帰る"] if w in VW %}{% set F = B5.form_ids(VW[w]) %}{% set opts = [] %}{% for f, zh in [("masu","现在肯定"),("masen","现在否定"),("mashita","过去肯定"),("masendeshita","过去否定")] %}{% set _ = opts.append({"id": F[f].id, "w": F[f].w, "label": F[f].w, "sub": zh}) %}{% endfor %}{% set _ = sets.append(opts) %}{% endfor %}
+{% if drill_sets("drill-v-masu", sets) %}{{ m.drill("drill-v-masu", "ます形：听出时态和肯定否定", "听一个ます形，选出是哪一种。区别全在词尾：ます／ません／ました／ませんでした。") }}{% endif %}
+{% set sets2 = [] %}
+{% for a, b in [("着る","切る"), ("いる","要る")] if a in VW and b in VW %}{% for f in ["te", "masu"] %}{% set Fa = B5.form_ids(VW[a]) %}{% set Fb = B5.form_ids(VW[b]) %}{% if Fa[f].r != Fb[f].r %}{% set _ = sets2.append([{"id": Fa[f].id, "w": Fa[f].w, "label": Fa[f].w, "sub": VW[a].zh}, {"id": Fb[f].id, "w": Fb[f].w, "label": Fb[f].w, "sub": VW[b].zh}]) %}{% endif %}{% endfor %}{% endfor %}
+{% for w in ["書く", "読む", "食べる", "行く"] if w in VW %}{% set F = B5.form_ids(VW[w]) %}{% set _ = sets2.append([{"id": F.te.id, "w": F.te.w, "label": F.te.w, "sub": "て形"}, {"id": F.ta.id, "w": F.ta.w, "label": F.ta.w, "sub": "た形（过去）"}]) %}{% endfor %}
+{% if drill_sets("drill-v-te", sets2) %}{{ m.drill("drill-v-te", "て形·た形与同音动词", "着て／切って（有没有促音）、います／いります、て／た——听一个，选出是哪一个。") }}{% endif %}
+
+{{ m.src([
+  "三类动词与活用规则：主流初级教材（《大家的日语》、《新版中日交流标准日本语》等）的通行体系；名称对照见日本国语语法的「五段·一段·カ变·サ变」。",
+  "活用形核对：每个形式由程序按上述规则生成，再用 MeCab + UniDic 反向分析，必须分析回同一词元、预期活用形（含音便类型）与预期读音；" ~ V5.verb_forms ~ " 个形式中 " ~ V5.verb_forms_ok ~ " 个通过（未通过的不上线）。写法有歧义的形式（如「降ります」也可读作「ふります」）用假名合成音频。",
+  "「言う」的发音：《現代仮名遣い》本文第 2-4（动词「いう（言）」写作「いう」）；发音ユー见 UniDic 发音字段。",
+  "声调：辞书形的声调来自 UniDic 与 Kanjium 交叉核对（不一致时用英文维基词典做第三票），活用形不标。",
+  "动词范围：Jonathan Waller 的 JLPT N5 词表（tanos.co.uk，CC BY）。音频：每个形式男女声各一条，经语音识别反向转写比对后发布。",
+]) }}
+{% endblock %}

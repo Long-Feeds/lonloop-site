@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% import "_macros.html" as m with context %}
-{% set _ = page.update(dict(eyebrow="Practice · 间隔重复", h1="练习：假名间隔重复", narrow=True, tools=True,
-   desc="日语假名间隔重复练习：认读（看假名打罗马字）与听辨（听音选假名）两种模式，由 FSRS 算法安排复习时间，数据只保存在本机浏览器。",
-   lead="每天 10–15 分钟。算法会记住你每个假名掌握得怎样，把快要忘的排在前面——比一遍遍从头背整张表省时间得多。",
+{% set _ = page.update(dict(eyebrow="Practice · 间隔重复", h1="练习：间隔重复", narrow=True, tools=True,
+   desc="日语假名与 N5 词汇（动词、形容词、汉字例词）间隔重复练习：认读（看字写读音）与听辨（听音选字）两种模式，由 FSRS 算法安排复习时间，数据只保存在本机浏览器。",
+   lead="每天 10–15 分钟。算法会记住你每张卡片掌握得怎样，把快要忘的排在前面——比一遍遍从头背整张表省时间得多。假名之外，还可以练初级上（N5）的动词、形容词和汉字例词。",
    meta=["FSRS 算法（Anki 同款）", "数据只存在你的浏览器", "每天新卡上限 15 张"])) %}
 {% set decks = [] %}
 {% set seion, dakuon, youon = KM.all_basic_kana() %}
@@ -17,14 +17,15 @@
 {% for h in src %}{% set kk = kconv(h, script) %}{% if has_audio(K[kk].id) %}{% set rom = K[kk].rom %}{% set ans = [rom] + (K[kk].typ.split(" / ")) %}{% set _ = items.append({"k": kk, "rom": rom, "ans": ans|unique|list, "id": K[kk].id, "row": h[0], "vv": vv_only(K[kk].id)}) %}{% endif %}{% endfor %}
 {% set _ = decks.append({"id": did, "name": name, "desc": desc, "items": items}) %}
 {% endfor %}
+{% for d in N5_DECKS %}{% for it in d["items"] %}{% set _ = has_audio(it.id) %}{% endfor %}{% set _ = decks.append(d) %}{% endfor %}
 {% block content %}
 <h2 id="start">开始</h2>
 <div class="deck-pick" id="deck-pick">
 {% for d in decks %}<label><input type="checkbox" value="{{ d.id }}"><span>{{ d.name }}<small>{{ d.desc }}</small></span></label>{% endfor %}
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:12px">
-  <label><input type="radio" name="mode" value="read" checked> 认读：看假名，打罗马字</label>
-  <label><input type="radio" name="mode" value="listen"> 听辨：听声音，选假名</label>
+  <label><input type="radio" name="mode" value="read" checked> 认读：看字，打读音</label>
+  <label><input type="radio" name="mode" value="listen"> 听辨：听声音，选字</label>
 </div>
 <button class="btn pri" id="start" type="button">开始这一轮</button>
 <div class="stats" id="overview" style="justify-content:flex-start;margin-top:12px"></div>
@@ -44,7 +45,7 @@
   <li><b>算法是 FSRS。</b>由开源组织 Open Spaced Repetition 开发、Anki 也采用的间隔重复算法；本站使用其官方 TypeScript 实现 ts-fsrs 6.0.0，目标记忆保持率设为 90%。</li>
   {% set ns = namespace(vv=[]) %}{% for d in decks if d.id.startswith("h") %}{% for it in d["items"] if it.vv %}{% set ns.vv = ns.vv + [it.k] %}{% endfor %}{% endfor %}
   {% if ns.vv %}<li><b>听辨模式不出只有 VOICEVOX 合成音的假名</b>（{% for k in ns.vv %}<span lang="ja">{{ k }}</span>{{ "、" if not loop.last }}{% endfor %}及对应片假名）：它们的音色和其他假名不同，听辨时一听音色就能猜出答案，所以只放在认读模式里。</li>{% endif %}
-  <li><b>认读模式的答案</b>：黑本式（shi / chi / tsu / fu / ji）和训令式（si / ti / tu / hu / zi）都算对；「を」答 o 或 wo、「ん」答 n 或 nn 都算对。</li>
+  <li><b>认读模式的答案</b>：假名卡片打罗马字，黑本式（shi / chi / tsu / fu / ji）和训令式（si / ti / tu / hu / zi）都算对；「を」答 o 或 wo、「ん」答 n 或 nn 都算对。<b>N5 词汇卡片</b>打读音：可以直接用日语输入法打假名，也可以打罗马字（按输入法的规则换成假名再比对，如 gakkou → がっこう）。</li>
   <li><b>隐私</b>：学习记录只保存在你这台设备的浏览器（localStorage）里，不上传任何地方；清除浏览器数据会一并清除。</li>
 </ul>
 <p>想练长短音、清浊、声调这些<b>听力</b>上的区分，去各课末尾的「听辨练习」。</p>

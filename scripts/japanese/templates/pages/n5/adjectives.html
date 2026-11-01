@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set AI = B5.adjectives("i") %}{% set AN = B5.adjectives("na") %}
+{% set _ = page.update(dict(eyebrow="初级上 · 第 2 课", h1="形容词：い形容词与な形容词", narrow=False, tools=True,
+   desc="日语 N5 形容词：い形容词与な形容词怎么区分（きれい、有名、嫌い是な形容词），现在/否定/过去/过去否定、敬体、连体与て形的变化，いい→よくない/よかった 的特殊变化；" ~ (AI|length + AN|length) ~ " 个常用形容词的活用表与男女声音频，经形态分析器反向核对。",
+   lead="日语形容词分两种：词尾自己会变的<b>い形容词</b>，和靠后面的「だ・です・な」变化的<b>な形容词</b>。两种的否定、过去说法不一样，这一课把它们分开学，再对照着练。",
+   meta=[AI|length ~ " 个い形容词", AN|length ~ " 个な形容词", "预计 3–4 天"])) %}
+{% macro fcell(f) -%}
+<td class="fc5"><span lang="ja" class="fw">{{ f.w }}</span>{% if f.w != f.r %}<span lang="ja" class="fr">{{ f.r }}</span>{% endif %}{{ m.say(f.id, "", f.r) }}</td>
+{%- endmacro %}
+{% macro ahead(a) -%}
+{%- set F = B5.form_ids(a) -%}{%- set x = W(a.w, a.r) -%}
+<th scope="row" class="vh"><span lang="ja" class="fw">{{ a.w }}</span>{% if a.w != a.r %}<span lang="ja" class="fr">{{ a.r }}</span>{% endif %}{{ m.say(F.dict.id, "", a.r) }}{% if x.acc is not none %}<span class="accn" title="声调类型（两部词典一致）">{{ x.acc_label }}</span>{% endif %}<span class="fz">{{ a.zh }}</span></th>
+{%- endmacro %}
+{% macro atable(list, forms, heads) -%}
+<div class="tablewrap"><table class="vt5">
+<tr><th>形容词</th>{% for h in heads %}<th>{{ h }}</th>{% endfor %}</tr>
+{% for a in list %}{% set F = B5.form_ids(a) %}<tr>{{ ahead(a) }}{% for f in forms %}{{ fcell(F[f]) }}{% endfor %}</tr>
+{% endfor %}
+</table></div>
+{%- endmacro %}
+{% macro s5(sid) -%}{%- set x = B5.sentence(sid) -%}{%- if x -%}
+<div class="ex5"><div class="exl">{{ m.say(x.id, "", x.w) }}<div><div class="jw" lang="ja">{% for t, mk in x.wdisp %}{% if mk == 2 %}<b class="pt5">{{ t }}</b>{% else %}{{ t }}{% endif %}{% endfor %}</div><div class="rd" lang="ja">{% for t, sp in x.display %}{% if sp %}<ruby class="sp5">{{ t }}<rt>{{ sp }}</rt></ruby>{% else %}{{ t }}{% endif %}{% endfor %}</div><div class="zh">{{ x.zh }}</div></div></div></div>
+{%- endif -%}{%- endmacro %}
+{% set AW = {} %}{% for a in AI + AN %}{% set _ = AW.update({a.w: a}) %}{% endfor %}
+{% block content %}
+<h2 id="two">两种形容词</h2>
+<div class="tablewrap"><table>
+<tr><th></th><th>い形容词</th><th>な形容词</th></tr>
+<tr><td>基本形</td><td lang="ja">高い　新しい　おいしい</td><td lang="ja">静か　便利　きれい</td></tr>
+<tr><td>修饰名词</td><td lang="ja">高い 本（直接接名词）</td><td lang="ja">静か<b>な</b> 部屋（中间加「な」）</td></tr>
+<tr><td>怎么变</td><td>词尾的「い」自己变化</td><td>词干不变，变的是后面的 だ／です</td></tr>
+</table></div>
+{% call m.callout("看结尾的「い」不可靠", "warn") %}<p><span lang="ja" class="jpw">きれい</span>（漂亮）、<span lang="ja" class="jpw">有名</span>（ゆうめい，有名）、<span lang="ja" class="jpw">嫌い</span>（きらい，讨厌）的读音都以「い」结尾，却是<b>な形容词</b>：说「きれい<b>な</b>花」「有名<b>な</b>人」，否定说「きれいじゃない」，<b>不说</b>「きれくない」。最可靠的判断方法是记住它修饰名词时要不要加「な」。（形态分析器 UniDic 也把这三个词分析为形状词，即な形容词。）</p>{% endcall %}
+
+<h2 id="i">い形容词</h2>
+<p>去掉词尾的「い」，接上不同的词尾：</p>
+<div class="tablewrap"><table>
+<tr><th>形式</th><th>变法</th><th>例（高い）</th></tr>
+<tr><td>现在肯定</td><td>基本形</td><td lang="ja">高い</td></tr>
+<tr><td>现在否定</td><td lang="ja">〜い → 〜くない</td><td lang="ja">高くない</td></tr>
+<tr><td>过去肯定</td><td lang="ja">〜い → 〜かった</td><td lang="ja">高かった</td></tr>
+<tr><td>过去否定</td><td lang="ja">〜い → 〜くなかった</td><td lang="ja">高くなかった</td></tr>
+<tr><td>て形（连接）</td><td lang="ja">〜い → 〜くて</td><td lang="ja">高くて</td></tr>
+</table></div>
+{% if "いい" in AW %}{% set F = B5.form_ids(AW["いい"]) %}
+{% call m.callout("唯一的不规则：いい（好）") %}<p>「いい」的变化全部从它的另一种说法「よい」来：<span lang="ja" class="jpw">{{ F.nai.w }}</span>（不好）、<span lang="ja" class="jpw">{{ F.katta.w }}</span>（过去好；口语里也常说「太好了」）、<span lang="ja" class="jpw">{{ F.nakatta.w }}</span>、<span lang="ja" class="jpw">{{ F.te.w }}</span>。<b>不说</b>「いくない」「いかった」。</p>{% endcall %}
+{% endif %}
+{{ atable(AI, ["nai", "katta", "nakatta", "te"], ["否定 〜くない", "过去 〜かった", "过去否定 〜くなかった", "て形 〜くて"]) }}
+
+<h3 id="i-polite">い形容词的敬体（礼貌说法）</h3>
+<p>在普通体后面加「です」就是敬体。否定还有一种说法「〜くありません」，两种都对，后者稍正式。</p>
+<div class="tablewrap"><table>
+<tr><th>形式</th><th>敬体</th></tr>
+<tr><td>现在肯定</td><td lang="ja">高いです</td></tr>
+<tr><td>现在否定</td><td lang="ja">高くないです ／ 高くありません</td></tr>
+<tr><td>过去肯定</td><td lang="ja">高かったです</td></tr>
+<tr><td>过去否定</td><td lang="ja">高くなかったです ／ 高くありませんでした</td></tr>
+</table></div>
+{% call m.callout("常见错误：「高いでした」", "warn") %}<p>い形容词的过去要在词尾上变：<b>高かったです</b>。把「高いです」的「です」直接换成「でした」（×高いでした）是初学者最常见的错误之一。名词和な形容词的过去肯定才是把「です」换成「でした」（学生でした、静かでした）。</p>{% endcall %}
+<details class="vd"><summary>展开全部 {{ AI|length }} 个い形容词的敬体（每个都有音频）</summary>
+{{ atable(AI, ["desu", "naidesu", "arimasen", "kattadesu", "nakattadesu", "arimasendeshita"], ["〜いです", "〜くないです", "〜くありません", "〜かったです", "〜くなかったです", "〜くありませんでした"]) }}
+</details>
+
+<h2 id="na">な形容词</h2>
+<p>な形容词的词干不变，变化的是后面的「だ」（普通体）或「です」（敬体）——除了修饰名词时用「な」（名词用「の」），变法和名词句「学生です／学生じゃありません」一样：</p>
+<div class="tablewrap"><table>
+<tr><th>形式</th><th>普通体</th><th>敬体</th></tr>
+<tr><td>现在肯定</td><td lang="ja">静かだ</td><td lang="ja">静かです</td></tr>
+<tr><td>现在否定</td><td lang="ja">静かじゃない</td><td lang="ja">静かじゃありません ／ 静かではありません</td></tr>
+<tr><td>过去肯定</td><td lang="ja">静かだった</td><td lang="ja">静かでした</td></tr>
+<tr><td>过去否定</td><td lang="ja">静かじゃなかった</td><td lang="ja">静かじゃありませんでした</td></tr>
+<tr><td>修饰名词</td><td colspan="2" lang="ja">静かな 部屋</td></tr>
+<tr><td>て形（连接）</td><td colspan="2" lang="ja">静かで</td></tr>
+</table></div>
+<p>「じゃ」是「では」的口语形，两者意思相同；书面和正式场合多用「では」。</p>
+{{ atable(AN, ["na", "janai", "datta", "janakatta", "de"], ["＋名词 〜な", "否定 〜じゃない", "过去 〜だった", "过去否定 〜じゃなかった", "て形 〜で"]) }}
+<details class="vd"><summary>展开全部 {{ AN|length }} 个な形容词的敬体（每个都有音频）</summary>
+{{ atable(AN, ["desu", "jaarimasen", "dewaarimasen", "deshita", "jaarimasendeshita"], ["〜です", "〜じゃありません", "〜ではありません", "〜でした", "〜じゃありませんでした"]) }}
+</details>
+
+<h2 id="attr">修饰名词</h2>
+<div class="pairs">
+{% for p in B5.phrases() %}<div class="pair"><div class="pr"><div class="pi">{{ m.say(p.id, "", p.r) }}<div><div class="jw" lang="ja">{{ p.w }}</div><div class="zh">{{ p.r }} · {{ p.zh }}</div></div></div></div></div>
+{% endfor %}
+</div>
+<p>い形容词直接接名词，な形容词中间加「な」。注意：「大きい」「小さい」还有另一种连体形「大きな」「小さな」（只能修饰名词，意思基本相同），遇到时认得即可。</p>
+
+<h2 id="examples">例句</h2>
+<div class="pairs">{{ s5("a-s-1") }}{{ s5("a-s-2") }}{{ s5("a-s-3") }}{{ s5("a-s-4") }}{{ s5("a-s-5") }}</div>
+<ul>
+  <li><b>好き・嫌い・上手・下手</b>的对象用「が」：<span lang="ja" class="jpw">猫が好きです</span>（我喜欢猫）、<span lang="ja" class="jpw">歌が上手です</span>（歌唱得好）。</li>
+  <li><b>上手</b>是夸别人的词，说自己时一般不用（自己擅长常说「得意」，以后会学）。</li>
+  <li><b>て形</b>用来连接两个形容词：<span lang="ja" class="jpw">広くて明るい</span>（又宽敞又明亮）、<span lang="ja" class="jpw">静かできれい</span>（又安静又漂亮）。</li>
+</ul>
+{% call m.callout("汉字词，意思不一定和中文一样", "zh") %}<p><span lang="ja" class="jpw">丈夫</span>（じょうぶ）在日语里是「结实、耐用；（身体）健壮」，不是中文的「丈夫（配偶）」。<span lang="ja" class="jpw">大切</span>（たいせつ）是「重要、珍贵」。<span lang="ja" class="jpw">大丈夫</span>（だいじょうぶ）是「没关系、不要紧」。</p>{% endcall %}
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for w in ["高い", "寒い", "おいしい", "いい"] if w in AW %}{% set F = B5.form_ids(AW[w]) %}{% set _ = sets.append([{"id": F.dict.id, "w": F.dict.w, "label": F.dict.w, "sub": "现在肯定"}, {"id": F.nai.id, "w": F.nai.w, "label": F.nai.w, "sub": "现在否定"}, {"id": F.katta.id, "w": F.katta.w, "label": F.katta.w, "sub": "过去肯定"}, {"id": F.nakatta.id, "w": F.nakatta.w, "label": F.nakatta.w, "sub": "过去否定"}]) %}{% endfor %}
+{% for w in ["静か", "きれい", "便利"] if w in AW %}{% set F = B5.form_ids(AW[w]) %}{% set _ = sets.append([{"id": F.desu.id, "w": F.desu.w, "label": F.desu.w, "sub": "现在肯定"}, {"id": F.jaarimasen.id, "w": F.jaarimasen.w, "label": F.jaarimasen.w, "sub": "现在否定"}, {"id": F.deshita.id, "w": F.deshita.w, "label": F.deshita.w, "sub": "过去肯定"}, {"id": F.jaarimasendeshita.id, "w": F.jaarimasendeshita.w, "label": F.jaarimasendeshita.w, "sub": "过去否定"}]) %}{% endfor %}
+{% if drill_sets("drill-adj", sets) %}{{ m.drill("drill-adj", "听出时态和肯定否定", "听一个形容词的变化形式，选出是哪一种。い形容词听词尾（くない／かった），な形容词听后面的です部分。") }}{% endif %}
+
+{{ m.src([
+  "活用规则：主流初级教材（《大家的日语》、《新版中日交流标准日本语》等）的通行讲法；「いい」的变化以「よい」为基础。",
+  "活用形核对：每个形式由程序生成，再用 MeCab + UniDic 反向分析（必须分析回同一词元、预期活用形与读音）；" ~ V5.adj_forms ~ " 个形式中 " ~ V5.adj_forms_ok ~ " 个通过。い／な 的类别同样由 UniDic 的词性确认（な形容词＝形状词，或标注「形状词可能」的名词）。",
+  "声调：基本形的声调来自 UniDic 与 Kanjium 交叉核对，活用形不标。",
+  "形容词范围：Jonathan Waller 的 JLPT N5 词表（tanos.co.uk，CC BY）。音频：每个形式男女声各一条，经语音识别反向转写比对后发布。",
+]) }}
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set _ = page.update(dict(eyebrow="初级上 · 第 3 课", h1="助词：N5 的 15 个核心助词", narrow=True, tools=True,
+   desc="日语 N5 助词：は が を に で へ と も の から まで や か ね よ 的用法；中文母语者最容易混的 は/が、に/で、へ/に、を＋移动动词、と/や；助词は・へ・を读 wa・e・o。例句只用 N5 词汇，每句配男女声音频，并用音素识别确认助词读音。",
+   lead="助词贴在词的后面，标出这个词在句子里的角色。中文靠语序，日语靠助词——所以助词一错，意思就变。这一课学 N5 最常用的 15 个，并把中文母语者最容易混的几组放在一起对照。",
+   meta=["15 个助词", "约 50 个例句", "预计 5–7 天"])) %}
+{% macro s5(sid) -%}{%- set x = B5.sentence(sid) -%}{%- if x -%}
+<div class="ex5"><div class="exl">{{ m.say(x.id, "", x.w) }}<div><div class="jw" lang="ja">{% for t, mk in x.wdisp %}{% if mk == 2 %}<b class="pt5">{{ t }}</b>{% elif mk == 1 %}<span class="pt5o">{{ t }}</span>{% else %}{{ t }}{% endif %}{% endfor %}</div><div class="rd" lang="ja">{% for t, sp in x.display %}{% if sp %}<ruby class="sp5">{{ t }}<rt>{{ sp }}</rt></ruby>{% else %}{{ t }}{% endif %}{% endfor %}</div><div class="zh">{{ x.zh }}</div></div></div></div>
+{%- endif -%}{%- endmacro %}
+{% macro ss(ids) -%}<div class="pairs">{% for i in ids %}{{ s5(i) }}{% endfor %}</div>{%- endmacro %}
+{% block content %}
+<h2 id="read">先记住：三个助词的读法</h2>
+<p>有三个助词<b>写法和读法不一样</b>，这是《現代仮名遣い》（日本政府的现代假名书写规则）按书写惯例特别规定的：</p>
+<div class="tablewrap"><table>
+<tr><th>写作</th><th>作助词时读</th><th>例</th></tr>
+<tr><td lang="ja" style="font-size:20px">は</td><td><b>wa</b>（同 わ）</td><td lang="ja">私は（わたし<b>わ</b>）</td></tr>
+<tr><td lang="ja" style="font-size:20px">へ</td><td><b>e</b>（同 え）</td><td lang="ja">国へ（くに<b>え</b>）</td></tr>
+<tr><td lang="ja" style="font-size:20px">を</td><td><b>o</b>（同 お）</td><td lang="ja">パンを（パン<b>お</b>）</td></tr>
+</table></div>
+<p>只有作<b>助词</b>时才这样读：「はな（花）」「へや（部屋）」里的は、へ照常读 ha、he。本页例句下方的假名读音里，凡是这样读的助词都在上方标了实际读音。打字时 を 要打 <code>wo</code>。</p>
+<p>本页例句的标示：<b class="pt5">蓝色粗体</b>是这一节讲的助词，<span class="pt5o">浅色</span>是其他助词。</p>
+
+<h2 id="wa">は（读 wa）：提示主题</h2>
+<p>「A は B」= 「说到 A 嘛，B」。は 提出一个话题，后面是对它的说明。入门课学的「AはBです」就是这个用法。</p>
+{{ ss(["p-wa-1", "p-wa-2"]) }}
+<p>两件事对照着说时，也用は（对比）：</p>
+{{ ss(["p-wa-3"]) }}
+
+<h2 id="ga">が：主语（尤其是新信息）</h2>
+<p>が 标出谁/什么「做了、存在、怎么样」。以下几种情况通常用 が：</p>
+<ul>
+  <li><b>疑问词作主语</b>，以及回答它的时候：</li>
+</ul>
+{{ ss(["p-ga-1", "p-ga-2"]) }}
+<ul>
+  <li><b>存在句</b>「（地方）に（东西／人）があります／います」里，存在的东西用 が：</li>
+</ul>
+{{ ss(["p-ga-3"]) }}
+<ul>
+  <li><b>好き・嫌い・上手・下手・分かる</b>等词的对象用 が（中文说「喜欢猫」，日语是「猫が好き」）：</li>
+</ul>
+{{ ss(["p-ga-4", "p-ga-5"]) }}
+
+<h3 id="wa-ga">は 和 が 怎么选（N5 够用的版本）</h3>
+<ul>
+  <li>疑问词（<span lang="ja" class="jpw">誰・何・どこ</span>……）后面<b>不能</b>用 は：说「誰が来ましたか」，不说 ×「誰は来ましたか」。</li>
+  <li>回答「谁／什么」这类问题时，答案部分用 が。</li>
+  <li>把某样东西当作话题、或者和别的东西对比时，用 は：</li>
+</ul>
+{{ ss(["p-ga-2", "p-wa-4"]) }}
+<p>上面两句：第一句回答「谁来了」，田中是新信息，用 が；第二句的意思是「至于田中嘛，没来」（可能别人来了），用 は。は／が 是日语语法里的大题目，以后还会继续深入，现在先掌握这几条。</p>
+
+<h2 id="o">を（读 o）：动作的对象，以及移动的路线和起点</h2>
+<p>最基本的用法：标出动作的对象，相当于中文动词后面的宾语。</p>
+{{ ss(["p-o-1"]) }}
+<p>和<b>移动动词</b>（<span lang="ja" class="jpw">歩く・散歩する・渡る・出る・降りる</span>等）连用时，を 还表示「经过的地方」或「离开的地方」——这时中文常译成「在／从」，很容易用错：</p>
+{{ ss(["p-o-2", "p-o-3", "p-o-4", "p-o-5"]) }}
+{% call m.callout("对照", "zh") %}<p>「家<b>を</b>出ます」是「离开家（出门）」；「バス<b>を</b>降ります」是「下公共汽车」。而「上车」要用 に：「バス<b>に</b>乗ります」（见下一节）。</p>{% endcall %}
+
+<h2 id="ni">に：时间点、目的地、存在的地方、对象</h2>
+<p><b>① 具体的时间点</b>：</p>
+{{ ss(["p-ni-1"]) }}
+{% call m.callout("什么时间词加に", "warn") %}<p>带数字的时间（<span lang="ja" class="jpw">六時、三月</span>等）加 に；<span lang="ja" class="jpw">今日・明日・毎日・来週・今</span> 这类不带数字的时间词<b>一般不加</b> に（不说 ×「明日に行きます」）；星期几（<span lang="ja" class="jpw">日曜日</span>）加不加 に 都可以。</p>{% endcall %}
+{{ ss(["p-e-3"]) }}
+<p><b>② 去的目的地</b>（也可以用 へ，见下文）：</p>
+{{ ss(["p-ni-2"]) }}
+<p><b>③ 存在的地方</b>（いる・ある 的场所）：</p>
+{{ ss(["p-ni-3", "p-ga-3"]) }}
+<p><b>④ 动作的对象</b>——「给谁、向谁」：</p>
+{{ ss(["p-ni-4"]) }}
+<p><b>⑤ 由动词决定的 に</b>：下面三个动词的对象用 に，中文母语者常误用 を（×友達を会います、×電車を乗ります）：</p>
+{{ ss(["p-ni-5", "p-ni-6", "p-ni-7"]) }}
+
+<h2 id="de">で：在哪里做、用什么做</h2>
+<p><b>① 动作发生的场所</b>：</p>
+{{ ss(["p-de-1"]) }}
+<p><b>② 手段、工具、语言</b>：</p>
+{{ ss(["p-de-2", "p-de-3"]) }}
+
+<h3 id="ni-de">に 和 で：中文都说「在」</h3>
+<p>「（人／东西）<b>在</b>某处」用 に；「<b>在</b>某处<b>做</b>某事」用 で。先看动词：<span lang="ja" class="jpw">いる・ある</span>（以及「住む」）用 に，大多数表示动作的动词用 で。（也有动作动词用 に 的，如「椅子に座る」「ノートに書く」，这里的 に 表示动作落到的地方，以后会学。）</p>
+{{ ss(["p-ni-8", "p-de-1"]) }}
+
+<h2 id="e">へ（读 e）：移动的方向</h2>
+{{ ss(["p-e-1", "p-e-2"]) }}
+<h3 id="e-ni">へ 和 に</h3>
+<p>和 <span lang="ja" class="jpw">行く・来る・帰る</span> 这类移动动词连用时，へ 和 に 基本都可以：<span lang="ja" class="jpw">学校へ行きます</span>／<span lang="ja" class="jpw">学校に行きます</span>。へ 着眼于「朝……方向」，に 着眼于「到达的地点」。但时间点和存在的地方<b>只能</b>用 に（不说 ×「六時へ起きます」「庭へいます」）。动作的对象（给谁）一般用 に，有时也可以用 へ（如「友達へ手紙を書きます」），初学先用 に。</p>
+
+<h2 id="to">と：和……一起；A 和 B（全部列出）</h2>
+{{ ss(["p-to-1", "p-to-2"]) }}
+<h2 id="ya">や：A 啊 B 啊（举例，没有全部列出）</h2>
+{{ ss(["p-ya-1", "p-ya-2"]) }}
+<p>「パン<b>と</b>卵」= 买的就是这两样；「パン<b>や</b>卵」= 面包、鸡蛋，还有别的东西。</p>
+
+<h2 id="mo">も：也、都</h2>
+<p>も 直接<b>替换</b> は、が、を（不说 ×「私はも」）：</p>
+{{ ss(["p-mo-1", "p-mo-2"]) }}
+<p>注意 と 和 も 的区别：</p>
+{{ ss(["p-to-3", "p-mo-3"]) }}
+
+<h2 id="no">の：……的</h2>
+{{ ss(["p-no-1", "p-no-2"]) }}
+{% call m.callout("「的」不一定是「の」", "warn") %}<p>表示「的」的 の 用在<b>名词和名词之间</b>。形容词修饰名词时不加 の：说「高い本」「きれいな花」，不说 ×「高いの本」。中文「贵的书」「漂亮的花」都有「的」，所以这是中文母语者的常见错误。</p>{% endcall %}
+
+<h2 id="kara">から・まで：从……到……；から 还表示原因</h2>
+{{ ss(["p-kara-1", "p-kara-2"]) }}
+<p>只说起点或终点也可以：</p>
+{{ ss(["p-made-1", "p-kara-4"]) }}
+<p>「から」接在<b>句子</b>后面时表示原因（因为……所以……）。本课先记两种用法：「駅から」「八時から」表示起点，「雨ですから」表示原因。（名词后面的から 有时也表示原因或材料，如书面语「不注意から」，以后会学，不能只凭前面是不是名词来判断。）</p>
+{{ ss(["p-kara-3"]) }}
+
+<h2 id="ka">か：疑问；或者</h2>
+{{ ss(["p-ka-1", "p-ka-2"]) }}
+
+<h2 id="ne-yo">ね・よ：句末的语气</h2>
+<p><b>ね</b>：期待对方同意、附和对方（「……对吧」「真……啊」）。<b>よ</b>：把对方可能不知道的信息告诉他（「……哦」）。</p>
+{{ ss(["p-ne-1", "p-yo-1"]) }}
+{{ ss(["p-ne-2", "p-yo-2"]) }}
+
+<h2 id="summary">总表</h2>
+<div class="tablewrap"><table>
+<tr><th>助词</th><th>主要用法</th><th>例</th></tr>
+<tr><td lang="ja">は（wa）</td><td>主题；对比</td><td lang="ja">私は学生です</td></tr>
+<tr><td lang="ja">が</td><td>主语（新信息、疑问词）；存在的东西；好き・分かる 的对象</td><td lang="ja">誰が来ましたか</td></tr>
+<tr><td lang="ja">を（o）</td><td>动作对象；移动经过、离开的地方</td><td lang="ja">パンを食べます・家を出ます</td></tr>
+<tr><td lang="ja">に</td><td>时间点；目的地；存在的地方；对象；会う・乗る・入る</td><td lang="ja">六時に起きます</td></tr>
+<tr><td lang="ja">で</td><td>动作场所；手段、工具、语言</td><td lang="ja">図書館で勉強します</td></tr>
+<tr><td lang="ja">へ（e）</td><td>移动的方向</td><td lang="ja">国へ帰ります</td></tr>
+<tr><td lang="ja">と</td><td>一起；全部列举</td><td lang="ja">友達と行きます</td></tr>
+<tr><td lang="ja">や</td><td>举例列举</td><td lang="ja">パンや卵</td></tr>
+<tr><td lang="ja">も</td><td>也；都</td><td lang="ja">私も学生です</td></tr>
+<tr><td lang="ja">の</td><td>名词＋の＋名词</td><td lang="ja">日本語の本</td></tr>
+<tr><td lang="ja">から／まで</td><td>起点／终点；から 接句子表示原因</td><td lang="ja">八時から五時まで</td></tr>
+<tr><td lang="ja">か</td><td>疑问；或者</td><td lang="ja">難しいですか</td></tr>
+<tr><td lang="ja">ね／よ</td><td>附和、求同意／告知</td><td lang="ja">寒いですね・おいしいですよ</td></tr>
+</table></div>
+
+<h2 id="drill">听辨练习</h2>
+{% set sets = [] %}
+{% for grp in C5.drills.particles %}{% set opts = [] %}{% for sid in grp %}{% set x = B5.sentence(sid) %}{% if x %}{% set _ = opts.append({"id": x.id, "w": x.w, "label": x.w, "sub": x.zh}) %}{% endif %}{% endfor %}{% if opts|length == grp|length %}{% set _ = sets.append(opts) %}{% endif %}{% endfor %}
+{% if drill_sets("drill-part", sets) %}{{ m.drill("drill-part", "听出是哪个助词", "每组句子只差一个助词。听一句，选出你听到的那一句——答完对照中文意思，体会助词怎样改变意思。") }}{% endif %}
+
+{{ m.src([
+  "助词「を」「は」「へ」的写法与读法：文化庁《現代仮名遣い》本文第 2-1、2-2、2-3。",
+  "用法说明：主流初级教材（《大家的日语》、《新版中日交流标准日本语》等）的通行讲法；は／が 只讲 N5 范围内的规则。",
+  "例句检查：假名读音必须与 MeCab + UniDic 的分析一致；每个实词都要在 Waller 的 JLPT N5 词表（CC BY）里，或是入门阶段学过的词（人名、地名、数量词除外）；所讲助词必须被 UniDic 分析为助词。",
+  "音频：按 UniDic 给出的实际发音比对（助词「は」按「わ」）；含助词は／へ的句子，再用音素模型（CTC 强制对齐）比较音频对「wa／e」与「ha／he」两种读法的似然，必须明显更接近正确读法（对数似然领先至少 1）才上线。",
+]) }}
+{% endblock %}

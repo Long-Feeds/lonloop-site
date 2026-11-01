@@ -68,6 +68,56 @@ function build(deckIds, mode) {
 
 function normRomaji(s) { return s.trim().toLowerCase().replace(/[\s'’-]/g, ''); }
 
+// Word decks (stage 1) are answered in kana: typed kana is compared directly,
+// romaji is first converted the way a Japanese IME converts it (shi/si, chi/ti,
+// tsu/tu, fu/hu, ji/zi, n/nn, double consonant = っ), so every spelling an IME
+// accepts is accepted here too.
+const R2K = {};
+(function () {
+  const base = { a: 'あ', i: 'い', u: 'う', e: 'え', o: 'お' };
+  const rows = { k: 'かきくけこ', g: 'がぎぐげご', s: 'さしすせそ', z: 'ざじずぜぞ', t: 'たちつてと', d: 'だぢづでど', n: 'なにぬねの',
+    h: 'はひふへほ', b: 'ばびぶべぼ', p: 'ぱぴぷぺぽ', m: 'まみむめも', r: 'らりるれろ', y: 'や\0ゆ\0よ', w: 'わ\0\0\0を' };
+  for (const [v, k] of Object.entries(base)) R2K[v] = k;
+  for (const [c, ks] of Object.entries(rows)) 'aiueo'.split('').forEach((v, i) => { if (ks[i] && ks[i] !== '\0') R2K[c + v] = ks[i]; });
+  Object.assign(R2K, { shi: 'し', chi: 'ち', tsu: 'つ', fu: 'ふ', ji: 'じ', zi: 'じ', di: 'ぢ', du: 'づ', ti: 'ち', tu: 'つ', si: 'し', hu: 'ふ',
+    nn: 'ん', "n'": 'ん', xtu: 'っ', ltu: 'っ', wo: 'を' });
+  const yo = { k: 'き', g: 'ぎ', n: 'に', h: 'ひ', b: 'び', p: 'ぴ', m: 'み', r: 'り' };
+  for (const [c, k] of Object.entries(yo)) { R2K[c + 'ya'] = k + 'ゃ'; R2K[c + 'yu'] = k + 'ゅ'; R2K[c + 'yo'] = k + 'ょ'; }
+  for (const [p, k] of [['sh', 'し'], ['sy', 'し'], ['ch', 'ち'], ['ty', 'ち'], ['cy', 'ち'], ['j', 'じ'], ['jy', 'じ'], ['zy', 'じ']]) {
+    R2K[p + 'a'] = k + 'ゃ'; R2K[p + 'u'] = k + 'ゅ'; R2K[p + 'o'] = k + 'ょ';
+  }
+  R2K.she = 'しぇ'; R2K.che = 'ちぇ'; R2K.je = 'じぇ';
+})();
+function romajiToKana(s, nnSplit) {
+  let out = '', i = 0;
+  s = s.toLowerCase().replace(/[\s]/g, '');
+  while (i < s.length) {
+    const c = s[i];
+    // IMEs differ on "onna": おんな (n + na) or おんあ (nn + a); accept both readings
+    if (nnSplit && c === 'n' && s[i + 1] === 'n' && /[aiueoy]/.test(s[i + 2] || '')) { out += 'ん'; i++; continue; }
+    if (c === '-' ) { out += 'ー'; i++; continue; }
+    if (i + 1 < s.length && c === s[i + 1] && /[bcdfghjkmprstwyz]/.test(c)) { out += 'っ'; i++; continue; }
+    let hit = false;
+    for (const L of [3, 2, 1]) {
+      const seg = s.slice(i, i + L);
+      if (R2K[seg] !== undefined) {
+        // n before a consonant (or at the end) is ん
+        out += R2K[seg]; i += L; hit = true; break;
+      }
+    }
+    if (hit) continue;
+    if (c === 'n') { out += 'ん'; i++; continue; }
+    out += c; i++;
+  }
+  return out;
+}
+const toHira = (s) => s.replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+function rightAnswer(it, typed) {
+  if (!it.kana) return it.ans.includes(normRomaji(typed));
+  const t = typed.trim().replace(/[\s。、]/g, '');
+  return toHira(t) === it.kana || romajiToKana(t) === it.kana || romajiToKana(t, true) === it.kana;
+}
+
 function showCard() {
   const s = session;
   if (!s.queue.length) return finish();
@@ -77,11 +127,12 @@ function showCard() {
   ui.reveal.innerHTML = '';
   ui.stats.innerHTML = `本轮剩余 <b>${s.queue.length + 1}</b> · 已答 <b>${s.done}</b> · 正确 <b>${s.right}</b>`;
   if (s.mode === 'read') {
-    ui.face.className = 'face'; ui.face.textContent = it.k; ui.face.lang = 'ja';
-    ui.ans.innerHTML = `<input class="typed" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="输入罗马字，回车" aria-label="输入罗马字读音"><button class="btn pri" id="go">确定</button>`;
+    ui.face.className = it.k.length > 2 ? 'face word' : 'face'; ui.face.textContent = it.k; ui.face.lang = 'ja';
+    const ph = it.kana ? '输入读音（假名或罗马字），回车' : '输入罗马字，回车';
+    ui.ans.innerHTML = `<input class="typed" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${ph}" aria-label="输入读音"><button class="btn pri" id="go">确定</button>`;
     const inp = $('#typed');
     inp.focus();
-    const go = () => answer(it.ans.includes(normRomaji(inp.value)));
+    const go = () => answer(rightAnswer(it, inp.value));
     inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
     $('#go').addEventListener('click', go);
   } else {

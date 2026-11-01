@@ -261,6 +261,306 @@ def phones_ok(kana, phones):
     return any(p in CLS[c] for p in cons), ("ok" if any(p in CLS[c] for p in cons) else f"onset {cons} ∉ {c}")
 
 
+
+# ---------------------------------------------------------------- stage 1 ---
+# Stage 1 (N5) items are checked with the same signal / reverse-dictation steps,
+# plus two things the transcript alone cannot settle:
+#   * When the written transcript allows more than one reading (Whisper writes
+#     降りません whether it heard おりません or ふりません; 四日 よっか / よんにち), the
+#     candidate readings come from UniDic's n-best analyses and the IPA phone
+#     recognizer makes a forced choice: the expected reading must be strictly
+#     closer to what was heard than every competitor.
+#   * Sentences are compared on pronunciation (UniDic `pron`), so a particle は
+#     counts as わ. Whisper writes は either way, so for sentences with a particle
+#     は/へ the phones also choose between the correct reading (わ/え) and the
+#     spelling pronunciation (は/へ read as written).
+N5_KINDS = {"n5word", "n5wordvar", "n5form", "n5formvar", "n5sent", "n5phrase"}
+SCHEMA_N5 = 5
+
+
+# counters after a numeral: the reading a Japanese reader gives 3つ / 8日 / 2人,
+# plus the naive 数字+音读 reading a TTS engine could produce instead (さんにち)
+_NATIVE_TSU = {1: "ひとつ", 2: "ふたつ", 3: "みっつ", 4: "よっつ", 5: "いつつ", 6: "むっつ", 7: "ななつ", 8: "やっつ", 9: "ここのつ", 10: "とお"}
+_DAYS = {1: ["ついたち", "いちにち"], 2: ["ふつか"], 3: ["みっか"], 4: ["よっか"], 5: ["いつか"], 6: ["むいか"], 7: ["なのか", "なぬか"],
+         8: ["ようか"], 9: ["ここのか"], 10: ["とおか"], 14: ["じゅうよっか"], 20: ["はつか"], 24: ["にじゅうよっか"]}
+_PEOPLE = {1: ["ひとり"], 2: ["ふたり"], 4: ["よにん"], 7: ["しちにん", "ななにん"], 9: ["きゅうにん", "くにん"]}
+
+
+def _counter_readings(n, counter):
+    """{reading: attested} for numeral n followed by counter つ/日/人."""
+    sino = _num_readings(str(n))
+    out = {}
+    if counter == "つ":
+        if n in _NATIVE_TSU:
+            out[_NATIVE_TSU[n]] = True
+        for r in sino:
+            out.setdefault(r + "つ", True)
+    elif counter == "日":
+        for r in _DAYS.get(n, []):
+            out[r] = True
+        for r in sino:
+            out.setdefault(r + "にち", True)
+    elif counter == "人":
+        for r in _PEOPLE.get(n, []):
+            out[r] = True
+        for r in sino:
+            out.setdefault(r + "にん", True)
+    return out
+
+
+_JM = None
+
+
+def _attested(tok_surface, tok_kana, base, base_kana, pos1):
+    """Is this token's reading one a dictionary gives? Particles, auxiliaries,
+    kana-only words: yes. Inflected words: their dictionary form must be a JMdict
+    (word, reading) pair (降る ふる, 下りる/降りる おりる …). Others: (surface,
+    reading) must be a JMdict pair — so 日曜日 split as 日曜+日(ぴ) is not a real
+    competitor, while 日(ひ) is."""
+    global _JM
+    if _JM is None:
+        import n5data
+        _JM = set(n5data.furigana().keys())
+    if pos1 in ("助詞", "助動詞", "補助記号", "記号", "空白") or re.fullmatch(r"[ぁ-ゖァ-ヺー]+", tok_surface):
+        return True
+    if pos1 in ("動詞", "形容詞") and base and base_kana:
+        return (base, base_kana) in _JM
+    return (tok_surface, tok_kana) in _JM
+
+
+def _readings_of(text, n, pron_only):
+    """{reading (pnorm): attested} over UniDic's n best analyses of a
+    transcript; numerals followed by a counter get counter readings."""
+    text = re.sub(r"[\s。、，,．！!？?「」『』（）()・…~〜]", "", text.strip())
+    parts = re.split(r"(\d+)", text)
+    variants = {"": True}
+    i = 0
+    while i < len(parts):
+        p = parts[i]
+        i += 1
+        if not p:
+            continue
+        if p.isdigit():
+            nxt = parts[i] if i < len(parts) else ""
+            if nxt[:1] in ("つ", "日", "人"):
+                rs = _counter_readings(int(p), nxt[0])
+                parts[i] = nxt[1:]
+            else:
+                rs = {r: True for r in _num_readings(p)}
+        else:
+            rs = {}
+            for nodes in _tagger.nbestToNodeList(p, n):
+                k, pr, att = "", "", True
+                for nd in nodes:
+                    f = nd.feature
+                    kana = f.kana if getattr(f, "kana", None) not in (None, "*") else nd.surface
+                    pron = f.pron if getattr(f, "pron", None) not in (None, "*") else kana
+                    kb = f.kanaBase if getattr(f, "kanaBase", None) not in (None, "*") else ""
+                    att = att and _attested(nd.surface, to_hiragana(kana), getattr(f, "orthBase", ""), to_hiragana(kb), f.pos1)
+                    k += kana
+                    pr += pron
+                for r in ([to_hiragana(pr)] + ([] if pron_only else [to_hiragana(k)])):
+                    rs[r] = rs.get(r, False) or att
+        variants = {a + r: (va and vr) for a, va in variants.items() for r, vr in rs.items()}
+        if len(variants) > 400:
+            variants = dict(list(variants.items())[:400])
+    out = {}
+    for v, att in variants.items():
+        key = pnorm(v)
+        out[key] = out.get(key, False) or att
+    return out
+
+
+def reading_ok_n5(text, expected, pron_only):
+    exp = pnorm(expected)
+    if pron_only:
+        return exp in _readings_of(text, 1, True)
+    return reading_ok(text, expected)
+
+
+_CLS_IDS = {}
+
+
+def _token_ids(tok):
+    """Model labels accepted as a realization of an expected phone token: the
+    recognizer's inventory is multilingual (it labels Japanese わ [ɰa] as 'v'),
+    so each token is scored by the best label in its accepted set — the same
+    curated sets the single-kana check uses (CLS / VCLS)."""
+    import pitch
+    if tok in _CLS_IDS:
+        return _CLS_IDS[tok]
+    voc = pitch.V
+    if tok in ("a", "i", "ɯ", "e", "o", "aː", "iː", "uː", "eː", "oː"):
+        v = {"a": "a", "i": "i", "ɯ": "u", "u": "u", "e": "e", "o": "o"}[tok[0]]
+        members = VCLS[v]
+    else:
+        c = _TOK_CLS.get(tok)
+        members = CLS[c] if c else {tok}
+    ids = sorted({voc[m] for m in members | {tok} if m in voc})
+    _CLS_IDS[tok] = ids
+    return ids
+
+
+def ctc_scores(path, readings):
+    """{reading: log-likelihood of the best CTC path} — the same wav2vec2 model
+    scores the audio against each candidate phone sequence (forced alignment,
+    each phone emitted by the best label of its accepted set). Candidates are
+    compared on the same audio, so the difference is a log-likelihood ratio:
+    which reading does the audio support?"""
+    import pitch
+    lp, _ = pitch.logprobs(path)
+    blank = pitch.P._blank
+    out = {}
+    for rd in readings:
+        toks = pitch.tokens_for(rd)[1]
+        # emission matrix for the extended sequence: blank, t1, blank, t2, …
+        cols = [lp[:, blank]]
+        keys = ["<b>"]
+        for t in toks:
+            cols.append(lp[:, _token_ids(t)].max(axis=1))
+            keys.append(t)
+            cols.append(lp[:, blank])
+            keys.append("<b>")
+        em = np.stack(cols, axis=1)
+        S, T = em.shape[1], em.shape[0]
+        NEG = -1e30
+        dp = np.full(S, NEG)
+        dp[0] = em[0, 0]
+        if S > 1:
+            dp[1] = em[0, 1]
+        skip = np.array([s >= 2 and keys[s] != "<b>" and keys[s] != keys[s - 2] for s in range(S)])
+        for t in range(1, T):
+            b1 = np.concatenate(([NEG], dp[:-1]))
+            b2 = np.where(skip, np.concatenate(([NEG, NEG], dp[:-2])), NEG)
+            dp = np.maximum(np.maximum(dp, b1), b2) + em[t]
+        out[rd] = float(max(dp[-1], dp[-2] if S > 1 else NEG))
+    return out
+
+
+CTC_MARGIN = 1.0   # nats: the expected reading must be ≥ e^1 ≈ 2.7× as likely
+ECHO_SIM = 0.7     # no attested competitor: the Stage-0 rule (phone similarity)
+
+
+def _phone_cls(p):
+    for v, ps in VCLS.items():
+        if p in ps or p.rstrip("ː") in ps:
+            return v
+    for c, ps in CLS.items():
+        if c and p in ps:
+            return c
+    return p
+
+
+# expected phone token (pitch.tokens_for) -> consonant class whose CLS set lists
+# the realizations the recognizer may output for it (same sets phones_ok uses)
+_TOK_CLS = {"k": "k", "kʲ": "ky", "ɡ": "g", "ɡʲ": "gy", "s": "s", "ɕ": "sh", "z": "z", "dʑ": "j", "t": "t", "tɕ": "ch",
+            "ts": "ts", "d": "d", "n": "n", "ɲ": "ny", "h": "h", "ç": "hy", "ɸ": "f", "b": "b", "p": "p", "m": "m",
+            "mʲ": "my", "j": "y", "ɾ": "r", "w": "w"}
+
+
+def _tok_match(exp, got):
+    """Does recognized phone `got` count as a realization of expected token
+    `exp`? Vowels by vowel class, consonants by membership in the class's
+    accepted set — so the recognizer's 'v' for Japanese わ [ɰa] counts as w (it is
+    in the w set) and not as h, while 'f' counts as は/ふ."""
+    g = _norm_phone(got)
+    if exp in ("aː", "iː", "uː", "eː", "oː") or exp in ("a", "i", "ɯ", "e", "o"):
+        v = {"a": "a", "i": "i", "ɯ": "u", "e": "e", "o": "o"}[exp[0] if exp[0] != "ɯ" else "ɯ"]
+        return g in VCLS[v] or g.rstrip("ː") in VCLS[v]
+    c = _TOK_CLS.get(exp)
+    if c is None:
+        return g == exp
+    if c == "n" and g in CLS["N"]:
+        return True
+    return g in CLS[c]
+
+
+def phone_sims(path, readings):
+    """{reading: similarity} against one run of the IPA recognizer:
+    1 - edit distance / length, where a substitution is free when the heard
+    phone is an accepted realization of the expected one."""
+    import phoneme_asr, pitch
+    got = [p for p in phoneme_asr.recognize(path) if p != "ʔ"]
+    out = {}
+    for rd in readings:
+        exp = pitch.tokens_for(rd)[1]
+        n, m = len(exp), len(got)
+        dp = [[0] * (m + 1) for _ in range(n + 1)]
+        for i in range(n + 1):
+            dp[i][0] = i
+        for j in range(m + 1):
+            dp[0][j] = j
+        for i in range(1, n + 1):
+            for j in range(1, m + 1):
+                dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (0 if _tok_match(exp[i - 1], got[j - 1]) else 1))
+        out[rd] = round(1 - dp[n][m] / max(n, m, 1), 3)
+    return out, " ".join(got)
+
+
+def n5_decide(c):
+    """Pass/fail for a stage-1 clip from its stored measurements (also used by
+    reevaluate, so a rule change does not need the models again)."""
+    ch = c["checks"]
+    pp = ch.get("particle")
+    if pp is not None:
+        pp["verdict"] = "ok" if pp["margin"] >= CTC_MARGIN else ("wrong" if pp["margin"] <= -CTC_MARGIN else "unclear")
+    if not ch.get("signal", {}).get("ok"):
+        return False
+    rd = ch.get("reading", {})
+    if rd.get("model") == "n-best + ctc":
+        rd["ok"] = rd.get("margin") is not None and rd["margin"] >= CTC_MARGIN
+    elif rd.get("model") == "echo + phones":
+        rd["ok"] = (rd.get("sim") or 0) >= ECHO_SIM
+    if not rd.get("ok"):
+        return False
+    if pp is not None and pp["verdict"] != "ok":
+        return False
+    return True
+
+
+def verify_n5(it, path, r):
+    import mlx_whisper
+    exp = it["r"]
+    pron_only = bool(it.get("pron_only"))
+    t1 = mlx_whisper.transcribe(path, path_or_hf_repo="mlx-community/whisper-large-v3-turbo",
+                                language="ja", temperature=0.0, condition_on_previous_text=False)["text"]
+    rd = {"asr": t1, "ok": reading_ok_n5(t1, exp, pron_only), "model": "large-v3-turbo", "pron_only": pron_only}
+    texts = [t1]
+    if not rd["ok"]:
+        t2 = mlx_whisper.transcribe(path, path_or_hf_repo="mlx-community/whisper-large-v3-mlx",
+                                    language="ja", temperature=0.0, condition_on_previous_text=False)["text"]
+        rd["asr2"] = t2
+        texts.append(t2)
+        if reading_ok_n5(t2, exp, pron_only):
+            rd["ok"], rd["model"] = True, "large-v3"
+    if not rd["ok"]:
+        # The transcript allows the expected reading only under another analysis
+        # (降りません: ふりません first), as a counter reading (3日), or Whisper wrote
+        # our input back. Then the audio itself must choose: CTC forced alignment
+        # against the expected reading and every attested competitor.
+        e = pnorm(exp)
+        cands = {}
+        for t in texts:
+            for k_, att in _readings_of(t, 10, pron_only).items():
+                cands[k_] = cands.get(k_, False) or att
+        echoed = any(_norm_written(t) == _norm_written(it.get("w", "")) for t in texts)
+        if e in cands or echoed:
+            comp = sorted(x for x, att in cands.items() if att and x != e)
+            if comp:
+                sc = ctc_scores(path, [e] + comp)
+                best = max(comp, key=lambda x: sc[x])
+                rd.update(model="n-best + ctc", competitors=comp[:12], competitor=best, margin=round(sc[e] - sc[best], 2))
+            else:
+                sims, heard = phone_sims(path, [e])
+                rd.update(model="echo + phones", sim=sims[e], phones=heard)
+    r["checks"]["reading"] = rd
+    if it.get("spell") and pnorm(it["spell"]) != pnorm(exp):
+        sc = ctc_scores(path, [pnorm(exp), pnorm(it["spell"])])
+        r["checks"]["particle"] = {"margin": round(sc[pnorm(exp)] - sc[pnorm(it["spell"])], 2)}
+    r["ok"] = n5_decide(r)
+    return r
+
+
 # ----------------------------------------------------------------- signal ---
 def voiced_seconds(path):
     import librosa
@@ -304,11 +604,17 @@ def main(shard=0, nshards=1):
             key = open(path.replace(".mp3", ".key")).read() if os.path.exists(path.replace(".mp3", ".key")) else ""
             cid = f"{v}/{it['id']}"
             prev = old.get("clips", {}).get(cid)
-            if prev and prev.get("key") == key and prev.get("schema") == 3 and prev.get("key") == key:
+            want_schema = SCHEMA_N5 if it["kind"] in N5_KINDS else 3
+            if prev and prev.get("key") == key and prev.get("schema") == want_schema:
                 rep["clips"][cid] = prev
                 continue
+            if it["kind"] in ("n5wordvar", "n5formvar"):
+                # a kana-typed variant is only needed where the base clip failed
+                base = old.get("clips", {}).get(f"{v}/{it['base']}")
+                if not base or base.get("ok") or not os.path.exists(path):
+                    continue
             r = {"id": it["id"], "voice": v, "kind": it["kind"], "text": it.get("w") or it.get("kana"),
-                 "expected": it["r"], "key": key, "schema": 3, "checks": {}}
+                 "expected": it["r"], "key": key, "schema": want_schema, "checks": {}}
             # 1 signal
             vs = voiced_seconds(path)
             from gen_audio import peak_db
@@ -322,6 +628,12 @@ def main(shard=0, nshards=1):
                 r["checks"]["reading"] = {"ok": False, "asr": "", "model": "skipped: silent clip"}
                 r["ok"] = False
                 rep["clips"][cid] = r
+                continue
+            if it["kind"] in N5_KINDS:
+                rep["clips"][cid] = verify_n5(it, path, r)
+                if done % 25 == 0:
+                    print(f"{done}/{total}", file=sys.stderr, flush=True)
+                    json.dump(rep, open(out_path, "w"), ensure_ascii=False, indent=0)
                 continue
             # 2 reading
             t1 = mlx_whisper.transcribe(path, path_or_hf_repo="mlx-community/whisper-large-v3-turbo",
@@ -402,6 +714,9 @@ def reevaluate():
             c["ok"] = False
             continue
         rd = ch.get("reading", {})
+        if c["kind"] in N5_KINDS:
+            c["ok"] = n5_decide(c)
+            continue
         if c["kind"] in ("kana", "kanavar"):
             if rd.get("asr") is not None:
                 rd["ok"] = reading_ok(rd["asr"], c["expected"])

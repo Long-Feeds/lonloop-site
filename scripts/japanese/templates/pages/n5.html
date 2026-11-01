@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set ks = B5.kanji() %}
+{% set nk = namespace(n=0, core=0) %}{% for g in ks %}{% for it in g["items"] %}{% set nk.n = nk.n + 1 %}{% if it.core %}{% set nk.core = nk.core + 1 %}{% endif %}{% endfor %}{% endfor %}
+{% set _ = page.update(dict(eyebrow="阶段 1 · 初级上（约 JLPT N5）", h1="初级上（约 JLPT N5）：第一批 4 课", narrow=True,
+   desc="日语初级上（约 JLPT N5）第一批 4 课：动词的三类与基本活用、い形容词与な形容词、15 个核心助词、103 个常用汉字。每个活用形都由程序生成并经形态分析器反向核对，汉字读音核对 KANJIDIC2 与文化厅《常用漢字表》，音频全部经过读音校验。",
+   lead="入门学完，就可以开始系统学语法和词汇了。这一阶段先上线<b>四根支柱</b>：动词、形容词、助词、常用汉字——它们是 N5 阶段几乎每个句子都要用到的东西。其余内容（存在句、助数词、时间表达、更多句型）会在后续批次补上。",
+   meta=["第一批 4 课", B5.verbs()|length ~ " 个动词 · " ~ (B5.adjectives('i')|length + B5.adjectives('na')|length) ~ " 个形容词 · " ~ nk.n ~ " 个汉字", "全部经机器校验"])) %}
+{% block content %}
+<h2 id="lessons">本阶段课程</h2>
+<section class="stage">
+  <div class="stage-h"><h2>阶段 1 · 初级上</h2><span class="badge live">第一批已上线</span></div>
+  <ul class="lessons" id="lessons-n5">
+  {% for l in n5_lessons %}
+    <li data-lesson="{{ l.slug }}"><a href="{{ l.url }}"><span class="no">{{ l.lesson }}</span><span class="tt"><b>{{ l.title }}</b><span>{{ {
+      "n5/verbs": B5.verbs()|length ~ " 个常用动词：怎么判断三类、ます形四种形式、辞书形、ない形、て形·た形与音便",
+      "n5/adjectives": "い形容词与な形容词的现在/否定/过去/过去否定、连体、て形；いい 的特殊变化",
+      "n5/particles": "は が を に で へ と も の から まで や か ね よ；中文母语者最容易混的几组",
+      "n5/kanji": nk.n ~ " 个字的音读·训读、笔顺动画、N5 例词，以及和简体字不同的字形"}[l.slug] }}</span></span><span class="st">未开始</span></a></li>
+  {% endfor %}
+  </ul>
+  <div class="progress" data-for="lessons-n5" aria-hidden="true"><i></i></div>
+  <div style="font-size:13px;color:var(--dim)">本阶段进度：<span data-prog-lab="lessons-n5">0 / {{ n5_lessons|length }} 课</span>（只保存在你自己的浏览器里）</div>
+</section>
+
+<h2 id="order">建议的学习顺序</h2>
+<ol>
+  <li><b>先动词，再形容词，再助词。</b>助词课的例句会用到前两课的ます形和形容词；反过来，前两课遇到助词时会注明「详见第 3 课」。</li>
+  <li><b>汉字和语法并行。</b>每天学 5–10 个字，先认读、会读例词；写字照笔顺动画在纸上写几遍即可，不必一次背熟所有读音——卡片上标<b>粗体</b>的读音才是这一阶段要会的。</li>
+  <li><b>每天到「<a href="/japanese/practice/">练习</a>」复习。</b>练习页新增了「N5 动词」「N5 形容词」「N5 汉字例词」三组卡片：看词写读音，或听音选词，由 FSRS 算法安排复习。</li>
+  <li><b>活用表要听着、念着学。</b>每个形式都有音频；先听，再跟读，最后遮住表格自己说出来。</li>
+</ol>
+
+<h2 id="lists">「N5 范围」是怎么定的</h2>
+<p>日本语能力测验（JLPT）自 2010 年改制后<b>不再公开列有词汇、汉字、语法项目的《出题基准》</b>（JLPT 官网常见问题「2010 年に試験が改定されてから、『出題基準』が非公開になったのはなぜですか」）；旧试验的合格水平与新级别相对应，旧 4 级相当于现在的 N5。网上流传的「N5 词表」都是各家自己整理的。本阶段明确采用下面两份清单，并在每个地方标注：</p>
+<ul>
+  <li><b>汉字：</b>2010 年以前的旧日本语能力测验《出题基准》4 级汉字（旧 4 级大致对应现在的 N5；字表据 KANJIDIC2 所记的旧级别，共 {{ V5.kanji_sets.old4 }} 字），以及 Jonathan Waller 整理的 N5 汉字表（tanos.co.uk，{{ V5.kanji_sets.waller_n5 }} 字）。后者的 {{ V5.kanji_sets.waller_n5 }} 个字<b>全部</b>包含在前者里。本站教前者的 {{ V5.kanji_sets.old4 }} 个字，其中两份清单都有的 {{ nk.core }} 个标为「核心」；另外 {{ V5.kanji_sets.extra }} 个字 Waller 的 N5 清单没有收（其中 {{ V5.kanji_sets.extra_in_waller_n4 }} 个在他的 N4 清单里，{{ V5.kanji_sets.extra_not_in_waller_n4|join("、") }} 不在），都是日常常用字，提前学不吃亏。</li>
+  <li><b>词汇：</b>例句和例词尽量只用 Waller 的 N5 词表（约 670 词）里的词，或入门阶段已经学过的词；程序逐词检查，词表外的少数几个词（如「母」「千円」）在<a href="/japanese/verification/#n5">校验报告</a>里列出并说明原因。</li>
+  <li><b>语法体系：</b>采用中国学习者常用的主流初级教材（如《大家的日语》、《新版中日交流标准日本语》）的通行讲法：动词分三类，先学ます形，再学辞书形、ない形、て形。</li>
+</ul>
+
+<h2 id="rigor">这一阶段怎么防止学错</h2>
+<ul>
+  <li><b>活用形由程序生成，再反向核对。</b>动词和形容词的每个形式都按规则生成，然后用形态分析器（MeCab + UniDic）反向分析：必须分析回同一个词、预期的活用形（例如「書いて」的「書い」必须是 <i>连用形·イ音便</i>，「行って」必须是 <i>促音便</i>）和预期的读音。{{ V5.verb_forms }} 个动词形式、{{ V5.adj_forms }} 个形容词形式全部通过。</li>
+  <li><b>例句读音核对词典。</b>例句的假名读音必须和 UniDic 的分析一致；音频校验比对的是 UniDic 给出的<b>实际发音</b>（助词「は」按「わ」比对），并用音素模型做强制对齐，确认音频里的助词「は」「へ」明显更像 wa、e 而不是 ha、he。</li>
+  <li><b>汉字读音两源核对。</b>只列 KANJIDIC2 和文化厅《常用漢字表》（2010 年内阁告示）<b>都收录</b>的读音；例词里每个字的读法都要对应到其中一个读音（允许连浊、促音化），整词特殊读法必须在《常用漢字表》付表里（国名「日本」等固有名词另据词典核对）。笔画数三源核对，笔顺两套独立数据逐笔核对。</li>
+  <li><b>音频反向听写。</b>和入门阶段一样，每条音频都要经语音识别转写后与教的读音一致；没通过的不上线。</li>
+  <li><b>声调只标词典一致的。</b>辞书形和例词的声调标注来自 UniDic × Kanjium（必要时维基词典第三票）；活用形的声调本阶段不标——动词、形容词活用后声调会移动，规律留到「声调进阶」专项。</li>
+</ul>
+<p>全部检查结果见「<a href="/japanese/verification/#n5">校验报告 · 阶段 1</a>」。</p>
+
+<h2 id="next">后续批次（尚未上线）</h2>
+<ul class="plan-list">
+  <li><b>存在句：</b>あります・います 与「〜に〜があります／〜は〜にあります」的系统讲解（助词课已涉及基本用法）。</li>
+  <li><b>时间与数量：</b>助数词（〜つ、〜人、〜枚、〜本……）、日期与时刻的读法。</li>
+  <li><b>常用句型：</b>〜たい、〜てください、〜ています、〜ましょう、〜から（原因）等 N5 句型的系统讲解。</li>
+  <li><b>N5 综合听读：</b>用本阶段的词汇和语法组成的短对话与短文。</li>
+</ul>
+
+{{ m.src([
+  "JLPT 不再公开《出题基准》、旧级与新级的对应：<a href=\"https://www.jlpt.jp/faq/\" target=\"_blank\" rel=\"noopener\">日本语能力测验官网 よくある質問</a>（「出題基準が非公開になったのはなぜですか」及新旧级别对应条目）。",
+  "旧 4 级汉字表：KANJIDIC2（EDRDG，CC BY-SA 4.0）各字的旧 JLPT 级别字段；N5 汉字与词汇：Jonathan Waller, tanos.co.uk（CC BY，经 Internet Archive 存档获取）。",
+  "形态分析：MeCab（fugashi）+ UniDic（unidic-lite 2.1.2）。",
+]) }}
+{% endblock %}

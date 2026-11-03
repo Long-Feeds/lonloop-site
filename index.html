@@ -197,6 +197,39 @@
     border:1px solid var(--line);background:var(--chip);
     transition:color .15s ease,border-color .15s ease}
   .lang-toggle:hover{color:var(--txt);border-color:var(--accent)}
+  /* phones: the language toggle rides the brand's row and the tabs get a row of
+     their own. Above, .nav-right holds the tabs and the toggle in one box. Once
+     that box stops fitting beside the brand it drops below it whole, and once
+     the tabs inside it wrap, align-items:center parks the toggle midway between
+     the two tab rows, level with neither. The fifth tab (日语, 2026-10-31) made
+     that every phone. Measured 2026-11-03 at every width 300–1200: the toggle
+     floated at zh 300–431 and en 348–530 (below 348 English needed three tab
+     rows, nav 217px), and 日语 / Japanese sat alone on the second row at
+     zh 368–431 — 390, 393, 412, 414 and 430 among them — and en 428–530.
+     display:contents dissolves the box, so brand, tabs and toggle become items
+     of the nav's own wrapping row: order puts the tabs after the toggle and
+     flex-basis:100% gives them a row of their own — brand … toggle on top, tabs
+     below, the shape every sub-page already has on a phone (brand, then tabs;
+     they carry no toggle). DOM and focus order are untouched (brand, tabs,
+     toggle): only where the toggle is drawn moves, inside the same nav.
+     The breakpoints are the widths where one row stops fitting: 495px in
+     Chinese, 594px in English, whose labels are wider (hence html:lang(en)).
+     Above them nothing moves. After, in Chromium and WebKit alike: the toggle
+     never floats (0 of 901 widths, either language); zh 377–495 shows all five
+     tabs on one row, so the nav drops 172.5 → 127.8px at 377–431; en 481–594
+     one row. Still open, and shared with every sub-page: when the tabs need two
+     rows the last one can sit alone (zh 313–376, en 379–480). A sixth tab pushes
+     the one-row width past these breakpoints — re-measure with
+     tools/navshape.mjs; tools/verify-navshape-live.mjs goes red at
+     breakpoint + 1 when that happens. */
+  @media (max-width:495px){
+    .nav-right{display:contents}
+    .topnav .tabs{order:1;flex-basis:100%}
+  }
+  @media (max-width:594px){
+    html:lang(en) .nav-right{display:contents}
+    html:lang(en) .topnav .tabs{order:1;flex-basis:100%}
+  }
   .wrap{max-width:880px;margin:0 auto;padding:40px 24px 96px}
   /* hero */
   .eyebrow{color:var(--accent2);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13px}

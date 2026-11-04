@@ -231,6 +231,26 @@
         <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
       </a>
 
+      <!-- LiteLLM —— 2026-11-04:路由表那句跟上 v1.108.0,同时写明 main 已经收回。
+           上一版末尾是「…Anthropic 的 messages 接口要设 LITELLM_RUST 才切过去。选型时按 Python 网关评估。
+           以上按 2026-10-26 的上游与发布版 v1.106.4 核过。」今天 03:31Z PyPI 发了 1.108.0(GitHub releases/latest
+           同为 v1.108.0),它的 catalog.py 和 v1.106.4 只差一行:MESSAGES 的 RUST_OPT_IN 从 {"anthropic"} 扩成
+           {"anthropic","deepseek","vertex_ai"}——10-09 #45614 / #45626 进的 main,v1.108.0 的 catalog.py 停在 10-15
+           那一版,没带上 10-20 的 #46750;同 tag 的 tests/unit/rust_bridge/test_catalog.py 也逐个断言这三家是
+           RUST_OPT_IN。同包 messages/dispatch.py 的 _python_serves 把 Vertex 上不含 claude 的模型留在 Python,
+           所以卡上写「Vertex AI 上的 Claude」。可 main 10-20 #46750(decide native routing in the catalog)又收回到
+           只剩 {"anthropic"},今天 02:17Z 发的 v1.109.0-rc.1 也一样 ⇒ 要是把主句改成三家,下一个正式版一出就得改回来。
+           所以主句一字不动(它对 v1.106.4、v1.108.0、main 都成立),只加括号写清 v1.108.0 多出的两家和 main 的收回;
+           v1.109.0 正式发布后整句照样成立。读包核过:manylinux x86_64 wheel 里的 catalog.py 与 messages/dispatch.py
+           跟 tag 上的文件逐字节相同(Range 读 zip 中央目录,只取这两个条目,不下整包)。
+           「以上」覆盖的其余各项同日重核:仓库简介仍是「…Rust core with Python SDK. Call 100+ LLM APIs…」;README
+           仍写 cost tracking、guardrails、load balancing、retry/fallback、caching、proxy;预算与限速见官方文档
+           /docs/proxy/users(max_budget、rpm_limit、tpm_limit);configuration.py 开关名仍是 LITELLM_RUST,
+           RUST_OPT_IN 不开时仍走 Python;PyPI 1.108.0 的 7 个 wheel 全是 cp310-abi3 平台包,带 rust_bridge/_native。
+           措辞是量出来的:cardwrap 比了 6 种等义写法,只有这一版 16 档里 0 孤字、桌面宽度不拆词;卡在桌面 7 → 8 行。
+           判据:rustroute.mjs 的 MESSAGES 登记改成两种都认(三家 = v1.108.x 的表,只有 Anthropic = v1.106.4 / main /
+           v1.109.0-rc.1 的表),第三种或别处多一条照旧红;另加 D2——main 上 messages 的 opt-in 一变(比如把 DeepSeek /
+           Vertex AI 加回来),括号里「main 上已收回」就不再成立,当天红。下面是 10-26 那次的记录,原样保留。 -->
       <!-- LiteLLM —— 2026-10-26:Rust 那句的证据从「文档里没有 rust」换成「发布版自己的路由表」。
            上一版写「仓库简介那句「Rust core with Python SDK」说的是方向、不是现状：README 与写给贡献者的
            ARCHITECTURE.md 通篇不含 rust，后者画出的请求链整条是 Python。…以上按 2026-09-13 的上游核过，
@@ -265,7 +285,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」对主路径说的还是方向、不是现状：发布版确实带着 Rust 原生模块，但它的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的 messages 接口要设 <code>LITELLM_RUST</code> 才切过去。选型时按 Python 网关评估。以上按 2026-10-26 的上游与发布版 v1.106.4 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
+        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」对主路径说的还是方向、不是现状：发布版确实带着 Rust 原生模块，但它的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的 messages 接口要设 <code>LITELLM_RUST</code> 才切过去（v1.108.0 里同一开关还管 DeepSeek 与 Vertex AI 上的 Claude，main 上已收回）。选型时按 Python 网关评估。以上按 2026-11-04 的上游与发布版 v1.108.0 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
         <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
       </a>
 

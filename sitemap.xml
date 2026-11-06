@@ -20,7 +20,12 @@
 
      /worldmonitor/ is absent on purpose: robots.txt disallows it (it mirrors
      someone else's app and canonicalizes elsewhere), so listing it here would ask
-     for a crawl this site has already declined. -->
+     for a crawl this site has already declined.
+
+     /travel/taiwan-9-days/ (zh + en) is absent on purpose too (owner's call,
+     2026-11-06): it names the hotels, dates and flights of a trip in progress, and
+     both pages carry <meta name="robots" content="noindex">. Re-add the two entries
+     only together with removing that tag. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://lonloop.com/</loc></url>
   <url><loc>https://lonloop.com/radar/</loc></url>
@@ -30,8 +35,6 @@
   <url><loc>https://lonloop.com/collection/harness-continual-learning/</loc></url>
   <url><loc>https://lonloop.com/collection/scaling-book-notes/</loc></url>
   <url><loc>https://lonloop.com/travel/</loc></url>
-  <url><loc>https://lonloop.com/travel/taiwan-9-days/</loc></url>
-  <url><loc>https://lonloop.com/travel/taiwan-9-days/en/</loc></url>
   <url><loc>https://lonloop.com/travel/guiyang-2-days/</loc></url>
   <url><loc>https://lonloop.com/japanese/</loc></url>
   <url><loc>https://lonloop.com/japanese/method/</loc></url>

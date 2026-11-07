@@ -259,6 +259,12 @@
   .badge{font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;
     background:rgba(91,224,200,.12);color:var(--accent2);border:1px solid rgba(91,224,200,.25)}
   .card .desc{color:var(--muted);font-size:14.5px;margin-top:10px;flex:1}
+  /* links inside a card's running text (the Daily Tools exemplars): body colour plus a
+     thin accent underline, accent on hover — so the paragraph stays quiet and the
+     underline, not colour alone, says "link". Paint only: no change to line boxes. */
+  .card .desc a{color:var(--txt);text-decoration:underline;text-decoration-color:rgba(124,156,255,.55);
+    text-decoration-thickness:1px;text-underline-offset:3px}
+  .card .desc a:hover{color:var(--accent);text-decoration-color:currentColor}
   .card .tags{color:var(--dim);font-size:12.5px;margin-top:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
   /* wrap so a card carrying a third action (Daily Tools' test link) never pushes
      its links past the card edge on a narrow viewport; row-gap is tighter than the
@@ -728,6 +734,22 @@
              10-21 swap it also re-checks, on each exemplar's own page, the
              reference it is said to be diffed against and the "fully inline"
              criterion (an external script/stylesheet or a fetch call goes red).
+             The three exemplar names are links (2026-11-07). They are the card's
+             strongest evidence, yet a reader could not open them: 「在线访问」 lands
+             on the index of every tool, newest first, where on 2026-11-07 they sat
+             at positions 18, 26 and 40 of 135. Each name now opens the tool it names —
+             the same move as the book card's chapter deep link. The hrefs are
+             written once, in this zh markup; the EN entry for daily.desc is an
+             array whose odd items are the words of the n-th link, rebuilt from
+             these <a>s by the toggle script, so both languages open the same three
+             pages. The words did not change in either language (textContent is
+             byte-identical, so every line break and card height stays put); only
+             the three phrases are drawn in the body colour with a thin accent
+             underline — underline, not colour alone, is what marks a link inside
+             running text. No ↗, as with the chapter chips. On the next swap, move
+             the hrefs with the names: verify-exemplars-live layer L checks that
+             each link opens the tool its words name, in registry order, in both
+             languages and after a round trip through the toggle.
              The third action is the evidence for this card's strongest sentence —
              "each carries its own integration test that must pass in real Chromium
              before it deploys" — which until now the page asserted with nothing to
@@ -755,7 +777,7 @@
 
         <article class="card">
           <div class="name">Daily Tools <span class="badge">LIVE</span></div>
-          <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从 GRI&#8209;Mech&nbsp;3.0 燃烧化学、jq&nbsp;1.7.1 解释器到全天星图，分别对拍 Cantera、真 jq 与 JPL&nbsp;DE440，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
+          <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从 <a href="https://long-feeds.github.io/daily-tools/tools/2026-09-27-combustion-lab/" target="_blank" rel="noopener">GRI&#8209;Mech&nbsp;3.0 燃烧化学</a>、<a href="https://long-feeds.github.io/daily-tools/tools/2026-10-11-jq-lab/" target="_blank" rel="noopener">jq&nbsp;1.7.1 解释器</a>到<a href="https://long-feeds.github.io/daily-tools/tools/2026-10-19-sky-lab/" target="_blank" rel="noopener">全天星图</a>，分别对拍 Cantera、真 jq 与 JPL&nbsp;DE440，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
           <div class="tags" data-i18n="daily.tags">自主选题 · 零后端自包含 · Playwright 集成测试 · 无人值守日更</div>
           <div class="actions">
             <a href="https://long-feeds.github.io/daily-tools/" target="_blank" rel="noopener"><span data-i18n="proj.visit">在线访问</span> <span aria-hidden="true">↗</span></a>
@@ -957,7 +979,9 @@
         'nav.japanese': 'Japanese',
         'hero.tagline': 'Engineer building the LLM-agent & Claude Code ecosystem',
         'hero.intro': 'Focused on AI agents / LLM applications and backend systems. I like turning working ideas into things that are genuinely usable, maintainable, and production-ready — from an auto-built tools site to deep dives into Claude Code’s source.',
-        'daily.desc': 'Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — GRI\u2011Mech\u00a03.0 combustion chemistry checked against Cantera, a jq\u00a01.7.1 interpreter against real jq, a full-sky chart against JPL\u00a0DE440; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.',
+        // an array, not a string: odd items are the words of the n-th <a> in the zh
+        // markup (the three exemplar links); joined, it is the same sentence as before
+        'daily.desc': ['Every day an agent picks the topic, writes, tests and ships one zero-backend, self-contained tool — ', 'GRI\u2011Mech\u00a03.0 combustion chemistry', ' checked against Cantera, a ', 'jq\u00a01.7.1 interpreter', ' against real jq, a ', 'full-sky chart', ' against JPL\u00a0DE440; almost no two share a domain. Each carries its own integration test that must pass in real Chromium before it deploys.'],
         'daily.tags': 'Self-directed · Zero-backend · Playwright-tested · Unattended daily ships',
         'daily.test': 'See the integration test',
         'book.name': 'Decoding Claude Code',
@@ -1003,16 +1027,41 @@
 
       var textEls = document.querySelectorAll('[data-i18n]');
       var ariaEls = document.querySelectorAll('[data-i18n-aria]');
-      // snapshot the shipped Chinese content so toggling back is lossless
-      textEls.forEach(function(el){ el._zh = el.textContent; });
+      // snapshot the shipped Chinese content so toggling back is lossless. A string
+      // with links inside it keeps its shipped nodes instead, and its EN entry is an
+      // array (see daily.desc): each link is rebuilt from the shipped <a> — href,
+      // target, rel — so the URLs live once, in the markup, for both languages.
+      textEls.forEach(function(el){
+        el._zh = el.textContent;
+        el._links = el.querySelectorAll('a');
+        if (el._links.length) el._zhNodes = Array.prototype.map.call(el.childNodes, function(n){ return n.cloneNode(true); });
+      });
       ariaEls.forEach(function(el){ el._zhAria = el.getAttribute('aria-label'); });
+
+      function fill(el, parts){
+        el.textContent = '';
+        parts.forEach(function(s, i){
+          var n = (i % 2) ? el._links[(i - 1) / 2].cloneNode(false) : document.createTextNode(s);
+          if (i % 2) n.textContent = s;
+          el.appendChild(n);
+        });
+      }
 
       function setLang(lang){
         var en = (lang === 'en');
         document.documentElement.lang = en ? 'en' : 'zh-CN';
         textEls.forEach(function(el){
           var k = el.getAttribute('data-i18n');
-          el.textContent = en && EN[k] != null ? EN[k] : el._zh;
+          var v = en && EN[k] != null ? EN[k] : null;
+          // a parts array that doesn't match the markup's links degrades to plain
+          // words rather than throwing halfway through the page
+          if (Array.isArray(v) && v.length === 2 * el._links.length + 1) fill(el, v);
+          else if (v != null) el.textContent = Array.isArray(v) ? v.join('') : v;
+          else if (el._zhNodes){
+            el.textContent = '';
+            el._zhNodes.forEach(function(n){ el.appendChild(n.cloneNode(true)); });
+          }
+          else el.textContent = el._zh;
         });
         ariaEls.forEach(function(el){
           var k = el.getAttribute('data-i18n-aria');

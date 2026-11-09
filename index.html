@@ -840,7 +840,27 @@
           </div>
         </article>
 
-        <a class="card card-more" href="https://github.com/Long-Feeds" target="_blank" rel="noopener" aria-label="在 GitHub 上浏览全部开源项目" data-i18n-aria="more.aria">
+        <!-- 更多项目 / More projects opens GitHub's own "Sources" view of the account
+             (?tab=repositories&type=source), not the bare profile. Until 2026-11-09 it
+             opened github.com/Long-Feeds, where nothing is pinned, so GitHub fills the
+             page with "Popular repositories", its own pick by stars. On 2026-11-09 three
+             of those six tiles were forks of other people's projects (BerriAI/litellm,
+             BloopAI/vibe-kanban, anthropics/claude-code), and Daily Tools, the first card
+             in this grid, was not among them. The one link on this page that promises
+             "all open-source work" was showing other people's code first, which is the
+             thing this grid is curated never to show (public + original only).
+             The Sources view lists exactly the account's public non-fork repos, most
+             recently pushed first: on 2026-11-09 daily-tools, lonloop-site,
+             feishu-claude-landing, wp-init, claude-code-book, one-question. GitHub keeps
+             that list itself when a repo is added or forked, so nothing here needs
+             re-syncing. The words did not change in either language; they are now an
+             exact description of the page they open.
+             Only this link moved. The hero button, the footer and the sub-page footers
+             are labelled "GitHub" and name the account, so they keep the profile URL,
+             and so does JSON-LD sameAs (an identity, not a list of work).
+             tools/verify-morelink-live.mjs re-reads the page this opens and goes red if
+             a fork shows up there or a featured project's repo goes missing. -->
+        <a class="card card-more" href="https://github.com/Long-Feeds?tab=repositories&type=source" target="_blank" rel="noopener" aria-label="在 GitHub 上浏览全部开源项目" data-i18n-aria="more.aria">
           <span class="more-title"><span data-i18n="more.title">更多项目</span> <span class="more-arrow" aria-hidden="true">↗</span></span>
           <span class="more-sub" data-i18n="more.sub">在 GitHub 上浏览全部开源工作</span>
         </a>

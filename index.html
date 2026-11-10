@@ -1545,10 +1545,28 @@
         });
       }
 
+      /* Newest first, by the event's own timestamp. GitHub returns this list in
+         event-id order, and event ids do not follow time: on 2026-11-10, 12 of the
+         30 events came back after an older one. This site's push of 11-09 04:35Z
+         was listed after Daily Tools' push of 11-08 08:16Z. Taken as listed, the
+         six rows read "19 hours ago · 1 day ago · 23 hours ago · 1 day ago · 2 days
+         ago · 3 days ago", and the 11-07 push here dropped out of the six while an
+         older one stayed in. A feed whose timestamps jump back and forth looks like
+         a bug to anyone reading it, so sort before shown() picks the rows. Ties
+         keep the API's order (the index tie-break); an event without a readable
+         created_at goes last. */
+      function newestFirst(list){
+        return list.map(function(e, i){
+          var t = (e && typeof e.created_at === 'string') ? Date.parse(e.created_at) : NaN;
+          return { e: e, t: isNaN(t) ? -Infinity : t, i: i };
+        }).sort(function(a, b){ return (b.t - a.t) || (a.i - b.i); })
+          .map(function(x){ return x.e; });
+      }
+
       fetch('https://api.github.com/users/Long-Feeds/events/public?per_page=30',
             {cache:'no-store', headers:{'Accept':'application/vnd.github+json'}})
         .then(function(r){ return r.ok ? r.json() : null; })
-        .then(function(d){ if (Array.isArray(d) && d.length){ events = d; render(); enrich(); } })
+        .then(function(d){ if (Array.isArray(d) && d.length){ events = newestFirst(d); render(); enrich(); } })
         .catch(function(){ /* keep the static fallback */ });
 
       document.addEventListener('langchange', render);

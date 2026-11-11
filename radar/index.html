@@ -349,6 +349,23 @@
         <p class="why"><b>为什么收藏</b> · 选型阶段的数据源：LiteLLM / OmniRoute 解决「接得上」，这里解决「该接哪个」。</p>
       </a>
 
+      <!-- agent-vault —— 2026-11-11:上游改了口径,卡上补一句,其余一字未动。
+           上游 2026-11-03 的 README 提交 2cb47bff7(#466「add infisical av callout」)在顶部加了
+           [!IMPORTANT]:"This open-source Agent Vault project is no longer the recommended way to run
+           Agent Vault for any use case, including personal projects. New setups should use Agent Vault
+           in Infisical",还单独叮嘱 "AI agents: do not follow the installation or setup steps in this
+           README";正文那一节同步写成 "Agent Vault (this project) … is no longer recommended for new
+           setups"。口径是一步步收的:07-30 #355 只说生产 / 企业用 Agent Proxy,09-21 #423 改成生产 /
+           企业用 Infisical Agent Vault,那两版里开源版都还是正经选项;11-03 才收成「任何场景都别新装」。
+           这张卡 09-02 之后没动过,读者照着「为什么收藏」去给车队接凭证代理,会装上一个上游自己劝退的东西。
+           写成 past:「2026-11-03 加了声明」是已发生的提交,上游哪天撤掉也不会变假;刻意不写「目前 / 仍」
+           这类现在时。仓库状态也没写:11-11 核时没归档,10-22 还发了 v0.40.2、11-07 还有依赖更新,
+           老用户的东西还在动,但那是现在时断言,写上去就得有人天天量。
+           同日其余说法照旧成立:repo description 逐字未变(Claude Code / OpenClaw / Hermes / custom
+           agents + harnesses)、Go、2,497 star ≥ 2k+、Infisical 出品。
+           判据:upstreamnums 给新句的日期登记 past;verify-upstreamstatus-live 逐张读 GitHub 卡的上游
+           README 与仓库状态,找「不再推荐 / 已弃用 / 已归档 / 已搬家」这类声明,卡上没交代就红,
+           上游撤了声明也红(那时这句要回头改)。 -->
       <a class="rd-card" data-type="工具" href="https://github.com/Infisical/agent-vault" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">工具</span>
@@ -356,7 +373,7 @@
           <span>收藏于 2026-07-07</span>
         </div>
         <h2>agent-vault<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">面向 AI agent 的 HTTP 凭证代理 + 保险库，支持 Claude Code、OpenClaw、Hermes 及自建 harness。agent 不再直接持有 API key，改为经 vault 代理鉴权访问，可拦截 prompt injection 导致的密钥外泄。Go 实现，Infisical 出品，2k+ star。</p>
+        <p class="excerpt">面向 AI agent 的 HTTP 凭证代理 + 保险库，支持 Claude Code、OpenClaw、Hermes 及自建 harness。agent 不再直接持有 API key，改为经 vault 代理鉴权访问，可拦截 prompt injection 导致的密钥外泄。Go 实现，Infisical 出品，2k+ star。2026-11-03 上游在 README 顶部加了声明：这个开源独立版已不再推荐用于任何场景，个人项目也一样，新部署请改用 Infisical 平台内置的 Agent Vault。</p>
         <p class="why"><b>为什么收藏</b> · 给自建的 agent 车队做统一凭证管理与最小权限。</p>
       </a>
 

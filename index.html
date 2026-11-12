@@ -339,7 +339,8 @@
      shipped, 80+ → 90+ on 2026-09-22 at exactly 90 shipped, 90+ → 100+ on
      2026-10-03 at 101 shipped, 100+ → 110+ on 2026-10-12 at exactly 110
      shipped, 110+ → 120+ on 2026-10-23 at exactly 120 shipped, 120+ → 130+ on
-     2026-11-02 at exactly 130 shipped; next bump at 140, not before.
+     2026-11-02 at exactly 130 shipped, 130+ → 140+ on 2026-11-12 at exactly
+     140 shipped; next bump at 150, not before.
      This one is late, and the reason is worth keeping: the 80th tool shipped
      without anything noticing. Every prior bump was made the day the milestone
      was hit, by hand; the only assertion that ever looked at this number with
@@ -357,28 +358,30 @@
      entry is short — there is no story to tell about it.
      A floor is only worth having if it is re-sourced, not assumed. Checked the
      day of this bump, against the repo tree rather than the manifest alone
-     (git/trees/main?recursive=1, untruncated): 130 manifest entries, all 130
+     (git/trees/main?recursive=1, untruncated): 140 manifest entries, all 140
      passing the same validation the live count uses (title/date/relative
      tools/ path — see the fetch block below; the count reads `valid`, not the
      raw array, so the floor has to be re-sourced against that same gate — raw
-     array 130, valid 130, 0 rejected), 130 tool directories, 130 test.mjs — a
+     array 140, valid 140, 0 rejected), 140 tool directories, 140 test.mjs — a
      clean 1:1 with nothing on either side unaccounted for. So the label this
-     number carries ("each browser-tested") holds at 130 too. Distinct
-     categories at this bump: 120 (was 110 at the 120+ bump).
+     number carries ("each browser-tested") holds at 140 too. Distinct
+     categories at this bump: 130 (was 120 at the 130+ bump).
      The floor tracks what is published, not what is built: the 100+ bump
      landed one tool late because the 100th sat unpushed in the daily-tools
      checkout until 2026-10-02; the 110+ bump landed on the milestone itself;
      the 120+ bump was a day late but not a tool late (the 2026-10-22 run
-     never launched). This one is on time, and on time means the next
-     morning: the 130th tool (2026-11-01 Growth Lab) was pushed at 08:05 UTC,
-     about four hours after that day's 04:00 UTC run, whose sweep still
-     counted 129 — so today's sweep was the first that could see 130, and
-     verify-floor-live went red on it. That one-day lag is built in, not a
-     slip: daily-tools publishes after this site's daily run, not before it
-     (the 110th, 120th and 130th were all pushed 08:05–08:32 UTC), so a bump
-     can at best land the morning after. Nothing shipped in between, so the
-     JS-off reader is again told 130+ where the JS reader is told 130 — the
-     tightest it ever is, and why the floor is written "130+" and never "130".
+     never launched). The 130+ and 140+ bumps were on time, and on time means
+     the next morning: the 140th tool (2026-11-11 Scan Studio) was pushed at
+     08:31 UTC, about four and a half hours after that day's 04:00 UTC run,
+     whose sweep still counted 139 — so today's sweep was the first that could
+     see 140, and verify-floor-live went red on it (the 130th, 2026-11-01
+     Growth Lab, went the same way at 08:05 UTC). That one-day lag is built
+     in, not a slip: daily-tools publishes after this site's daily run, not
+     before it (the 110th, 120th, 130th and 140th were all pushed 08:05–08:32
+     UTC), so a bump can at best land the morning after. Nothing shipped in
+     between, so the JS-off reader is again told 140+ where the JS reader is
+     told 140 — the tightest it ever is, and why the floor is written "140+"
+     and never "140".
      Verifying a bump: read #stat-tools out of the rendered DOM with JS off,
      never grep. This comment necessarily quotes every prior floor, so a grep
      for the old value matches the bump commit itself and "passes" on a page
@@ -601,7 +604,7 @@
       <h2>By the numbers</h2>
       <div class="stats">
         <div class="stat">
-          <span class="num" id="stat-tools">130+</span>
+          <span class="num" id="stat-tools">140+</span>
           <span class="lbl" data-i18n="stats.tools">款 AI 小工具已交付 · 均经浏览器测试</span>
         </div>
         <div class="stat">

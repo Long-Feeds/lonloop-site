@@ -1301,7 +1301,8 @@
       document.addEventListener('langchange', function(){ renderLatest(); renderTools(); renderBreadth(); });
     })();
 
-    /* Recent activity — a live feed of public GitHub events. Only events on
+    /* Recent activity — a live feed of public GitHub events, plus each repo's
+       newest push read off its commits when the events lag (fillTip). Only
        verified public + original repos (isFork=false, isPrivate=false) are
        shown; the section keeps its static fallback link if JS is off, the API
        is rate-limited/offline, or nothing matches. Re-localizes on lang toggle. */
@@ -1542,10 +1543,45 @@
                 if (line.length > 96) line = line.slice(0, 95) + '…';
                 if (line){ subjects[c.sha] = line; got = true; }
               }
+              if (fillTip(full, d)) got = true;
               if (got) render();
             })
             .catch(function(){ /* row keeps its existing wording */ });
         });
+      }
+
+      /* A repo's newest push, read off its commits when the events feed has not
+         caught up. That feed stopped keeping up with this account's pushes: the
+         events each daily sweep saved show a push listed within a minute on 10-25
+         and 10-26, then, from 2026-10-27 on, a newest listed push 20 to 48 hours
+         old every single day — and some never arrived at all. On 2026-11-14 it
+         had nothing after 11-12 08:31Z, and Daily Tools' pushes of 10-31, 11-04
+         and 11-05 were still missing. Both repos here push daily, so this section
+         ran a day or two behind the "latest ship" line above it.
+         The commits answer fetched for subjects already holds the newest push: its
+         first entry is the tip of the default branch, and a tip has been pushed.
+         It becomes a row, timed by its commit, only when no listed push ends at it
+         and it is newer than everything listed for that repo — anything as new
+         means the feed is current there, or the newest activity was elsewhere (a
+         branch, a PR) and slotting the tip below it would be a guess. One row per
+         repo, never one per missing push: a commit list cannot tell where one push
+         ended and the next began, and a row must not claim a push that did not
+         happen. Once the events catch up, the push that ends at this tip is listed
+         and this returns false — no second row. */
+      function fillTip(full, list){
+        var c = list[0], who = c && c.commit && (c.commit.committer || c.commit.author);
+        if (!c || typeof c.sha !== 'string' || !who || typeof who.date !== 'string') return false;
+        var t = Date.parse(who.date);
+        if (isNaN(t)) return false;
+        for (var i=0;i<events.length;i++){
+          var e = events[i];
+          if (!e || !e.repo || e.repo.name !== full) continue;
+          if (e.type === 'PushEvent' && e.payload && e.payload.head === c.sha) return false;
+          if (typeof e.created_at === 'string' && Date.parse(e.created_at) >= t) return false;
+        }
+        events = newestFirst(events.concat([{ type: 'PushEvent', created_at: who.date,
+                                              repo: { name: full }, payload: { head: c.sha } }]));
+        return true;
       }
 
       /* Newest first, by the event's own timestamp. GitHub returns this list in

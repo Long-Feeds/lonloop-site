@@ -231,6 +231,35 @@
         <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
       </a>
 
+      <!-- LiteLLM —— 2026-11-18:v1.110.0 正式发布(01:36Z,GitHub releases/latest 与 PyPI info.version 都是它),Rust 这一段整段改写。
+           上一版是「…对主路径说的还是方向、不是现状：发布版确实带着 Rust 原生模块，但它的路由表把 …才切过去（main 上已改成只走 Rust，
+           不再看开关）。选型时按 Python 网关评估；从 v1.110.0 的预发布版起，管负载均衡、fallback 与重试的 Router 改用 Rust core，每次
+           实际调用仍交回 Python。以上按 2026-11-13 的上游与发布版 v1.109.1 核过。」11-13 就写明:正式版的 Router 一换成 Rust core,
+           「选型时按 Python 网关评估」到期、整段重写——今天 rustroute R1 按设计红了。今天读到的:
+           ① v1.110.0 的 litellm/router_core.py:make_core 只有一行 return RustCore.build(config, host);router_python_core.py 不在 tag 上,
+              PyPI 1.110.0 的 7 个 wheel 也都没有它(release notes 列着 #49513「add the Rust router core」与 #50178「delete the python
+              router core」)。router_rust/core.py 自述「The Rust core owns the registry, selection, retries, fallbacks and cooldowns」,
+              「every attempt runs through the host … PythonHost.invoke(op) calls litellm.<op>」⇒ 写「只剩 Rust core，但每次实际调用仍
+              交回 Python 执行」。
+           ② v1.110.0 的 rust_bridge/catalog.py 非 Python 规则与 v1.109.1 完全相同(OCR、Bedrock 转写 RUST_REQUIRED,Anthropic messages
+              RUST_OPT_IN),除一处 docstring 外只多了两个「带这些特性就留在 Python」的 feature(FOUNDRY_BETA_ROW、LATEST_ALIAS);configuration.py 与
+              v1.109.1 逐字节相同 ⇒ 路由表那句一字不动,只把「它的」换成「发布版的」(前面多了 Router 一句,「它」指代不清)。
+           ③ 括号从 main 改锚到已发布的 tag(11-13 教训①):v1.111.0-dev.1 / dev.2 / dev.3 / dev.4 / rc.1 五个预发布 tag 的 catalog.py 里
+              Anthropic messages 都是 RUST_REQUIRED(dev.3 起同一条还有 azure_ai,rc.1 另有一条 Bedrock InvokeModel 上的 Claude),
+              rc.1 的 decide() 对 RUST_REQUIRED 直接返回、不看 LITELLM_RUST。括号只说 Anthropic,别家不进卡。
+           ④ 开头那句不再写「对主路径说的还是方向、不是现状」:每个请求都要过的 Router 已经只有 Rust 实现,再这么说对上游不公道;
+              但每次调用、以及路由表留在 Python 的三类接口仍由 Python 执行,端点还是 FastAPI(proxy_server.py 仍是 app = FastAPI(…)),
+              所以写成「兑现在 Router 上」,后面紧跟哪些仍在 Python。「发布版确实带着 Rust 原生模块」随之下卡(Router 只剩 Rust
+              core 已经蕴含它;wheel 里的 rust_bridge/_native 仍由 rustroute C 层每天核)。
+           ⑤「选型时按 Python 网关评估」收窄成「选型时性能仍按 Python 网关评估」:Router 的行为已归 Rust core,运维面也变了(没有纯
+              Python 的 Router 可退),说整个网关「按 Python 评估」已不准;吞吐与延迟仍由 FastAPI 端点和 Python 调用决定。
+           读包核过:1.110.0 manylinux x86_64 wheel 里的 router_core.py、rust_bridge/catalog.py 与 tag 逐字节相同;PyPI 1.110.0 与 1.109.1
+           一样是 7 个 cp310-abi3 平台 wheel 加 1 个 sdist。「以上」覆盖的其余各项同日重核(见 rustroute / upstreamnums)。
+           措辞是量出来的:cardorph 前后量了 200 多种组合,再用 cardwrap 把双字词表扩到 50 个(含「只剩」「过去」——第一稿在全部桌面宽度
+           都把「只剩」拆在两行,原先的词表没收它)。入选这版(「这层 Router」)16 档 0 孤字、桌面(≥900)不拆词,桌面 9 → 8 行、390 宽仍 23 行。
+           判据:rustroute.mjs 的 LITERALS 换新;R1 改成正式版必须只建 Rust core,R2 锚 v1.110.0 这个 tag;新加 P 层逐个读 v1.111.0-*
+           预发布 tag 的 catalog.py / configuration.py 核括号,P0 守「v1.111.0 还没正式发布」(一发布,括号就该并进主句、按正式版的表
+           重写);main 整体改为只提示。下面是 11-13、11-04 与 10-26 三次的记录,原样保留。 -->
       <!-- LiteLLM —— 2026-11-13:括号与日期子句跟上 v1.109.1 和 main,另加一句 v1.110.0 预发布版的 Router;主句一字不动。
            上一版是「…才切过去（v1.108.0 里同一开关还管 DeepSeek 与 Vertex AI 上的 Claude，main 上已收回）。选型时按 Python
            网关评估。以上按 2026-11-04 的上游与发布版 v1.108.0 核过。」过时了两处:
@@ -311,7 +340,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」对主路径说的还是方向、不是现状：发布版确实带着 Rust 原生模块，但它的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的 messages 接口要设 <code>LITELLM_RUST</code> 才切过去（main 上已改成只走 Rust，不再看开关）。选型时按 Python 网关评估；从 v1.110.0 的预发布版起，管负载均衡、fallback 与重试的 Router 改用 Rust core，每次实际调用仍交回 Python。以上按 2026-11-13 的上游与发布版 v1.109.1 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
+        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」从 v1.110.0 起兑现在 Router 上：管负载均衡、fallback 与重试的这层 Router 只剩 Rust core，但每次实际调用仍交回 Python 执行。发布版的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的 messages 接口要设 <code>LITELLM_RUST</code> 才切过去（v1.111.0 的预发布版起改成只走 Rust，不再看开关）。选型时性能仍按 Python 网关评估。以上按 2026-11-18 的上游与发布版 v1.110.0 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
         <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
       </a>
 

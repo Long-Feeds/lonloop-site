@@ -167,23 +167,25 @@
      not prose in the sense the warning above means: one line of space-delimited
      terms whose longest space-free run, 生态的工程师, is six characters (about
      108px at the tagline's 18px floor), so there is always a space to break at
-     before anything overflows. Measured in 1px steps from 300 to 700 and 20px
-     steps up to 1440, it was cut mid-word on the commonest phones: …生态的工|程师
-     at 389–424 (the 390/393/402 iPhones, 412 Android, 414) and …生|态 at
-     335–352; and inside the product name, Claude|Code, at 300–312 in Chinese and
-     403–620 in English (every phone from 412 up); English also broke LLM-|agent
-     at 300–322. keep-all fixes the Chinese words. The names are joined by hand,
-     because the cut between Claude and Code falls on a space, which keep-all
-     allows: &nbsp; in the zh markup, \u00a0 in the EN string, and a non-breaking
-     hyphen (\u2011) in LLM-agent. After: both languages break only at a space
-     and never inside either name at any measured width, with no overflow; the
-     box keeps its height everywhere except en at 321–322px (2 → 3 lines; 320
-     was already 3). If the tagline is reworded, re-measure before keeping this:
-     keep-all stays safe only while every space-free run fits the narrowest
-     phone, and a new product name needs its own non-breaking space. A grep of
-     this file for an ASCII "Claude Code" will not find the tagline. Kept honest
-     by tools/verify-tagline-live.mjs: every break must land on a space and the
-     registered names must never split across lines. */
+     before anything overflows. On phones it was being cut inside a word or a
+     name, at different widths per engine. Chromium (Android and desktop Chrome;
+     1px steps from 300 to 700, 20px up to 1440): …生态的工|程师 at 389–424,
+     …生|态 at 335–352, Claude|Code at 300–312; in English Claude|Code at 403–620
+     and LLM-|agent at 300–322. WebKit (every iPhone browser; 21 sampled widths):
+     Claude|Code at 300–352 and …生|态 at 412–414; in English Claude|Code at
+     300–320 and 430–620, LLM-|agent at 320–360. keep-all fixes the Chinese
+     words. The names are joined by hand, because the cut between Claude and Code
+     falls on a space, which keep-all allows: &nbsp; in the zh markup, \u00a0 in
+     the EN string, and a non-breaking hyphen (\u2011) in LLM-agent. After, in
+     both engines: both languages break only at a space and never inside either
+     name at any measured width, with no overflow; the box keeps its height at
+     every measured width except Chromium en 321–322px (2 → 3 lines; 320 was 3).
+     If the tagline is reworded, re-measure before keeping this: keep-all stays
+     safe only while every space-free run fits the narrowest phone, and a new
+     product name needs its own non-breaking space. A grep of this file for an
+     ASCII "Claude Code" will not find the tagline. Kept honest by
+     tools/verify-tagline-live.mjs (Chromium and WebKit): every break must land
+     on a space and the registered names must never split across lines. */
   .card .tags,.stat .lbl,.tagline{word-break:keep-all}
   .tagline,.intro,.card .desc{text-wrap:pretty}
   /* top nav — the tab labels are 2–3 CJK characters, and a flex item shrinks before

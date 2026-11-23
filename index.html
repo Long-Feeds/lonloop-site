@@ -278,6 +278,19 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 18px;
     display:flex;flex-direction:column;transition:transform .15s ease,border-color .15s ease}
   .card:hover{transform:translateY(-3px);border-color:#33405e}
+  /* Card titles are h3 elements, not divs (2026-11-23). Every card on this page sits
+     under a section h2 (Selected Projects, Writing), but its own title was a div, so
+     the outline stopped one level short: the accessibility tree held one h1 and five
+     h2s, with five articles and no heading between them. A screen-reader user moving
+     by heading (H, 3, the rotor) reached "Selected Projects" and none of the projects
+     in it; readers that turn a page into an outline or markdown (reader view, LLM
+     fetchers) got the project names as loose lines. The W3C checker flagged each of
+     the five: "Article lacks heading". The h3's UA defaults (1.17em, 1em block
+     margins) are overridden by this rule and the * reset, so nothing moved: crops of
+     every title at 12 widths in both languages, and a 3468-element geometry and
+     computed-style snapshot of the page, were identical before and after. The badge
+     stays inside the heading, so a title reads "Daily Tools LIVE", as it does to the
+     eye. tools/verify-headings-live.mjs guards the outline and the zero margins. */
   .card .name{font-size:18px;font-weight:700;display:flex;align-items:center;gap:9px}
   .badge{font-size:11px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;
     background:rgba(91,224,200,.12);color:var(--accent2);border:1px solid rgba(91,224,200,.25)}
@@ -804,7 +817,7 @@
              all three numbers off the repo tree on every daily sweep.) -->
 
         <article class="card">
-          <div class="name">Daily Tools <span class="badge">LIVE</span></div>
+          <h3 class="name">Daily Tools <span class="badge">LIVE</span></h3>
           <p class="desc" data-i18n="daily.desc">每天由 agent 自主选题、编码、测试、部署一个零后端自包含的小工具——从 <a href="https://long-feeds.github.io/daily-tools/tools/2026-09-27-combustion-lab/" target="_blank" rel="noopener">GRI&#8209;Mech&nbsp;3.0 燃烧化学</a>、<a href="https://long-feeds.github.io/daily-tools/tools/2026-10-11-jq-lab/" target="_blank" rel="noopener">jq&nbsp;1.7.1 解释器</a>到<a href="https://long-feeds.github.io/daily-tools/tools/2026-10-19-sky-lab/" target="_blank" rel="noopener">全天星图</a>，分别对拍 Cantera、真 jq 与 JPL&nbsp;DE440，领域几乎不重样；每个都自带集成测试，真实 Chromium 跑通才允许上线。</p>
           <div class="tags" data-i18n="daily.tags">自主选题 · 零后端自包含 · Playwright 集成测试 · 无人值守日更</div>
           <div class="actions">
@@ -827,7 +840,7 @@
              chapter the headline claim lives in — same move as the Agent Kit card.
              Re-sync only if those chapters change. -->
         <article class="card">
-          <div class="name"><span data-i18n="book.name">解密 Claude Code</span> <span class="badge">LIVE</span></div>
+          <h3 class="name"><span data-i18n="book.name">解密 Claude Code</span> <span class="badge">LIVE</span></h3>
           <p class="desc" data-i18n="book.desc">从泄露的 CLI bundle 里逆向出 Anthropic agent 的真实实现：子 agent 如何派生、隔离与继承父上下文，流式主循环怎么用异步生成器串起来，工具入参又在哪一层被 Zod 严格模式拦下。</p>
           <div class="tags" data-i18n="book.tags">Agent 生命周期 · worktree 隔离 · AsyncGenerator 流式 · Zod 严格边界</div>
           <div class="actions">
@@ -859,7 +872,7 @@
              thing to machines via codeRepository and was dropped for the same
              reason — url already points at the live page. -->
         <article class="card">
-          <div class="name">Always-On Agent Kit <span class="badge">LIVE</span></div>
+          <h3 class="name">Always-On Agent Kit <span class="badge">LIVE</span></h3>
           <p class="desc" data-i18n="kit.desc">让 Claude Code agent 跑数月而非数分钟：把常驻 agent 真正需要的五套运行系统做成可直接套用的模板与 playbook，每条都抽取自一支每天真实开火的 agent 舰队。</p>
           <div class="tags" data-i18n="kit.tags">记忆协议 · 反馈闭环 · 状态去重 · 护栏 · 防僵尸运维</div>
           <div class="actions">
@@ -906,7 +919,7 @@
     <section class="section">
       <h2>Writing</h2>
       <article class="card card-writing">
-        <div class="name"><span data-i18n="book.name">解密 Claude Code</span></div>
+        <h3 class="name"><span data-i18n="book.name">解密 Claude Code</span></h3>
         <p class="desc" data-i18n="writing.desc">《解密 Claude Code：Anthropic CLI 源码深度解析》—— 基于 2026 年 3 月泄露的 CLI 源码，用 12 章逐层还原 Anthropic agent 的真实实现；每处引用都标注文件路径与行号，只写代码能证实的结论。</p>
         <!-- A chip is a label on a link: it is named by the chapter it opens, not by
              what an earlier survey chapter called that subsystem. 2026-09-20: 08 read
@@ -978,7 +991,7 @@
            LIVE uses because 非译文 is the same kind of marker and is the single most
            load-bearing word on this card. -->
       <article class="card card-writing">
-        <div class="name"><span data-i18n="notes.name">《How to Scale Your Model》精读笔记</span> <span class="badge" data-i18n="notes.badge">非译文</span></div>
+        <h3 class="name"><span data-i18n="notes.name">《How to Scale Your Model》精读笔记</span> <span class="badge" data-i18n="notes.badge">非译文</span></h3>
         <p class="desc" data-i18n="notes.desc">读 Google DeepMind《How to Scale Your Model》时自己整理的中文笔记：从「一次权重矩阵乘的算术强度 ≈ 这一批的 token 数」这一个式子出发，推出 roofline 的三个上限、四种集合通信各自的代价、Transformer 的参数 / 算力 / 显存三本账，以及训练怎么切、推理为什么是另一个世界。九节、七张自绘示意图，不镜像原书任何插图，每节末尾直达原书对应章节。</p>
         <div class="tags" data-i18n="notes.tags">算术强度 · roofline · collective 代价模型 · 并行切分 · prefill / decode 分离</div>
         <div class="actions">

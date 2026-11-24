@@ -596,7 +596,15 @@
         <a href="/travel/" class="tab" data-i18n="nav.travel">旅行</a>
         <a href="/japanese/" class="tab" data-i18n="nav.japanese">日语</a>
       </div>
-      <button type="button" id="langToggle" class="lang-toggle" aria-label="Switch to English">EN</button>
+      <!-- The toggle's spoken name starts with the word it shows (2026-11-24):
+           "EN, switch to English" / 「中，切换到中文」, not "Switch to English" alone.
+           WCAG 2.5.3 (Label in Name, level A): a voice-control user reads "EN" off
+           the screen and says "click EN", which matched nothing while the name left
+           it out; Lighthouse 13.6 (axe 4.14) flagged it. The rest of the name still
+           announces the destination in the destination's own language, the
+           convention tools/i18nleak.mjs holds the 中 side to. setLang() below writes
+           both strings; keep them in step with this one. -->
+      <button type="button" id="langToggle" class="lang-toggle" aria-label="EN, switch to English">EN</button>
     </div>
   </nav>
   <div class="wrap">
@@ -900,8 +908,18 @@
              are labelled "GitHub" and name the account, so they keep the profile URL,
              and so does JSON-LD sameAs (an identity, not a list of work).
              tools/verify-morelink-live.mjs re-reads the page this opens and goes red if
-             a fork shows up there or a featured project's repo goes missing. -->
-        <a class="card card-more" href="https://github.com/Long-Feeds?tab=repositories&type=source" target="_blank" rel="noopener" aria-label="在 GitHub 上浏览全部开源项目" data-i18n-aria="more.aria">
+             a fork shows up there or a featured project's repo goes missing.
+             No aria-label (2026-11-24). It had one, 「在 GitHub 上浏览全部开源项目」 /
+             "Browse all open-source projects on GitHub", and an aria-label replaces
+             the visible words as the link's name: the title 更多项目 / More projects
+             was not in it at all, and the sub-line differed by a word (工作 / work
+             vs 项目 / projects). WCAG 2.5.3 (Label in Name, level A) wants the words
+             a reader sees inside the name, so that saying 「点击 更多项目」 to voice
+             control lands here; Lighthouse 13.6 (axe 4.14) flagged it in both
+             languages. Without the label the name is the visible text itself (the ↗
+             is aria-hidden), so the two cannot drift apart again; the EN_ARIA table
+             that existed only for this link went with it. -->
+        <a class="card card-more" href="https://github.com/Long-Feeds?tab=repositories&type=source" target="_blank" rel="noopener">
           <span class="more-title"><span data-i18n="more.title">更多项目</span> <span class="more-arrow" aria-hidden="true">↗</span></span>
           <span class="more-sub" data-i18n="more.sub">在 GitHub 上浏览全部开源工作</span>
         </a>
@@ -1084,10 +1102,8 @@
         'notes.tags': 'Arithmetic intensity \u00b7 Roofline \u00b7 Collective cost model \u00b7 Sharding \u00b7 Prefill / decode split',
         'notes.src': 'The book (free, online)'
       };
-      var EN_ARIA = { 'more.aria': 'Browse all open-source projects on GitHub' };
 
       var textEls = document.querySelectorAll('[data-i18n]');
-      var ariaEls = document.querySelectorAll('[data-i18n-aria]');
       // snapshot the shipped Chinese content so toggling back is lossless. A string
       // with links inside it keeps its shipped nodes instead, and its EN entry is an
       // array (see daily.desc): each link is rebuilt from the shipped <a> — href,
@@ -1097,7 +1113,6 @@
         el._links = el.querySelectorAll('a');
         if (el._links.length) el._zhNodes = Array.prototype.map.call(el.childNodes, function(n){ return n.cloneNode(true); });
       });
-      ariaEls.forEach(function(el){ el._zhAria = el.getAttribute('aria-label'); });
 
       function fill(el, parts){
         el.textContent = '';
@@ -1124,14 +1139,11 @@
           }
           else el.textContent = el._zh;
         });
-        ariaEls.forEach(function(el){
-          var k = el.getAttribute('data-i18n-aria');
-          el.setAttribute('aria-label', en && EN_ARIA[k] != null ? EN_ARIA[k] : el._zhAria);
-        });
         var btn = document.getElementById('langToggle');
         if (btn){
           btn.textContent = en ? '中' : 'EN';
-          btn.setAttribute('aria-label', en ? '切换到中文' : 'Switch to English');
+          // name = the shown word first, then where it goes (WCAG 2.5.3; see the markup)
+          btn.setAttribute('aria-label', en ? '中，切换到中文' : 'EN, switch to English');
         }
         try { localStorage.setItem('lang', en ? 'en' : 'zh'); } catch(e){}
         // let dynamic, JS-rendered content (e.g. the activity feed) re-localize

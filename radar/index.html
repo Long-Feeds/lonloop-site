@@ -231,6 +231,32 @@
         <p class="why"><b>怎么用</b> · 当体系化查阅书使：先顺着目录读一遍建立全局，之后遇到具体问题（选卡、算显存、要不要上投机解码）再回来查对应章节。对 agent 也友好——任意页面网址后加 <code>.md</code> 就能取 Markdown 原文，站点还提供 <code>llms.txt</code> 全站索引。</p>
       </a>
 
+      <!-- LiteLLM —— 2026-11-25:v1.111.0 正式发布(01:42Z,GitHub releases/latest 与 PyPI info.version 都是它),路由表那句按正式版的表重写,括号并进主句。
+           上一版是「发布版的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的
+           messages 接口要设 LITELLM_RUST 才切过去（v1.111.0 的预发布版起改成只走 Rust，不再看开关）。选型时性能仍按 Python 网关评估。以上按
+           2026-11-18 的上游与发布版 v1.110.0 核过。」11-18 就写明:v1.111.0 一正式发布,括号说的就成了正式版现状,该并进主句、按正式版的表重写
+           ——今天 rustroute 的 P0 与 B2 按设计红了(卡上「要设 LITELLM_RUST 才切过去」与「只有 OCR 与 Bedrock 语音转写」从 01:42Z 起不再成立)。今天读到的:
+           ① v1.111.0 的 rust_bridge/catalog.py 与 v1.111.0-rc.3 逐字节相同。非 Python 的规则恰好四条、全是 RUST_REQUIRED:OCR(不限 provider)、
+              Bedrock 语音转写、messages 上的 providers={anthropic, azure_ai}、messages 上的 bedrock + targets={BEDROCK_INVOKE};RUST_OPT_IN 一条不剩。
+              chat completions / embeddings / responses / token counter / tokenizer 的规则全是 PYTHON_ONLY,没有规则命中仍落回 PYTHON_ONLY
+              ⇒「都留在 Python」与「只有」照旧成立,枚举从两项变三项。
+           ②「调用 Claude」有出处,不是猜的:litellm/messages/dispatch.py 的 _route_target 只在 provider 有原生 Anthropic messages 配置时给
+              Target.MESSAGES,utils.py 的 get_provider_anthropic_messages_config 对 azure_ai 只在模型名含 claude 时给配置;其余模型落到
+              CHAT_COMPLETIONS / RESPONSES,被 messages 的第一条 PYTHON_ONLY 截回 Python。BEDROCK_INVOKE 的 docstring 自己写着「Claude on Bedrock
+              InvokeModel」。Vertex AI 与 Bedrock Mantle 上的 Claude 这一版仍走 Python(main 与 v1.112.0-* 预发布 tag 才把它们加进来、并改成按
+              target 判),所以只点这三处。
+           ③「不受 LITELLM_RUST 开关控制」:configuration.py 的 decide() 对 RUST_REQUIRED 直接返回、不看开关;开关名仍是 LITELLM_RUST(常量名
+              ENV_NAME)。「从 v1.111.0 起」:同日发的补丁版 v1.110.4 / v1.109.5 的表仍是 Anthropic RUST_OPT_IN、没有 azure_ai 与 InvokeModel 两条。
+           ④ Router 那句与选型那句照旧:router_core.py 的 make_core 仍只返回 RustCore.build(config, host),router_rust/core.py 仍写着
+              「every attempt runs through the host」,端点仍是 FastAPI(proxy_server.py 仍是 app = FastAPI(…)),主路径三类接口仍在 Python。
+              选型句只多一个逗号:量断行时,它是能救回 430 宽末行孤字的写法之一(见下)。
+           读包核过:PyPI 1.111.0 的 7 个 wheel 全是 cp310-abi3、都带 rust_bridge/_native;manylinux x86_64 wheel 里的 rust_bridge/catalog.py、
+           configuration.py、router_core.py 与 tag v1.111.0 上的逐字节相同。「以上」覆盖的其余各项同日重核(见 rustroute / upstreamnums)。
+           措辞是量出来的:先在 1200 宽筛了两千多种组合(动词、连词、括号写法、选型句),1200 与 430 两档都干净的 35 种再跑 16 档,
+           剩 16 种 0 孤字且桌面(≥900)不拆词,取读着最顺的一种。桌面 8 → 9 行(多了两处 provider),390 宽仍 23 行。
+           判据:rustroute.mjs 的 LITERALS / EXPECT 换新(messages 两条 RUST_REQUIRED 进登记,MESSAGES_OPTIN 撤掉);新加 B6 拿几种调用上下文
+           按「先命中者胜」跑一遍规则表(Anthropic / Azure AI 的 messages、Bedrock 的 InvokeModel 都必须落到 RUST_REQUIRED);B5 改核 decide()
+           对 RUST_REQUIRED 不看开关;卡上不再说预发布版,P 层改成对 v1.112.0-* 只提示。下面是 11-18、11-13、11-04 与 10-26 四次的记录,原样保留。 -->
       <!-- LiteLLM —— 2026-11-18:v1.110.0 正式发布(01:36Z,GitHub releases/latest 与 PyPI info.version 都是它),Rust 这一段整段改写。
            上一版是「…对主路径说的还是方向、不是现状：发布版确实带着 Rust 原生模块，但它的路由表把 …才切过去（main 上已改成只走 Rust，
            不再看开关）。选型时按 Python 网关评估；从 v1.110.0 的预发布版起，管负载均衡、fallback 与重试的 Router 改用 Rust core，每次
@@ -340,7 +366,7 @@
           <span>收藏于 2026-07-21</span>
         </div>
         <h2>LiteLLM<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」从 v1.110.0 起兑现在 Router 上：管负载均衡、fallback 与重试的这层 Router 只剩 Rust core，但每次实际调用仍交回 Python 执行。发布版的路由表把 chat completions、embeddings、responses 都留在 Python，只有 OCR 与 Bedrock 语音转写必须走 Rust，Anthropic 的 messages 接口要设 <code>LITELLM_RUST</code> 才切过去（v1.111.0 的预发布版起改成只走 Rust，不再看开关）。选型时性能仍按 Python 网关评估。以上按 2026-11-18 的上游与发布版 v1.110.0 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
+        <p class="excerpt">开源 AI 网关：一个 OpenAI 兼容端点接进 100+ 家模型（OpenAI / Anthropic / Gemini / Bedrock / Azure / VertexAI / vLLM / NIM…），内置成本追踪、负载均衡、自动 fallback 与重试、预算与限速、缓存和 guardrails，可当 proxy 自托管。仓库简介那句「Rust core with Python SDK」从 v1.110.0 起兑现在 Router 上：管负载均衡、fallback 与重试的这层 Router 只剩 Rust core，但每次实际调用仍交回 Python 执行。发布版的路由表把 chat completions、embeddings、responses 都留在 Python，必须走 Rust 的只有 OCR、Bedrock 语音转写，以及经 Anthropic、Azure AI 与 Bedrock InvokeModel 调用 Claude 的 messages 接口（从 v1.111.0 起，不受 <code>LITELLM_RUST</code> 开关控制）。选型时，性能仍按 Python 网关评估。以上按 2026-11-25 的上游与发布版 v1.111.0 核过。Google ADK 与 OpenAI Agents SDK 各自仓库里都带着一个 LiteLLM 适配器（<code>LiteLlm</code> / <code>LitellmModel</code>），两家模型厂自己的 agent SDK 都拿它接别家模型。5 万+ star，几乎每天都在更新。</p>
         <p class="why"><b>为什么收藏</b> · 摆在自建 agent 车队前面做统一模型接入层，和同在这页的 agent-vault 凭证代理天然配套。</p>
       </a>
 

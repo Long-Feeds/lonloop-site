@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>英语：听力与口语 12 周 · 英语 · lonX</title>
+<meta name="description" content="为在新加坡工作的中文母语工程师设计的 12 周英语听说课程：每天 40 分钟的精听听写、跟读、口语输出和表达复习，配上经过校验的多口音音频。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="canonical" href="https://lonloop.com/english/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="英语：听力与口语 12 周 · 英语 · lonX" />
+<meta property="og:description" content="为在新加坡工作的中文母语工程师设计的 12 周英语听说课程：每天 40 分钟的精听听写、跟读、口语输出和表达复习，配上经过校验的多口音音频。" />
+<meta property="og:url" content="https://lonloop.com/english/" />
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="en-data" content="/english/data/course.json?v=28ae5950" />
+<link rel="stylesheet" href="/english/assets/en.css?v=31bcb33a" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+      <a href="/travel/" class="tab">旅行</a>
+      <a href="/japanese/" class="tab">日语</a>
+      <a href="/english/" class="tab" aria-current="page">英语</a>
+    </div>
+  </nav>
+  <nav class="subnav" aria-label="英语板块">
+    <a href="/english/" aria-current="page">今日</a>
+    <a href="/english/listen/">精听</a>
+    <a href="/english/speak/">口语</a>
+    <a href="/english/phrases/">表达</a>
+    <a href="/english/sounds/">发音</a>
+    <a href="/english/resources/">资源</a>
+    <a href="/english/method/">方法</a>
+  </nav>
+  <main class="en">
+    <header class="page-head">
+      <div class="eyebrow">English · 听力与口语</div>
+      <h1>英语：听力与口语 12 周</h1>
+      <p class="lead">为在新加坡工作的中文母语工程师准备的听说课程。阅读和词汇已经够用（雅思 6–7 分），卡住的是两件事：<b>听不出</b>真实语速下连成一串的英语，<b>说不顺</b>——要先在脑子里翻译。每天 40 分钟，按顺序完成下面的任务就行：精听听写练耳朵，跟读和 4/3/2 练嘴，表达卡片攒「现成的句子」，真实材料和 AI 陪练用成熟的工具。</p>
+      <div class="meta"><span>12 周 · 每周 6 天练习 + 1 天周测</span><span>美 / 英 / 澳 / 印 / 新加坡口音</span><span>记录只存在你的浏览器</span></div>
+    </header>
+
+    <section class="card" id="setup" hidden>
+      <h3>从今天开始</h3>
+      <p class="sub" style="margin-bottom:12px">课程按「完成到第几天」推进，不按日历：哪天没练，回来接着做下一天就好，不用补。开始日期只用来算连续天数。</p>
+      <button class="btn pri" id="start-btn" type="button">开始第 1 天</button>
+    </section>
+
+    <section id="today" hidden>
+      <div class="today-h">
+        <h2 id="day-title">第 1 天</h2>
+        <div class="daynav">
+          <button class="btn sm" id="prev" type="button" aria-label="上一天">←</button>
+          <button class="btn sm" id="cur" type="button">回到当前</button>
+          <button class="btn sm" id="next" type="button" aria-label="下一天">→</button>
+        </div>
+      </div>
+      <div class="dim" id="day-sub" style="font-size:14px"></div>
+      <ul class="tasks" id="tasks"></ul>
+      <div class="kpis" id="kpis"></div>
+    </section>
+
+    <div class="prose">
+      <h2 id="map">12 周地图</h2>
+      <p class="dim" style="font-size:14px;margin-bottom:6px">每格一天，点格子可以跳过去看那天的任务。浅蓝 = 做了一部分，青色 = 做完，虚线 = 周测日。</p>
+      <div class="cal" id="cal" aria-label="84 天进度"></div>
+
+      <h2 id="roadmap">三个阶段</h2>
+      <section class="stage">
+        <div class="stage-h"><h3>阶段 1 · 第 1–4 周：把耳朵「解码」打开</h3><span class="badge ok">地基</span></div>
+        <p>听不懂的主因往往不是生词，而是认不出<b>本来就认识的词</b>——它们在真实语流里被弱读、连读、吞掉了。这一阶段先用 18 节微课把连读、弱读和中文母语者最常见的发音问题过一遍，每天逐句听写清晰的美式、英式句子。口语从熟悉的话题开始，用 4/3/2 练流利度。</p>
+        <ul><li>目标：常速、清晰的工作对话，听写正确率稳定在 85% 以上</li><li>能连续讲 2 分钟熟悉的话题，不长时间停顿</li></ul>
+      </section>
+      <section class="stage">
+        <div class="stage-h"><h3>阶段 2 · 第 5–8 周：真实语速，多种口音</h3><span class="badge">提速</span></div>
+        <p>语速提高 10%，加入澳式、印度、新加坡口音——这些就是你在办公室真正会听到的。口语转向「把技术讲给外行听」和复述听到的内容；表达卡片加入讨论、协商、坏消息怎么说。</p>
+        <ul><li>目标：播客和会议能跟上大意，听写正确率在 1.1 倍速下保持 80% 以上</li><li>能用结构化的方式讲清一个技术概念（先结论，再展开，最后说代价）</li></ul>
+      </section>
+      <section class="stage">
+        <div class="stage-h"><h3>阶段 3 · 第 9–12 周：会议和面试</h3><span class="badge hi">实战</span></div>
+        <p>语速再快一些，句子更长、更口语化。口语以角色扮演和面试为主：顶住不合理的截止日期、安抚着急的同事、讲一个设计方案、行为面试（STAR）、系统设计开场、谈薪。用 AI 语音陪练做模拟面试。</p>
+        <ul><li>目标：能在没有准备的情况下回答行为面试问题，2 分钟内有结构、有细节</li><li>周测录音和第 1 周相比：停顿更少、更少「嗯……」，用上了学过的表达</li></ul>
+      </section>
+      <p class="dim" style="font-size:14px">12 周之后：换更难的材料（长播客、技术大会演讲、无字幕剧集）按同样的节奏再走一轮。为什么这样安排、每一步的依据，见「<a href="/english/method/">方法</a>」。</p>
+
+      <h2 id="journal">周记</h2>
+      <p class="dim" style="font-size:14px">周测日写三行就够：这周最常听不出什么、说的时候卡在哪、下周多练什么。只保存在这个浏览器里。</p>
+      <div id="journal-box"></div>
+
+      <h2 id="data">备份记录</h2>
+      <p class="dim" style="font-size:14px">进度、听写分数、表达卡片的复习记录都存在这个浏览器里。换设备或清缓存之前，先导出备份。</p>
+      <div class="row"><button class="btn sm" id="export" type="button">导出备份</button><label class="btn sm" style="cursor:pointer">导入备份<input type="file" id="import" accept="application/json" hidden></label></div>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span><a href="/english/method/">方法与校验</a> · <a href="/english/resources/">外部资源</a></span>
+    <span class="lic">音频由 Microsoft 神经网络语音合成（edge-tts），每条都经过 Whisper 反向听写校验后才发布；练习记录和录音只保存在你自己的浏览器里，不会上传。</span>
+  </footer>
+  <noscript><p class="en">这一板块的练习需要 JavaScript。</p></noscript>
+  <script type="module" src="/english/assets/today.js?v=13babdc3"></script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

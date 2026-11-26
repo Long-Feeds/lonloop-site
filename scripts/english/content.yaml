@@ -1,0 +1,2272 @@
+# English listening & speaking course content.
+# Accent assumption: notes and IPA describe General American (GA) unless the note says 英音/澳音/新加坡/印度口音.
+dictation:
+  - id: d01
+    phase: 1
+    title: 周一站会
+    voice: en-US-AndrewNeural
+    rate: "+0%"
+    items:
+      - id: d01-01
+        text: "Yesterday I finished the login page, and today I'm going to work on the tests."
+        focus: [gonna, contraction]
+        note: "going to 口语常弱化为 gonna /ˈɡʌnə/"
+      - id: d01-02
+        text: "I'm still blocked on the database migration, so I could use some help."
+        focus: [weak-form, linking]
+        note: "blocked on 卡在；could use some help 需要帮忙"
+      - id: d01-03
+        text: "Not much to report from my side, just a couple of small bug fixes."
+        focus: [weak-form, linking]
+        note: "a couple of 常连成 /əˈkʌpələ/，of 弱读"
+      - id: d01-04
+        text: "Can you give me a hand with the review after lunch?"
+        focus: [weak-form, linking]
+        note: "give me 常读 /ˈɡɪmi/；give sb a hand 帮忙"
+      - id: d01-05
+        text: "I think we should be able to ship it by the end of the week."
+        focus: [weak-form, linking]
+        note: "end of the 连成 /ˈendəvðə/；ship 发布上线"
+      - id: d01-06
+        text: "I'll pick that ticket up once I'm done with the payment bug."
+        focus: [phrasal-verb, contraction]
+        note: "pick up 接手；I'll /aɪl/ 很短，易漏听"
+      - id: d01-07
+        text: "Let's keep this short, we've got a lot to get through today."
+        focus: [flap-t, contraction]
+        note: "got a 闪音 /ˈɡɑɾə/；get through 过完议程"
+      - id: d01-08
+        text: "Did you get a chance to look at my pull request?"
+        focus: [yod, flap-t]
+        note: "did you→/ˈdɪdʒə/；get a→/ˈɡeɾə/"
+      - id: d01-09
+        text: "I'm out on Friday, so Jake will cover for me."
+        focus: [phrasal-verb, linking]
+        note: "I'm out 请假不在；cover for 替…顶班"
+      - id: d01-10
+        text: "That's it from me, I'll hand it over to Priya."
+        focus: [linking, flap-t]
+        note: "hand it over 连读，it over 闪音"
+
+  - id: d02
+    phase: 1
+    title: 冲刺规划
+    voice: en-US-AvaNeural
+    rate: "+0%"
+    items:
+      - id: d02-01
+        text: "How many points do you think this story is worth?"
+        focus: [weak-form, stress]
+        note: "do you 常弱化为 /dəjə/；points 故事点"
+      - id: d02-02
+        text: "I'd rather split it into two smaller tickets."
+        focus: [contraction, flap-t]
+        note: "I'd rather 宁愿；split it into 闪音连读"
+      - id: d02-03
+        text: "We've only got about eight days of capacity this sprint."
+        focus: [numbers, flap-t]
+        note: "got about 闪音；eight 的 t 常不爆破"
+      - id: d02-04
+        text: "Let's not overcommit like we did last time."
+        focus: [elision, stress]
+        note: "last time 两个 t 只发一次"
+      - id: d02-05
+        text: "Can we push the analytics work to next sprint?"
+        focus: [elision, phrasal-verb]
+        note: "next sprint 的 t 常吞掉；push to 推迟到"
+      - id: d02-06
+        text: "If we can't get design sign-off by Wednesday, it's going to slip."
+        focus: [can-cant, gonna]
+        note: "can't 重读、元音饱满；slip 延期"
+      - id: d02-07
+        text: "What's the definition of done for this one?"
+        focus: [weak-form, linking]
+        note: "definition of done 完成标准；of 弱读 /əv/"
+      - id: d02-08
+        text: "I'm a bit worried we're underestimating the testing effort."
+        focus: [contraction, weak-form]
+        note: "we're 读 /wɪr/，别听成 were"
+      - id: d02-09
+        text: "Does anyone want to take the lead on the search feature?"
+        focus: [gonna, weak-form]
+        note: "want to 口语常读 wanna；take the lead 牵头"
+      - id: d02-10
+        text: "Let's timebox this discussion to ten minutes and move on."
+        focus: [numbers, phrasal-verb]
+        note: "timebox 限定时长；move on 进入下一项"
+
+  - id: d03
+    phase: 1
+    title: 代码评审
+    voice: en-GB-RyanNeural
+    rate: "+0%"
+    items:
+      - id: d03-01
+        text: "Could you add a comment explaining why this check is here?"
+        focus: [yod, linking]
+        note: "could you 常读 /ˈkʊdʒə/；add a 连读"
+      - id: d03-02
+        text: "This looks good to me, just a few minor nits."
+        focus: [idiom, elision]
+        note: "nits 小毛病；just a few 中 t 常省"
+      - id: d03-03
+        text: "I'm not sure this'll handle the empty case."
+        focus: [contraction, glottal-t]
+        note: "this'll = this will；英音 not 常喉塞"
+      - id: d03-04
+        text: "Have you thought about pulling this out into a helper function?"
+        focus: [phrasal-verb, linking]
+        note: "pull out into 抽成；out into 连读"
+      - id: d03-05
+        text: "There's a typo in the variable name on line forty-two."
+        focus: [numbers, contraction]
+        note: "forty 重音在前，别和 fourteen 混"
+      - id: d03-06
+        text: "I'd hold off on merging until the tests are green."
+        focus: [phrasal-verb, contraction]
+        note: "hold off 先别；green 测试全部通过"
+      - id: d03-07
+        text: "We can't really afford another dependency for something this small."
+        focus: [can-cant]
+        note: "英音 can't /kɑːnt/，can 弱读 /kən/"
+      - id: d03-08
+        text: "What happens if the request times out halfway through?"
+        focus: [phrasal-verb, glottal-t]
+        note: "time out 超时；英音 what 常喉塞"
+      - id: d03-09
+        text: "It's a bit of a nitpick, so feel free to ignore it."
+        focus: [glottal-t, idiom]
+        note: "英音 bit of 常喉塞；nitpick 吹毛求疵"
+      - id: d03-10
+        text: "Let me know when you've pushed the fix and I'll take another look."
+        focus: [contraction, linking]
+        note: "you've 易漏听；take another look 连读"
+
+  - id: d04
+    phase: 1
+    title: 午饭闲聊
+    voice: en-US-EmmaNeural
+    rate: "+0%"
+    items:
+      - id: d04-01
+        text: "Do you want to grab lunch? I'm starving."
+        focus: [gonna, idiom]
+        note: "want to→wanna；grab lunch 去吃个饭"
+      - id: d04-02
+        text: "Have you tried that new noodle place across the street?"
+        focus: [weak-form, linking]
+        note: "have you 弱读 /həvjə/；noodle place 面馆"
+      - id: d04-03
+        text: "I'm not a big fan of spicy food, to be honest."
+        focus: [idiom, flap-t]
+        note: "not a 闪音；not a big fan of 不太喜欢"
+      - id: d04-04
+        text: "What did you get up to over the weekend?"
+        focus: [yod, phrasal-verb]
+        note: "what did you 常读 /ˈwʌɾɪdʒə/；get up to 干了啥"
+      - id: d04-05
+        text: "We just went hiking and then binge-watched a show all evening."
+        focus: [elision, linking]
+        note: "just went 中 t 常吞；binge-watch 狂刷剧"
+      - id: d04-06
+        text: "Man, it's been crazy hot lately, hasn't it?"
+        focus: [contraction, stress]
+        note: "crazy hot 热死了；hasn't it 求认同"
+      - id: d04-07
+        text: "So how long have you been in Singapore now?"
+        focus: [h-dropping, weak-form]
+        note: "句中 have 常脱 h 读 /əv/"
+      - id: d04-08
+        text: "I'm thinking of heading back home for Chinese New Year."
+        focus: [phrasal-verb, linking]
+        note: "head back 回去；thinking of 连读"
+      - id: d04-09
+        text: "Let me know if you ever want to try the hawker stalls near my place."
+        focus: [gonna, linking]
+        note: "want to→wanna；near my place 我家附近"
+      - id: d04-10
+        text: "Anyway, I should get back to it. Catch you later!"
+        focus: [idiom, linking]
+        note: "get back to it 回去干活；catch you later 回头见"
+
+  - id: d05
+    phase: 1
+    title: 入职第一天
+    voice: en-US-BrianNeural
+    rate: "+0%"
+    items:
+      - id: d05-01
+        text: "Welcome aboard! Let me show you around the office."
+        focus: [linking, phrasal-verb]
+        note: "show you around 带你转转；welcome aboard 欢迎加入"
+      - id: d05-02
+        text: "You'll get access to the repo once your account's set up."
+        focus: [contraction, phrasal-verb]
+        note: "account's = account is；set up 开通好"
+      - id: d05-03
+        text: "Don't worry if it takes a while to get up to speed."
+        focus: [idiom, elision]
+        note: "get up to speed 上手；don't 的 t 常不爆破"
+      - id: d05-04
+        text: "Your onboarding buddy is Sam, so ping him with any questions."
+        focus: [idiom, h-dropping]
+        note: "ping 发消息；him 常脱 h，ping him 像 pingim"
+      - id: d05-05
+        text: "We usually have a team lunch on the first Thursday of the month."
+        focus: [elision, weak-form]
+        note: "first Thursday 中 t 常吞；of the 弱读"
+      - id: d05-06
+        text: "The docs are a little out of date, so take them with a grain of salt."
+        focus: [idiom, flap-t]
+        note: "out of 闪音；grain of salt 别全信"
+      - id: d05-07
+        text: "I'd start by reading through the architecture overview."
+        focus: [contraction, phrasal-verb]
+        note: "I'd = I would；read through 通读"
+      - id: d05-08
+        text: "Feel free to shadow me on calls this week."
+        focus: [idiom, linking]
+        note: "shadow 跟着旁听学习"
+      - id: d05-09
+        text: "It's a lot to take in, but you'll pick it up pretty quickly."
+        focus: [flap-t, phrasal-verb]
+        note: "take in 消化；pick it up 闪音 /ˈpɪkɪˈɾʌp/"
+      - id: d05-10
+        text: "If you get stuck, just reach out on the team channel."
+        focus: [phrasal-verb, linking]
+        note: "get stuck 卡住；reach out 联系"
+
+  - id: d06
+    phase: 1
+    title: 和经理一对一
+    voice: en-GB-SoniaNeural
+    rate: "+0%"
+    items:
+      - id: d06-01
+        text: "So how are things going on your end?"
+        focus: [linking, idiom]
+        note: "on your end 你那边；things going 连读"
+      - id: d06-02
+        text: "I've been feeling a bit stretched lately, to be honest."
+        focus: [contraction, glottal-t]
+        note: "stretched 忙不过来；英音 bit 常喉塞"
+      - id: d06-03
+        text: "Is there anything I can do to make that easier?"
+        focus: [can-cant, weak-form]
+        note: "can 弱读 /kən/，不是 can't"
+      - id: d06-04
+        text: "I'd like to take on more ownership of the platform work."
+        focus: [contraction, phrasal-verb]
+        note: "take on 承担；ownership 主导负责"
+      - id: d06-05
+        text: "Where do you see yourself in a year or two?"
+        focus: [weak-form, linking]
+        note: "do you 弱读；year or 英音带连接 r"
+      - id: d06-06
+        text: "That's fair, let's revisit it at your mid-year review."
+        focus: [idiom, glottal-t]
+        note: "that's fair 有道理；英音 it at 喉塞"
+      - id: d06-07
+        text: "I'd appreciate some feedback on how the presentation went."
+        focus: [contraction, linking]
+        note: "I'd appreciate 礼貌请求；feedback on 连读"
+      - id: d06-08
+        text: "You handled that really well, but try not to over-explain."
+        focus: [stress, weak-form]
+        note: "but 弱读 /bət/；over-explain 解释过度"
+      - id: d06-09
+        text: "Honestly, I'm not sure the current scope is realistic."
+        focus: [glottal-t, stress]
+        note: "honestly 的 h 不发音；英音 not 常喉塞"
+      - id: d06-10
+        text: "Let's catch up again in a couple of weeks."
+        focus: [phrasal-verb, weak-form]
+        note: "catch up 碰一下；couple of 弱读 /ˈkʌpl əv/"
+
+  - id: d07
+    phase: 1
+    title: 日常快速沟通
+    voice: en-US-AvaNeural
+    rate: "+0%"
+    items:
+      - id: d07-01
+        text: "Quick question for you, do you have a sec?"
+        focus: [weak-form, idiom]
+        note: "sec = second 一会儿；do you 弱读"
+      - id: d07-02
+        text: "Sorry, I totally missed your message from yesterday."
+        focus: [flap-t, yod]
+        note: "totally 闪音；missed your→/ˈmɪstʃər/"
+      - id: d07-03
+        text: "Can you send me the link to that doc?"
+        focus: [can-cant, elision]
+        note: "can 弱读；send me 中 d 常吞掉"
+      - id: d07-04
+        text: "No worries, take your time, it's not urgent at all."
+        focus: [idiom, flap-t]
+        note: "no worries 没事；at all 闪音 /əˈɾɔl/"
+      - id: d07-05
+        text: "I'll circle back on this after my next meeting."
+        focus: [idiom, elision]
+        note: "circle back 回头再跟进；next 的 t 常吞"
+      - id: d07-06
+        text: "Just a heads-up, the staging server is down again."
+        focus: [idiom, linking]
+        note: "heads-up 提个醒；down again 连读"
+      - id: d07-07
+        text: "Let me double-check and get back to you."
+        focus: [phrasal-verb, glottal-t]
+        note: "get back 中 t 常喉塞；get back to 回复"
+      - id: d07-08
+        text: "Are you okay with me merging this tonight?"
+        focus: [weak-form, linking]
+        note: "are you 弱读 /ərjə/；okay with 同意"
+      - id: d07-09
+        text: "I'm going to be out for a few hours this afternoon."
+        focus: [gonna, weak-form]
+        note: "going to→gonna；hours 的 h 不发音"
+      - id: d07-10
+        text: "Does that work for you, or should we find another time?"
+        focus: [weak-form, linking]
+        note: "work for you 方便吗；find another 连读"
+
+  - id: d08
+    phase: 1
+    title: 客户电话
+    voice: en-US-AndrewNeural
+    rate: "+0%"
+    items:
+      - id: d08-01
+        text: "Thanks for jumping on the call at such short notice."
+        focus: [idiom, weak-form]
+        note: "jump on a call 上线开会；at short notice 临时"
+      - id: d08-02
+        text: "Before we start, can everyone hear me okay?"
+        focus: [can-cant, linking]
+        note: "can 弱读 /kən/；hear me okay 连读"
+      - id: d08-03
+        text: "I'll share my screen and walk you through the new dashboard."
+        focus: [phrasal-verb, contraction]
+        note: "walk you through 带你过一遍"
+      - id: d08-04
+        text: "Sorry, you cut out for a second there. Could you repeat that?"
+        focus: [phrasal-verb, yod]
+        note: "cut out 声音断了；could you→/ˈkʊdʒə/"
+      - id: d08-05
+        text: "We're aiming to have the fix out by the end of next week."
+        focus: [elision, contraction]
+        note: "next week 的 t 常吞；fix out 发布修复"
+      - id: d08-06
+        text: "Let me make sure I've understood your requirements correctly."
+        focus: [contraction, stress]
+        note: "I've 很轻易漏；make sure 两个词连读"
+      - id: d08-07
+        text: "So what does your current setup look like today?"
+        focus: [weak-form, linking]
+        note: "what does 常读 /ˈwʌdəz/；setup 现有配置"
+      - id: d08-08
+        text: "That's a great question. Let me loop in our solutions engineer."
+        focus: [idiom, linking]
+        note: "loop in 把…拉进来"
+      - id: d08-09
+        text: "We can definitely look into that and follow up by Friday."
+        focus: [can-cant, phrasal-verb]
+        note: "can 弱读；look into 调查；follow up 跟进"
+      - id: d08-10
+        text: "I'll send over a summary right after this call."
+        focus: [phrasal-verb, flap-t]
+        note: "right after 闪音；send over 发过去"
+
+  - id: d09
+    phase: 2
+    title: 线上事故电话
+    voice: en-AU-NatashaNeural
+    rate: "+10%"
+    items:
+      - id: d09-01
+        text: "Okay, it looks like the payment service started timing out around nine forty."
+        focus: [numbers, phrasal-verb]
+        note: "nine forty=9:40，别听成 fourteen"
+      - id: d09-02
+        text: "Has anyone pushed anything to production in the last hour?"
+        focus: [elision, linking]
+        note: "last hour 连读，hour 的 h 不发音"
+      - id: d09-03
+        text: "I'm rolling back the last deploy just to rule it out."
+        focus: [phrasal-verb, linking]
+        note: "roll back 回滚；rule it out 排除"
+      - id: d09-04
+        text: "Error rates are coming down, but we're not out of the woods yet."
+        focus: [idiom, weak-form]
+        note: "not out of the woods 还没脱险"
+      - id: d09-05
+        text: "Can someone keep an eye on the dashboards while I dig into the logs?"
+        focus: [idiom, phrasal-verb]
+        note: "keep an eye on 盯着；dig into 深挖"
+      - id: d09-06
+        text: "We're seeing about two percent of requests fail with a five hundred."
+        focus: [numbers, weak-form]
+        note: "five hundred 指 HTTP 500 错误"
+      - id: d09-07
+        text: "It's probably the connection pool, but I don't want to jump to conclusions."
+        focus: [gonna, idiom]
+        note: "want to→wanna；jump to conclusions 过早下结论"
+      - id: d09-08
+        text: "Let's get a status update out to customers in the next fifteen minutes."
+        focus: [numbers, flap-t]
+        note: "fifteen 重音在后；get a 闪音"
+      - id: d09-09
+        text: "Who's on call for the database team tonight?"
+        focus: [contraction, idiom]
+        note: "who's = who is；on call 值班"
+      - id: d09-10
+        text: "Good work, everyone. We'll do a proper post-mortem tomorrow."
+        focus: [contraction, idiom]
+        note: "post-mortem 事后复盘；we'll 很短"
+
+  - id: d10
+    phase: 2
+    title: 设计评审
+    voice: en-IN-PrabhatNeural
+    rate: "+10%"
+    items:
+      - id: d10-01
+        text: "The main goal here is to cut down on the number of round trips."
+        focus: [phrasal-verb, linking]
+        note: "cut down on 减少；round trips 往返请求"
+      - id: d10-02
+        text: "Why did we go with a queue instead of just calling the service directly?"
+        focus: [phrasal-verb, stress]
+        note: "go with 选用；instead of 对比"
+      - id: d10-03
+        text: "What happens to the messages if the consumer falls over?"
+        focus: [phrasal-verb]
+        note: "fall over 口语指服务挂掉"
+      - id: d10-04
+        text: "I'm a bit concerned about the extra latency this adds."
+        focus: [stress, linking]
+        note: "concerned about 连读；印度口音节奏较均匀"
+      - id: d10-05
+        text: "We could cache the results, but then we'd have to deal with invalidation."
+        focus: [contraction, phrasal-verb]
+        note: "we'd = we would；deal with 处理"
+      - id: d10-06
+        text: "Have we thought about what this looks like at ten times the traffic?"
+        focus: [numbers, stress]
+        note: "ten times the traffic 十倍流量"
+      - id: d10-07
+        text: "That's a fair point, let's add it to the open questions."
+        focus: [idiom, linking]
+        note: "fair point 说得在理；add it to 连读"
+      - id: d10-08
+        text: "I'd rather keep it simple for version one and iterate later."
+        focus: [contraction, numbers]
+        note: "version one 第一版；iterate 迭代"
+      - id: d10-09
+        text: "Can you talk us through the failure modes one more time?"
+        focus: [phrasal-verb, can-cant]
+        note: "talk us through 给我们讲一遍"
+      - id: d10-10
+        text: "Overall I'm on board, as long as we've got proper monitoring in place."
+        focus: [idiom, contraction]
+        note: "on board 赞同；in place 到位"
+
+  - id: d11
+    phase: 2
+    title: 给非技术同事讲技术
+    voice: en-SG-WayneNeural
+    rate: "+10%"
+    items:
+      - id: d11-01
+        text: "Think of a cache as a shortcut that saves us a trip to the database."
+        focus: [linking, weak-form]
+        note: "think of a 连读；saves us a trip 省一趟"
+      - id: d11-02
+        text: "Basically, the app was trying to do too much at once."
+        focus: [linking, weak-form]
+        note: "much at once 连读；at once 同时"
+      - id: d11-03
+        text: "It's kind of like a waiter taking orders from too many tables."
+        focus: [weak-form, idiom]
+        note: "kind of 口语常读 kinda /ˈkaɪndə/"
+      - id: d11-04
+        text: "The short answer is yes, but there's a catch."
+        focus: [idiom, contraction]
+        note: "there's a catch 有个隐藏问题"
+      - id: d11-05
+        text: "We didn't lose any data, it just wasn't showing up for a while."
+        focus: [contraction, phrasal-verb]
+        note: "show up 显示出来；didn't/wasn't 易混"
+      - id: d11-06
+        text: "So instead of checking every time, we keep a copy close by."
+        focus: [linking, weak-form]
+        note: "instead of 中 of 弱读；close by 就近"
+      - id: d11-07
+        text: "It'll take about three weeks, mostly because of the testing."
+        focus: [contraction, numbers]
+        note: "it'll = it will；three 别听成 tree"
+      - id: d11-08
+        text: "Does that make sense, or should I go into more detail?"
+        focus: [weak-form, phrasal-verb]
+        note: "go into detail 展开讲"
+      - id: d11-09
+        text: "The tricky part is keeping everything in sync across regions."
+        focus: [idiom, linking]
+        note: "in sync 同步；tricky part 难点"
+      - id: d11-10
+        text: "Put simply, more servers won't fix it if the bottleneck's the database."
+        focus: [contraction, stress]
+        note: "won't /woʊnt/ 别听成 want"
+
+  - id: d12
+    phase: 2
+    title: 复述科技播客
+    voice: en-US-EmmaNeural
+    rate: "+10%"
+    items:
+      - id: d12-01
+        text: "The guy they interviewed used to run engineering at a big startup."
+        focus: [weak-form, flap-t]
+        note: "used to 读 /ˈjuːstə/；at a 闪音"
+      - id: d12-02
+        text: "His main point was that you shouldn't optimize for scale too early."
+        focus: [contraction, stress]
+        note: "shouldn't 的 t 很弱；optimize for 优化目标"
+      - id: d12-03
+        text: "He said they ended up rewriting the whole thing twice."
+        focus: [phrasal-verb, linking]
+        note: "end up 最终；ended up 连成 /ˈendɪdʌp/"
+      - id: d12-04
+        text: "What stuck with me was how much time they spent on hiring."
+        focus: [idiom, weak-form]
+        note: "stick with me 让我印象深刻；was 弱读"
+      - id: d12-05
+        text: "I didn't totally agree with him, but it got me thinking."
+        focus: [flap-t, h-dropping]
+        note: "totally 闪音；with him 常脱 h /wɪðɪm/"
+      - id: d12-06
+        text: "She made a good case for writing things down instead of having meetings."
+        focus: [idiom, flap-t]
+        note: "make a case for 论证；writing 闪音"
+      - id: d12-07
+        text: "Apparently, a lot of the bugs came from unclear requirements."
+        focus: [flap-t, weak-form]
+        note: "a lot of 闪音 /əˈlɑɾəv/"
+      - id: d12-08
+        text: "They also touched on remote work, which I found pretty interesting."
+        focus: [phrasal-verb, flap-t]
+        note: "touch on 简单提到；pretty 闪音 /ˈprɪɾi/"
+      - id: d12-09
+        text: "The episode's about an hour long, but it's worth a listen."
+        focus: [contraction, linking]
+        note: "episode's = episode is；值得一听"
+      - id: d12-10
+        text: "If you've got time on your commute, I'd definitely check it out."
+        focus: [contraction, flap-t]
+        note: "check it out 闪音 /ˈtʃekɪˈɾaʊt/"
+
+  - id: d13
+    phase: 2
+    title: 冲刺回顾会
+    voice: en-IN-NeerjaNeural
+    rate: "+10%"
+    items:
+      - id: d13-01
+        text: "Let's start with what went well this sprint."
+        focus: [linking, stress]
+        note: "went well 做得好的部分"
+      - id: d13-02
+        text: "I think the new release checklist really paid off."
+        focus: [phrasal-verb, linking]
+        note: "pay off 见效；paid off 连读"
+      - id: d13-03
+        text: "On the flip side, we had way too many last-minute changes."
+        focus: [idiom, stress]
+        note: "on the flip side 另一方面；way too 太过"
+      - id: d13-04
+        text: "The handoff between design and engineering still feels a bit clunky."
+        focus: [idiom, weak-form]
+        note: "handoff 交接；clunky 不顺畅"
+      - id: d13-05
+        text: "We kept getting pulled into support tickets, which slowed us down."
+        focus: [phrasal-verb, linking]
+        note: "pulled into 被拉去；slow down 拖慢"
+      - id: d13-06
+        text: "Can we agree on one or two action items we'll actually follow through on?"
+        focus: [phrasal-verb, numbers]
+        note: "follow through on 落实到底"
+      - id: d13-07
+        text: "I'll own the item about making stand-ups shorter."
+        focus: [contraction, idiom]
+        note: "own 负责；I'll own 别听成 I own"
+      - id: d13-08
+        text: "It wasn't anyone's fault, the process just didn't catch it."
+        focus: [contraction]
+        note: "wasn't 与 was 只差一个 n't，要听清"
+      - id: d13-09
+        text: "Shout-out to Mei for staying late to fix the build."
+        focus: [idiom, linking]
+        note: "shout-out 公开致谢；fix the build 修构建"
+      - id: d13-10
+        text: "Let's check back on these at the next retro."
+        focus: [phrasal-verb, linking]
+        note: "check back on 回头检查进度"
+
+  - id: d14
+    phase: 2
+    title: 产品演示
+    voice: en-AU-WilliamMultilingualNeural
+    rate: "+10%"
+    items:
+      - id: d14-01
+        text: "Today I want to show you what we've been working on for the last month."
+        focus: [gonna, contraction]
+        note: "want to→wanna；we've 易漏听"
+      - id: d14-02
+        text: "Bear with me, it takes a second to load."
+        focus: [idiom, linking]
+        note: "bear with me 请稍等"
+      - id: d14-03
+        text: "As you can see, the search results now come back almost instantly."
+        focus: [can-cant, phrasal-verb]
+        note: "as you can see 中 can 弱读"
+      - id: d14-04
+        text: "If I click on this tab, you'll get a breakdown by region."
+        focus: [contraction, linking]
+        note: "click on 连读；breakdown 细分数据"
+      - id: d14-05
+        text: "This used to take users about five clicks, now it's down to one."
+        focus: [numbers, weak-form]
+        note: "used to /ˈjuːstə/；down to one 降到一次"
+      - id: d14-06
+        text: "We're still ironing out a few kinks in the mobile version."
+        focus: [idiom, phrasal-verb]
+        note: "iron out the kinks 解决小毛病"
+      - id: d14-07
+        text: "Don't hesitate to jump in with questions at any point."
+        focus: [phrasal-verb, linking]
+        note: "jump in 插话；at any 连读"
+      - id: d14-08
+        text: "That's not live yet, it's behind a feature flag for now."
+        focus: [contraction, idiom]
+        note: "live /laɪv/ 已上线；feature flag 功能开关"
+      - id: d14-09
+        text: "We're planning to roll it out to everyone early next quarter."
+        focus: [phrasal-verb, elision]
+        note: "roll out 全量上线；next 的 t 常吞"
+      - id: d14-10
+        text: "I'll hang around after the demo if anyone wants a closer look."
+        focus: [phrasal-verb, linking]
+        note: "hang around 留下来；closer 读 /ˈkloʊsər/"
+
+  - id: d15
+    phase: 2
+    title: 猎头电话
+    voice: en-SG-LunaNeural
+    rate: "+10%"
+    items:
+      - id: d15-01
+        text: "Hi, is now still a good time to chat?"
+        focus: [weak-form, idiom]
+        note: "a good time 方便吗；chat 聊聊"
+      - id: d15-02
+        text: "I came across your profile and thought you'd be a great fit."
+        focus: [phrasal-verb, contraction]
+        note: "come across 偶然看到；great fit 很合适"
+      - id: d15-03
+        text: "Are you actively looking, or just open to the right opportunity?"
+        focus: [weak-form, linking]
+        note: "open to 对…持开放态度"
+      - id: d15-04
+        text: "The role sits within the platform team and reports to the head of infra."
+        focus: [linking, weak-form]
+        note: "report to 向…汇报；infra = 基础设施"
+      - id: d15-05
+        text: "It's a hybrid setup, three days in the office and two from home."
+        focus: [numbers, linking]
+        note: "hybrid 混合办公；三天坐班两天在家"
+      - id: d15-06
+        text: "What are you currently on in terms of base salary?"
+        focus: [weak-form, idiom]
+        note: "currently on 目前拿多少；base 底薪"
+      - id: d15-07
+        text: "Just so you know, the budget for this one is pretty flexible."
+        focus: [idiom, weak-form]
+        note: "just so you know 先跟你说一声"
+      - id: d15-08
+        text: "How much notice do you need to give your current employer?"
+        focus: [weak-form, idiom]
+        note: "notice 离职通知期"
+      - id: d15-09
+        text: "The process is usually a screening call followed by three rounds."
+        focus: [numbers, weak-form]
+        note: "screening call 初筛电话；rounds 轮"
+      - id: d15-10
+        text: "I'll send you the job description and we can set up a time next week."
+        focus: [phrasal-verb, can-cant]
+        note: "set up a time 约时间；can 非重读"
+
+  - id: d16
+    phase: 2
+    title: 和产品经理谈优先级
+    voice: en-GB-RyanNeural
+    rate: "+10%"
+    items:
+      - id: d16-01
+        text: "I get why this is urgent, but something else has to give."
+        focus: [idiom, weak-form]
+        note: "something has to give 必须有所取舍"
+      - id: d16-02
+        text: "If we take this on now, the migration will slip by at least a week."
+        focus: [phrasal-verb, linking]
+        note: "take on 接下；slip by a week 推迟一周"
+      - id: d16-03
+        text: "What's driving the deadline? Is it a contract thing?"
+        focus: [glottal-t, weak-form]
+        note: "英音 it a 中 t 常喉塞"
+      - id: d16-04
+        text: "Could we ship a cut-down version first and follow up later?"
+        focus: [phrasal-verb, weak-form]
+        note: "cut-down version 精简版；follow up 再补"
+      - id: d16-05
+        text: "I'm not saying no, I'm just flagging the trade-off."
+        focus: [idiom, contraction]
+        note: "flag 指出；trade-off 取舍"
+      - id: d16-06
+        text: "Honestly, I don't think we can do both properly in two weeks."
+        focus: [can-cant, numbers]
+        note: "can 弱读 /kən/，注意不是 can't"
+      - id: d16-07
+        text: "Let's get the stakeholders in a room and make a call."
+        focus: [idiom, glottal-t]
+        note: "make a call 拍板；英音 get the 喉塞"
+      - id: d16-08
+        text: "Can you ask her whether the date is actually fixed?"
+        focus: [h-dropping, can-cant]
+        note: "ask her 常脱 h，听似 asker"
+      - id: d16-09
+        text: "We've been firefighting all month, so the team's running on fumes."
+        focus: [idiom, contraction]
+        note: "running on fumes 快累垮了；firefighting 救火"
+      - id: d16-10
+        text: "Fair enough. I'll write up both options and we'll decide on Thursday."
+        focus: [phrasal-verb, contraction]
+        note: "fair enough 行吧；write up 写成文档"
+
+  - id: d17
+    phase: 3
+    title: 行为面试：面试官提问
+    voice: en-US-BrianNeural
+    rate: "+15%"
+    items:
+      - id: d17-01
+        text: "Tell me about a time you had to deal with a difficult stakeholder."
+        focus: [weak-form, flap-t]
+        note: "had to /ˈhæftə/；about a 闪音"
+      - id: d17-02
+        text: "Walk me through how you handled it, step by step."
+        focus: [phrasal-verb, linking]
+        note: "walk me through 详细讲讲；handled it 连读"
+      - id: d17-03
+        text: "Looking back, what would you have done differently?"
+        focus: [yod, weak-form]
+        note: "would you have 常读 /ˈwʊdʒəv/"
+      - id: d17-04
+        text: "How did you win over the other teams?"
+        focus: [yod, phrasal-verb]
+        note: "did you→/ˈdɪdʒə/；win over 争取到支持"
+      - id: d17-05
+        text: "Give me an example of a decision you made with incomplete information."
+        focus: [weak-form, linking]
+        note: "example of a 连成 /ɪɡˈzæmpləvə/"
+      - id: d17-06
+        text: "What was the measurable impact on the business?"
+        focus: [weak-form, stress]
+        note: "was 弱读 /wəz/；measurable 重音在首"
+      - id: d17-07
+        text: "Have you ever had to give tough feedback to a peer?"
+        focus: [weak-form, idiom]
+        note: "tough feedback 不中听的反馈；peer 同级"
+      - id: d17-08
+        text: "Tell me about a project that didn't go the way you planned."
+        focus: [contraction, flap-t]
+        note: "about a 闪音；go the way 按预期进行"
+      - id: d17-09
+        text: "What's something you'd do differently if you were starting over?"
+        focus: [contraction, phrasal-verb]
+        note: "you'd 易漏听；start over 从头来"
+      - id: d17-10
+        text: "And how did the rest of the team react to that?"
+        focus: [weak-form, linking]
+        note: "did 弱读；rest of the 连成 /ˈrestəvðə/"
+
+  - id: d18
+    phase: 3
+    title: 行为面试：候选人回答
+    voice: en-SG-WayneNeural
+    rate: "+15%"
+    items:
+      - id: d18-01
+        text: "So the context was that we were about to launch, and our main backend engineer quit."
+        focus: [weak-form, linking]
+        note: "about to 即将；quit 离职"
+      - id: d18-02
+        text: "My job was to get the service stable before the holiday sales."
+        focus: [weak-form, stress]
+        note: "holiday sales 节日大促"
+      - id: d18-03
+        text: "The first thing I did was sit down with each team and map out the dependencies."
+        focus: [phrasal-verb, linking]
+        note: "sit down with 坐下来谈；map out 梳理"
+      - id: d18-04
+        text: "I pushed for a feature freeze, which wasn't a popular call at the time."
+        focus: [idiom, contraction]
+        note: "push for 力争；feature freeze 功能冻结"
+      - id: d18-05
+        text: "We managed to cut the error rate by about sixty percent."
+        focus: [numbers, weak-form]
+        note: "sixty 重音在前，别和 sixteen 混"
+      - id: d18-06
+        text: "In hindsight, I should have brought the product team in earlier."
+        focus: [weak-form, phrasal-verb]
+        note: "should have 常读 /ˈʃʊdəv/；bring in 拉进来"
+      - id: d18-07
+        text: "It was a tough conversation, but we ended up on the same page."
+        focus: [idiom, phrasal-verb]
+        note: "on the same page 达成共识"
+      - id: d18-08
+        text: "What I took away from it was to raise risks much earlier."
+        focus: [phrasal-verb, linking]
+        note: "take away 收获；took away 连读"
+      - id: d18-09
+        text: "I didn't have any formal authority, so I had to lead by influence."
+        focus: [contraction, weak-form]
+        note: "had to /ˈhæftə/；lead by influence 靠影响力"
+      - id: d18-10
+        text: "Long story short, we shipped on time and the on-call load dropped a lot."
+        focus: [idiom, linking]
+        note: "long story short 长话短说；on-call 值班"
+
+  - id: d19
+    phase: 3
+    title: 系统设计面试
+    voice: en-GB-SoniaNeural
+    rate: "+20%"
+    items:
+      - id: d19-01
+        text: "Let's say we need to design a link shortener for a few million users."
+        focus: [numbers, weak-form]
+        note: "let's say 假设；a few million 几百万"
+      - id: d19-02
+        text: "Before I jump into the design, can I clarify a few requirements?"
+        focus: [phrasal-verb, can-cant]
+        note: "jump into 直接开始；can 弱读"
+      - id: d19-03
+        text: "Roughly how many reads are we expecting compared to writes?"
+        focus: [weak-form, stress]
+        note: "读写比；reads/writes 对比重音"
+      - id: d19-04
+        text: "I'll start with a simple version and then scale it up."
+        focus: [phrasal-verb, linking]
+        note: "scale it up 连读，扩容"
+      - id: d19-05
+        text: "We could shard the data by user, but that creates hot spots."
+        focus: [idiom, glottal-t]
+        note: "shard 分片；英音 but that 喉塞"
+      - id: d19-06
+        text: "The write path is going to be the bottleneck here, not the reads."
+        focus: [gonna, weak-form]
+        note: "going to→gonna；write path 写路径"
+      - id: d19-07
+        text: "To keep latency down, I'd put a cache in front of the database."
+        focus: [contraction, linking]
+        note: "in front of 中 of 弱读；keep down 压低"
+      - id: d19-08
+        text: "What happens if one of the nodes goes down in the middle of a write?"
+        focus: [phrasal-verb, weak-form]
+        note: "go down 宕机；one of the 连读"
+      - id: d19-09
+        text: "There's a trade-off here between consistency and availability."
+        focus: [stress, contraction]
+        note: "consistency 重音在第二音节"
+      - id: d19-10
+        text: "If I had more time, I'd look at how we handle failover across regions."
+        focus: [contraction, linking]
+        note: "failover 故障切换；I'd = I would"
+
+  - id: d20
+    phase: 3
+    title: 谈薪资
+    voice: en-AU-NatashaNeural
+    rate: "+15%"
+    items:
+      - id: d20-01
+        text: "Thanks for the offer, I'm really excited about the role."
+        focus: [linking, weak-form]
+        note: "excited about 连读；for the 弱读"
+      - id: d20-02
+        text: "Before I accept, I'd like to talk through the compensation a bit."
+        focus: [contraction, phrasal-verb]
+        note: "talk through 详谈；compensation 薪酬"
+      - id: d20-03
+        text: "Based on my research and other offers, I was hoping for something closer to one forty."
+        focus: [numbers, weak-form]
+        note: "one forty 指年薪十四万"
+      - id: d20-04
+        text: "Is there any flexibility on the base, or is it mostly in the bonus?"
+        focus: [weak-form, linking]
+        note: "base 底薪；is it 连读"
+      - id: d20-05
+        text: "I'm not trying to play hardball, I just want to make sure it's fair."
+        focus: [idiom, gonna]
+        note: "play hardball 强硬施压；want to→wanna"
+      - id: d20-06
+        text: "If the base is fixed, could we look at a signing bonus instead?"
+        focus: [weak-form, linking]
+        note: "signing bonus 签字费；look at a 连读"
+      - id: d20-07
+        text: "What does the equity vesting schedule look like?"
+        focus: [weak-form, stress]
+        note: "vesting schedule 股权归属时间表"
+      - id: d20-08
+        text: "That's a little lower than I was expecting, if I'm being honest."
+        focus: [flap-t, weak-form]
+        note: "little 闪音 /ˈlɪɾəl/；than 弱读"
+      - id: d20-09
+        text: "Can I take a few days to think it over before I decide?"
+        focus: [can-cant, phrasal-verb]
+        note: "think it over 考虑一下"
+      - id: d20-10
+        text: "If we can land somewhere around there, I'm ready to sign."
+        focus: [can-cant, idiom]
+        note: "land around 落在那个数；can 弱读"
+
+  - id: d21
+    phase: 3
+    title: 事故通报和道歉
+    voice: en-IN-NeerjaNeural
+    rate: "+20%"
+    items:
+      - id: d21-01
+        text: "I'll get straight to it: we had a data loss incident last night."
+        focus: [idiom, linking]
+        note: "get straight to it 开门见山"
+      - id: d21-02
+        text: "Around two percent of orders weren't written to the database."
+        focus: [numbers, contraction]
+        note: "weren't /wɜːrnt/，别听成 want"
+      - id: d21-03
+        text: "The root cause was a config change that skipped code review."
+        focus: [idiom, weak-form]
+        note: "root cause 根因；skip 跳过"
+      - id: d21-04
+        text: "We caught it within the hour and rolled back immediately."
+        focus: [phrasal-verb, linking]
+        note: "within the hour 一小时内；roll back 回滚"
+      - id: d21-05
+        text: "We're reaching out to every affected customer individually."
+        focus: [phrasal-verb, linking]
+        note: "reach out to 主动联系"
+      - id: d21-06
+        text: "I take full responsibility for this, and I'm sorry it happened."
+        focus: [stress, linking]
+        note: "full responsibility 重读 full"
+      - id: d21-07
+        text: "Going forward, every config change will need a second pair of eyes."
+        focus: [idiom, weak-form]
+        note: "second pair of eyes 再找人复核"
+      - id: d21-08
+        text: "We don't have a full picture yet, but I'll keep you posted."
+        focus: [idiom, contraction]
+        note: "keep you posted 随时同步进展"
+      - id: d21-09
+        text: "The good news is that nothing was exposed outside the company."
+        focus: [weak-form, stress]
+        note: "exposed 泄露；that/was 非重读"
+      - id: d21-10
+        text: "Better to over-communicate on this than have you hear it from someone else."
+        focus: [weak-form, linking]
+        note: "than 常弱读 /ðən/；hear it from 连读"
+
+  - id: d22
+    phase: 3
+    title: 跨团队谈判
+    voice: en-US-AndrewNeural
+    rate: "+20%"
+    items:
+      - id: d22-01
+        text: "I hear you, and I don't want to dismiss the concern."
+        focus: [gonna, contraction]
+        note: "I hear you 我明白；want to→wanna"
+      - id: d22-02
+        text: "Where I'm struggling is the timing, not the idea itself."
+        focus: [stress, weak-form]
+        note: "对比重音落在 timing / idea"
+      - id: d22-03
+        text: "Can we meet halfway and do the read path this quarter?"
+        focus: [can-cant, idiom]
+        note: "meet halfway 各让一步"
+      - id: d22-04
+        text: "If you can lend us one engineer for a month, that changes the math."
+        focus: [can-cant, idiom]
+        note: "changes the math 情况就不同了"
+      - id: d22-05
+        text: "I'm not going to commit to a date I don't believe in."
+        focus: [gonna, contraction]
+        note: "going to→gonna；believe in 认同"
+      - id: d22-06
+        text: "Let me play devil's advocate for a second."
+        focus: [idiom, linking]
+        note: "play devil's advocate 故意唱反调"
+      - id: d22-07
+        text: "What would it take for you to move this to next quarter?"
+        focus: [flap-t, weak-form]
+        note: "would it 闪音 /ˈwʊɾɪt/；需要什么条件"
+      - id: d22-08
+        text: "We're not that far apart, it's really just about sequencing."
+        focus: [contraction, idiom]
+        note: "not that far apart 分歧不大"
+      - id: d22-09
+        text: "I'll need to run it by my director before I can say yes."
+        focus: [phrasal-verb, can-cant]
+        note: "run it by 先征求…意见"
+      - id: d22-10
+        text: "Let's put a pin in that and come back to it after the launch."
+        focus: [idiom, flap-t]
+        note: "put a pin in it 先搁置；put a 闪音"
+
+  - id: d23
+    phase: 3
+    title: 面试结尾反问
+    voice: en-SG-LunaNeural
+    rate: "+15%"
+    items:
+      - id: d23-01
+        text: "We've got about five minutes left. What questions do you have for me?"
+        focus: [numbers, weak-form]
+        note: "do you have 常弱读 /dəjə/"
+      - id: d23-02
+        text: "What does a typical week look like for someone on this team?"
+        focus: [weak-form, linking]
+        note: "what does a 连读；typical week 日常"
+      - id: d23-03
+        text: "How do you measure success in the first six months?"
+        focus: [numbers, elision]
+        note: "first six 中 t 常吞；six months"
+      - id: d23-04
+        text: "What's the biggest challenge the team is facing right now?"
+        focus: [contraction, stress]
+        note: "what's = what is；facing 面临"
+      - id: d23-05
+        text: "Is there anything in my background that gives you pause?"
+        focus: [idiom, linking]
+        note: "give sb pause 让人犹豫"
+      - id: d23-06
+        text: "I really enjoyed this conversation, thanks for your time."
+        focus: [linking, weak-form]
+        note: "for your 弱读 /fər jər/"
+      - id: d23-07
+        text: "What are the next steps in the process?"
+        focus: [elision, weak-form]
+        note: "next steps 中 t 常吞；what are 连读"
+      - id: d23-08
+        text: "How has the team changed since the reorg?"
+        focus: [h-dropping, weak-form]
+        note: "how has 中 has 常弱读 /əz/；reorg 重组"
+      - id: d23-09
+        text: "Would you mind if I followed up by email with a few more questions?"
+        focus: [yod, phrasal-verb]
+        note: "would you→/ˈwʊdʒə/；follow up 跟进"
+      - id: d23-10
+        text: "Honestly, it sounds like a great fit, and I'd love to keep the conversation going."
+        focus: [idiom, contraction]
+        note: "great fit 很契合；keep going 继续"
+
+  - id: d24
+    phase: 3
+    title: 架构决策会
+    voice: en-AU-WilliamMultilingualNeural
+    rate: "+20%"
+    items:
+      - id: d24-01
+        text: "I'm not convinced we need microservices at our size."
+        focus: [stress, linking]
+        note: "not convinced 不太认同；at our 连读"
+      - id: d24-02
+        text: "Splitting it up now would just add a lot of operational overhead."
+        focus: [phrasal-verb, flap-t]
+        note: "split up 拆分；a lot of 闪音"
+      - id: d24-03
+        text: "Let's not reinvent the wheel; there's a library that does exactly this."
+        focus: [idiom, contraction]
+        note: "reinvent the wheel 重复造轮子"
+      - id: d24-04
+        text: "The devil's in the details, especially around retries and timeouts."
+        focus: [idiom, contraction]
+        note: "devil's in the details 魔鬼在细节"
+      - id: d24-05
+        text: "We've been bitten by this before, so I'd like a rollback plan."
+        focus: [idiom, contraction]
+        note: "been bitten 吃过亏；rollback plan 回滚预案"
+      - id: d24-06
+        text: "Can we get some numbers on this instead of going with gut feel?"
+        focus: [can-cant, idiom]
+        note: "gut feel 直觉；instead of 中 of 弱读"
+      - id: d24-07
+        text: "Worst case, we flip the flag and we're back where we started."
+        focus: [idiom, elision]
+        note: "worst case 最坏情况；flip the flag 关开关"
+      - id: d24-08
+        text: "I'm happy to take a first pass at the design doc this week."
+        focus: [idiom, elision]
+        note: "take a first pass 先出初稿；first 的 t 常吞"
+      - id: d24-09
+        text: "Does anyone feel strongly either way, or can we lock this in?"
+        focus: [can-cant, phrasal-verb]
+        note: "lock in 敲定；either way 两边都"
+      - id: d24-10
+        text: "Great, let's go with option two and revisit it in a month."
+        focus: [numbers, linking]
+        note: "go with 选；revisit it in a 连读"
+
+chunks:
+  - id: c-meeting-opinion
+    phase: 1
+    title: 开会表达观点、同意与反对
+    items:
+      - id: c-meeting-opinion-01
+        en: "I see where you're coming from, but I'd push back a little on the timeline."
+        zh: "我理解你的出发点，但时间线这块我想稍微提点不同意见。"
+        note: "push back = 委婉反对"
+      - id: c-meeting-opinion-02
+        en: "For what it's worth, I think option B is the safer bet."
+        zh: "仅供参考，我觉得 B 方案更稳妥。"
+        note: "for what it's worth 谦虚地抛出观点"
+      - id: c-meeting-opinion-03
+        en: "I'm with Sarah on this one."
+        zh: "这件事我同意 Sarah 的看法。"
+        note: "be with sb = 站在某人一边"
+      - id: c-meeting-opinion-04
+        en: "That's a good point. I hadn't thought about it that way."
+        zh: "说得好，我之前没从这个角度想过。"
+      - id: c-meeting-opinion-05
+        en: "I'd lean towards keeping it simple for now."
+        zh: "我倾向于先保持简单。"
+        note: "lean towards 倾向于"
+      - id: c-meeting-opinion-06
+        en: "I'm not totally sold on that, to be honest."
+        zh: "说实话，我还没完全被说服。"
+        note: "be sold on sth = 认同、被说服"
+      - id: c-meeting-opinion-07
+        en: "Just to throw another idea out there, what if we cached it on the client?"
+        zh: "我再抛个想法：如果在客户端缓存呢？"
+        note: "throw sth out there 随口提一个想法"
+      - id: c-meeting-opinion-08
+        en: "I agree in principle, but the details worry me a bit."
+        zh: "原则上我同意，但细节让我有点担心。"
+      - id: c-meeting-opinion-09
+        en: "Can I just add something quickly?"
+        zh: "我能快速补充一点吗？"
+        note: "礼貌插话"
+      - id: c-meeting-opinion-10
+        en: "I think we're mostly on the same page here."
+        zh: "我觉得我们基本达成共识了。"
+      - id: c-meeting-opinion-11
+        en: "My gut says it's fine, but I'd like to see the data."
+        zh: "直觉上没问题，但我想看看数据。"
+        note: "my gut says 直觉告诉我"
+      - id: c-meeting-opinion-12
+        en: "Let's agree to disagree and run the experiment."
+        zh: "我们保留分歧，先把实验跑起来。"
+        note: "agree to disagree 求同存异"
+
+  - id: c-clarify
+    phase: 1
+    title: 请对方澄清、确认理解
+    items:
+      - id: c-clarify-01
+        en: "Sorry, could you say that again? You cut out a little."
+        zh: "不好意思，能再说一遍吗？你声音断了一下。"
+        note: "cut out 信号中断"
+      - id: c-clarify-02
+        en: "Just to make sure I'm following, you mean the old endpoint, right?"
+        zh: "确认一下我跟上了：你说的是旧接口，对吧？"
+      - id: c-clarify-03
+        en: "When you say 'soon', roughly what are we talking about?"
+        zh: "你说的「很快」大概是多久？"
+      - id: c-clarify-04
+        en: "So if I understand correctly, the blocker is the security review?"
+        zh: "如果我理解没错，卡点是安全评审？"
+      - id: c-clarify-05
+        en: "Could you walk me through that part one more time?"
+        zh: "那部分能再给我讲一遍吗？"
+      - id: c-clarify-06
+        en: "What do you mean by 'scalable' in this context?"
+        zh: "这里的「可扩展」具体指什么？"
+      - id: c-clarify-07
+        en: "Sorry, I didn't quite catch the last part."
+        zh: "抱歉，最后那部分我没太听清。"
+        note: "catch = 听清"
+      - id: c-clarify-08
+        en: "Let me just play that back to make sure I've got it."
+        zh: "我复述一遍，确认我理解对了。"
+        note: "play back 复述"
+      - id: c-clarify-09
+        en: "Are we talking days or weeks here?"
+        zh: "我们说的是几天还是几周？"
+      - id: c-clarify-10
+        en: "Can you give me a concrete example?"
+        zh: "能举个具体的例子吗？"
+      - id: c-clarify-11
+        en: "Sorry, what does that acronym stand for?"
+        zh: "不好意思，那个缩写代表什么？"
+        note: "stand for 代表"
+      - id: c-clarify-12
+        en: "Does that mean we're dropping the mobile version?"
+        zh: "那意思是我们不做移动端了吗？"
+        note: "drop 放弃、砍掉"
+
+  - id: c-standup
+    phase: 1
+    title: 站会与进度汇报
+    items:
+      - id: c-standup-01
+        en: "Yesterday I wrapped up the refactor, and today I'm moving on to the tests."
+        zh: "昨天把重构收尾了，今天开始写测试。"
+        note: "wrap up 收尾；move on to 转向"
+      - id: c-standup-02
+        en: "I'm about halfway through the migration."
+        zh: "迁移我大概做了一半。"
+      - id: c-standup-03
+        en: "No blockers on my end."
+        zh: "我这边没有阻碍。"
+      - id: c-standup-04
+        en: "I'm blocked waiting on the access keys from the vendor."
+        zh: "我在等供应商给访问密钥，卡住了。"
+        note: "wait on = 等待（某人/某事）"
+      - id: c-standup-05
+        en: "It's taking longer than expected because of a few edge cases."
+        zh: "因为一些边界情况，比预期慢。"
+      - id: c-standup-06
+        en: "I should have a pull request up by end of day."
+        zh: "今天下班前应该能提 PR。"
+        note: "end of day 当天下班前"
+      - id: c-standup-07
+        en: "I'll sync with Ravi after this to sort out the config issue."
+        zh: "会后我和 Ravi 对一下，把配置问题搞定。"
+        note: "sync with 对齐；sort out 解决"
+      - id: c-standup-08
+        en: "Quick update: the fix is in review."
+        zh: "简单同步：修复已经在评审中。"
+      - id: c-standup-09
+        en: "I'm still chasing the design team for the final mockups."
+        zh: "我还在催设计团队要最终稿。"
+        note: "chase sb for sth 催"
+      - id: c-standup-10
+        en: "Heads-up, I'll be off on Friday."
+        zh: "提醒一下，我周五请假。"
+        note: "be off 休假"
+      - id: c-standup-11
+        en: "That's on track for Thursday, as long as testing doesn't turn up anything big."
+        zh: "只要测试没发现大问题，周四能按计划完成。"
+        note: "on track 按计划；turn up 发现"
+      - id: c-standup-12
+        en: "Let's take that offline so we don't hold everyone up."
+        zh: "这个会后再聊，别耽误大家。"
+        note: "take offline 会后单独聊；hold up 耽误"
+
+  - id: c-small-talk
+    phase: 1
+    title: 闲聊与拉近关系
+    items:
+      - id: c-small-talk-01
+        en: "How was your weekend? Get up to anything fun?"
+        zh: "周末怎么样？做了什么好玩的吗？"
+        note: "口语省略 Did you"
+      - id: c-small-talk-02
+        en: "Did you catch the game last night?"
+        zh: "昨晚的比赛你看了吗？"
+        note: "catch = 看到、赶上"
+      - id: c-small-talk-03
+        en: "How are you finding Singapore so far?"
+        zh: "到目前为止觉得新加坡怎么样？"
+        note: "How are you finding X? 问感受"
+      - id: c-small-talk-04
+        en: "I've been meaning to try that place."
+        zh: "我一直想去那家试试。"
+        note: "have been meaning to 一直想"
+      - id: c-small-talk-05
+        en: "Any plans for the long weekend?"
+        zh: "长周末有什么安排吗？"
+      - id: c-small-talk-06
+        en: "Oh nice, how long have you been doing that?"
+        zh: "不错啊，你玩这个多久了？"
+      - id: c-small-talk-07
+        en: "I know, right? It's been non-stop this week."
+        zh: "可不是嘛，这周忙个不停。"
+        note: "I know, right? 附和对方"
+      - id: c-small-talk-08
+        en: "That sounds amazing. Where did you stay?"
+        zh: "听起来很棒，你住在哪？"
+      - id: c-small-talk-09
+        en: "What's the coffee situation like on this floor?"
+        zh: "这层的咖啡怎么样？"
+        note: "轻松开启话题"
+      - id: c-small-talk-10
+        en: "Are you from here originally?"
+        zh: "你本来就是这里人吗？"
+      - id: c-small-talk-11
+        en: "Ha, I can totally relate."
+        zh: "哈，我太能理解了。"
+        note: "relate 有同感"
+      - id: c-small-talk-12
+        en: "Anyway, I'll let you get back to it. Good chatting!"
+        zh: "好了，不打扰你干活了，聊得开心！"
+        note: "礼貌结束闲聊"
+
+  - id: c-buying-time
+    phase: 2
+    title: 争取思考时间、边想边说
+    items:
+      - id: c-buying-time-01
+        en: "That's a good question. Let me think about that for a second."
+        zh: "好问题，让我想一下。"
+      - id: c-buying-time-02
+        en: "Hmm, how do I put this?"
+        zh: "嗯，怎么说呢？"
+      - id: c-buying-time-03
+        en: "Off the top of my head, I'd say around two weeks."
+        zh: "我随口估计，大概两周。"
+        note: "off the top of my head 不查资料、凭印象"
+      - id: c-buying-time-04
+        en: "I don't have the exact number in front of me, but it's roughly ten percent."
+        zh: "手头没有确切数字，但大概百分之十。"
+      - id: c-buying-time-05
+        en: "Let me think out loud for a moment."
+        zh: "我边想边说一下。"
+        note: "think out loud 把思考过程说出来"
+      - id: c-buying-time-06
+        en: "Bear with me, I'm just pulling it up."
+        zh: "稍等，我正在调出来。"
+        note: "pull up 调出（文件/页面）"
+      - id: c-buying-time-07
+        en: "So, the way I see it, there are two options."
+        zh: "在我看来，有两个选项。"
+      - id: c-buying-time-08
+        en: "I'm not a hundred percent sure, but my guess would be the cache."
+        zh: "不是百分百确定，但我猜是缓存的问题。"
+      - id: c-buying-time-09
+        en: "Can I get back to you on that? I want to double-check."
+        zh: "这个我晚点回复你行吗？我想再核实一下。"
+      - id: c-buying-time-10
+        en: "Where was I? Oh right, the retry logic."
+        zh: "我说到哪了？对，重试逻辑。"
+      - id: c-buying-time-11
+        en: "Let me rephrase that."
+        zh: "我换个说法。"
+      - id: c-buying-time-12
+        en: "It's a bit hard to explain without a diagram, but I'll give it a shot."
+        zh: "没图有点难讲，不过我试试。"
+        note: "give it a shot 试一试"
+
+  - id: c-explain-simply
+    phase: 2
+    title: 把技术讲简单（类比与结构）
+    items:
+      - id: c-explain-simply-01
+        en: "The simplest way to think about it is like a phone book."
+        zh: "最简单的理解方式：它就像一本电话簿。"
+      - id: c-explain-simply-02
+        en: "At a high level, there are three pieces."
+        zh: "从宏观上看，一共三部分。"
+      - id: c-explain-simply-03
+        en: "First, the request hits the load balancer. Then it gets routed to a server."
+        zh: "首先请求到达负载均衡器，然后被转发到某台服务器。"
+        note: "hit 到达；route 路由"
+      - id: c-explain-simply-04
+        en: "The catch is that it only works if the data doesn't change often."
+        zh: "问题在于，只有数据不常变时才行得通。"
+        note: "the catch is 但麻烦在于"
+      - id: c-explain-simply-05
+        en: "In plain English, we keep a copy so we don't have to ask twice."
+        zh: "说白了，我们存一份副本，免得问两遍。"
+        note: "in plain English 说白了"
+      - id: c-explain-simply-06
+        en: "Think of it as the line at a coffee shop."
+        zh: "把它想成咖啡店门口排的队。"
+      - id: c-explain-simply-07
+        en: "The key thing to remember is that nothing is lost, just delayed."
+        zh: "关键要记住：数据没丢，只是延迟了。"
+      - id: c-explain-simply-08
+        en: "Without getting too technical, the two systems stopped talking to each other."
+        zh: "不讲太技术的话，就是两个系统之间断了联系。"
+      - id: c-explain-simply-09
+        en: "Here's where it gets interesting."
+        zh: "有意思的地方来了。"
+      - id: c-explain-simply-10
+        en: "To put it another way, we traded a bit of speed for reliability."
+        zh: "换句话说，我们牺牲了一点速度换取可靠性。"
+        note: "trade A for B 用 A 换 B"
+      - id: c-explain-simply-11
+        en: "Does that analogy work for you, or should I try a different one?"
+        zh: "这个比喻好理解吗？要不要换一个？"
+      - id: c-explain-simply-12
+        en: "The bottom line is it'll feel a lot faster for users."
+        zh: "总之，用户会感觉快很多。"
+        note: "the bottom line is 归根结底"
+
+  - id: c-negotiate
+    phase: 2
+    title: 不同意与协商优先级
+    items:
+      - id: c-negotiate-01
+        en: "I understand the urgency, but we need to be realistic about capacity."
+        zh: "我理解紧迫性，但人力上我们得现实一点。"
+      - id: c-negotiate-02
+        en: "If this moves up, something else has to move down."
+        zh: "这个往前排，就得有别的往后挪。"
+      - id: c-negotiate-03
+        en: "What's the actual cost of waiting another two weeks?"
+        zh: "再等两周，实际代价是什么？"
+      - id: c-negotiate-04
+        en: "Can we scope it down to just the must-haves?"
+        zh: "能把范围缩到只保留必需项吗？"
+        note: "scope down 缩减范围；must-haves 必需项"
+      - id: c-negotiate-05
+        en: "I'm happy to take it on, as long as we push back the reporting work."
+        zh: "我愿意接，前提是报表那块往后推。"
+        note: "push back 推迟（此处非反对）"
+      - id: c-negotiate-06
+        en: "Let's figure out what really needs to ship by the deadline."
+        zh: "我们理一下截止前真正必须上线的是什么。"
+      - id: c-negotiate-07
+        en: "I'm not sure that's an apples-to-apples comparison."
+        zh: "我觉得这两者不太能直接比较。"
+        note: "apples-to-apples 同类可比"
+      - id: c-negotiate-08
+        en: "Can we revisit this once we have the usage data?"
+        zh: "等有了使用数据再讨论行吗？"
+      - id: c-negotiate-09
+        en: "Unfortunately, that's a non-starter for us."
+        zh: "很遗憾，这对我们来说行不通。"
+        note: "non-starter 根本不可行"
+      - id: c-negotiate-10
+        en: "What if we met in the middle and did a phased rollout?"
+        zh: "要不我们各让一步，分阶段上线？"
+        note: "what if we + 过去式，委婉提议"
+      - id: c-negotiate-11
+        en: "I'd need a stronger case before we drop what we're working on."
+        zh: "要放下手头的工作，我需要更充分的理由。"
+      - id: c-negotiate-12
+        en: "Let's escalate this so someone can make the call."
+        zh: "我们往上升级吧，让能拍板的人来决定。"
+        note: "escalate 上报；make the call 拍板"
+
+  - id: c-bad-news
+    phase: 2
+    title: 报坏消息、事故沟通与道歉
+    items:
+      - id: c-bad-news-01
+        en: "I'm afraid I've got some bad news about the release."
+        zh: "恐怕关于这次发布有个坏消息。"
+      - id: c-bad-news-02
+        en: "We're going to miss Friday's deadline."
+        zh: "我们赶不上周五的截止日期了。"
+      - id: c-bad-news-03
+        en: "That's on me. I should have flagged it earlier."
+        zh: "这是我的责任，我应该早点提出来。"
+        note: "that's on me 怪我"
+      - id: c-bad-news-04
+        en: "Here's what happened, what we've done so far, and what's next."
+        zh: "我讲一下经过、目前已采取的措施和下一步。"
+        note: "事故通报三段式"
+      - id: c-bad-news-05
+        en: "Sorry for the disruption. We're working on a fix right now."
+        zh: "抱歉造成影响，我们正在修复。"
+      - id: c-bad-news-06
+        en: "The impact was limited to about five percent of users."
+        zh: "影响范围大约是百分之五的用户。"
+      - id: c-bad-news-07
+        en: "We've mitigated it, but we're still digging into the root cause."
+        zh: "已经缓解了，但还在查根因。"
+        note: "mitigate 缓解"
+      - id: c-bad-news-08
+        en: "I'll post an update every thirty minutes until it's resolved."
+        zh: "解决之前我每半小时发一次进展。"
+      - id: c-bad-news-09
+        en: "I want to be upfront: this could happen again until we patch it."
+        zh: "先坦白说：打补丁之前可能还会再发生。"
+        note: "upfront 坦率"
+      - id: c-bad-news-10
+        en: "Apologies, that was my mistake. I'll have it fixed today."
+        zh: "抱歉，是我的错，今天就改好。"
+      - id: c-bad-news-11
+        en: "We dropped the ball on testing this one."
+        zh: "这次测试我们没做到位。"
+        note: "drop the ball 失职、疏漏"
+      - id: c-bad-news-12
+        en: "Thanks for bearing with us while we sorted this out."
+        zh: "感谢大家在我们处理期间的耐心。"
+
+  - id: c-interview-about-me
+    phase: 3
+    title: 面试：介绍自己与职业经历
+    items:
+      - id: c-interview-about-me-01
+        en: "I'm a backend engineer with about six years of experience, mostly in distributed systems."
+        zh: "我是后端工程师，大约六年经验，主要做分布式系统。"
+      - id: c-interview-about-me-02
+        en: "Right now I'm at a fintech company, working on the payments platform."
+        zh: "目前我在一家金融科技公司做支付平台。"
+      - id: c-interview-about-me-03
+        en: "I kind of got into software by accident, through a data project at university."
+        zh: "我入行有点偶然，是因为大学的一个数据项目。"
+        note: "get into 进入（某行业）"
+      - id: c-interview-about-me-04
+        en: "Over the last two years, I've been focusing more on machine learning infrastructure."
+        zh: "过去两年我更专注于机器学习基础设施。"
+      - id: c-interview-about-me-05
+        en: "What I enjoy most is taking something messy and making it reliable."
+        zh: "我最喜欢把一团乱的东西变得可靠。"
+      - id: c-interview-about-me-06
+        en: "The thing I'm most proud of is cutting our deploy time from hours to minutes."
+        zh: "最自豪的是把部署时间从几小时缩短到几分钟。"
+      - id: c-interview-about-me-07
+        en: "I'm looking for a role where I can own things end to end."
+        zh: "我在找一个能端到端负责的岗位。"
+        note: "own 负责；end to end 从头到尾"
+      - id: c-interview-about-me-08
+        en: "That's a big part of what drew me to this position."
+        zh: "这也是这个岗位吸引我的很大原因。"
+        note: "draw sb to 吸引"
+      - id: c-interview-about-me-09
+        en: "In a nutshell, I build backend systems that don't fall over."
+        zh: "简单说，我做不会垮掉的后端系统。"
+        note: "in a nutshell 简言之"
+      - id: c-interview-about-me-10
+        en: "I moved to Singapore three years ago for my current job."
+        zh: "三年前我为了现在这份工作搬到新加坡。"
+      - id: c-interview-about-me-11
+        en: "I'd say my strength is bridging the gap between research and production."
+        zh: "我的长处应该是连接研究和生产环境。"
+        note: "bridge the gap 弥合差距"
+      - id: c-interview-about-me-12
+        en: "I'm at a point where I want to grow into a tech lead role."
+        zh: "我到了想成长为技术负责人的阶段。"
+        note: "grow into 成长为"
+
+  - id: c-interview-star
+    phase: 3
+    title: 面试：行为题回答（STAR 衔接）
+    items:
+      - id: c-interview-star-01
+        en: "To give you some context, we were a team of five supporting the whole checkout flow."
+        zh: "先讲背景：我们五个人支撑整个结账流程。"
+        note: "S：背景"
+      - id: c-interview-star-02
+        en: "The challenge was that we had two weeks and no clear owner."
+        zh: "难点是只有两周，而且没有明确的负责人。"
+        note: "S/T：难点"
+      - id: c-interview-star-03
+        en: "My role in this was to lead the migration plan."
+        zh: "我在其中负责主导迁移方案。"
+        note: "T：你的任务"
+      - id: c-interview-star-04
+        en: "So the first thing I did was get everyone in a room."
+        zh: "我做的第一件事是把大家拉到一起。"
+        note: "A：行动开头"
+      - id: c-interview-star-05
+        en: "From there, I broke the work down into smaller milestones."
+        zh: "接着我把工作拆成更小的里程碑。"
+        note: "break down into 拆分"
+      - id: c-interview-star-06
+        en: "That's when things got tricky."
+        zh: "就在那时，事情变得棘手了。"
+      - id: c-interview-star-07
+        en: "What I ended up doing was building a small proof of concept."
+        zh: "最后我做了一个小的概念验证。"
+        note: "proof of concept 概念验证"
+      - id: c-interview-star-08
+        en: "As a result, we cut latency by about forty percent."
+        zh: "结果延迟降低了大约百分之四十。"
+        note: "R：量化结果"
+      - id: c-interview-star-09
+        en: "The outcome was that we launched a week early."
+        zh: "最终我们提前一周上线了。"
+      - id: c-interview-star-10
+        en: "Looking back, I'd have brought the other team in much sooner."
+        zh: "回头看，我会更早把另一个团队拉进来。"
+        note: "I'd have done 虚拟语气"
+      - id: c-interview-star-11
+        en: "The biggest lesson for me was to over-communicate when things are uncertain."
+        zh: "对我最大的教训是：情况不明朗时要多沟通。"
+      - id: c-interview-star-12
+        en: "I've applied that on every project since."
+        zh: "之后每个项目我都这么做。"
+
+  - id: c-interview-design
+    phase: 3
+    title: 面试：系统设计与技术讨论
+    items:
+      - id: c-interview-design-01
+        en: "Before I start, can I ask a few clarifying questions?"
+        zh: "开始之前，我能先问几个澄清问题吗？"
+      - id: c-interview-design-02
+        en: "Are we optimizing for latency or for cost here?"
+        zh: "这里优先考虑延迟还是成本？"
+      - id: c-interview-design-03
+        en: "Let me do some quick back-of-the-envelope math."
+        zh: "我先粗略估算一下。"
+        note: "back-of-the-envelope 粗略估算"
+      - id: c-interview-design-04
+        en: "I'll start with a simple design, and then we can stress-test it together."
+        zh: "我先给个简单设计，然后我们一起推敲它的极限。"
+      - id: c-interview-design-05
+        en: "The main trade-off here is consistency versus availability."
+        zh: "这里主要的权衡是一致性和可用性。"
+      - id: c-interview-design-06
+        en: "One option is to put a queue in between to absorb the spikes."
+        zh: "一个方案是在中间加队列来削峰。"
+        note: "absorb spikes 吸收流量高峰"
+      - id: c-interview-design-07
+        en: "This becomes a single point of failure, so I'd add a replica."
+        zh: "这会变成单点故障，所以我会加一个副本。"
+      - id: c-interview-design-08
+        en: "If reads dominate, caching gives us the biggest win."
+        zh: "如果以读为主，缓存的收益最大。"
+      - id: c-interview-design-09
+        en: "I'm making an assumption here, so let me know if that's off."
+        zh: "这里我做了个假设，不对的话请指出。"
+        note: "off = 不对、有偏差"
+      - id: c-interview-design-10
+        en: "At this scale, I'd probably shard by user."
+        zh: "在这个规模下，我大概会按用户分片。"
+      - id: c-interview-design-11
+        en: "Let me zoom in on the write path, since that's the tricky part."
+        zh: "我重点讲一下写路径，那是难点。"
+        note: "zoom in on 聚焦"
+      - id: c-interview-design-12
+        en: "Is there a particular area you'd like me to go deeper on?"
+        zh: "有没有哪部分希望我深入讲？"
+
+  - id: c-closing
+    phase: 3
+    title: 收尾、跟进与反问
+    items:
+      - id: c-closing-01
+        en: "What would success look like in this role after six months?"
+        zh: "这个岗位六个月后怎样才算做得好？"
+      - id: c-closing-02
+        en: "What do you enjoy most about working here?"
+        zh: "你最喜欢在这里工作的哪一点？"
+      - id: c-closing-03
+        en: "How does the team usually make technical decisions?"
+        zh: "团队通常怎么做技术决策？"
+      - id: c-closing-04
+        en: "Is there anything about my background you'd like me to clarify?"
+        zh: "我的背景有什么需要我补充说明的吗？"
+      - id: c-closing-05
+        en: "What does the timeline look like from here?"
+        zh: "接下来的流程时间线大概是怎样的？"
+      - id: c-closing-06
+        en: "Thanks again, I really enjoyed chatting with you."
+        zh: "再次感谢，和你聊得很愉快。"
+      - id: c-closing-07
+        en: "To recap, we agreed on three action items."
+        zh: "总结一下，我们定了三个待办事项。"
+        note: "recap 回顾总结"
+      - id: c-closing-08
+        en: "I'll send out notes with owners after this."
+        zh: "会后我发纪要，并标明各项负责人。"
+      - id: c-closing-09
+        en: "Did I miss anything, or are we good to wrap up?"
+        zh: "我有遗漏吗？没有的话就结束吧？"
+        note: "wrap up 结束"
+      - id: c-closing-10
+        en: "Let's follow up async and regroup next week if we need to."
+        zh: "我们线上异步跟进，需要的话下周再碰。"
+        note: "async 异步；regroup 再碰头"
+      - id: c-closing-11
+        en: "Who's going to own this going forward?"
+        zh: "今后这件事谁来负责？"
+      - id: c-closing-12
+        en: "Thanks, everyone. I'll give you ten minutes back."
+        zh: "谢谢大家，提前十分钟结束。"
+        note: "give time back 提前散会"
+
+pronunciation:
+  - id: p-ih-iy
+    title: "/ɪ/ 和 /iː/：ship 与 sheep"
+    explain: "/iː/ 舌位高而靠前，肌肉紧张，嘴角略向两边拉，时长较长，接近中文「衣」。/ɪ/ 舌位稍低、稍靠中，口腔放松，短促，介于「衣」和「诶」之间。美音里两者的区别主要在音质（紧 vs 松），不只是长短，所以别只把 ship 读短一点的「西」。"
+    pairs:
+      - ["ship", "sheep"]
+      - ["bit", "beat"]
+      - ["sit", "seat"]
+      - ["fill", "feel"]
+      - ["hit", "heat"]
+      - ["slip", "sleep"]
+      - ["chip", "cheap"]
+      - ["fit", "feet"]
+    sentences:
+      - "Did you leave the sheep on the ship?"
+      - "If you feel sleepy, sit in the seat by the window for a bit."
+
+  - id: p-ae-e
+    title: "/æ/ 和 /e/：bad 与 bed"
+    explain: "/æ/ 嘴张得很大，下巴明显下拉，舌前部压低、平放，音色介于「啊」和「诶」之间。/e/ 嘴只半开，舌位更高，像不滑动的「诶」。中国学习者常把两者都读成「诶」，导致 bad 和 bed 不分。练习时照镜子：读 /æ/ 时下巴能放进一根手指的距离。"
+    pairs:
+      - ["bad", "bed"]
+      - ["sad", "said"]
+      - ["had", "head"]
+      - ["sat", "set"]
+      - ["pat", "pet"]
+      - ["gas", "guess"]
+      - ["track", "trek"]
+      - ["pack", "peck"]
+    sentences:
+      - "I said I was sad, not that I felt bad."
+      - "Can you guess how much gas we had left in the tank?"
+
+  - id: p-th-s
+    title: "/θ/ 和 /s/：think 与 sink"
+    explain: "/θ/ 是清辅音：舌尖轻轻放在上下齿之间（或轻抵上齿背），让气流从舌和牙齿的缝隙中摩擦出来，声带不振动。/s/ 舌尖靠近上齿龈但不伸到牙齿之间。中文没有 /θ/，学习者常用 /s/ 或 /f/ 替代。练习时可以先夸张地把舌尖伸出来，再逐渐收回到自然位置。"
+    pairs:
+      - ["think", "sink"]
+      - ["thick", "sick"]
+      - ["thing", "sing"]
+      - ["thumb", "sum"]
+      - ["math", "mass"]
+      - ["path", "pass"]
+      - ["faith", "face"]
+      - ["worth", "worse"]
+    sentences:
+      - "I think the path we picked is worth the risk."
+      - "Thanks for the thick stack of math notes, I owe you something."
+
+  - id: p-dh-d
+    title: "/ð/ 和 /d/：then 与 den"
+    explain: "/ð/ 是 /θ/ 的浊音版：舌尖同样放在齿间，但声带振动，气流持续摩擦，可以拖长。/d/ 是舌尖抵住上齿龈后突然放开的爆破音，不能拖长。中国学习者常把 /ð/ 读成 /d/ 或 /z/；这里选 /d/ 做对比，因为 the、this、that、then 这类高频词被读成 d 音最常见。注意：快速口语中 /ð/ 在某些位置本来就会弱化，但慢速说话时要发出摩擦。"
+    pairs:
+      - ["then", "den"]
+      - ["they", "day"]
+      - ["though", "dough"]
+      - ["there", "dare"]
+      - ["those", "doze"]
+      - ["breathe", "breed"]
+      - ["worthy", "wordy"]
+      - ["lather", "ladder"]
+    sentences:
+      - "They said the day went well, though."
+      - "Those are worthy ideas, but the doc is a bit wordy."
+
+  - id: p-v-w
+    title: "/v/ 和 /w/：vest 与 west"
+    explain: "/v/ 是唇齿音：上齿轻轻咬在下唇内侧，声带振动，气流持续摩擦，能感觉到下唇发麻。/w/ 是半元音：双唇收圆、向前突出（像读「乌」），然后迅速滑向后面的元音，牙齿完全不碰嘴唇。不少中国学习者把 v 发成近似 w，也有人反过来把 w 读成 v。练习时用手指轻触下唇，读 /v/ 应该有振动。"
+    pairs:
+      - ["vest", "west"]
+      - ["vet", "wet"]
+      - ["vine", "wine"]
+      - ["veil", "whale"]
+      - ["vow", "wow"]
+      - ["verse", "worse"]
+      - ["vent", "went"]
+      - ["vary", "wary"]
+    sentences:
+      - "We went to the vet when the weather was wet."
+      - "The vine on the west wall makes very good wine."
+
+  - id: p-l-n
+    title: "/l/ 和 /n/：light 与 night"
+    explain: "/n/ 和 /l/ 舌尖都抵在上齿龈，区别在气流：/n/ 软腭下降，气流从鼻腔出；/l/ 口腔通道打开，气流从舌头两侧流出，鼻腔不出气。部分南方方言 n、l 不分，会把 light 说成 night。自测方法：捏住鼻子读，/l/ 可以持续发出，/n/ 会被憋住。"
+    pairs:
+      - ["light", "night"]
+      - ["lot", "not"]
+      - ["low", "no"]
+      - ["line", "nine"]
+      - ["lap", "nap"]
+      - ["lock", "knock"]
+      - ["life", "knife"]
+      - ["lit", "knit"]
+    sentences:
+      - "The light in the hall was on all night."
+      - "We need nine more lines, which is not a lot."
+
+  - id: p-r-l
+    title: "/r/ 和 /l/：right 与 light"
+    explain: "美音 /r/：舌尖向上卷起（或舌身后缩隆起），但不碰到上颚任何地方，嘴唇略微收圆；它更像一个滑音。/l/ 舌尖要实实在在贴住上齿龈。读 r 开头的词时，可以先把嘴唇微微收圆（像要发「乌」），舌尖后卷但悬空，再滑向元音。词尾的 l（如 feel、pool）是“暗 l”，舌根同时抬起，听起来带一点「欧」色。"
+    pairs:
+      - ["right", "light"]
+      - ["road", "load"]
+      - ["rock", "lock"]
+      - ["pray", "play"]
+      - ["fry", "fly"]
+      - ["grass", "glass"]
+      - ["rice", "lice"]
+      - ["correct", "collect"]
+    sentences:
+      - "Turn right at the light and follow the long road."
+      - "Please collect the glass from the grass."
+
+  - id: p-final-voicing
+    title: "词尾辅音与清浊：cap 与 cab"
+    explain: "普通话音节大多以元音或 n/ng 结尾，所以学习者常把词尾辅音吞掉、读成清音，或者在后面多加一个「呃」。英语词尾的清浊对立，很大程度上靠前面元音的长短来体现：浊辅音前的元音明显更长（bed 比 bet 长，bag 比 back 长），清辅音前的元音短而利落。练习时先把元音长短做出来，尾辅音轻轻收住，不要加元音。"
+    pairs:
+      - ["cap", "cab"]
+      - ["bet", "bed"]
+      - ["back", "bag"]
+      - ["rope", "robe"]
+      - ["seat", "seed"]
+      - ["lock", "log"]
+      - ["safe", "save"]
+      - ["rice", "rise"]
+    sentences:
+      - "Put the cap in the back of the cab."
+      - "Save me a seat, I'll grab a bag of rice on the way."
+
+  - id: p-clusters
+    title: "辅音连缀：别插入多余元音（sport 与 support）"
+    explain: "中文音节结构以「辅音+元音」为主，遇到英语的辅音连缀（pl、bl、spr、sk、-sks）时，学习者容易在中间或末尾插入一个弱元音，比如把 desk 读成 desiku、please 读成 pulease。下面这些是近似对：右边的词恰好就是左边插入一个 /ə/ 后的读音，插错了就变成另一个词。读左边的词时，两个辅音要紧贴着发，中间不能有任何元音。"
+    pairs:
+      - ["sport", "support"]
+      - ["blow", "below"]
+      - ["please", "police"]
+      - ["plight", "polite"]
+      - ["prayed", "parade"]
+      - ["claps", "collapse"]
+      - ["train", "terrain"]
+      - ["bray", "beret"]
+    sentences:
+      - "The police asked us to please stay below the bridge."
+      - "We need more support for this sport, and fewer tasks on my desk."
+
+  - id: p-uh-ah
+    title: "/ʌ/ 和 /ɑ/：cut 与 cot（美音）"
+    explain: "本组按美音（GA）设计。/ʌ/ 嘴半开，舌位居中、放松，短促，像轻声的「阿」。/ɑ/ 嘴张大，下巴下拉，舌位低而靠后，像拉长的「啊」。美音里 hot、not、lock 用的是 /ɑ/，所以 cut/cot 构成对比；英音里 cot 读圆唇的 /ɒ/，英音对应的 /ʌ/-/ɑː/ 对比是 cut/cart。"
+    pairs:
+      - ["cut", "cot"]
+      - ["luck", "lock"]
+      - ["duck", "dock"]
+      - ["nut", "not"]
+      - ["hut", "hot"]
+      - ["cup", "cop"]
+      - ["shut", "shot"]
+      - ["rub", "rob"]
+    sentences:
+      - "Good luck, the lock on that door is stuck."
+      - "The cop had a cup of hot cocoa in the hut."
+
+connected:
+  - id: cs-weak
+    title: 弱读：功能词几乎听不见
+    explain: "英语里冠词、介词、代词、助动词、连词等功能词，在不强调时通常使用弱读式：元音变成 /ə/ 或 /ɪ/，有些辅音也会脱落（如 him→/ɪm/，and→/ən/）。这些词说得又轻又快，常常只剩一个模糊的音，所以听力时“少听了几个词”往往就是弱读。注意：同一个词在句末或被强调时会恢复强读式（如 What are you looking at? 中的 at 读 /æt/）。听写时要靠语法和上下文把弱读词补回来。"
+    examples:
+      - text: "I can do it for you at four."
+        hear: "aɪ kən ˈduː ɪt fər jə ət ˈfɔːr"
+        note: "can 弱读 /kən/，for /fər/，you /jə/，at /ət/"
+      - text: "What do you want to do?"
+        hear: "ˈwʌɾəjə ˈwɑnə ˈduː"
+        note: "what do you 常连成 /ˈwʌɾəjə/（whaddya）；want to 常读 wanna"
+      - text: "I was going to ask them about it."
+        hear: "aɪ wəz ˈɡʌnə ˈæsk ðəm əˈbaʊɾɪt"
+        note: "was /wəz/；them 弱读 /ðəm/，甚至 /əm/"
+      - text: "Some of us have to leave at six."
+        hear: "ˈsʌm əv əs ˈhæftə ˈliːv ət ˈsɪks"
+        note: "of /əv/；have to 读 /ˈhæftə/；at /ət/"
+      - text: "Tell him that we're on our way."
+        hear: "ˈtelɪm ðət wɪr ɑn ɑr ˈweɪ"
+        note: "him 脱 h 变 /ɪm/；连词 that 弱读 /ðət/；our 口语常读 /ɑr/"
+
+  - id: cs-linking
+    title: 连读：辅音接元音
+    explain: "当前一个词以辅音结尾、后一个词以元音开头时，这个辅音通常会“挪”到下一个词的开头，听起来像一个新词：an apple 像 a napple，pick it up 像 pi-ki-tup。英语母语者说话时词与词之间基本没有停顿，所以不能靠词间空隙切分单词。另外，美音里 t 被挪到元音前时常变成闪音（见闪音一课）。元音接元音时则会插入一个轻微的 /w/ 或 /j/ 过渡音（go on→go-won，I am→I-yam）。"
+    examples:
+      - text: "Pick it up."
+        hear: "ˈpɪ kɪ ˈɾʌp"
+        note: "k 挪到 it 前，t 挪到 up 前并变成闪音"
+      - text: "Check it out on your own."
+        hear: "ˈtʃe kɪ ˈɾaʊ ɾɑn jər ˈoʊn"
+        note: "check it out 连成一串；out on 的 t 闪音"
+      - text: "Turn it off and on again."
+        hear: "ˈtɜr nɪ ˈɾɔf ə ˈnɑ nə ˈɡen"
+        note: "and 弱读 /ən/，n 连到 on；on again 连成 /ɑnəˈɡen/"
+      - text: "Can I ask a question?"
+        hear: "kə naɪ ˈæs kə ˈkwestʃən"
+        note: "can I 连成 /kənaɪ/；ask a 连成 /ˈæskə/"
+      - text: "It's an old idea."
+        hear: "ɪt sə ˈnoʊl daɪ ˈdiːə"
+        note: "an old 听着像 a nold；old 的 d 连到 idea 前"
+
+  - id: cs-elision
+    title: 吞音：t 和 d 的省略
+    explain: "当 t 或 d 夹在两个辅音之间时（典型是 -st、-nt、-nd、-ld、-ft 后面再接辅音开头的词），口语中常常直接省略：next week 读成 nex week，last time 读成 las time。动词过去式的 -ed 在辅音前也常被吞掉，只能靠时态和上下文判断。吞音并不是乱省：后面接元音时 t/d 一般会保留并连读（next item）。还有 don't know、I don't think 这类高频组合，t 几乎总是不发。"
+    examples:
+      - text: "I'll do it next week."
+        hear: "aɪl ˈduː ɪt ˈneks ˈwiːk"
+        note: "next 的 t 在辅音 w 前常脱落"
+      - text: "I don't know what happened."
+        hear: "aɪ ˈdoʊn ˈnoʊ wʌʔ ˈhæpənd"
+        note: "don't 的 t 常不发；what 的 t 常变成喉塞音"
+      - text: "We met last Friday."
+        hear: "wi ˈmet ˈlæs ˈfraɪdeɪ"
+        note: "last 的 t 夹在 s 和 f 之间，常省略"
+      - text: "She asked me to send the slides."
+        hear: "ʃi ˈæsk mi tə ˈsen ðə ˈslaɪdz"
+        note: "asked 的 -ed /t/ 常省；send 的 d 在 the 前常省"
+      - text: "It must be the old version."
+        hear: "ɪt ˈmʌs bi ði ˈoʊl ˈvɜrʒən"
+        note: "must be 中 t 脱落；old 的 d 在 v 前常弱化或省略"
+
+  - id: cs-flap
+    title: 闪音：美音里的 t 变成轻 d
+    explain: "在美音（以及澳音、很多加拿大口音）中，t（有时是 d）夹在两个元音之间、且后一个音节不重读时，常常发成闪音 [ɾ]：舌尖极快地轻弹一下上齿龈，听起来像很轻的 d 或中文的「勒」。这在单词内部（water、better、city）和跨词连读时（get it、a lot of）都会出现。t 后面的音节重读时一般不闪音（attack、return）。英音（RP）通常保留清楚的 t，或在某些位置用喉塞音代替。"
+    examples:
+      - text: "Can I get a glass of water?"
+        hear: "kə naɪ ˈɡeɾə ˈɡlæsə ˈwɔɾər"
+        note: "get a、water 中的 t 都闪音化"
+      - text: "Let it go, it's not a big deal."
+        hear: "ˈleɾɪ ˈɡoʊ ɪts ˈnɑɾə ˈbɪɡ ˈdiːl"
+        note: "let it、not a 闪音；let it 的第二个 t 不爆破"
+      - text: "We've got a lot of work to do."
+        hear: "wiv ˈɡɑɾə ˈlɑɾəv ˈwɜrk tə ˈduː"
+        note: "got a lot of 连续闪音，听着像 gada lada"
+      - text: "What about Saturday?"
+        hear: "ˈwʌɾə ˈbaʊt ˈsæɾərdeɪ"
+        note: "what about 跨词闪音；Saturday 词内闪音"
+      - text: "I'll put it on the agenda."
+        hear: "aɪl ˈpʊɾɪ ɾɑn ði əˈdʒendə"
+        note: "put it on 两次闪音；英音一般读清楚的 t"
+
+  - id: cs-assimilation
+    title: 同化与 yod 融合：did you → didja
+    explain: "相邻的辅音会互相影响，变得更容易发。最常见的是 yod 融合：词尾 t、d、s、z 遇到下一个词开头的 /j/（you、your、year）时，会融合成 /tʃ/、/dʒ/、/ʃ/、/ʒ/：did you→/ˈdɪdʒə/，don't you→/ˈdoʊntʃə/，miss you→/ˈmɪʃjə/。另一种是部位同化：n 在 p、b、m 前常变成 /m/（in person→im person），在 k、g 前变成 /ŋ/。这些变化在快速口语中很常见，但并非每次都发生，慢速时说话人也可能读得很清楚。"
+    examples:
+      - text: "Did you finish it?"
+        hear: "ˈdɪdʒə ˈfɪnɪʃɪt"
+        note: "d + y 融合成 /dʒ/，you 弱读成 /ə/"
+      - text: "Would you mind checking?"
+        hear: "ˈwʊdʒə ˈmaɪn ˈtʃekɪŋ"
+        note: "would you→/ˈwʊdʒə/；mind 的 d 在辅音前常脱落"
+      - text: "Don't you think so?"
+        hear: "ˈdoʊntʃə ˈθɪŋk ˈsoʊ"
+        note: "t + y 融合成 /tʃ/"
+      - text: "I moved here last year."
+        hear: "aɪ ˈmuːv ˈhɪr ˈlæstʃɪr"
+        note: "last year→/ˈlæstʃɪr/，像 las-cheer"
+      - text: "Let's meet in person."
+        hear: "lets ˈmiːt ɪm ˈpɜrsən"
+        note: "in 在 p 前常同化为 /ɪm/"
+
+  - id: cs-contractions
+    title: 缩略与叠加缩略：I'd've、it'll
+    explain: "口语里助动词几乎总是缩略，而且常常只剩一个辅音：'s、'd、'll、've、'm、're。难点在于同一个缩略有多种来源：'s 可以是 is 或 has，'d 可以是 would 或 had，要看后面的动词形式（'s been = has been，'d gone = had gone，'d go = would go）。还会叠加缩略，比如 I'd have 口语里读成 /ˈaɪdəv/（非正式写作 I'd've），wouldn't have 读成 /ˈwʊdntəv/。'll 在代词后极短（we'll /wil/，it'll /ˈɪɾəl/），很容易被漏掉，导致听不出是将来时。"
+    examples:
+      - text: "I'd have told you if I'd known."
+        hear: "aɪdəv ˈtoʊld jə ɪf aɪd ˈnoʊn"
+        note: "I'd have 常读 /ˈaɪdəv/；前一个 'd = would，后一个 'd = had"
+      - text: "It'll be fine, we'll sort it out."
+        hear: "ˈɪɾəl bi ˈfaɪn wil ˈsɔrɾɪ ˈɾaʊt"
+        note: "it'll /ˈɪɾəl/；we'll /wil/ 很短；sort it out 闪音"
+      - text: "She'd already left by then."
+        hear: "ʃid ɔlˈredi ˈleft baɪ ˈðen"
+        note: "she'd 后接过去分词 left，所以是 she had"
+      - text: "There's been a change of plan."
+        hear: "ðerz bɪn ə ˈtʃeɪndʒ əv ˈplæn"
+        note: "there's 后接 been，所以是 there has"
+      - text: "We should have checked first."
+        hear: "wi ˈʃʊdəv ˈtʃekt ˈfɜrst"
+        note: "should have 常读 /ˈʃʊdəv/ 甚至 /ˈʃʊdə/，听着像 should of"
+
+  - id: cs-can-cant
+    title: can 和 can't：靠重音和元音分辨
+    explain: "美音里 can't 末尾的 t 常常不爆破（甚至只剩喉塞），所以不能靠听 t 来区分。真正的线索是重音和元音：肯定句里的 can 通常不重读，弱读成 /kən/ 或 /kn̩/，重音落在后面的动词上；can't 通常重读，元音是饱满的 /æ/，时长也更长。句末或强调时 can 会读强式 /kæn/，这时要靠语调和上下文。英音的 can't 读 /kɑːnt/，和 can /kæn/ 元音不同，更好分辨；澳音的 can't 也多用长元音。新加坡、印度口音常把 can't 的 t 发得比较清楚。"
+    examples:
+      - text: "I can make it on Tuesday."
+        hear: "aɪ kən ˈmeɪk ɪt ɑn ˈtuːzdeɪ"
+        note: "肯定句 can 弱读 /kən/，重音在 make"
+      - text: "I can't make it on Tuesday."
+        hear: "aɪ ˈkænʔ ˈmeɪk ɪt ɑn ˈtuːzdeɪ"
+        note: "can't 重读、元音饱满 /æ/，t 常只剩喉塞"
+      - text: "Yes, I can."
+        hear: "ˈjes aɪ ˈkæn"
+        note: "句末 can 读强式 /kæn/，别误听成 can't"
+      - text: "We can't really afford to wait."
+        hear: "wi ˈkænʔ ˈrɪli əˈfɔrd tə ˈweɪt"
+        note: "can't 和 really 都重读；afford to 中 d 和 t 合并"
+      - text: "I can't come, but she can."
+        hear: "aɪ ˈkɑːnt ˈkʌm bət ʃi ˈkæn"
+        note: "英音示范：can't /kɑːnt/ 与 can /kæn/ 元音不同"
+
+  - id: cs-stress
+    title: 句子重音与节奏
+    explain: "英语是“重音计时”语言：句子中重读音节（通常是名词、实义动词、形容词、副词、否定词）之间的时间间隔大致相等，中间的功能词无论有几个都会被压缩、弱读。中文更接近“音节计时”，每个字的时长差不多，所以中国学习者说英语时容易每个词都一样重、一样长，听起来生硬，也听不出母语者的节奏。听力时抓住重读词就能抓住大意；说的时候要敢于把功能词读轻读快。另外，重音位置还能改变句子的重点（对比重音）。"
+    examples:
+      - text: "I need to send the report to my manager by Friday."
+        hear: "aɪ ˈniːd tə ˈsend ðə rɪˈpɔrt tə maɪ ˈmænɪdʒər baɪ ˈfraɪdeɪ"
+        note: "重读 need、send、report、manager、Friday，其余快速带过"
+      - text: "Cats chase mice."
+        hear: "ˈkæts ˈtʃeɪs ˈmaɪs"
+        note: "三个重音，和下一句的时长差不多"
+      - text: "The cats have been chasing the mice."
+        hear: "ðə ˈkæts əv bɪn ˈtʃeɪsɪŋ ðə ˈmaɪs"
+        note: "同样三个重音，多出的功能词被压缩，整体时长相近"
+      - text: "It's not a bug, it's a feature."
+        hear: "ɪts ˈnɑɾə ˈbʌɡ ɪtsə ˈfiːtʃər"
+        note: "对比重音落在 bug 和 feature"
+      - text: "We're going to have to push it to next month."
+        hear: "wɪr ˈɡʌnə ˈhæftə ˈpʊʃɪt tə ˈneks ˈmʌnθ"
+        note: "前面一串功能词被压缩，只突出 push、next、month"
+
+speaking:
+  - id: s01
+    phase: 1
+    kind: monologue
+    title: 介绍你现在的工作
+    prompt: "Describe what you do at work day to day, as if to a new teammate."
+    hints: ["what the team owns", "a typical day", "what you enjoy and what's hard"]
+    chunks: [c-standup]
+  - id: s02
+    phase: 1
+    kind: monologue
+    title: 介绍你的团队
+    prompt: "Describe your team to a friend: who's on it, how you work together, and how decisions get made."
+    hints: ["size and roles", "how you communicate", "one thing you'd change"]
+    chunks: [c-meeting-opinion]
+  - id: s03
+    phase: 1
+    kind: monologue
+    title: 做一次站会汇报
+    prompt: "Give your stand-up update for today: what you did yesterday, what you're doing today, and anything blocking you."
+    hints: ["one finished task", "today's focus", "a blocker or risk", "keep it under one minute"]
+    chunks: [c-standup]
+  - id: s04
+    phase: 1
+    kind: monologue
+    title: 最近修过的一个 bug
+    prompt: "Talk about a bug you fixed recently: how you found it, what caused it, and how you fixed it."
+    hints: ["the symptom", "how you tracked it down", "the actual cause", "what you'd do to prevent it"]
+    chunks: [c-explain-simply]
+  - id: s05
+    phase: 1
+    kind: monologue
+    title: 周末做了什么
+    prompt: "A colleague asks how your weekend was. Tell them what you got up to, with a bit of detail."
+    hints: ["where you went", "who you were with", "one funny or surprising moment"]
+    chunks: [c-small-talk]
+  - id: s06
+    phase: 1
+    kind: monologue
+    title: 在新加坡的生活
+    prompt: "Tell a new colleague who just moved here what living in Singapore has been like for you."
+    hints: ["what surprised you at first", "food and neighborhoods", "one tip for a newcomer"]
+    chunks: [c-small-talk]
+  - id: s07
+    phase: 1
+    kind: monologue
+    title: 推荐一个你每天用的工具
+    prompt: "Recommend a tool or app you use every day at work and explain why your teammates should try it."
+    hints: ["what it does", "how you use it", "one downside"]
+    chunks: [c-explain-simply]
+  - id: s08
+    phase: 1
+    kind: retell
+    title: 复述最近一次会议
+    prompt: "Retell the last meeting you were in for someone who missed it: what was discussed, what was decided, and what happens next."
+    hints: ["the purpose of the meeting", "the main disagreement, if any", "decisions and owners"]
+    chunks: [c-closing]
+  - id: s09
+    phase: 1
+    kind: monologue
+    title: 你怎么跟上新技术
+    prompt: "Explain how you keep up with new technology and how you decide what's worth learning."
+    hints: ["where you find information", "how you test new things", "something you learned recently"]
+  - id: s10
+    phase: 1
+    kind: explain
+    title: 给朋友讲你的项目
+    prompt: "Explain the main project you're working on to a friend who doesn't work in tech."
+    hints: ["who uses it", "what problem it solves", "your part in it"]
+    chunks: [c-explain-simply]
+  - id: s11
+    phase: 1
+    kind: monologue
+    title: 观点：办公室还是在家办公
+    prompt: "Share your opinion: is it better to work from the office or from home? Give reasons and an example."
+    hints: ["your position", "two reasons", "one example from your own experience", "what a good compromise looks like"]
+    chunks: [c-meeting-opinion]
+  - id: s12
+    phase: 1
+    kind: roleplay
+    title: 和新同事吃午饭
+    prompt: "Roleplay. The AI plays Daniel, a friendly engineer from another team who just joined the company last week. You meet him at lunch. Make small talk: find out about his background, share a bit about yourself, and suggest somewhere good to eat nearby. Daniel should ask you a few questions back and keep the tone casual."
+    hints: ["open with a friendly question", "find one thing in common", "end the chat naturally"]
+    chunks: [c-small-talk]
+
+  - id: s13
+    phase: 2
+    kind: explain
+    title: 给产品经理讲什么是缓存
+    prompt: "Explain what a cache is and why it makes the app faster to a non-technical product manager."
+    hints: ["an everyday analogy", "when it helps", "the catch: stale data"]
+    chunks: [c-explain-simply]
+  - id: s14
+    phase: 2
+    kind: explain
+    title: 向销售同事解释昨天为什么宕机
+    prompt: "The app went down for an hour yesterday. Explain to a colleague in sales what happened, in plain language, and what the team is doing so it doesn't happen again."
+    hints: ["what customers saw", "the cause in one sentence", "what's been fixed", "what to tell customers"]
+    chunks: [c-bad-news, c-explain-simply]
+  - id: s15
+    phase: 2
+    kind: explain
+    title: 用类比讲清楚什么是接口
+    prompt: "Explain what an application programming interface is to someone in marketing, using an analogy like a restaurant menu or a power socket."
+    hints: ["the analogy", "who talks to whom", "why companies offer one"]
+    chunks: [c-explain-simply]
+  - id: s16
+    phase: 2
+    kind: retell
+    title: 复述一期播客或视频
+    prompt: "Retell a tech podcast episode or video you watched recently. Summarize the main argument and say whether you agree."
+    hints: ["who was speaking", "the main point", "one example they gave", "your take"]
+    chunks: [c-meeting-opinion, c-buying-time]
+  - id: s17
+    phase: 2
+    kind: explain
+    title: 给新人讲数据库索引
+    prompt: "Explain to a junior engineer why adding an index makes a query faster, and when an index can actually hurt."
+    hints: ["the book index analogy", "reads versus writes", "how you'd check if it helps"]
+    chunks: [c-explain-simply]
+  - id: s18
+    phase: 2
+    kind: monologue
+    title: 观点：AI 编程助手
+    prompt: "Give your honest opinion: are AI coding assistants making engineers better or worse at their jobs?"
+    hints: ["where they help most", "a risk you've seen", "how your team uses them", "your overall view"]
+    chunks: [c-meeting-opinion, c-buying-time]
+  - id: s19
+    phase: 2
+    kind: retell
+    title: 总结一篇技术文章
+    prompt: "Summarize an engineering blog post or article you read recently for a teammate who doesn't have time to read it."
+    hints: ["the problem they had", "what they tried", "the result", "whether it applies to your team"]
+    chunks: [c-explain-simply]
+  - id: s20
+    phase: 2
+    kind: explain
+    title: 说服队友写测试
+    prompt: "A teammate thinks writing tests slows the team down. Convince them it's worth the time."
+    hints: ["acknowledge their point first", "a bug that tests would have caught", "a cheap way to start"]
+    chunks: [c-meeting-opinion, c-negotiate]
+  - id: s21
+    phase: 2
+    kind: explain
+    title: 讲一个团队做过的技术取舍
+    prompt: "Describe a technical trade-off your team made, such as speed versus quality or build versus buy, and explain why you chose what you did."
+    hints: ["the two options", "what mattered most", "what you gave up", "would you choose the same again"]
+    chunks: [c-explain-simply, c-buying-time]
+  - id: s22
+    phase: 2
+    kind: roleplay
+    title: 澄清模糊需求
+    prompt: "Roleplay. The AI plays Mia, a product manager who says: 'Can we make search better? Users keep complaining.' Mia is vague at first and only gives details when asked good questions. You are the engineer: ask clarifying questions to find out what 'better' means, who is affected, how success will be measured, and when it's needed, then summarize what you understood."
+    hints: ["ask what 'better' means", "check scope and deadline", "play back your understanding"]
+    chunks: [c-clarify]
+  - id: s23
+    phase: 2
+    kind: monologue
+    title: 讲一次工作中出问题的经历
+    prompt: "Talk about a time something went wrong at work, what you did about it, and what you learned."
+    hints: ["what went wrong", "how you found out", "what you did next", "what changed afterwards"]
+    chunks: [c-bad-news]
+  - id: s24
+    phase: 2
+    kind: explain
+    title: 给新人讲部署流程
+    prompt: "Explain to a new hire how code gets from someone's laptop to production at your company."
+    hints: ["first, then, finally", "where the checks happen", "what to do if something breaks"]
+    chunks: [c-explain-simply]
+
+  - id: s25
+    phase: 3
+    kind: roleplay
+    title: 推回不现实的截止日期
+    prompt: "Roleplay. The AI plays Priya, your product manager. A big customer demo is on Friday and she wants the new export feature finished by then. You estimate it needs two more weeks. Explain why Friday isn't realistic and negotiate: a smaller scope, a new date, or extra help. Priya should push back at least twice and only agree to a compromise if it's reasonable."
+    hints: ["acknowledge the urgency", "explain the risk with one concrete reason", "offer two options", "confirm what you agreed"]
+    chunks: [c-negotiate, c-meeting-opinion]
+  - id: s26
+    phase: 3
+    kind: roleplay
+    title: 安抚生气的业务方
+    prompt: "Roleplay. The AI plays Mark, an operations manager whose team couldn't process orders for two hours this morning because of an outage your team caused. Mark is angry and wants to know why this keeps happening. Stay calm, apologize without over-promising, explain what happened simply, and agree on next steps. Mark should interrupt and challenge vague answers."
+    hints: ["let him vent, then acknowledge", "own the mistake", "what happened and what's fixed", "a clear follow-up and timeline"]
+    chunks: [c-bad-news, c-explain-simply]
+  - id: s27
+    phase: 3
+    kind: roleplay
+    title: 在设计评审中提出方案
+    prompt: "Roleplay. The AI plays Ken, a senior engineer in a design review. You are proposing to add a message queue between the order service and the notification service. Present the problem, your design, and the trade-offs. Ken should ask tough questions about failure handling, ordering, and operational cost."
+    hints: ["the problem today", "the proposal at a high level", "trade-offs and risks", "what you need from the group"]
+    chunks: [c-interview-design, c-explain-simply]
+  - id: s28
+    phase: 3
+    kind: interview
+    title: "面试：Tell me about yourself"
+    prompt: "Interview. The AI is a hiring manager for a senior backend engineer role at a tech company in Singapore. Open with: 'So, tell me a bit about yourself.' Let the candidate answer for about two minutes, then ask one or two natural follow-up questions about their experience."
+    hints: ["present: current role and scope", "past: how you got here", "a highlight with impact", "future: why this role"]
+    chunks: [c-interview-about-me]
+  - id: s29
+    phase: 3
+    kind: interview
+    title: 行为面试：冲突
+    prompt: "Interview. The AI is an interviewer running a behavioral round. Ask: 'Tell me about a time you disagreed with a teammate or manager. What happened?' Then probe with follow-ups on what the candidate personally did, how it was resolved, and what they would do differently."
+    hints: ["situation in two sentences", "what you disagreed on and why", "how you handled it", "the outcome and lesson"]
+    chunks: [c-interview-star]
+  - id: s30
+    phase: 3
+    kind: interview
+    title: 行为面试：失败经历
+    prompt: "Interview. The AI is an interviewer running a behavioral round. Ask: 'Tell me about a time you failed or made a big mistake.' Follow up on how the candidate found out, how they communicated it, and what changed afterwards. Push gently if the answer avoids taking responsibility."
+    hints: ["pick a real mistake", "own it clearly", "how you fixed it", "what you do differently now"]
+    chunks: [c-interview-star, c-bad-news]
+  - id: s31
+    phase: 3
+    kind: interview
+    title: 行为面试：最有影响力的项目
+    prompt: "Interview. The AI is an interviewer. Ask: 'What's the most impactful project you've worked on?' Follow up on the candidate's specific contribution, how impact was measured, and the hardest technical decision."
+    hints: ["the context and why it mattered", "your specific role", "numbers or measurable impact", "the hardest call you made"]
+    chunks: [c-interview-star, c-interview-about-me]
+  - id: s32
+    phase: 3
+    kind: interview
+    title: 行为面试：没有职权的领导力
+    prompt: "Interview. The AI is an interviewer. Ask: 'Tell me about a time you had to lead or influence people without formal authority.' Follow up on how the candidate got buy-in and handled people who resisted."
+    hints: ["the goal and who you needed", "how you built buy-in", "handling resistance", "the result"]
+    chunks: [c-interview-star, c-negotiate]
+  - id: s33
+    phase: 3
+    kind: interview
+    title: 系统设计面试：短链服务开场
+    prompt: "Interview. The AI is a system design interviewer. Say: 'Let's design a link shortening service, something like a smaller version of bit.ly.' Let the candidate drive. Answer clarifying questions with reasonable numbers (for example, a hundred million new links a month, mostly reads). Ask about scaling and failure cases after they present a high-level design."
+    hints: ["clarify requirements and scale", "rough estimates", "high-level components", "the main bottleneck and trade-off"]
+    chunks: [c-interview-design, c-buying-time]
+  - id: s34
+    phase: 3
+    kind: interview
+    title: 系统设计面试：限流器
+    prompt: "Interview. The AI is a system design interviewer. Say: 'How would you design a rate limiter for our public developer platform?' Let the candidate ask questions and think out loud. Challenge them on distributed counting, accuracy versus cost, and what happens when the limiter itself fails."
+    hints: ["what exactly we're limiting", "an algorithm and why", "where it runs", "failure mode: fail open or fail closed"]
+    chunks: [c-interview-design, c-buying-time]
+  - id: s35
+    phase: 3
+    kind: roleplay
+    title: 谈薪资
+    prompt: "Roleplay. The AI plays Grace, an in-house recruiter. She has just made a verbal offer for a senior backend role in Singapore, with a base salary slightly below what the candidate hoped for. Negotiate politely: express enthusiasm, give a number with a reason, and explore base, signing bonus, and equity. Grace should say the base is fairly fixed at first, but have some flexibility elsewhere."
+    hints: ["thank and show enthusiasm", "anchor with a number and a reason", "ask about other levers", "ask for time to decide"]
+    chunks: [c-negotiate, c-closing]
+  - id: s36
+    phase: 3
+    kind: interview
+    title: 面试最后反问面试官
+    prompt: "Interview. The AI is an engineering manager at the end of a final-round interview. Say: 'We've got about ten minutes left. What questions do you have for me?' Answer the candidate's questions honestly and naturally, and occasionally ask a short question back."
+    hints: ["ask about the team and how success is measured", "ask about challenges right now", "ask about next steps", "close with thanks and enthusiasm"]
+    chunks: [c-closing]

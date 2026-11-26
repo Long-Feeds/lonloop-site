@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>精听：听写与跟读 · 英语 · lonX</title>
+<meta name="description" content="逐句听写和跟读：美、英、澳、印、新加坡口音的工作场景句子，自动比对，标出没听出的词。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="canonical" href="https://lonloop.com/english/listen/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="精听：听写与跟读 · 英语 · lonX" />
+<meta property="og:description" content="逐句听写和跟读：美、英、澳、印、新加坡口音的工作场景句子，自动比对，标出没听出的词。" />
+<meta property="og:url" content="https://lonloop.com/english/listen/" />
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="en-data" content="/english/data/course.json?v=28ae5950" />
+<link rel="stylesheet" href="/english/assets/en.css?v=31bcb33a" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+      <a href="/travel/" class="tab">旅行</a>
+      <a href="/japanese/" class="tab">日语</a>
+      <a href="/english/" class="tab" aria-current="true">英语</a>
+    </div>
+  </nav>
+  <nav class="subnav" aria-label="英语板块">
+    <a href="/english/">今日</a>
+    <a href="/english/listen/" aria-current="page">精听</a>
+    <a href="/english/speak/">口语</a>
+    <a href="/english/phrases/">表达</a>
+    <a href="/english/sounds/">发音</a>
+    <a href="/english/resources/">资源</a>
+    <a href="/english/method/">方法</a>
+  </nav>
+  <main class="en">
+    <header class="page-head">
+      <div class="eyebrow">Listening · 精听</div>
+      <h1>精听：听写与跟读</h1>
+      <p class="lead">一次一句。听写时，你没写出来的词会标成红色。这些词往往你都认识，只是在连读、弱读里没认出来，这正是要练的地方。跟读时，先录下自己的版本，再和原声连着播放对比。</p>
+      <div class="meta"><span>24 组 · 工作与面试场景</span><span>美 / 英 / 澳 / 印 / 新加坡口音</span><span>每条音频都经过 Whisper 反向听写校验</span></div>
+    </header>
+    <div class="tools" role="toolbar" aria-label="播放设置">
+      <div class="grp"><span>语速</span><span class="seg" data-rate><button type="button" data-val="0.75">0.75×</button><button type="button" data-val="1">1×</button><button type="button" data-val="1.25">1.25×</button></span></div>
+      <div class="grp"><span>模式</span><span class="seg" id="modes"><button type="button" data-mode="dictate">听写</button><button type="button" data-mode="shadow">跟读</button><button type="button" data-mode="speed">提速听写</button><button type="button" data-mode="test">测验</button></span></div>
+    </div>
+    <div id="pick">
+      <div class="prose"><p class="dim" style="font-size:14px">选一组开始。按「今日」里的安排来就行，每组连做三天：听写 → 跟读 → 提速听写。</p></div>
+      <div id="sets"></div>
+    </div>
+    <section id="work" hidden>
+      <div class="row" style="justify-content:space-between;margin-bottom:6px">
+        <div><b id="set-title"></b> <span class="dim" id="set-meta" style="font-size:13.5px"></span></div>
+        <button class="btn sm" id="back" type="button">← 换一组</button>
+      </div>
+      <div class="dict" id="dict"></div>
+    </section>
+    <section id="summary" class="card" hidden></section>
+    <div class="prose">
+      <h2 id="how">怎么练最有效</h2>
+      <ul>
+        <li><b>先别急着看答案。</b>一句最多听三遍再提交。听第二遍时，留意是哪个位置糊成了一团。</li>
+        <li><b>红词要大声读出来。</b>对着答案，按句子提示里说的连读、弱读方式念两遍，再听一遍原声。耳朵认不出的读法，往往是自己从来没那样说过的读法。</li>
+        <li><b>跟读模仿的是节奏和语调，不是单词。</b>英语是重音计时：重读的词又长又清楚，其他词被压短。照着这种轻重念，比每个词都念清楚更像母语者。</li>
+        <li><b>快捷键：</b><span class="kbd">Enter</span> 提交或进入下一句，<span class="kbd">Shift</span>+<span class="kbd">Enter</span> 换行，<span class="kbd">Esc</span> 重播。</li>
+      </ul>
+      <div class="callout"><span class="ct">关于音频</span>句子是神经网络语音合成的，口音标准、发音清晰，比真人说话略「干净」。所以每天还有一项「真实材料精听」，用真人播客和节目补上这一块。每句的文本和音频都经过机器反向听写核对，不会出现答案和读音对不上的情况。</div>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span><a href="/english/method/">方法与校验</a> · <a href="/english/resources/">外部资源</a></span>
+    <span class="lic">音频由 Microsoft 神经网络语音合成（edge-tts），每条都经过 Whisper 反向听写校验后才发布；练习记录和录音只保存在你自己的浏览器里，不会上传。</span>
+  </footer>
+  <noscript><p class="en">这一板块的练习需要 JavaScript。</p></noscript>
+  <script type="module" src="/english/assets/listen.js?v=30ccdf91"></script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

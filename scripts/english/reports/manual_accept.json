@@ -1,0 +1,52 @@
+{
+ "d19-06": {
+  "key": "a52c6ee98e8d14e5",
+  "reason": "同音词：write/right、reads/reeds 读音相同，Whisper 只能猜拼写；其余词逐词一致",
+  "heard": "The right path is going to be the bottleneck here, not the reeds."
+ },
+ "d20-03": {
+  "key": "0028b3693f684193",
+  "reason": "数字写法：one forty 被写成 140（薪资语境的口语说法），读音一致",
+  "heard": "Based on my research and other offers, I was hoping for something closer to 140."
+ },
+ "c-meeting-opinion-07": {
+  "key": "0bd284079d42ea80",
+  "reason": "同音词：cached/cashed 读音相同；其余词逐词一致",
+  "heard": "Just to throw another idea out there, what if we cashed it on the client?"
+ },
+ "c-buying-time-08": {
+  "key": "4db4bf39720baa2c",
+  "reason": "数字写法 a hundred percent → 100%；同音词 cache/cash；其余词逐词一致",
+  "heard": "I'm not 100% sure, but my guess would be the cash."
+ },
+ "c-interview-design-06": {
+  "key": "2fcd54033de622e6",
+  "reason": "同音词：queue/Q/cue 读音相同；其余词逐词一致",
+  "heard": "One option is to put a Q in between to absorb the spikes."
+ },
+ "c-interview-design-11": {
+  "key": "be70f70e2a4b9b8b",
+  "reason": "同音词：write/right 读音相同；其余词逐词一致",
+  "heard": "Let me zoom in on the right path, since that's the tricky part."
+ },
+ "pw-sink": {
+  "key": "f3a197203328dc55",
+  "reason": "同音词：sink/sync 读音相同（/sɪŋk/）",
+  "heard": "SYNC"
+ },
+ "pw-dock": {
+  "key": "2b1f506de96beac9",
+  "reason": "同音词：dock/doc 读音相同（/dɑk/）",
+  "heard": "Doc."
+ },
+ "pw-dock-m": {
+  "key": "97b3b2163daf80a6",
+  "reason": "同音词：dock/doc 读音相同（/dɑk/）",
+  "heard": "Doc."
+ },
+ "pw-veil-m": {
+  "key": "6530cb5eb0af806d",
+  "reason": "同音词：veil/vale 读音相同（/veɪl/）",
+  "heard": "Vale."
+ }
+}

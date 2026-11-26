@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>发音与连读 · 英语 · lonX</title>
+<meta name="description" content="中文母语者最容易听错、说错的音：连读、弱读、吞音、闪音，以及十组最小对立词。" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="canonical" href="https://lonloop.com/english/sounds/" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="lonX" />
+<meta property="og:title" content="发音与连读 · 英语 · lonX" />
+<meta property="og:description" content="中文母语者最容易听错、说错的音：连读、弱读、吞音、闪音，以及十组最小对立词。" />
+<meta property="og:url" content="https://lonloop.com/english/sounds/" />
+<meta property="og:image" content="https://lonloop.com/og.png" />
+<meta property="og:locale" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="en-data" content="/english/data/course.json?v=28ae5950" />
+<link rel="stylesheet" href="/english/assets/en.css?v=31bcb33a" />
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">lonX<span class="dot">.</span></a>
+    <div class="tabs">
+      <a href="/" class="tab">主页</a>
+      <a href="/collection/" class="tab">收藏夹</a>
+      <a href="/radar/" class="tab">雷达</a>
+      <a href="/travel/" class="tab">旅行</a>
+      <a href="/japanese/" class="tab">日语</a>
+      <a href="/english/" class="tab" aria-current="true">英语</a>
+    </div>
+  </nav>
+  <nav class="subnav" aria-label="英语板块">
+    <a href="/english/">今日</a>
+    <a href="/english/listen/">精听</a>
+    <a href="/english/speak/">口语</a>
+    <a href="/english/phrases/">表达</a>
+    <a href="/english/sounds/" aria-current="page">发音</a>
+    <a href="/english/resources/">资源</a>
+    <a href="/english/method/">方法</a>
+  </nav>
+  <main class="en">
+    <header class="page-head">
+      <div class="eyebrow">Sounds · 发音与连读</div>
+      <h1>发音与连读</h1>
+      <p class="lead">两部分内容。<b>连读与弱读</b>讲清楚真实语流里词和词是怎么粘在一起、被压缩的：听不出来的地方，八成都在这里。<b>中文母语者的发音陷阱</b>是十组最小对立词，比如 ship 和 sheep 只差一个音。先练到听得出区别，再练到说得出区别。阶段 1 每天安排一节，也可以随时回来查。</p>
+      <div class="meta"><span>8 节连读微课</span><span>10 组最小对立词 + 听辨</span><span>默认美式发音</span></div>
+    </header>
+    <div class="tools" role="toolbar" aria-label="播放设置">
+      <div class="grp"><span>语速</span><span class="seg" data-rate><button type="button" data-val="0.75">0.75×</button><button type="button" data-val="1">1×</button><button type="button" data-val="1.25">1.25×</button></span></div>
+      <div class="grp"><a class="btn sm" href="#connected">连读与弱读</a><a class="btn sm" href="#pron">发音陷阱</a></div>
+    </div>
+    <div class="prose">
+      <h2 id="connected">一 · 连读与弱读</h2>
+      <p class="dim" style="font-size:14px">每个例子：先听原声，再对照下面的近似读音（IPA）看哪里被压缩了，最后跟着读三遍。标音是自然语速下常见的读法，并不是唯一读法。</p>
+      <div id="cs"></div>
+      <h2 id="pron">二 · 中文母语者的发音陷阱</h2>
+      <p class="dim" style="font-size:14px">每组先读说明，再点单词听对比，最后做听辨：随机播放一对词里的一个，你来选听到的是哪个。能听出来，才说得出来。</p>
+      <div id="pr"></div>
+      <div class="callout warn"><span class="ct">这一页做不到的事</span>这里只能让你听标准音、练听辨，没法给你自己的发音打分。想要逐个音素的反馈，用 <a href="/english/resources/#pronunciation">ELSA Speak</a> 这类专门的应用。想听某个词或某句话在真实视频里怎么说，用 <a href="https://youglish.com/" target="_blank" rel="noopener">YouGlish</a>。</div>
+    </div>
+  </main>
+  <footer class="site-foot">
+    <span>© <span id="y"></span> lonX · Built with Claude Code</span>
+    <span><a href="/english/method/">方法与校验</a> · <a href="/english/resources/">外部资源</a></span>
+    <span class="lic">音频由 Microsoft 神经网络语音合成（edge-tts），每条都经过 Whisper 反向听写校验后才发布；练习记录和录音只保存在你自己的浏览器里，不会上传。</span>
+  </footer>
+  <noscript><p class="en">这一板块的练习需要 JavaScript。</p></noscript>
+  <script type="module" src="/english/assets/sounds.js?v=5d6715d0"></script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

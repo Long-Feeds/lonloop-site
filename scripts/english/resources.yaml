@@ -1,0 +1,278 @@
+# English listening/speaking course: curated external resources.
+# Every URL below was fetched on 2026-11-26 (HTTP 200, and the content checked to be the right page).
+# Prices come only from the vendor's own pages; anything not shown publicly is marked as unknown.
+
+- category: intensive
+  items:
+    - id: bbc-6min
+      name: "BBC Learning English · 6 Minute English"
+      url: "https://www.bbc.co.uk/learningenglish/english/features/6-minute-english"
+      cost: "免费"
+      level: "B1–B2"
+      accent: "英式"
+      why: "每周一集，6 分钟，两位主持人对话，每集页面都有免费的 transcript + worksheet PDF，新集还配了带字幕的视频。适合做阶段 1 的精听和跟读主材料：先盲听一遍，再看文稿逐句跟读，最后复述。"
+      caveat: "语速比真实会议慢、用词偏生活话题，只能做打底；B2 稳定后要换到下面的 NPR 或 Pragmatic Engineer。"
+      verified: "2026-11-26"
+
+    - id: npr-indicator
+      name: "NPR · The Indicator from Planet Money"
+      url: "https://www.npr.org/podcasts/510325/the-indicator-from-planet-money"
+      cost: "免费"
+      level: "B2–C1"
+      accent: "美式"
+      why: "周一到周五更新，每集不到 10 分钟，讲经济、商业、科技新闻，用的是正常母语语速。每集页面都有 Transcript 链接（npr.org/transcripts/…），而且文稿免费。适合阶段 2 的精听：选 2–3 分钟一段做听写，再对照文稿影子跟读。"
+      caveat: "节目里有快速对话、插话和美式俚语，第一次听可能只懂一半，这正是要练的部分。"
+      verified: "2026-11-26"
+
+    - id: ted-transcript
+      name: "TED Talks（交互式 transcript）"
+      url: "https://www.ted.com/talks"
+      cost: "免费"
+      level: "B2–C1"
+      accent: "多口音（美/英/澳/印/非母语讲者都有）"
+      why: "每个演讲页都能切到 Transcript 视图（?view=transcript），文稿免费，点文稿里的句子就能跳到对应时间点，很适合逐句精听和跟读。可以挑科技、职场类演讲，练『对外行讲清楚技术』的表达，这也正是面试和会议要用的能力。"
+      caveat: "演讲是事先准备好的独白，比会议里的即兴对话清楚、规整，不能代替练对话听力。"
+      verified: "2026-11-26"
+
+    - id: pragmatic-engineer-transcript
+      name: "The Pragmatic Engineer Podcast（逐集文稿）"
+      url: "https://newsletter.pragmaticengineer.com/podcast"
+      cost: "免费"
+      level: "C1"
+      accent: "多口音（主持人 Gergely Orosz 是匈牙利裔，嘉宾来自全球的工程师）"
+      why: "软件工程师访谈节目，最近几集嘉宾有 Anthropic、Slack/GitHub、Google 的工程师，以及 Satya Nadella。每集页面顶部有免费 transcript，所以可以截一段讲系统设计或职业经历的片段做精听，把好的说法记下来，直接用到面试里讲自己的项目。"
+      caveat: "单集通常一小时以上，只截 3–5 分钟来精听。这个 /podcast 页面是 Substack 用 JS 渲染的，链接到单集页面会更稳。"
+      verified: "2026-11-26"
+
+- category: extensive
+  items:
+    - id: hard-fork
+      name: "Hard Fork（NYT 科技播客）· YouTube"
+      url: "https://www.youtube.com/@hardfork"
+      cost: "免费"
+      level: "C1"
+      accent: "美式"
+      why: "两位科技记者每周聊 AI 和科技行业新闻，节奏快，玩笑和插话很多，最接近同事之间闲聊时的真实语速。通勤时泛听，目标是跟上话题，不需要每个词都听懂。"
+      caveat: "nytimes.com 的节目页拒绝了自动访问，无法核实，所以这里链接 YouTube 频道。文稿在 NYT 站内，可能要订阅。"
+      verified: "2026-11-26"
+
+    - id: decoder
+      name: "Decoder with Nilay Patel（The Verge）"
+      url: "https://www.theverge.com/decoder-podcast-with-nilay-patel"
+      cost: "免费"
+      level: "C1"
+      accent: "美式"
+      why: "节目长篇访谈科技公司 CEO 和高管，话题集中在组织架构、产品决策、AI 战略。可以学到会议和面试里讲『为什么这样决策』用的表达。2026-11 仍在更新，适合每天通勤听一段。"
+      caveat: "单集偏长（40–60 分钟），信息密度高，累的时候建议换成 Hard Fork。"
+      verified: "2026-11-26"
+
+    - id: cna-deep-dive
+      name: "CNA · Deep Dive（新加坡）"
+      url: "https://www.channelnewsasia.com/listen/deep-dive"
+      cost: "免费"
+      level: "B2–C1"
+      accent: "新加坡英语"
+      why: "CNA938 的每周新闻深度播客，主持人和嘉宾都是新加坡人，话题是本地职场、求职、数据安全、AI 监管等，最近一集讲新加坡年轻人找第一份工作。可以熟悉本地同事和面试官的口音与节奏，也能积累本地职场话题。更多 CNA 播客见 channelnewsasia.com/listen。"
+      verified: "2026-11-26"
+
+    - id: bbc-more-or-less
+      name: "BBC Radio 4 · More or Less"
+      url: "https://www.bbc.co.uk/programmes/b006qshd"
+      cost: "免费"
+      level: "B2–C1"
+      accent: "英式"
+      why: "每集约 9 分钟，专门拆解新闻里的数字和统计说法，可以练英式口音，也能顺便练听数字、比例、趋势的表达，这在汇报指标和讨论数据时很常用。长度刚好放进通勤。"
+      caveat: "这个页面没有提供免费 transcript，只适合泛听。"
+      verified: "2026-11-26"
+
+    - id: abc-conversations
+      name: "ABC listen · Conversations（澳大利亚）"
+      url: "https://www.abc.net.au/listen/programs/conversations"
+      cost: "免费"
+      level: "B2–C1"
+      accent: "澳式"
+      why: "ABC 的人物长访谈，语速自然、讲故事性强，用来补澳式口音。新加坡职场的澳洲同事和客户不少。挑感兴趣的嘉宾来听，不必每集都听。"
+      caveat: "话题以人物经历为主，与科技关系不大。"
+      verified: "2026-11-26"
+
+    - id: seen-and-unseen
+      name: "The Seen and the Unseen（Amit Varma，印度）"
+      url: "https://seenunseen.in/"
+      cost: "免费"
+      level: "C1"
+      accent: "印度英语"
+      why: "印度最有名的长访谈播客之一，2026-11 仍在更新（第 457 集）。主持人和嘉宾都是受过高等教育的印度讲者，用来适应新加坡科技公司里很常见的印度同事口音。"
+      caveat: "单集常常 2–3 小时，话题是经济、政策、文化，不是科技。只截一段来练口音，不必追完。"
+      verified: "2026-11-26"
+
+- category: speaking-ai
+  items:
+    - id: chatgpt-voice
+      name: "ChatGPT Voice（Live 模式）"
+      url: "https://help.openai.com/en/articles/20001274-chatgpt-voice"
+      cost: "免费+付费"
+      level: "B1–C2"
+      why: "可以边说边被打断，轮流说话的感觉最接近真人。可以让它扮演面试官（例如『对我做 behavioral interview，每题后指出我的语法和用词问题』），也可以模拟 stand-up 发言。Go 和 Plus 每天有 3 小时 Live，日常 15–20 分钟的口语练习足够。"
+      caveat: "官方帮助页写明：旧的 Advanced 和 Standard 语音会在 2026-12-11 下线，届时自动切到 Live。免费版只有『有限』用量。AI 会迁就你，纠错不如真人严格，最好在提示里明确要求纠错。新加坡可用性：该帮助页没有单独列国家。"
+      verified: "2026-11-26"
+
+    - id: gemini-live
+      name: "Gemini Live"
+      url: "https://gemini.google/overview/gemini-live/"
+      cost: "免费+付费"
+      level: "B1–C2"
+      why: "已经整合进 Gemini 普通对话，可以随时在打字和语音之间切换，也支持随时打断。适合通勤路上练习免提口头复述：听完一集播客后，用 2 分钟口头总结给 Gemini 听，再让它挑出表达问题。"
+      caveat: "官方页面没有写免费版的具体用量和新加坡可用性；Plus 套餐用量更多（页面上有学生一年免费的促销）。"
+      verified: "2026-11-26"
+
+    - id: claude-voice
+      name: "Claude 语音模式"
+      url: "https://support.claude.com/en/articles/11101966-use-voice-mode"
+      cost: "免费+付费"
+      level: "B1–C2"
+      why: "官方说明 Free 到 Enterprise 各套餐都能用（目前是 beta），手机、桌面、网页都有，并且有免提和按住说话两种模式。比较适合需要讲解技术的练习，比如『我口头讲一遍这个系统设计，你扮演资深面试官追问』。"
+      caveat: "语音对话会计入普通用量额度；目前是 beta；嘈杂环境建议用按住说话。"
+      verified: "2026-11-26"
+
+    - id: praktika
+      name: "Praktika（AI 虚拟外教 App）"
+      url: "https://praktika.ai/"
+      cost: "免费+付费（官网写约 US$8/月）"
+      level: "A2–B2"
+      why: "有固定的 AI 形象导师，带个人学习计划和逐句反馈。适合不想自己写提示词、想要『上课感』的日子。"
+      caveat: "价格写在 Praktika 自家官网的对比栏里，实际价格以 App 内为准；官网展示的用户评价也提到免费版口音偶尔不稳。对 IELTS 6–7 的水平可能偏简单，只建议当作备选。"
+      verified: "2026-11-26"
+
+    - id: langua
+      name: "Langua（LanguaTalk）"
+      url: "https://languatalk.com/"
+      cost: "免费+付费（价格官方未公开列出）"
+      level: "B1–C1"
+      why: "主打和 AI 对话并附详细纠错，有通勤用的 hands-free 模式，也可以加约真人外教。不注册订阅也能先免费聊几轮，来判断纠错风格是否适合自己。"
+      caveat: "官方帮助页只说明免费试用：月付 5 天、年付 7 天，需要绑卡。没有找到官方公开的价格，第三方站点给的数字互相矛盾，所以这里不写价格。"
+      verified: "2026-11-26"
+
+- category: pronunciation
+  items:
+    - id: youglish
+      name: "YouGlish"
+      url: "https://youglish.com/"
+      cost: "免费"
+      level: "全级别"
+      accent: "可选美/英/澳等"
+      why: "输入任意单词或短语（如 'idempotent'、'trade-off'、'circle back'），会跳到真实 YouTube 视频里有人说这个词的片段，可以按口音筛选。适合在精听里遇到吃音、连读的词时，马上听 5 个真人例子再跟读。"
+      verified: "2026-11-26"
+
+    - id: oxford-learners
+      name: "Oxford Learner's Dictionaries"
+      url: "https://www.oxfordlearnersdictionaries.com/"
+      cost: "免费（部分高级词典付费）"
+      level: "全级别"
+      accent: "英式 + 美式"
+      why: "每个词都有英式和美式的真人发音和音标，并标注 Oxford 3000/5000 和 CEFR 级别。适合查技术或会议高频词的标准读音和重音，比如 'analysis'、'architecture'。"
+      caveat: "Cambridge Dictionary 也很好，但今天自动访问被拒（403），没能核实，所以没有收录。"
+      verified: "2026-11-26"
+
+    - id: rachels-english
+      name: "Rachel's English（YouTube）"
+      url: "https://www.youtube.com/@rachelsenglish"
+      cost: "免费（YouTube）；付费 Academy 另计"
+      level: "B1–C1"
+      accent: "美式"
+      why: "系统讲解美式发音、连读（linking）和弱读（reductions），这正好是听不懂快速口语的根源。每周看 1–2 个讲 reductions 的视频，再回到 NPR 精听，验证自己能否听出来。"
+      caveat: "官网 rachelsenglish.com 在推付费 Academy（目前是黑五促销）。免费的 YouTube 内容已经够用。"
+      verified: "2026-11-26"
+
+    - id: elsa-speak
+      name: "ELSA Speak"
+      url: "https://elsaspeak.com/en"
+      cost: "免费+付费（价格官网未公开，以 App 内为准）"
+      level: "B1–C1"
+      why: "AI 逐音素打分，能指出具体哪个音发错了，例如中文母语者常见的 th、v/w、词尾辅音丢失。另外有 AI 角色扮演。适合每天花 5 分钟做针对性纠音。"
+      caveat: "主要纠单词和句子级别的发音，对听力帮助有限；付费价格因地区和促销变化，官网没有直接列出。"
+      verified: "2026-11-26"
+
+- category: tutors
+  items:
+    - id: italki
+      name: "italki"
+      url: "https://www.italki.com/"
+      cost: "付费（按课付费，价格由老师自定）"
+      level: "全级别"
+      why: "按节付费、不用订阅（官网写 'No subscriptions'），英语老师有 4000 多位，可以按口音、价格和专长筛选，比如找做过技术面试辅导的老师。适合每周 1–2 次 mock interview 或 meeting role-play。"
+      caveat: "价格差异很大，先约 1–2 位老师试课，再决定长期跟谁上。"
+      verified: "2026-11-26"
+
+    - id: preply
+      name: "Preply"
+      url: "https://preply.com/"
+      cost: "付费（价格由老师自定，页面支持 SGD 显示）"
+      level: "全级别"
+      why: "和 italki 类似，有大量英语老师，老师会围绕你的目标（职场、面试）定制课程。可以直接用 SGD 结算，对在新加坡的人比较方便。"
+      caveat: "Preply 采用按课时包订阅的模式，退订和退款规则要先看清楚；官网首页没有公开具体价格。"
+      verified: "2026-11-26"
+
+    - id: cambly
+      name: "Cambly"
+      url: "https://www.cambly.com/english"
+      cost: "付费（页面显示小班约 US$12/月起、一对一 Private+ 约 US$28/月起，原价为其两倍，疑似促销价）"
+      level: "全级别"
+      why: "全部是英语母语老师，24 小时随时上，适合需要大量即兴对话输入的阶段，比如面试前一周天天练。"
+      caveat: "价格取自今日官网，页面同时显示了划线原价（US$24/US$56），可能是黑五折扣；'起'价对应的时长和频率需要在结账页确认。"
+      verified: "2026-11-26"
+
+    - id: hellotalk
+      name: "HelloTalk（语言交换）"
+      url: "https://www.hellotalk.com/"
+      cost: "免费+付费（VIP）"
+      level: "全级别"
+      why: "免费和想学中文的英语母语者交换语言，你的中文母语在这里就是优势。适合找固定语伴，每周语音聊 30 分钟（一半中文一半英文），练对真人开口的勇气。"
+      caveat: "语伴不是老师，不会系统纠错，而且质量参差不齐；替代选项是 Tandem（tandem.net），模式类似。"
+      verified: "2026-11-26"
+
+    - id: toastmasters-sg
+      name: "Toastmasters（新加坡 District 80）"
+      url: "https://www.toastmasters.org/find-a-club"
+      cost: "付费（会费；可先免费以访客身份参加）"
+      level: "B2+"
+      why: "新加坡有大量 Toastmasters 俱乐部（District 80，2024 年有 200 多个），其中有 SAP、Visa 等公司内部俱乐部和公开俱乐部。例如 Toastmasters Club of Singapore（1967 年成立，每月前 3 个周一 18:30 在 Scotts Rd 的 Sheraton Towers）。可以练 Table Topics 即兴发言，直接对应会议上被点名发言的场景。在官方 Find a Club 里搜 Singapore，就能约到访客名额。"
+      caveat: "会费的具体金额由各俱乐部定，这里没有核实；District 80 官网（d80toastmasters.org）是 JS 页面，没能读到内容。"
+      verified: "2026-11-26"
+
+- category: test
+  items:
+    - id: ielts-sample
+      name: "IELTS 官方 · Sample test questions"
+      url: "https://ielts.org/take-a-test/preparation-resources/sample-test-questions"
+      cost: "免费"
+      level: "B1–C1"
+      accent: "多口音（英/澳/美等）"
+      why: "IELTS 官方的免费样题和答案入口，分 Academic 和 General Training。听力部分可以每 4 周做一次，记录分数，作为『听力有没有进步』的客观指标。"
+      verified: "2026-11-26"
+
+    - id: idp-listening-practice
+      name: "IDP IELTS · Listening practice tests"
+      url: "https://ielts.idp.com/prepare/all-test-types/listening/practice-test"
+      cost: "免费"
+      level: "B1–C1"
+      why: "IDP（IELTS 主办方之一）的官方听力练习列表，目前有 14 套，附音频和答案，题量比 ielts.org 样题更多，适合定期测试，每次换一套。"
+      caveat: "British Council 的 takeielts 免费练习页今天从本机访问一直超时，没能核实，所以没有收录。"
+      verified: "2026-11-26"
+
+    - id: efset
+      name: "EF SET"
+      url: "https://www.efset.org/"
+      cost: "免费"
+      level: "A1–C2"
+      why: "免费测试，结果对齐 CEFR。现在有 90 分钟四项版（含听力和口语）和 50 分钟听读版两种，可以拿到免费证书。开课时做一次四项版作为基线，3 个月后再做一次，对比听力和口语的分项变化。"
+      caveat: "不是 IELTS 分数，不能用于签证或升学；分数和 IELTS 只能粗略对应。"
+      verified: "2026-11-26"
+
+    - id: cambridge-test
+      name: "Cambridge English · Test your English"
+      url: "https://www.cambridgeenglish.org/test-your-english/"
+      cost: "免费"
+      level: "A1–C2"
+      why: "官方称 'Quick, free level check'，几分钟就能测出大致级别，适合每月快速自检一次。"
+      caveat: "主要考语法和词汇的阅读题，基本测不出听力和口语进步，只作辅助参考。"
+      verified: "2026-11-26"

@@ -774,7 +774,27 @@
            视频、Edge TTS 免费免 Key；功能清单仍把 AI Agent 与 WebUI / API / CLI 并列且排在
            首位，「推荐使用方式」首行仍是 AI Agent（10-16 新增的官方 pip 包排第二）；SKILL.md
            raw 200，LICENSE 仍是 MIT，132,179 star ≥ 12 万。pip 包不上卡：它是安装渠道，
-           不是入口，本卡只写入口。 -->
+           不是入口，本卡只写入口。
+
+           ⚠️ 2026-11-26 复诊：上游 11-25 的 3837b078（feat(desktop): add cross-platform
+           desktop app）在「推荐使用方式」首行插进「想直接在桌面使用：下载桌面版」，AI Agent
+           退到第二行——卡上「上游『推荐使用方式』中排在最前的也是它」从那天起是假话，当天
+           sweep 里 verify-mpt-live 的 A 层判红（37/0 → 36/1）。这次**删掉那半句，不改写成
+           「仅次于桌面版」**，两条理由：① 桌面版是 Tauri 壳（desktop/src-tauri）包着同一个
+           WebUI（webui/Main.py），顶替的是原来那行「Windows 一键启动包」——它是装法，不是
+           入口，照 10-17 定的「本卡只写入口」不上卡（pip 包当时同样没上）；② 推荐序只是上游
+           一行 markdown 的先后，09-15 写上卡、11-25 就变了。它撑的那件事（agent 是一等入口）
+           由「并排」那句单独作证：功能清单仍写「提供 AI Agent、WebUI、API 和 CLI 四种使用
+           方式」，agent 仍在首位。删掉它，卡上只是少了一句会自己变假的话。删完 320 宽末行只剩
+           「心。」，把「全由」改成「全都由」补齐（cardorph 16 档 0 孤字；桌面 7 → 6 行，原先
+           每档都被拆开的「赞助」不再拆）。整段按今天的 README 逐条重核过：主题或关键词 →
+           脚本 / 配音 / 素材 / 字幕 / 配乐 / 合成、9:16 / 16:9 / 1:1、TikTok / Instagram /
+           YouTube Shorts、Kimi / Claude / Gemini、OpenRouter / Ollama / LiteLLM、自传素材与
+           Pexels / Pixabay 免费库存、文生视频、Edge TTS 免费免 Key、SKILL.md raw 200、
+           LICENSE 仍是 MIT、145,749 star ≥ 12 万，逐条仍在。带 aff= / track_id= / utm_ 的推广
+           链接从 10-17 的 17 条涨到 33 条，卡上那句不带数的「不少」照旧只会更真。发版句随之
+           换到今天：v1.3.11 于 11-23 发布（其前 v1.3.10 11-07、v1.3.9 10-21），截至今天是
+           最新正式版；三平台 Desktop zip 是这一版才第一次出现在附件里。 -->
       <a class="rd-card" data-type="项目" href="https://github.com/harry0703/MoneyPrinterTurbo" target="_blank" rel="noopener">
         <div class="rd-meta">
           <span class="badge">项目</span>
@@ -782,7 +802,7 @@
           <span>收藏于 2026-06-09</span>
         </div>
         <h2>MoneyPrinterTurbo<span class="out" aria-hidden="true">↗</span></h2>
-        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口里 AI Agent 和 WebUI、API、CLI 并排，上游「推荐使用方式」中排在最前的也是它——把一份 <code>SKILL.md</code> 的地址丢给能读技能文档的 agent，装环境、填配置、出片全由它自己做完。MIT，12 万+ star；本段描述按 2026-10-17 的上游 README 核过，当时最近一版是 2026-10-03 发的 v1.3.8。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
+        <p class="excerpt">给一个主题或关键词，整条短视频流水线自己跑完：AI 写脚本 → 配音 → 匹配素材 → 生成字幕 → 配乐 → 合成成片，竖屏 / 横屏 / 方形都出，还能一键发到 TikTok、Instagram、YouTube Shorts。每一段都可换件：脚本模型接 Kimi、Claude、Gemini 等，也认 OpenRouter、Ollama、LiteLLM 这类网关；素材自己传或取 Pexels、Pixabay 的免费库存，也能走文生视频；配音有免费的 Edge TTS 打底。入口里 AI Agent 和 WebUI、API、CLI 并排——把一份 <code>SKILL.md</code> 的地址丢给能读技能文档的 agent，装环境、填配置、出片全都由它自己做完。MIT，12 万+ star；本段描述按 2026-11-26 的上游 README 核过，当时最近一版是 2026-11-23 发的 v1.3.11。自述页里穿插了不少赞助与推广链接，挑接入方式时留个心。</p>
         <p class="why"><b>为什么收藏</b> · 脚本 / 配音 / 素材 / 字幕 / 配乐 / 发布每一段都能单独换件，是这条链上最完整的公开参照物；而「把一份 SKILL.md 丢给 agent、让它自己跑完」正是这页在追的那条线。</p>
       </a>
 

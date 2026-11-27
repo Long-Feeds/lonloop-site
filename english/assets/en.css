@@ -232,5 +232,8 @@ pre.aiprompt{white-space:pre-wrap;background:var(--bg2);border:1px solid var(--l
   .en,.site-foot,.subnav{padding-left:16px;padding-right:16px}
   .tools{margin:0 -16px 20px;padding:8px 16px}
   .task{gap:10px;padding:12px}
-  .pairs{grid-template-columns:1fr 1fr}
+  /* one pair per row: a pair can't shrink below its two buttons + two words
+     (163–226px), and two columns at 390 leave 175px each — 1fr 1fr pushed the
+     page 84px wider than a 390 phone (174px at 300). Measured 2026-11-27. */
+  .pairs{grid-template-columns:1fr}
 }
